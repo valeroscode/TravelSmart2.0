@@ -1,0 +1,18 @@
+
+#XButtonComponent {
+width: fit-content;
+    height: fit-content;
+    border: 2px solid white;
+    background-color: white;
+    color: rgb(46, 100, 254);
+    border-radius: 100%;
+    padding: 2px 6px;
+    position: relative;
+    top: 2.5rem;
+    left: 1.5rem;
+    z-index: 99999999999;
+}
+
+#XButtonComponent:hover {
+color: black;
+}

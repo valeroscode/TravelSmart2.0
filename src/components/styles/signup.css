@@ -1,0 +1,187 @@
+  @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+
+#body {
+    display: flex;
+    justify-content: center;
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 32%, rgba(0,212,255,1) 100%);
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+}
+
+h2 {
+    font-family: 'Archivo Black', sans-serif;
+    font-weight: 800;
+    color: #0076CC;
+}
+.error {
+    color: red;
+    font-size: 0.7rem;
+    margin: 0;
+    position: absolute;
+}
+
+#Signup {
+   height: fit-content;
+    width: 40%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 5rem;
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.4);
+    font-weight: 200;
+    border-radius: 4px;
+padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+.signupH1 {
+    color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 32%, rgba(0,212,255,1) 100%);;
+    font-weight: 600;
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.3rem;
+}
+.forgotPW-Text {
+    margin-top: 0;
+    width: 50%;
+    position: relative;
+    bottom: 0.7rem;
+    font-size: 0.9rem;
+    text-align: center;
+    font-family: 'Roboto Condensed';
+    color: darkgray;
+}
+
+.signup-field {
+   height: 1.5rem;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    width: 15rem;
+}
+
+#signupSubmit {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 0.8rem;
+    border-radius: 3px;
+    background-color: #2E64FE;
+    color: white;
+    position: relative;
+    left: 0.2rem;
+    margin-top: 0.5rem;
+}
+input {
+    height: 1.5rem;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    width: 15rem;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+#confirmPassword {
+   margin-bottom: 1rem;
+}
+input:focus {
+    outline: none;
+    border-color: #0076CC;
+}
+button {
+    margin-top: 1rem;
+    height: 1.5rem;
+    width: 15rem;
+    cursor: pointer;
+    align-content: center;
+    background-color: #2E64FE;
+    font-family: 'Roboto Condensed', sans-serif;
+    border: none;
+    border-radius: 3px;
+    color: white;
+    font-weight: 500;
+}
+.FP {
+    color: gray;
+    font-size: 0.7rem;
+    cursor: pointer;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+
+}
+.AL {
+    color: gray;
+    font-size: 0.7rem;
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 0.2rem;
+}
+.FP:hover {
+    color: black;
+}
+
+.loginBtn {
+    margin-top: 0;
+    height: fit-content;
+    width: 10rem;
+    cursor: pointer;
+    align-content: center;
+    justify-content: center;
+    border-radius: 0;
+    background-color: #2E64FE;
+    border: none;
+    border-radius: 3px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+}
+.loginBtn a {
+font-family: 'Roboto Condensed', sans-serif;
+font-weight: 800;
+color: white;
+}
+#NoAcc-signup {
+    height: 10%;
+    width: 40%;
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 33rem;
+    box-shadow: 0px 8px 15px rgba(0,0,0,0.4);
+    font-family: 'Archivo Black', sans-serif;
+    font-weight: 200;
+    transition: ease-out 0.2s;
+    border-radius: 3px;
+}
+#NoAcc-signup:hover {
+    transform: scale(1.05);
+}
+.SU:hover {
+    background-color: #2E64FE;
+}
+a {
+    color: white;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+a:visited {
+    text-decoration: none;
+}
+
+@media screen and (max-width:450px) {
+  #NoAcc-signup {
+    width: 87vw;
+  }
+}

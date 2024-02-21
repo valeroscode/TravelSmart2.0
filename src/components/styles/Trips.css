@@ -1,0 +1,965 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+#your-trips {
+position: relative;
+z-index: 10;
+font-family: 'Roboto Condensed', sans-serif;
+-webkit-transition: top 0.5s ease;
+-moz-transition: top 0.5s ease;
+-o-transition: top 0.5s ease;
+transition: top 0.5s ease;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 2rem;
+left: revert-layer;
+background-color: white;
+flex-direction: column;
+padding-bottom: 10rem;
+padding-top: 15rem;
+}
+#your-trips .your-trips-h2 {
+  font-family: 'Roboto Condensed', sans-serif;
+    font-size: 7rem;
+    color: black;
+    left: 9rem;
+    position: absolute;
+    z-index: 1;
+    width: 30rem;
+}
+#return-home {
+height: fit-content;
+width: fit-content;
+background-color: #2E64FE;
+display: flex;
+justify-content: center;
+}
+#return-home a {
+color: white;
+font-family: 'Roboto Condensed', sans-serif;
+font-weight: 800;
+}
+#your-trips ul {
+width: fit-content;
+height: fit-content;
+padding: 1.5rem;
+border-radius: 7px;
+display: flex;
+flex-wrap: wrap;
+justify-content: center;
+align-items: center;
+}
+.trip-flex {
+  display: flex;
+  flex-direction: column;
+  left: 1rem;
+  justify-content: center;
+  align-items: start;
+}
+.trip-item {
+display: flex;
+width: fit-content;
+padding: 1rem;
+border-radius: 7px;
+background-color: white;
+height: 8rem;
+margin-bottom: 1.5rem;
+margin-right: 1.5rem;
+min-width: 35rem;
+cursor: pointer;
+box-shadow: 0 0 61px 8px rgba(0,0,0,0.2);
+}
+.trip-item:hover h2 {
+font-size: 1.7rem;
+}
+.trip-item button {
+width: 100%;
+height: fit-content;
+background-color: #2E64FE; 
+font-size: 0.9rem;
+font-family: "Roboto Condensed", sans-serif;
+font-weight: 600;
+margin-top: 0;
+justify-self: start;
+margin-left: 0;
+}
+.trip-section-btns {
+  display: flex;
+  position: relative;
+  align-items: baseline;
+  height: fit-content;
+  width: 10rem;
+  bottom: 2rem;
+}
+.trip-section-btns .delete-trip {
+background-color: whitesmoke;
+margin-top: 0.5rem;
+margin-left: 0.5rem;
+color: black;
+position: relative;
+}
+.trip-item div {
+position: relative;
+margin-right: 1rem;
+}
+.day {
+    width: 26.67px;
+    padding: 1.5rem;
+    height: 1rem;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .day:hover {
+    background-color: whitesmoke
+  }
+  
+  .day + #currentDay {
+    background-color:#e8f4fa;
+  }
+.trip-item img {
+height: 8rem;
+border-radius: 7px;
+position: relative;
+}
+.trip-item h2 {
+font-family: "Roboto Condensed", sans-serif;
+margin-bottom: 0;
+color: black;
+font-size: 1.5rem;
+-webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+}
+.trip-item p {
+font-family: "Roboto Condensed", sans-serif;
+color: gray;
+margin-top: 0;
+font-size: 0.9rem;
+}
+.trip-item h6 {
+margin-top: 0;
+position: relative;
+bottom: 0.7rem;
+font-size: 0.9rem;
+}
+#lottie-section {
+display: flex;
+justify-content: center;
+position: relative;
+left: 20%;
+height: 20rem;
+}
+.trip-item h6 a {
+color: #d65600;
+font-weight: 800;
+margin-left: 0.5rem;
+}
+#new-trip-text {
+position: relative;
+left: 2rem;
+top: 8vh;
+background-color: white;
+color: black;
+height: 2rem;
+}
+@media screen and (min-width: 598px) {
+#new-trip-text {
+top: 13vh;
+left: 1rem;
+}
+}
+.X-btn {
+  width: fit-content;
+  height: fit-content;
+  padding: 0.3rem 0.8rem;
+  border-radius: 100%;
+  font-size: 1.2rem;
+  background-color: whitesmoke;
+  color: gray;
+  position: relative;
+  right: 15rem;
+  top: 1rem;
+}
+.new-trip-h3 {
+font-size: 1.8rem;
+font-family: "Roboto Condensed", sans-serif;
+margin: 0;
+}
+#new-trip {
+position: fixed;
+right: 18rem;
+top: 9vh;
+padding: 0 2rem 2rem 2rem;
+border-radius: 20px;
+background-color: white;
+display: none;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+color: black;
+height: fit-content;
+width: fit-content;
+box-shadow: 0px 0px 15px gray;
+overflow: scroll;
+z-index: 90000000000000000;
+opacity: 0;
+-webkit-transition: opacity 0.3s ease;
+-moz-transition: opacity 0.3s ease;
+-o-transition: opacity 0.3s ease;
+transition: opacity 0.3s ease;
+}
+#create-trip-btn {
+position: relative;
+background-color: #2E64FE;
+color: white;
+height: fit-content;
+margin-bottom: 1rem;
+margin-left: 25%;
+}
+#create-trip-btn a {
+color: white;
+font-weight: 800;
+}
+#create-trip-text {
+display: flex;
+flex-direction: row;
+justify-content: center;
+height: 900px;
+}
+#create-trip-text h5 {
+font-size: 1.7rem;
+z-index: 10;
+height: fit-content;
+}
+#create-trip-text div {
+background-color: #2E64FE;
+height: 0.5rem;
+width: 2rem;
+position: absolute;
+top: 3rem;
+margin-left: 2.5rem;
+-webkit-transition: all 1s ease;
+-moz-transition: all 1s ease;
+-o-transition: all 1s ease;
+transition: all 1s ease;
+}
+.expand-line {
+transform: scaleX(8);
+z-index: 900;
+}
+#create {
+transition: all 1s;
+position: relative;
+right: 25rem;
+margin-right: 0.5rem;
+}
+#newtrip {
+right: 0;
+position: relative;
+left: 25rem;
+transition: all 1s;
+}
+.unjoined {
+opacity: 0;
+filter: blur(5px);
+transition: all 1s;
+}
+.join {
+opacity: 1;
+filter: blur(0);
+transform: translateX(545%);
+}
+.join2 {
+opacity: 1;
+filter: blur(0);
+transform: translateX(-355%);
+}
+#where-to-div {
+display: flex;
+flex-direction: column;
+position: relative;
+}
+.input-title {
+margin: 0;
+position: absolute;
+top: 2rem;
+left: 1.5rem;
+font-weight: 800;
+font-family: 'Roboto Condensed', sans-serif;
+font-size: 1.3rem;
+-webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+}
+.time {
+width: fit-content;
+position: absolute;
+top: 3rem;
+left: 1rem;
+background-color: whitesmoke;
+cursor: pointer;
+
+}
+.learn-more {
+background-color: #2E64FE;
+height: fit-content;
+width: fit-content;
+font-size: 0.9rem;
+font-weight: 800;
+margin-right: 1rem;
+position: relative;
+bottom: 0.2rem;
+}
+.change-time {
+background-color: green;
+height: fit-content;
+width: fit-content;
+font-size: 0.9rem;
+font-weight: 800;
+margin-right: 1rem;
+position: relative;
+bottom: 0.2rem;
+}
+.rotate-chevron {
+transform: rotate(90deg);
+}
+.tripPlace {
+height: 3rem;
+border-radius: 10px;
+border: 1px solid lightgray;
+padding-left: 1rem;
+padding-top: 0.5rem;
+width: 100%;
+}
+.placeholder {
+position: absolute;
+left: 7.5rem;
+font-size: 0.9rem;
+top: 2.3rem;
+color: lightgray;
+width: fit-content;
+opacity: 1;
+-webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+z-index: 3;
+pointer-events: none;
+font-family: "Roboto Condensed", sans-serif;
+}
+.delete-plan {
+background-color: lightgray;
+color: black;
+font-weight: 800;
+font-size: 0.9rem;
+height: fit-content;
+width: fit-content;
+position: relative;
+bottom: 0.2rem;
+}
+.tripPlace:focus + .placeholder {
+left: 1.8rem;
+}
+.tripPlace:focus:active + .input-title {
+top: 1.5rem;
+font-size: 0.7rem;
+}
+@media(prefers-reduced-motion) {
+.unjoined {
+transition: none;
+}
+}
+#wrapper {
+width: 30vw;
+background-color: white;
+display: flex;
+border: 1px solid black;
+box-shadow: 3px 3px #222;
+border-radius: 10px;
+position: relative;
+top: 0vh;
+flex-direction: column;
+font-family: 'Roboto Condensed', sans-serif;
+justify-content: center;
+align-items: center;
+}
+#wrapper header {
+display: flex;
+justify-content: center;
+background-color: whitesmoke;
+color: black;
+font-weight: 800;
+border-radius: 7px 7px 0 0;
+width: 100%;
+}
+.current-date {
+margin-left: 2rem;
+margin-right: 2rem;
+color: black;
+}
+.hr-calendar {
+position: relative;
+border: none;
+border-top: 1px solid gray;
+margin: 0;
+width: 97%;
+left: 1.5%;
+}
+.trip-wrapper {
+height: fit-content;
+background-color: white;
+position: relative;
+width: 100%;
+}
+input[type=time] {
+font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+font-size: 0.9em;
+}
+#trip-created {
+position: fixed;
+bottom: 7vh;
+right: 47vw;
+background-color: #7498FF;
+padding-left: 0.5rem;
+padding-right: 0.5rem;
+font-family: 'Roboto Condensed', sans-serif;
+font-weight: 800;
+pointer-events: none;
+cursor: none;
+color: white;
+opacity: 0;
+display: none;
+-webkit-transition: opacity 1s ease;
+-moz-transition: opacity 1s ease;
+-o-transition: opacity 1s ease;
+transition: opacity 1s ease;
+}
+.show-trip-created {
+display: block;
+opacity: 1;
+
+
+}
+#trip-description {
+padding: 1.5rem;
+position: relative;
+right: 0.7rem;
+}
+#trip-description button {
+position: relative;
+top: 10vh;
+background-color: #2E64FE;
+color: white;
+}
+.tripName {
+border: 0;
+border-bottom: 1px solid black;
+background-color: #F0F0F0;
+}
+.tripName:focus {
+outline: none;
+border-bottom: 1px solid #2E64FE;
+}
+.arrDep {
+margin-bottom: 0;
+position: relative;
+left: 0.5rem;
+font-weight: 500;
+}
+#date-selection {
+display: none;
+flex-direction: row;
+position: relative;
+margin-top: 1rem;
+pointer-events: all;
+cursor: pointer;
+}
+
+.input-dates {
+margin: 0;
+position: absolute;
+top: 0.3rem;
+left: 1.5rem;
+font-weight: 800;
+font-family: 'Roboto Condensed', sans-serif;
+font-size: 0.8rem;
+-webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+}
+#tripStartDate {
+position: absolute;
+left: 1.5rem;
+font-weight: 500;
+top: 1.3rem;
+}
+#tripEndDate {
+position: absolute;
+left: 12.5rem;
+font-weight: 500;
+top: 1.3rem;
+}
+.sm-line {
+height: 1rem;
+width: 0.5rem;
+color: lightgray;
+margin-right: 3rem;
+margin-left: 1rem;
+}
+header {
+font-size: 1.45rem;
+font-weight: 500;
+position: relative;
+}
+header p {
+position: relative;
+display: flex;
+justify-content: center;
+}
+header .icons {
+position: absolute;
+top: 1rem;
+}
+#month-arrows {
+display: flex;
+}
+.rounded-arrow {
+position: relative;
+top: 1.5rem;
+background-color: white;
+color: black;
+border-radius: 100%;
+height: fit-content;
+padding-right: 0.5rem;
+padding-left: 0.5rem;
+}
+
+header .icons span {
+height: 4rem;
+width: 6rem;
+margin: 0 2px;
+padding: 0.5rem 1rem;
+font-size: 1rem;
+cursor: pointer;
+text-align: center;
+line-height: 4rem;
+border-radius: 50%;
+color: white;
+}
+header .icons span:hover {
+background: #f2f2f2;
+color: black;
+}
+header .icons span:last-child {
+margin-right: -10px;
+}
+#where-to-div #city-dropdown {
+position: absolute;
+height: fit-content;
+width: 100%;
+left: 1rem;
+background-color: white;
+border: 1px solid lightgray;
+border-radius: 10px;
+z-index: 900;
+top: 5rem;
+opacity: 1;
+display: none;
+flex-direction: column;
+}
+#city-dropdown a {
+pointer-events: all;
+cursor: pointer;
+color: black;
+padding: 0.5rem;
+}
+#city-dropdown a:hover {
+background-color: lightgray;
+}
+.calendar {
+padding: 2rem;
+padding-top: 0;
+}
+.calendar ul {
+display: flex;
+list-style: none;
+flex-wrap: wrap;
+text-align: center;
+}
+.calendar ul li {
+position: relative;
+width: calc(100%/7);
+}
+.calendar .days li {
+cursor: pointer;
+}
+.calendar .weeks li {
+font-weight: 500;
+}
+.calendar .days li {
+border-radius: 0;
+}
+.days li:hover {
+background: #f2f2f2;
+}
+.days li.inactive {
+color: gray;
+pointer-events: none;
+cursor: none;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+li {
+padding-left: 0;
+}
+#title {
+position: fixed;
+top:0;
+}
+#are-you-sure {
+position: fixed;
+height: fit-content;
+width: 30vw;
+background-color: white;
+z-index: 9000;
+left: 30%;
+top: 30%;
+box-shadow: -1px -1px 10px gray;
+padding: 1rem;
+border-radius: 10px;
+display: none;
+flex-direction: column;
+align-items: center;
+}
+#are-you-sure h5 {
+font-family: "Roboto Condensed", sans-serif;
+font-weight: 800;
+font-size: 1rem;
+margin: 0;
+}
+#are-you-sure p {
+font-family: "Roboto Condensed", sans-serif;
+font-size: 0.9rem;
+color: gray;
+margin: 0;
+}
+#are-you-sure button {
+height: fit-content;
+width: fit-content;
+}
+#are-you-sure #delete-btn {
+background-color: red;
+margin-right: 0.5rem;
+}
+#are-you-sure #cancel-btn {
+background-color: lightgray;
+color: black;
+margin-left: 0.5rem;
+}
+.trips-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+.Xout {
+position: absolute;
+left: 1rem;
+background-color: lightgray;
+border-radius: 100%;
+padding-right: 0.5rem;
+padding-left: 0.5rem;
+padding-top: 0.1rem;
+padding-bottom: 0.1rem;
+cursor: pointer;
+pointer-events: all;
+font-weight: 600;
+-webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+}
+.Xout:hover {
+background-color: gray;
+color: white;
+}
+#trip-details {
+position: fixed;
+height: 80vh;
+width: 85vw;
+max-width: 677.391px;
+background-color: white;
+z-index: 9000;
+left: 7vw;
+top: 9vh;
+box-shadow: -1px -1px 10px gray;
+padding: 1rem;
+border-radius: 10px;
+display: none;
+flex-direction: column;
+align-items: center;
+overflow: scroll;
+opacity: 0;
+-webkit-transition: opacity 0.3s ease;
+-moz-transition: opacity 0.3s ease;
+-o-transition: opacity 0.3s ease;
+transition: opacity 0.3s ease;
+}
+#trip-details h5 {
+font-family: "Roboto Condensed", sans-serif;
+font-weight: 800;
+font-size: 1.5rem;
+margin: 0;
+}
+#trip-details h3 {
+font-family: "Roboto Condensed", sans-serif;
+font-size: 0.9rem;
+color: gray;
+margin: 0;
+}
+.trip-overview-li {
+color: black;
+}
+#trip-details ul {
+display: flex;
+flex-direction: column;
+position: absolute;
+left: 4rem;
+top: 4rem;
+}
+#trip-details ul li {
+font-family: "Roboto Condensed", sans-serif;
+font-weight: 800;
+}
+#trip-details ul li h6 {
+font-family: "Roboto Condensed", sans-serif;
+font-weight: 800;
+font-size: 1rem;
+margin: 0;
+margin-bottom: 0.5rem;
+pointer-events: all;
+cursor: pointer;
+}
+#trip-details ul li h6 svg { 
+font-size: 0.8rem;
+margin-left: 0.5rem;
+pointer-events: none;
+}
+#trip-details ul li p {
+font-family: "Roboto Condensed", sans-serif;
+font-weight: 600;
+color: gray;
+}
+#trip-details ul li a div img {
+border-radius: 7px;
+height: 6rem;
+width: 7rem;
+}
+#trip-details ul li a div {
+background-color: whitesmoke;
+border-radius: 7px;
+padding: 0.5rem;
+display: flex;
+margin-bottom: 1rem;
+position: relative;
+width: 130%;
+max-width: 586.031px;
+}
+#trip-details ul li a div a {
+color: black;
+position: relative;
+bottom: 0;
+font-family: "Roboto Condensed", sans-serif;
+font-weight: 600;
+padding-left: 1rem;
+font-size: 1.1rem;
+}
+#trip-details ul li a div p {
+position: absolute;
+left: 1.5rem;
+top: 1rem;
+width: fit-content;
+}
+#next {
+cursor: pointer;
+}
+#prev {
+cursor: pointer;
+}
+#next svg {
+pointer-events: none;
+}
+#prev svg {
+pointer-events: none;
+}
+
+@media screen and (max-width: 1317px) {
+#wrapper {
+width: 50vw;
+}
+.trip-item {
+  min-width: 29rem;
+}
+.trip-item:hover h2 {
+  font-size: 1rem;
+}
+.your-trips-h2 {
+  left: unset;
+}
+  #new-trip {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    padding-top: 17rem;
+    height: 36vh;
+    border-radius: 20px 0 0 20px;
+  }
+  .X-btn {
+    right: 17rem;
+  }
+}
+
+@media screen and (max-width: 1030px) {
+#your-trips .your-trips-h2 {
+left: unset;
+}
+}
+
+@media screen and (max-width: 975px) {
+#trip-details ul li a div {
+max-width: 90%;
+}
+.placeholder {
+font-size: 0.7rem;
+top: 2.6rem;
+}
+#wrapper {
+width: 75vw;
+}
+}
+
+@media screen and (max-width: 679px) {
+#trip-details ul li a div img {
+display: none;
+}
+#trip-details ul li a div {
+bottom: 0.5rem;
+}
+.time {
+top: 2.5rem;
+}
+#trip-details {
+left: 4vw;
+}
+}
+
+@media screen and (max-width: 597px) {
+#wrapper {
+width: 90vw;
+}
+.placeholder {
+display: none;
+}
+#tripStartDate {
+font-size: 0.8rem;
+}
+#tripEndDate {
+font-size: 0.8rem;
+left: 7.5rem;
+}
+.tripPlace {
+width: 70vw;
+}
+#new-trip {
+left: 0;
+}
+#new-trip-text {
+left: -1rem;
+top: 11rem;
+}
+#create-trip-text {
+position: relative;
+bottom: 4rem;
+}
+.learn-more {
+padding: 0.5rem;
+}
+.delete-plan {
+padding: 0.5rem;
+}
+#your-trips ul {
+  left: 0rem;
+}
+.trip-item img {
+  display: none;
+}
+.trip-item {
+  position: relative;
+  left: 1rem;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.trip-item div {
+  width: 87%;
+}
+.trip-item div {
+  bottom: 0.5rem;
+}
+}
+
+@media screen and (max-width: 517px) {
+#create-trip-btn {
+margin-right:0;
+margin-left:0;
+}
+#trip-details ul li a div p {
+display: none;
+}
+}
+
+@media screen and (max-width: 448px) {
+#tripStartDate {
+top: 1.7rem;
+font-size: 0.6rem;
+}
+#tripEndDate {
+top: 1.7rem;
+font-size: 0.6rem;
+left: 6.5rem;
+}
+.trip-item {
+  height: fit-content;
+  min-width: 20rem;
+}
+#your-trips .your-trips-h2 {
+  left: -11rem;
+  font-size: 5.5rem;
+    color: black;
+    top: -10rem;
+}
+}
+
+@media screen and (max-width: 340px) {
+.calendar .days li {
+margin-top: 1.5rem;
+}
+}
+
+
+
+
+
+
+
+
+
+

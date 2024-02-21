@@ -1,0 +1,1059 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+body {
+    margin: 0;
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+}
+
+/* #right-panel {
+    background-color: antiquewhite;
+    width: 50vw;
+    height: 100vh;
+    overflow: hidden;
+} */
+
+#main nav {
+    display: flex;
+    justify-content: space-between;
+    background-color: #2E64FE;
+}
+
+#main nav svg {
+    position: relative;
+    top: 0.8rem;
+   font-size: 1.5rem;
+   margin-left: 3rem;
+}
+
+#main nav .log-out-planner {
+    margin-right: 3rem;
+    background-color: white;
+    color: #151515;
+    border: none;
+    border-radius: 7px;
+    height: 2rem;
+    position: relative;
+    bottom: 0.3rem;
+    cursor: pointer;
+    pointer-events: all;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+}
+
+#main nav .log-out-planner a {
+    color: black;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+}
+
+#main nav .home-btn-planner {
+    color: white;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 7px;
+    width: fit-content;
+    margin-right: 1rem;
+}
+
+#main nav p {
+    cursor: pointer;
+    pointer-events: all;
+} 
+
+#main nav div {
+    display: flex;
+}
+#main nav div p {
+    position: relative;
+    right: 3rem;
+    color: white;
+}
+
+#main-section {
+    display: flex;
+    flex-direction: column;
+    background-color: #EFEFEF;
+}
+
+#trip-name-photo {
+    position: relative;
+    height: 20rem;
+    background-color: aquamarine;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+#trip-name-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#trip-name-photo #inner-box {
+    background-color: white;
+    text-align: start;
+    width: 60%;
+    border: 2px solid white;
+    border-radius: 7px;
+    position: absolute;
+    bottom: -2rem;
+    height: 40%;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+#editNameElems {
+    display: none;
+}
+
+#editNameElems input {
+    font-size: 2.5rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+}
+
+#editNameElems button {
+    width: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+}
+
+.contain-title-btn {
+    position: relative;
+    display: flex;
+}
+
+#inner-box #editName {
+    border: 1px solid lightgray;
+    border-radius: 100%;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+#inner-box #editName path {
+    pointer-events: none;
+}
+
+#inner-box svg:hover {
+    background-color: lightgray;
+}
+
+#trip-name-photo div h1 {
+    font-size: 3.5rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+    color: #232323;
+}
+
+.email-btn {
+    position: absolute;
+    right: 0;
+    width: fit-content;
+    height: fit-content;
+    top: 2rem;
+    color: #151515;
+    font-weight: 800;
+    background-color: white;
+}
+
+.email-btn svg {
+    margin-right: 0.5rem;
+}
+
+#calendar
+{
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+}
+
+.inner-box svg {
+    border: 1px solid lightgray;
+    border-radius: 100%;
+    padding: 0.5rem;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.inner-box svg:hover {
+    border: 1px solid black;
+    background-color: lightgray;
+}
+
+#calendar span {
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-left: 0.5rem;
+}
+
+#budgeting {
+    display: flex;
+    flex-direction: column;
+    margin: 0 14rem;
+    position: relative;
+    top: 5rem;
+}
+
+@media screen and (max-width: 1960px) {
+    #budgeting {
+        margin: 0 10rem;
+    }
+
+    #itinerary {
+        margin: 0 10rem;
+    }
+}
+
+@media screen and (max-width: 1160px) {
+    #budgeting {
+        margin: 0 2rem;
+    }
+
+    #itinerary {
+        margin: 0 2rem;
+    }
+}
+
+#budgeting h3 {
+    font-size: 2.2rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    color: black;
+   
+}
+
+.budgeting-tool {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px;
+}
+
+.budget-tool-header {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 3rem 0 3rem;
+    padding: 0.7rem;
+}
+
+.budget-tool-header span {
+font-size: 3.5rem;
+font-family: 'Roboto Condensed', sans-serif;
+font-weight: 800;
+}
+
+.budget-tool-header button {
+    background-color: white;
+    color: #151515;
+    font-size: 1.1rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    cursor: pointer;
+    pointer-events: all;
+    height: fit-content;
+    width: fit-content;
+    font-weight: 800;
+    border: 1px solid #151515;
+    padding: 0.5rem;
+}
+
+.visual-breakdown {
+    display: flex;
+    flex-direction: column;
+    margin: 3rem;
+    align-items: center;
+}
+
+.visual-breakdown h4 {
+    text-align: center;
+    font-size: 1.3rem;
+}
+
+#pie-chart {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#pie-chart div {
+    margin: 0 2rem;
+}
+#pie-chart div p {
+    text-align: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+
+@property --p{
+    syntax: '<number>';
+    inherits: true;
+    initial-value: 0;
+  }
+  
+  .pie {
+    --p:20;
+    --b:7px;
+    --c:darkred;
+    --w:71px;
+    
+    width:var(--w);
+    aspect-ratio:1;
+    position:relative;
+    display:inline-grid;
+    margin:5px;
+    place-content:center;
+    font-size:20px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight:800;
+  }
+  .pie:before,
+  .pie:after {
+    content:"";
+    position:absolute;
+    border-radius:50%;
+  }
+  .pie:before {
+    inset:0;
+    background:
+      radial-gradient(farthest-side,var(--c) 98%,#0000) top/var(--b) var(--b) no-repeat,
+      conic-gradient(var(--c) calc(var(--p)*1%),#0000 0);
+    -webkit-mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+            mask:radial-gradient(farthest-side,#0000 calc(99% - var(--b)),#000 calc(100% - var(--b)));
+  }
+  .pie:after {
+    inset:calc(50% - var(--b)/2);
+    background:var(--c);
+    transform:rotate(calc(var(--p)*3.6deg)) translateY(calc(50% - var(--w)/2));
+  }
+  .animate {
+    animation:p 1s .5s both;
+  }
+  .no-round:before {
+    background-size:0 0,auto;
+  }
+  .no-round:after {
+    content:none;
+  }
+  @keyframes p {
+    from{--p:0}
+  }
+  
+  body {
+    background: white;
+  }
+
+.detailed-breakdown {
+    display: flex;
+    flex-direction: column;
+    margin: 0 3rem 0 3rem;
+}
+
+.detailed-breakdown h4 {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+#budget-breakdown {
+    display: flex;
+    flex-direction: column;
+}
+
+#budget-breakdown li {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    font-weight: 800;
+    background-color: whitesmoke;
+    margin: 1rem;
+    border-radius: 7px;
+}
+
+#budget-breakdown li p {
+    margin: 1rem;
+}
+
+.place-planned {
+    margin-bottom: 1.5rem;
+}
+
+
+
+#remaining-budget p {
+    color: black;
+    margin: 1rem;
+    font-size: 1.2rem;
+}
+
+#summary {
+    display: flex;
+    justify-content: space-between;
+    background-color: #2E64FE;
+    color: white;
+}
+
+#summary h2 {
+margin-left: 3rem;
+color: white;
+}
+
+#summary p {
+    margin-right: 3rem;
+}
+
+#itinerary {
+position: relative;
+background-color: white;
+}
+
+#itinerary div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+#itinerary div button {
+    height: fit-content;
+    width: fit-content;
+    font-weight: 800;
+    margin-right: 3rem;;
+}
+
+#itinerary div button svg {
+    margin-right: 0.5rem;
+}
+
+#itinerary hr {
+    width: 90%;
+}
+
+#email-input {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 10rem;
+}
+
+#email-input input {
+    width: 90%;
+}
+
+#tripDetailsList {
+    flex-direction: column;
+    align-items: start;
+    margin-left: 3rem;
+}
+
+.add-li {
+    width: 100%;
+    background-color: whitesmoke;
+    height: 1rem;
+    border-radius: 10px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    cursor: pointer;
+    padding: 1rem;
+    text-align: left;
+}
+
+.add-li:hover {
+    background-color: lightgray;
+}
+
+.add-li svg {
+    margin-right: 0.5rem;
+}
+
+.add-li h4 {
+    color: black;
+}
+
+.learn-more {
+    background-color: #2E64FE;
+    height: fit-content;
+    width: 100%;
+    font-size: 0.9rem;
+    font-weight: 800;
+    margin-right: 1rem;
+    position: relative;
+    bottom: 0.2rem;
+    margin-top: 0;
+}
+
+.delete-plan {
+    background-color: whitesmoke;
+    color: black;
+    font-weight: 800;
+    font-size: 0.9rem;
+    width: 100%;
+    position: relative;
+    bottom: 0.2rem;
+    margin-top: 2.2rem;
+    border: 1px solid lightgray;
+}
+
+.trip-overview-li {
+    width: 90%;
+}
+
+.trip-overview-li div div {
+display: flex;
+}
+
+.trip-overview-li div div img {
+min-height: 10rem;
+min-width: 12rem;
+margin-right: 0.5rem;
+border-radius: 7px;
+}
+
+.hide-show-plans {
+    font-size: 1.5rem;
+    color: #151515;
+    margin-bottom: 0.5rem;
+}
+
+.hide-show-plans svg {
+    position: relative;
+    top: 0.2rem;
+}
+
+.middle-div a {
+font-weight: 800;
+font-size: 1.4rem;
+color: black;
+}
+
+input[type="time"]:before {
+    content: attr(placeholder) !important;
+    color: #aaa;
+  font-style:italic;
+  font-size:0.9em;
+  }
+
+.set-budget {
+    font-size: 1.8rem;
+    color: black;
+    font-weight: 400;
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: whitesmoke;
+    width: 5rem;
+    height: 2rem;
+    border-radius: 3px;
+    margin-left: 0.2rem;
+    position: relative;
+    top: 0.2rem;
+}
+
+.set-budget span {
+    pointer-events: none;
+}
+
+.set-budget:hover {
+    background-color: lightgray;
+}
+
+.set-budget:first-child {
+    font-size: 1.8rem;
+    color: black;
+    font-weight: 400;
+    font-family: 'Roboto Condensed', sans-serif;
+    background-color: whitesmoke;
+    width: 5rem;
+    height: 2rem;
+    border-radius: 3px;
+    margin-left: 0.2rem;
+    position: relative;
+    top: 0.2rem;
+}
+
+.set-budget:first-child:hover {
+    background-color: lightgray;
+}
+
+.set-budget-place {
+    margin: 0;
+    width: 5rem;
+    height: fit-content;
+    margin-left: 0.5rem;
+    background-color: whitesmoke;
+    border: 1px solid lightgray;
+    color: black;
+    font-weight: 800;
+    opacity: 0;
+    transition: opacity 0.3s linear;
+    -o-transition: opacity 0.3s linear; /* opera */
+    -ms-transition: opacity 0.3s linear; /* IE 10 */
+    -moz-transition: opacity 0.3s linear; /* Firefox */
+    -webkit-transition: opacity 0.3s linear; /*safari and chrome */
+}
+
+.input-active {
+    height: 100%;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: 1px solid gray;
+    width: 100%;
+    position: relative;
+    font-family: 'Roboto Condensed', sans-serif;
+    margin: 0;
+}
+
+.middle-div {
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 62vw;
+}
+
+.middle-div p {
+    color: black;
+    background-color: #FFE34C;
+    font-weight: 800;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    margin-bottom: 0;
+}
+
+.budget-box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 0;
+}
+
+.budget-box h5 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1rem;
+    color: black;
+    margin: 0;
+    margin-left: 0.5rem;
+}
+
+.budgeting {
+    margin-left: 0.5rem;
+}
+
+.time-itin {
+    margin-top: 0.6rem;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid lightgray;
+}
+
+#itinerary {
+    margin-top: 8rem;
+    border-radius: 7px;
+}
+
+#itinerary h3 {
+    text-align: start;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 2.5rem;
+    margin-left: 3rem;
+    color: #151515;
+}
+
+.trip-div-btns {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    
+}
+
+.budget-hr {
+    border-top: 1px solid lightgray;
+    border-bottom: none;
+    width: 90%;
+    margin-top: 0.5rem;
+    background: transparent;
+}
+
+#cost-div-list {
+    display: flex;
+    flex-direction: column;
+    margin: 0 3.7rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.2rem;
+}
+
+#cost-div-list h5 {
+    font-weight: 800;
+    margin-top: 1rem;
+    margin-left: 1rem;
+}
+
+.cost-div {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 7px;
+    margin-bottom: 1rem;
+}
+
+.cost-div div {
+    display: flex;
+    justify-content: center;
+}
+
+.cost-div div a {
+    font-weight: 800;
+}
+
+.cost-div div span {
+    font-weight: 800;
+}
+
+.cost-div div button {
+    width: fit-content;
+    margin: 0;
+    margin-left: 0.5rem;
+    display: flex;
+    background-color: #151515;
+    align-items: center;
+    margin-right: 1rem;
+    font-size: 1.1rem;
+    padding: 0.7rem;
+}
+
+.cost-div div span input {
+    margin: 0;
+    width: 3rem;
+}
+
+.cost-div div a {
+    color: black;
+}
+
+#favorites-list {
+    position: fixed;
+    top: 0;
+    right: -30rem;
+    height: 100vh;
+    width: 26rem;
+    background-color: white;
+    box-shadow: -2px 0px 25px gray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: right 0.3s linear;
+    -o-transition: right 0.3s linear; /* opera */
+    -ms-transition: right 0.3s linear; /* IE 10 */
+    -moz-transition: right 0.3s linear; /* Firefox */
+    -webkit-transition: right 0.3s linear; /*safari and chrome */
+}
+
+#favorites-list h3 {
+    font-family: 'Roboto Condensed', sans-serif;
+}
+
+#favorites-list hr {
+    width: 80%;
+    margin: 0;
+}
+
+#favorites-list ul {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    overflow-y: scroll;
+}
+
+#favorites-list ul li {
+    display: flex;
+}
+
+#favorites-list ul li:hover {
+    background-color: whitesmoke;
+}
+
+#favorites-list ul li button {
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 1rem;
+    padding: 1rem;
+    color: #151515;
+    background-color: white;
+    border: 1px solid #151515;
+}
+
+.placeName {
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+.placeAtts {
+    position: relative;
+    bottom: 0.5rem;
+    display: flex;
+}
+
+.budget-time-section {
+    display: none;
+    flex-direction: column;
+    width: 80%;
+    position: relative;
+    bottom: 1rem;
+    right: 0.5rem;
+}
+
+.budgeting-slider {
+    display: flex;
+}
+
+.budgeting-slider a {
+    color: black;
+    font-weight: 800;
+    font-size: 2rem;
+}
+
+.budgeting-slider div input {
+    margin-top: 0;
+    width: 80%;
+}
+
+#hotel {
+    --c: #0E1C46;
+}
+
+#transport {
+    --c: #223F97;
+}
+
+#dining {
+    --c: #082D9E;
+}
+
+#ent {
+    --c: #0A34B2;
+}
+
+#night {
+    --c: #202478;
+}
+
+#remaining-budget-widget {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: white;
+    border: 1px solid lightgray;
+    color: black;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    border-radius: 7px;
+    padding: 0.5rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    transition: opacity 0.3s linear;
+    -o-transition: opacity 0.3s linear; /* opera */
+    -ms-transition: opacity 0.3s linear; /* IE 10 */
+    -moz-transition: opacity 0.3s linear; /* Firefox */
+    -webkit-transition: opacity 0.3s linear; /*safari and chrome */
+}
+
+@keyframes switchToDark {
+    0% {
+        background-color: white;
+    }
+    100% {
+        background-color: #151515;
+    }
+}
+
+@keyframes darkModeDetails {
+    0% {
+        color: #151515;
+    }
+    100% {
+        color: white;
+    }
+}
+
+@keyframes darkModeBar {
+    0% {
+        background-color: white;
+    }
+    100% {
+        background-color: #3C3C3C;
+    }
+    
+}
+
+#planning-time {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: switchToDark 2s ease;
+    animation-fill-mode: forwards;
+    background-color: white;
+    transition: opacity 0.3s linear;
+    -o-transition: opacity 0.3s linear; /* opera */
+    -ms-transition: opacity 0.3s linear; /* IE 10 */
+    -moz-transition: opacity 0.3s linear; /* Firefox */
+    -webkit-transition: opacity 0.3s linear; /*safari and chrome */
+}
+
+#planning-time h2 {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #151515;
+    animation: darkModeDetails 2s ease;
+    animation-fill-mode: forwards;
+}
+
+#planning-time .bar {
+    width: 40%;
+    border: 1px solid #151515;
+    border-radius: 50px;
+    padding: 2rem;
+    height: 0rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    animation: darkModeBar 2s ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes moveCircle {
+    0% {
+        left: 0;
+        background-color: #151515;
+    }
+    100% {
+        left: 100%;
+        background-color: white;
+    }
+}
+
+#planning-time .circle {
+    border-radius: 100%;
+    height: 2rem;
+    width: 2rem;
+    background-color: #151515;
+    position: relative;
+    animation: moveCircle 2s ease;
+    animation-fill-mode: forwards;
+    margin: 0 -1rem;
+}
+
+#footer {
+    padding-top: 15rem;
+}
+
+@media screen and (max-width: 1300px) {
+    .middle-div {
+        width: 42vw;
+    }
+}
+
+
+@media screen and (max-width: 958px) {
+    #trip-name-photo div h1 {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 722px) {
+    .middle-div {
+        width: 35vw;
+    }
+}
+
+@media screen and (max-width: 616px) {
+    .middle-div {
+        width: 30vw;
+    }
+}
+
+@media screen and (max-width: 586px) {
+    .trip-overview-li div div img {
+        display: none;
+    }
+    .middle-div {
+        width: 50vw;
+    }
+
+    .add-li {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 524px) {
+    #budgeting h3 {
+        font-size: 1.6rem;
+    }
+    .email-btn {
+        top: 0.8rem;
+    }
+
+    .budget-tool-header span {
+        font-size: 2.5rem;
+    }
+
+    .budget-tool-header button {
+        font-size: 1rem;
+        position: relative;
+        top: -0.5rem;
+    }
+}
+
+@media screen and (max-width: 464px) {
+    .contain-title-btn {
+        flex-direction: column;
+    }
+    .email-btn {
+        position: relative;
+        top: -2rem;
+    }
+    .budget-tool-header {
+        margin: 2rem 1rem 0 1rem;
+    }
+    #cost-div-list {
+        margin: 0 1rem;
+    }
+}
+
+@media screen and (max-width: 418px) {
+    .middle-div a {
+        font-size: 1.1rem;
+    }
+}
+
+@media screen and (max-width: 394px) {
+    .budgeting-tool {
+        width: 100vw;
+        position: relative;
+        left: -2rem;
+    }
+    .middle-div {
+        width: 69vw;
+    }
+}
