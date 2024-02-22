@@ -328,16 +328,14 @@ function TripPlanner() {
         let planBudget = String(specificPlan).split("|")[2];
         let planTime = String(specificPlan).split("|")[1];
         if (planBudget === undefined) {
-          planBudget = 0
-          }
-        const image = require(`./assets/${
-          plan[i][`Day ${i + 1}`][iter].split("|")[0]
-        }.jpg`);
+          planBudget = 0;
+        }
+        const image = `/${plan[i][`Day ${i + 1}`][iter].split("|")[0]}.jpg`;
         const div = document.createElement("div");
         div.innerHTML = `<div number='${iter}' place='${String(
           plan[i][`Day ${i + 1}`][iter].split("|")[0]
         )}' class='place-planned'>
-            <img src=${image}></img>
+            <img src="${image}"></img>
             <div place='${String(
               plan[i][`Day ${i + 1}`][iter].split("|")[0]
             )}' trip='${sessionStorage.getItem("trip")}' class="right-side-div">
@@ -481,24 +479,24 @@ function TripPlanner() {
         favoritesList.current.style.width = "15rem";
       }
       e.target.setAttribute("id", "newNode");
-    }
-
-    //changes time in database
-    parent.childNodes[3].childNodes[1].childNodes[7].addEventListener(
-      "change",
-      (e) => {
-        for (let i = 0; i <= plan.length; i++) {
-          var split = String(plan[i]).split("|")[0];
-          if (split == parent.getAttribute("place")) {
-            var budget = plan[i].split("|")[2];
-            plan[i] = `${parent.getAttribute("place")}|${
-              e.target.value
-            }|${budget}`;
+    } else if (e.target.classList.contains("time-itin")) {
+      //changes time in database
+      parent.childNodes[3].childNodes[1].childNodes[7].addEventListener(
+        "change",
+        (e) => {
+          for (let i = 0; i <= plan.length; i++) {
+            var split = String(plan[i]).split("|")[0];
+            if (split == parent.getAttribute("place")) {
+              var budget = plan[i].split("|")[2];
+              plan[i] = `${parent.getAttribute("place")}|${
+                e.target.value
+              }|${budget}`;
+            }
           }
+          docMethods.updateTrips(userCreds, dbTrips);
         }
-        docMethods.updateTrips(userCreds, dbTrips);
-      }
-    );
+      );
+    }
   }
 
   function editTripName(e) {
@@ -611,18 +609,18 @@ function TripPlanner() {
           .firstElementChild.value;
       let time = e.target.nextElementSibling.childNodes[2].childNodes[1].value;
       if (budget === "") {
-        budget = 0
+        budget = 0;
       }
       if (time === "") {
-        time = "00:00"
+        time = "00:00";
       }
       const newNode = document.getElementById("newNode");
       const div = document.createElement("div");
-      const image = require(`./assets/${name}.jpg`);
+      const image = `/${name}.jpg`;
       div.innerHTML = `<div place='${name}' number='${
         parseInt(newNode.previousElementSibling.getAttribute("number")) + 1
       }' class='place-planned'>
-    <img src=${image}></img>
+    <img src="${image}"></img>
     <div place='${name}' trip='${sessionStorage.getItem(
         "trip"
       )}' class="right-side-div">
@@ -641,7 +639,6 @@ function TripPlanner() {
     </div>
     </div>
     <div class='trip-div-btns'>
-    <button class='learn-more' name='${name}'>Move</button>
     <button place='${name}' trip='${sessionStorage.getItem(
         "trip"
       )}' class='delete-plan'>Delete</button>
@@ -662,27 +659,6 @@ function TripPlanner() {
       newNode.removeAttribute("id");
     }
   }
-
-  const budgetWidget = useRef();
-
-  const onScrollStop = (callback) => {
-    let isScrolling;
-    window.addEventListener(
-      "scroll",
-      (e) => {
-        budgetWidget.current.style.opacity = 0;
-        clearTimeout(isScrolling);
-        isScrolling = setTimeout(() => {
-          callback();
-        }, 2000);
-      },
-      false
-    );
-  };
-
-  onScrollStop(() => {
-    budgetWidget.current.style.opacity = 1;
-  });
 
   const [error, setError] = useState("");
 
@@ -719,10 +695,7 @@ function TripPlanner() {
           </nav>
           <div id="main-section">
             <div id="trip-name-photo">
-              <img
-                src={require(`./assets/${sessionStorage.getItem("city")}.jpg`)}
-                alt=""
-              />
+              <img src={`/${sessionStorage.getItem("city")}.jpg`} alt="" />
               <div id="inner-box">
                 <h1 id="trip-name" ref={tripName}>
                   {sessionStorage.getItem("trip")}
@@ -748,9 +721,7 @@ function TripPlanner() {
                 <button
                   className="email-btn"
                   onClick={() =>
-                    alert(
-                      "This feature is currently in development. Current difficulties involve resolving polyfills"
-                    )
+                    alert("This feature is currently in development")
                   }
                 >
                   <FontAwesomeIcon icon={faEnvelope} />
@@ -891,8 +862,8 @@ function TripPlanner() {
             : null}
         </ul>
       </div>
-      <div ref={budgetWidget} id="remaining-budget-widget">
-        <h4>Remaining Budget: {remainingBudget}</h4>
+      <div id="remaining-budget-widget">
+        <h4>Remaining Budget: ${remainingBudget}</h4>
       </div>
       <footer id="footer">
         <div className="row">

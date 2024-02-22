@@ -100,15 +100,15 @@ fill:red;
 position: absolute;
 width: 30vw;
 height: 30vh;
-z-index: 900000;
+z-index: 9000000000;
 left:35%;
-top: 10vh;
+top: 20vh;
 }
 #lottie-bg {
 position: absolute;
 width: 100vw;
 height: 100%;
-z-index: 90000;
+z-index: 900000;
 background-color: white;
 }
 #title h1 {
@@ -535,7 +535,7 @@ background-color: white;
 padding-left: 2rem;
 padding-right: 1rem;
 padding-bottom: 2rem;
-right: 0;
+right: 1.5rem;
 border-radius: 7px;
 box-shadow: -1px -1px 10px gray;
 }
@@ -544,12 +544,14 @@ position: relative;
 top: 1rem;
 }
 #filters-cancel {
-background-color: lightgray;
-color: black;
+background-color: #2E64FE;
+color: white;
 margin-top: 1rem;
 width: fit-content;
 height: fit-content;
 margin-right: 1rem;
+font-weight: 800;
+font-family: "Roboto Condensed", sans-serif;
 }
 #filtersList:focus {
 outline: none;
@@ -634,7 +636,7 @@ display: flex;
 justify-content: center;
 }
 #trans-btns button {
-background-color: gray;
+background-color: #2E64FE;
 height: fit-content;
 width: 6rem;
 margin: 0;
@@ -740,7 +742,7 @@ padding: 0.5rem;
 font-weight: 600;
 }
 #transportation {
-background-color: lightgray;
+background-color: whitesmoke;
 border-radius: 10px;
 display: flex;
 position: relative;
@@ -1061,10 +1063,11 @@ transition:height 5s linear;
 #cityDD {
 background-color: whitesmoke;
 min-height: fit-content;
-width: 7rem;
+width: 11rem;
 position: absolute;
 display: none;
 border-radius: 10px;
+z-index: 99999;
 -webkit-transition:height 0.5s linear;
 -moz-transition:height 0.5s linear;
 -o-transition:height 0.5s linear;
@@ -1266,6 +1269,7 @@ left: 0.5rem;
 .open-closed {
 font-family: "Roboto Condensed", sans-serif;
 font-size: 0.9rem;
+text-align: left;
 }
 #rec-item-lower {
 position: absolute;
@@ -1277,7 +1281,7 @@ width: 0;
 height: 0.5rem;
 position: relative;
 background-color: #2E64FE;
-bottom: 1.5rem;
+bottom: 0.8rem;
 right: 13rem;
 -webkit-transition:width 0.3s ease;
 -moz-transition:width 0.3s ease;
@@ -1291,7 +1295,7 @@ height: 1rem;
 margin: 0;
 font-weight: 800;
 top: -6rem;
-left: 3rem;
+left: 2.3rem;
 color: white;
 font-family: 'Roboto Condensed', sans-serif;
 opacity: 0;
@@ -1320,6 +1324,10 @@ line-height: 0.9rem;
 .yellowstar svg {
 fill: #FFD804;
 }
+.middle-org {
+position: relative;
+top: 1.5rem;
+}
 .rec-container-item img {
 height: 100%;
 width: 12rem;
@@ -1328,10 +1336,10 @@ max-height: 160px;
 }
 .rec-container-item p {
 margin: 0;
-margin-top: 1rem;
 position: relative;
 bottom: 0.3rem;
 }
+
 .rec-container-item .area-info-price svg {
 position: relative;
 bottom: 0.25rem;
@@ -1339,16 +1347,19 @@ bottom: 0.25rem;
 .rec-container-item .item-quick-info {
 font-size: 0.8rem;
 font-weight: 600;
-top: -1rem;
+bottom: 1.7rem;
 }
 .item-quick-info svg {
 fill: green;
 }
 
-.rec-container-item p:nth-child(odd) {
+.area-info-price {
 font-size: 0.8rem;
 position: relative;
-bottom: 0.5rem;
+bottom: 0rem;
+}
+.area-info-price .pricinginfo {
+bottom: 0;
 }
 #trip-adder {
 width: 7rem;
@@ -1433,9 +1444,14 @@ background-color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9000000000;
+    z-index: 9000000;
     pointer-events: all;
     cursor: pointer;
+    opacity: 0;
+    -webkit-transition: all 0.2s ease;
+    -moz-transition: all 0.2s ease;
+    -o-transition: all 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 
@@ -1481,7 +1497,7 @@ background-color: white;
     position: absolute;
     font-size: 6rem;
     z-index: 1;
-    top: 0rem;
+    top: -3rem;
 }
 
 #cities-list {
@@ -2374,10 +2390,11 @@ bottom: 10.75rem;
 width: fit-content;
 display: flex;
 padding: 0 1rem;
+border-radius: 7px;
 }
 .instructions-showall {
 position: relative;
-bottom: 22.5rem;
+bottom: 24.5rem;
 left: 7rem;
 font-weight: 800;
 color: white;
@@ -2508,7 +2525,7 @@ width: fit-content;
 font-weight: 800;
 margin: 0;
 color: white;
-bottom: 0.1rem;
+bottom: 0.8rem;
 }
 .price-showall {
 position: relative;
@@ -2653,7 +2670,6 @@ top: 5rem;
 overflow-y: scroll;
 overflow-x: hidden;
 position: absolute;
-right: 1rem;
 }
 
 #suggestions hr {
@@ -2962,8 +2978,6 @@ border-top: 1px solid lightgray;
 margin-top: 0.5rem;
 margin-bottom: 0.5rem;
 position: relative;
-left: 1rem;
-width: 180%;
 }
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
@@ -2984,6 +2998,9 @@ width: 180%;
     font-weight: 200;
    display: flex;
    
+}
+#dropdown2 div p {
+    margin: 0.3rem 0;
 }
 #dropdown2 div input {
     cursor: pointer;
@@ -3229,6 +3246,9 @@ text-align: center;
 #infoCard p {
 position: relative;
 left: 0.7rem;
+font-size: 1rem;
+font-family: "Roboto Condensed", sans-serif;
+font-weight: 500;
 }
 #infoCard svg {
 fill: #ffde0a;

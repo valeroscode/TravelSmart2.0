@@ -1,5 +1,4 @@
 import allPlaces from "./allMarkers.mjs";
-import React from "react";
 //Used to redirect the user and display information when they click on a specific place
 export function learnMoreAboutPlace(
   text,
@@ -127,8 +126,10 @@ export function placePageSuggestions() {
     }
   }
 
-  arr2 = [];
-  window.open("/place", "_blank");
+  arr2 = [];  
+
+  window.open("http://localhost:3000/place")
+
 }
 
 export function matchingKeyInputs(e, name, element) {

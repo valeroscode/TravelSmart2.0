@@ -6,6 +6,21 @@ display: flex;
 flex-direction: column;
 overflow-x: hidden;
 }
+#lottie {
+    position: absolute;
+    width: 30vw;
+    height: 30vh;
+    z-index: 9000000000;
+    left:35%;
+    top: 20vh;
+    }
+    #lottie-bg {
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    z-index: 900000;
+    background-color: white;
+    }
 #grayBackdrop {
 width: 100vw;
 height: 100vh;
@@ -41,7 +56,7 @@ font-weight: 800;
 #budget-best-section {
 display: flex;
 justify-content: space-between;
-margin: 0 19rem 0 19rem;
+margin: 0 19rem 14rem 19rem;
 }
 #budget-section {
 position: relative;
@@ -210,7 +225,7 @@ top: 12.1rem;
 left: 0.2rem;
 }
 #budget-f .results-div:hover .line {
-    width: 20rem;
+    width: 19rem;
 }
 #sorry-budget {
 position: relative;
@@ -261,7 +276,6 @@ color: black;
 z-index: 5;
 top: 2rem;
 font-size: 1.3rem;
-padding-bottom: 2rem;
 }
 .results-div {
 position: relative;
@@ -278,11 +292,11 @@ left: 0.2rem;
 }
 .results-img img {
 position: relative;
-min-width: 100%;
 height: 98%;
 top: 0.7rem;
 object-fit: fill;
-border-radius: 7px
+border-radius: 7px;
+width: 19rem;
 }
 
 #filteredResults_List .results-img img {
@@ -530,9 +544,8 @@ z-index: 2;
 .dropdown-div {
 opacity: 0;
 position: absolute;
-top: 3rem;
-width: 25rem;
-height: 85vh;
+width: 30rem;
+height: 75vh;
 left: 36rem;
 background-color: white;
 font-family: 'Roboto Condensed', sans-serif;
@@ -545,7 +558,7 @@ padding-bottom: 2rem;
 -moz-transition:height 0.3s ease;
 -o-transition:height 0.3s ease;
 transition:height 0.3s ease;
-border-radius: 0 7px;
+border-radius: 10px;
 }
 .dropdown-downsize {
 height: 15rem;
@@ -578,20 +591,19 @@ border-radius: 10px;
 }
 
 .DDp {
-color: gray;
-font-weight: 600;
+color: black;
+font-weight: 200;
 font-size: 1rem;
 }
 .dropdown-div a .DDtitle {
 color: black;
 font-weight:800;
 font-size: 1.2rem;
+font-family: 'Roboto Condensed', sans-serif;
 }
 .floater {
-float: right;
-position: relative;
-right: 8rem;
-bottom: 8rem;
+margin-left: 2rem;
+font-family: 'Roboto Condensed';
 }
 #place-container {
     display: flex;
@@ -1127,7 +1139,7 @@ color: white;
     }
 @media screen and (max-width: 1668px) {
 #budget-best-section {
-margin: 0 15rem 0 15rem;
+margin: 0 15rem 14rem 15rem;
 }
 }
 @media screen and (max-width: 1554px) {
@@ -1138,7 +1150,7 @@ margin: 0 15rem 0 15rem;
 }
 @media screen and (max-width: 1415px) {
 #budget-best-section {
-    margin: 0 10rem 0 10rem;
+    margin: 0 10rem 14rem 10rem;
 }
 #budget-f .results-div #results-content h6 {
     width: 19rem;
@@ -1147,7 +1159,7 @@ margin: 0 15rem 0 15rem;
 @media screen and (min-width: 1300px) {
         #top-rated .results-div .results-img div p {
         position: relative;
-        bottom: 1.3rem;
+        bottom: 1.5rem;
         }
         
 }

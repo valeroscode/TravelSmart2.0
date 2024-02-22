@@ -14,7 +14,7 @@ import "./styles/Miami.css";
 import "./styles/Miami2.css";
 import allPlaces from "./allMarkers.mjs";
 import Lottie from "lottie-react";
-import animationData from "./assets/loading-screen.json";
+import animationData from "./assets/loading-page.json";
 import AddTrip_Button from "./AddTrip_Button";
 import { handleTripAdderPopup, learnMoreAboutPlace } from "./getPlaceInfo.mjs";
 import Notification from "./Notification";
@@ -50,7 +50,7 @@ function Results() {
         : null
     );
     if (placeScore === parseInt(sessionStorage.getItem("total"))) {
-    populateWithInfo()
+      populateWithInfo();
     }
 
     function populateWithInfo() {
@@ -62,7 +62,7 @@ function Results() {
             placeId: data.placeID,
             fields: ["reviews"],
           };
-          var service = new window.google.maps.places.PlacesService(window.Map);
+          var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
             if (status == "OK") {
               if (!parent.innerText.includes(data.name)) {
@@ -116,7 +116,7 @@ function Results() {
           if (ul.current.children.length === 2) {
             sorryText.current.style.display = "flex";
           }
-        }, 500);
+        }, 1500);
       }
     }
   }, []);

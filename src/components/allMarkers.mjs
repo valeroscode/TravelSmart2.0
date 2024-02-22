@@ -392,7 +392,7 @@ const ZakBaker = {
   favorite: false,
   popular: false,
   city: "Miami",
-  style: "Cafe",
+  style: "Gourmet",
   serves: "Breakfast Lunch Gourmet",
 };
 const MrOmaKase = {

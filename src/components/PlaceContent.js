@@ -26,28 +26,12 @@ import {
 import Notification from "./Notification";
 import { useAuth } from "./contexts/AuthContext";
 import { docMethods } from "./firebase/firebase";
+import Lottie from "lottie-react";
+import animationData from "./assets/loading-page.json";
 
 function PlaceContent() {
-  const [Image, setImage] = useState("");
-  const [Title, setTitle] = useState("");
-  const [Rate, setRate] = useState("");
-  const [descripRate, setDescriprate] = useState("");
-  const [Type, setType] = useState("");
-  const [Area, setArea] = useState("");
-  const [address, setAddress] = useState("");
-  const [Price, setPrice] = useState(0);
-  const [popular, setPopular] = useState(false);
-  const [category, setCategory] = useState("");
-  const [Favorite, setFavorite] = useState("");
-  const [best, setBest] = useState(false);
-  const [costly, setCostly] = useState(false);
-  const [SuggPrice, setSuggPrice] = useState(0);
-  const [SuggPop, setSuggPop] = useState("");
   const [serves, setServes] = useState("");
   const [style, setStyle] = useState("");
-  const [ID, setID] = useState("");
-  const [Lat, setLat] = useState(0);
-  const [Lng, setLng] = useState(0);
   const addressText = useRef();
 
   const { currentUser, info } = useAuth();
@@ -73,7 +57,6 @@ function PlaceContent() {
         }
       }, 2500);
     }
-
     var geocoderRev = new window.google.maps.Geocoder();
     geocoderRev.geocode(
       { placeId: localStorage.getItem("ID") },
@@ -84,7 +67,7 @@ function PlaceContent() {
             fields: ["reviews", "formatted_address"],
           };
 
-          var service = new window.google.maps.places.PlacesService(window.Map);
+          var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
             if (status == "OK") {
               addressText.current.textContent = place.formatted_address;
@@ -158,6 +141,8 @@ function PlaceContent() {
   }
 
   const reviewsCon = useRef();
+  const lottie = useRef();
+  const lottieBg = useRef();
   function renderReviews(item) {
     // if (reviews && reviews.childNodes.length === 0) {
     if (reviewsCon.current) {
@@ -194,6 +179,8 @@ function PlaceContent() {
         }
       }
     }
+    lottie.current.style.display = "none";
+    lottieBg.current.style.display = "none";
   }
 
   function handleFavoritesBtn(e) {
@@ -253,6 +240,10 @@ function PlaceContent() {
   return (
     <>
       <PlaceHome />
+      <div ref={lottie} id="lottie">
+        <Lottie animationData={animationData} />
+      </div>
+      <div id="lottie-bg" ref={lottieBg}></div>
       <section id="overall-page" style={{ backgroundColor: "white" }}>
         <div id="top-page-organizer">
           <section id="upper-page-sec">

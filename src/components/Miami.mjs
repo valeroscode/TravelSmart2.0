@@ -1,10 +1,5 @@
 import allPlaces from "./allMarkers.mjs";
-import {
-  learnMoreAboutPlace,
-  placePageSuggestions,
-  handleTripAdderPopup,
-  favoritesArr,
-} from "./getPlaceInfo.mjs";
+import { learnMoreAboutPlace, handleTripAdderPopup } from "./getPlaceInfo.mjs";
 
 export function generalScript() {
   //Intersection Observers for the home page
@@ -55,44 +50,80 @@ export function generalScript() {
 
   const filtersList = document.getElementById("filtersList");
 
-  const accountBtn = document.getElementById("SignUp-Home");
-  const accountOpts = document.getElementById("accountOpts");
-
-  if (accountBtn) {
-    accountBtn.addEventListener("click", (e) => {
-      const t = e.target.lastElementChild;
-      t.classList.toggle("closer");
-      if (!t.classList.contains("closer")) {
-        t.classList.add("further");
-        accountOpts.classList.remove("OptsAppear");
-        accountOpts.classList.add("OptsGone");
-        setTimeout(() => {
-          accountOpts.style.display = "none";
-        }, 500);
-      } else {
-        t.classList.remove("further");
-        accountOpts.style.display = "flex";
-        accountOpts.classList.remove("OptsGone");
-        accountOpts.classList.add("OptsAppear");
-      }
-    });
-  }
-  if (accountOpts) {
-    accountOpts.addEventListener("click", (e) => {
-      const text = e.target.textContent;
-      if (text === "Sign Up") {
-        window.location.href = `/signup`;
-      } else if (text === "Log In") {
-        window.location.href = `/login`;
-      }
-    });
-  }
-
   async function handleMap() {
-    var map = window.Map;
     const liveMap = document.getElementById("google-map");
     const mapOrg = document.getElementById("map-organizer");
+    var map = window.map;
     mapOrg.appendChild(liveMap);
+    if (liveMap.hasChildNodes()) {
+      document.getElementById("lottie").style.display = "none";
+      document.getElementById("lottie-bg").style.display = "none";
+      document.getElementById("map-btn").style.opacity = 1;
+
+      const txtArr = {
+        txt0: "PLAN YOUR TRIPS",
+        txt1: "BROWSE A CITY'S BEST",
+        txt2: "DISCOVER NEW PLACES",
+        txt3: "FIND YOUR NEXT FAVORITE",
+      };
+
+      let i = 0;
+
+      const handleBackgroundImg = {
+        homeImg: document.getElementById("homeimg"),
+        intro: document.getElementById("intro-text"),
+        fillerClicked: false,
+        handleFillerClick: function () {
+          const filler = document.getElementsByClassName("filler");
+          const length = filler.length;
+          for (let i = 0; i < length; i++) {
+            filler[i].addEventListener("click", () => {
+              this.fillerClicked = true;
+              filler[i].style.transition = "none";
+              filler[i].style.height = "100%";
+
+              this.intro.firstElementChild.innerHTML = txtArr[`txt${i}`];
+              this.homeImg.src = `/backgroundimg${i}.jpeg`;
+            });
+          }
+        },
+        handleFillers: function (index, text, img) {
+          const filler = document.getElementsByClassName("filler");
+          for (let i = 0; i < filler.length; i++) {
+            filler[index].style.height = "100%";
+          }
+
+          this.intro.firstElementChild.innerHTML = text;
+          this.homeImg.src = `/backgroundimg${img}.jpeg`;
+
+          if (i === 3) {
+            this.intro.firstElementChild.style.opacity = 1;
+            this.intro.childNodes[1].style.opacity = 1;
+          }
+        },
+        loopTopPage: function () {
+          if (this.fillerClicked === true) {
+            return;
+          }
+          setTimeout(() => {
+            this.intro.firstElementChild.style.opacity = 0;
+            this.intro.childNodes[1].style.opacity = 0;
+            setTimeout(() => {
+              this.handleFillers(i, txtArr[`txt${i}`], i);
+              this.intro.firstElementChild.style.opacity = 1;
+              this.intro.childNodes[1].style.opacity = 1;
+            }, 500);
+            if (i < 3) {
+              i = i + 1;
+              this.loopTopPage();
+            }
+          }, 5000);
+        },
+      };
+      handleBackgroundImg.handleFillerClick();
+      handleBackgroundImg.handleFillers(0, txtArr.txt0, 0);
+      handleBackgroundImg.loopTopPage();
+    }
     liveMap.classList.add("map");
     const directionsService = new window.google.maps.DirectionsService();
     const directionsRenderer = new window.google.maps.DirectionsRenderer();
@@ -106,34 +137,20 @@ export function generalScript() {
       Barcelona: { lat: 41.387397, lng: 2.168568 },
     };
 
-    directionsRenderer.setMap(map);
-
     //autocomplete
-    var autocomplete = new window.google.maps.places.Autocomplete(
+    new window.google.maps.places.Autocomplete(
       document.getElementById("autocomplete")
     );
     const input = document.getElementById("autocomplete");
-
-    const image =
-      "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png";
 
     let userLat;
     let userLng;
     let userCoords = [];
     let allmarkers = [];
-    let userReviews = [];
     var placeDetails = document.getElementById("placeDetails");
-    var write_reviews = document.getElementById("review-writing-container");
-    var write_a_review_btn = document.getElementById("write_a_review");
-    var post = document.getElementById("post");
-    var error = document.getElementById("error");
     const placeInfo = document.getElementById("placeInfo");
-    const ReviewsBtn = document.getElementById("ReviewsBtn");
-    const backBtn = document.getElementById("backBtn");
-    const fav_Button = document.getElementsByClassName("fa-fav");
     const route_info = document.getElementById("pullup_travelInfo");
     const travel_info = document.getElementById("travelInfo");
-    const directionsHeading = document.getElementsByClassName("directions-p");
     const gallery = document.getElementById("gallery");
 
     if (route_info.outerText == "Hide") {
@@ -388,10 +405,10 @@ export function generalScript() {
                       place.name +
                       `   ` +
                       starRating +
-                      "<i class='fa fa-solid fa-heart fa-fav'></i></h1></strong>" +
+                      "</h1></strong>" +
                       `  ` +
                       `<p>` +
-                      place.rating +
+                      `${place.rating}/5` +
                       " · " +
                       priceLevel +
                       " · " +
@@ -452,7 +469,6 @@ export function generalScript() {
                         "Sorry! Phone number not listed...";
                     }
 
-                    //div.appendChild(ReviewsBtn);
                     //This block of code handles displaying opening hours for the entire week
                     const dd = document.getElementById("dropdown3");
 
@@ -481,199 +497,6 @@ export function generalScript() {
                   } else {
                     placeDetails.style.display = "none";
                   }
-                  ////////////////////////////FAVORITES////////////////////////////////////////////////////////////////////////////////////
-                  // const heart = document.getElementsByClassName("fa-heart");
-
-                  // for (let i = 0; i < heart.length; i++) {
-                  //   favorites.includes(place.name)
-                  //     ? (heart[i].style.color = "red")
-                  //     : (heart[i].style.color = "#BDBDBD");
-                  // }
-
-                  // for (let f = 0; f < fav_Button.length; f++) {
-                  //   fav_Button[f].addEventListener("click", (e) => {
-                  //     if (fav_Button[f].style.color !== "red") {
-                  //       fav_Button[f].style.color = "red";
-                  //     } else {
-                  //       fav_Button[f].style.color = "whitesmoke";
-                  //     }
-                  //     e.target.style.color === "red"
-                  //       ? favorites.push(place.name) //&&
-                  //       : //updateFavorites(place.name)
-                  //         favorites.splice(favorites.indexOf(place.name), 1); //&& updateFavorites(place.name);
-
-                  //     const dbFavorites = favorites.toString();
-
-                  //     async function favoritesInDataBase() {
-                  //       const usersRef = doc(
-                  //         db,
-                  //         "users",
-                  //         "2CBVyiBYP1IFLmHgoILI"
-                  //       );
-                  //       updateDoc(usersRef, {
-                  //         favorites: favorites,
-                  //       }).then(() => {});
-                  //     }
-                  //     favoritesInDataBase();
-
-                  //     for (let i = 0; i < favorites.length; i++) {
-                  //       overall_non_favorites = allmarkers.filter(
-                  //         (marker) => marker.title !== favorites[i]
-                  //       );
-                  //     }
-                  //     createCarousel();
-
-                  //     // if (favorites.includes(this.title)) {
-                  //     //   this.favorite = true;
-                  //     // } else {
-                  //     //   this.favorite = false;
-                  //     // }
-
-                  //     allmarkers.forEach((array) =>
-                  //       favorites.includes(array.name)
-                  //         ? (array.favorite = true)
-                  //         : (array.favorite = false)
-                  //     );
-                  //   });
-                  // }
-                  /////////////////////////////////FAVORITES///////////////////////////////////////////////////////////////////
-
-                  //Gets rid of repeating words, used for detecting reocurring words in reviews and highlighting them in a function below
-                  function repeatingWords(sentance) {
-                    const words = sentance.split(" ");
-                    let wordMap = {};
-                    let repeatedWords = [];
-                    const container = document.createElement("div");
-                    container.classList.add("filter-btn-container");
-
-                    for (let i = 0; i < words.length; i++) {
-                      let currentWordCount = wordMap[words[i]];
-                      let count = currentWordCount ? currentWordCount : 0;
-                      let num = (wordMap[words[i]] = count + 1);
-                    }
-                    const finder = Object.keys(wordMap).filter(
-                      (key) =>
-                        wordMap[key] > 1 &&
-                        key.length > 4 &&
-                        !key.includes("other") &&
-                        !key.includes("night") &&
-                        !key.includes("Rating:") &&
-                        !key.includes("still") &&
-                        !key.includes("since") &&
-                        !key.includes("[object") &&
-                        !key.includes("Object]") &&
-                        !key.includes("Miami") &&
-                        !key.includes("miami") &&
-                        !key.includes("there") &&
-                        !key.includes("which") &&
-                        !key.includes("place") &&
-                        !key.includes("don’t") &&
-                        !key.includes("because") &&
-                        !key.includes("and") &&
-                        !key.includes("we") &&
-                        !key.includes("place") &&
-                        !key.includes("could've")
-                    );
-
-                    for (let i = 0; i < 16; i++) {
-                      const filterBtn = document.createElement("BUTTON");
-                      container.appendChild(filterBtn);
-                      placeDetails.appendChild(container);
-                      filterBtn.classList.add("filterReviews");
-                      filterBtn.innerHTML = finder[i].toString();
-                      filterBtn.style.cursor = "pointer";
-
-                      let counter = 0;
-
-                      filterBtn.addEventListener("click", function () {
-                        counter++;
-                        let currentCount = counter + 1;
-
-                        filterBtn.classList.toggle("filterSelected");
-
-                        if (currentCount % 2 === 0) {
-                          placeInfo.innerHTML = placeInfo.innerHTML.replaceAll(
-                            filterBtn.textContent,
-                            `<span style='background-color:#fa3bf0'>${filterBtn.textContent}</span>`
-                          );
-                        } else {
-                          placeInfo.innerHTML = placeInfo.innerHTML.replaceAll(
-                            filterBtn.textContent,
-                            `<span style='background-color:whitesmoke'>${filterBtn.textContent}</span>`
-                          );
-                        }
-                      });
-                    }
-                    return repeatedWords;
-                  }
-
-                  //Renders reviews from the google API
-                  function googleReviewsHandler() {
-                    placeInfo.innerHTML =
-                      `<div id="reviews">` +
-                      place.reviews[0].text +
-                      `         | <strong>Rating: ${place.reviews[0].rating}/5 </strong>` +
-                      "<br>" +
-                      "<br>" +
-                      place.reviews[1].text +
-                      `         | <strong>Rating: ${place.reviews[1].rating}/5
-          </strong>` +
-                      "<br>" +
-                      "<br>" +
-                      place.reviews[2].text +
-                      `         | <strong>Rating: ${place.reviews[2].rating}/5
-          </strong>` +
-                      "<br>" +
-                      "<br>" +
-                      place.reviews[3].text +
-                      `         | <strong>Rating: ${place.reviews[3].rating}/5
-          </strong>` +
-                      "<br>" +
-                      "<br>" +
-                      place.reviews[4].text +
-                      `         | <strong>Rating: ${place.reviews[4].rating}/5
-          </strong>` +
-                      "<br>" +
-                      `</div>`;
-
-                    placeInfo.classList.add("reviews-active");
-                  }
-
-                  function renderReviewsSection() {
-                    backBtn.style.display = "block";
-                    googleReviewsHandler();
-                    const reviews = document.getElementById("reviews");
-
-                    placeDetails.style.width = `35vw`;
-                    write_a_review_btn.style.borderRadius = 0;
-
-                    ReviewsBtn.style.opacity = "0";
-                    ReviewsBtn.style.padding = "0";
-
-                    gallery.style.filter = "grayscale(0.4)";
-                    gallery.style.filter = "blur(3px)";
-
-                    const reviewOverlay = document.createElement("div");
-                    reviewOverlay.setAttribute("id", "review-overlay");
-                    reviewOverlay.innerHTML =
-                      `<h1 class='bigRating'><strong>${place.rating}` +
-                      "/5" +
-                      "</strong></h1>" +
-                      `<div style="color:white;font-family: 'Montserrat', sans-serif">Out of ${place.user_ratings_total} reviews` +
-                      "<br>" +
-                      starRating;
-                    placeDetails.appendChild(reviewOverlay);
-                    placeDetails.appendChild(write_a_review_btn);
-                    write_a_review_btn.style.display = "block";
-
-                    let string = reviews.textContent.toString();
-
-                    //Creates buttons to highlight reoccuring words in reviews
-                    repeatingWords(string);
-                  }
-                  ReviewsBtn.addEventListener("click", function () {
-                    renderReviewsSection();
-                  });
                 }
               });
             }
@@ -689,15 +512,6 @@ export function generalScript() {
           placeDetails.style.display = "none";
         }, 400);
       });
-
-      map.addListener("click", function () {
-        DD.style.display = "none";
-        directionsRenderer.setMap(null);
-        inputText.value = "";
-        destination.value = "";
-        placeDetails.style.display = "none";
-        write_reviews.style.display = "none";
-      });
     }
 
     let geocoder = new window.google.maps.Geocoder();
@@ -706,7 +520,10 @@ export function generalScript() {
 
     let userLocation = new window.google.maps.Marker({
       map,
-      icon: image,
+      icon: {
+        scaledSize: new window.google.maps.Size(8, 6),
+      },
+      animation: window.google.maps.Animation.DROP,
     });
 
     function geocode(request) {
@@ -717,15 +534,13 @@ export function generalScript() {
 
       geocoder.geocode(request).then((result) => {
         const { results } = result;
-
         map.setCenter(results[0].geometry.location);
+        userLocation.setIcon(`/home-marker.svg`);
         userLocation.setPosition(results[0].geometry.location);
         userLocation.setMap(map);
         userLat = userLocation.getPosition().lat();
         userLng = userLocation.getPosition().lng();
         userCoords.push({ location: { lat: userLat, lng: userLng } });
-        //responseDiv.style.display = "block";
-        //response.innerText = JSON.stringify(result, null, 2);
         return results;
       });
     }
@@ -742,7 +557,7 @@ export function generalScript() {
     var routeButton = document.getElementById("routeButton");
     var userDestination = document.getElementById("userDestination");
     userDestination.appendChild(routeButton);
-    var service = new window.google.maps.DistanceMatrixService();
+    var distance = new window.google.maps.DistanceMatrixService();
 
     const DD = document.getElementById("durationANDdistance");
 
@@ -783,8 +598,10 @@ export function generalScript() {
     }
 
     routeButton.addEventListener("click", function () {
+      directionsRenderer.setMap(map);
+
       calcRoute(modeofTransport);
-      service.getDistanceMatrix(
+      distance.getDistanceMatrix(
         {
           origins: [`${inputText.value}`],
           destinations: [`${destination.value}`],
@@ -817,6 +634,15 @@ export function generalScript() {
           }
         }
       );
+    });
+
+    map.addListener("click", () => {
+      DD.style.display = "none";
+      directionsRenderer.setMap(null);
+      inputText.value = "";
+      destination.value = "";
+      placeDetails.style.display = "none";
+      userLocation.setMap(null);
     });
 
     function render_Markers() {
@@ -852,7 +678,7 @@ export function generalScript() {
 
     showFiltersList_btn.addEventListener("click", () => {
       filtersList.style.display = "flex";
-      filtersList.style.width = "fit-content";
+      filtersList.style.width = "10vw";
       filtersList.style.height = "fit-content";
       if (window.innerWidth <= 1300) {
         filtersList.style.height = "70vh";
@@ -994,13 +820,15 @@ export function generalScript() {
             }' src=''></img><div class="item-info"><h4>${[i + 1]}. ${
               marker.name
             }</h4>` +
-            `<p class='yellowstar'>${starPrinter.repeat(num)}  <strong>${
+            `<div class="middle-org"><p class='yellowstar'>${starPrinter.repeat(
+              num
+            )}  <strong>${
               marker.rating
             }</strong></p><div class="area-info-price"><p>${
               marker.area
             }</p><p class="pricinginfo">${dollarSvg.repeat(
               marker.price
-            )}</p></div><p class="open-closed"></p><p class="item-quick-info">${popularStr}    ${cheapStr}</p>
+            )}</p></div><h5 class="open-closed"></h5><p class="item-quick-info">${popularStr}    ${cheapStr}</p></div>
             <div id='rec-item-lower'>
             <button id='trip-adder' name="${
               marker.name
@@ -1514,10 +1342,6 @@ export function generalScript() {
         )}<em></p>`;
       });
     }
-
-    window.addEventListener("storage", () => {
-      placePageSuggestions();
-    });
   }
   handleMap();
 }

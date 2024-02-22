@@ -39,7 +39,7 @@ function LoginForm() {
     try {
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      navigate("Home");
+      window.location.replace(window.location.href + "Home");
     } catch {
       alert("failed to login");
     }
@@ -116,11 +116,6 @@ function LoginForm() {
           >
             LOG IN
           </button>
-          {/* <a>
-            <Link to="forgotPW.js">
-              <p className="FP">Forgot Password?</p>
-            </Link>
-          </a> */}
           <p style={{ color: "black", fontWeight: 800 }} className="trailAcc">
             🛫 DEMO ACCOUNT: 🛬 <br /> 👉 EMAIL: avalero1112ee@gmail.com 👈{" "}
             <br /> 🙊 PASSWORD: 12345678 🙊
@@ -130,7 +125,7 @@ function LoginForm() {
         <div id="NoAcc">
           <p className="FP">Don't Have An Account?</p>
           <button className="gtsignup-Btn">
-            {/*             <Link to="/Signup">Sign Up</Link> */}
+            <Link to="/Signup">Sign Up</Link>
           </button>
         </div>
       </div>

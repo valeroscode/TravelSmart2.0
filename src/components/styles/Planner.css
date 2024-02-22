@@ -85,6 +85,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: #EFEFEF;
+    padding-bottom: 9rem;
 }
 
 #trip-name-photo {
@@ -630,6 +631,7 @@ input[type="time"]:before {
     margin-top: 0.5rem;
     padding-left: 0.5rem;
     margin-bottom: 0;
+    border-radius: 10px;
 }
 
 .budget-box {
@@ -867,6 +869,7 @@ input[type="time"]:before {
     height: 2rem;
     display: flex;
     align-items: center;
+    z-index: 90000000;
     transition: opacity 0.3s linear;
     -o-transition: opacity 0.3s linear; /* opera */
     -ms-transition: opacity 0.3s linear; /* IE 10 */
@@ -962,10 +965,6 @@ input[type="time"]:before {
     animation: moveCircle 2s ease;
     animation-fill-mode: forwards;
     margin: 0 -1rem;
-}
-
-#footer {
-    padding-top: 15rem;
 }
 
 @media screen and (max-width: 1300px) {

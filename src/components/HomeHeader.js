@@ -9,32 +9,23 @@ import {
 import allPlaces from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
-import { learnMoreAboutPlace, placePageSuggestions } from "./getPlaceInfo.mjs";
 
-function HomeHeader() {
+function HomeHeader({ name }) {
   const account = useRef();
   const { currentUser, info, logout } = useAuth();
-
+  const [user, setUser] = useState(false);
   const [firstname, setFirstname] = useState("");
   const [places_InCity, setPlaces_InCity] = useState([]);
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    if (currentUser) {
-      const settingName = () => {
-        if (info.name) {
-          setFirstname(info.name);
-        } else {
-          setTimeout(settingName(), 200);
-        }
-      };
-
-      allPlaces.map((place) =>
-        !cities.includes(place.city) ? cities.push(place.city) : null
-      );
-      setCities(cities);
-    }
-
+    allPlaces.map((place) =>
+      !cities.includes(place.city) ? cities.push(place.city) : null
+    );
+    setCities(cities);
+    setTimeout(() => {
+      document.getElementById("users-name").style.opacity = 1;
+    }, 500);
     window.addEventListener("click", (e) => {
       setTimeout(() => {
         searchBar.handleClicksOutside_ofInputs(e);
@@ -42,14 +33,11 @@ function HomeHeader() {
     });
   }, []);
 
-  const [error, setError] = useState("");
-
   async function handleLogout() {
-    setError("");
     try {
       await logout();
     } catch {
-      setError("Failed to log out");
+      alert("Failed to log out");
     }
   }
 
@@ -69,26 +57,13 @@ function HomeHeader() {
 
         if (e.target === searchInput.current) {
           const arr = [];
-          if (cityInput.current.value === "") {
             allPlaces.map((place) =>
               !arr.includes(place.style) ? arr.push(place.style) : null
             );
             allPlaces.map((place) =>
-              !arr.includes(place.type) ? arr.push(place.type) : null
+              !arr.includes(place.category) ? arr.push(place.category) : null
             );
             setPlaces_InCity(arr);
-          } else if (cityInput.current.value !== "") {
-            for (let i = 0; i < allPlaces.length; i++) {
-              if (allPlaces[i].city === cityInput.current.value) {
-                if (!arr.includes(allPlaces[i].style)) {
-                  arr.push(allPlaces[i].style);
-                } else if (!arr.includes(allPlaces[i].type)) {
-                  arr.push(allPlaces[i].type);
-                }
-              }
-            }
-            setPlaces_InCity(arr);
-          }
         }
         dropdown.style.display = "flex";
       }
@@ -102,16 +77,13 @@ function HomeHeader() {
       }
     },
     handleDropdownClicks: function (e) {
-      const input = e.target.closest(".placeInCity");
+      const input = e.target.closest("#city-search-DD");
       if (input) {
-        if (
-          input.parentNode.previousSibling === searchInput.current &&
-          cityInput.current.value !== ""
-        ) {
-          input.parentNode.previousSibling.value = input.getAttribute("place");
-        }
+        e.target.parentNode.previousSibling.value = e.target.textContent;
+        cityDD.current.style.display = "none";
       } else {
         e.target.parentNode.previousSibling.value = e.target.textContent;
+        searchDD.current.style.display = "none";
       }
     },
   };
@@ -205,7 +177,7 @@ function HomeHeader() {
               <div ref={account} className="account">
                 {currentUser ? (
                   <div className="user-name">
-                    <p>Hello, {firstname}</p>
+                    <p id="users-name">Hello, {name}</p>
                     <button onClick={() => handleLogout()}>
                       <Link to="/login">Log Out</Link>
                     </button>

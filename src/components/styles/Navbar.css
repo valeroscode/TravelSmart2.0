@@ -5,7 +5,7 @@ background-color: #2E64FE;
 position: fixed;
 width: 100%;
 justify-content: flex-start;
-height: 8vh;
+height: 11vh;
 -webkit-transition: all 0.3s ease;
 -moz-transition: all 0.3s ease;
 -o-transition: all 0.3s ease;
@@ -141,7 +141,7 @@ border-radius: 3px;
 color: white;
 height: 1rem;
 width: 25vw;
-positive: relative;
+position: relative;
 top: -0.3rem;
 padding: 0.5rem;
 }
@@ -360,8 +360,7 @@ top: 1.9rem;
 @media screen and (min-width: 1800px) {
 .dropdown-div {
     left: -3.5rem;
-    top: 3.78rem;
-    width: 25vw;
+    top: 6.78rem;
 }
 }
 

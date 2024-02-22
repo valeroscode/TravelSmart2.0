@@ -198,6 +198,13 @@ font-weight: 800;
 font-weight: 600;
 width: 7rem;
 }
+#users-name {
+  opacity: 0;
+  -webkit-transition: opacity 0.3s ease;
+-moz-transition: opacity 0.3s ease;
+-o-transition: opacity 0.3s ease;
+transition: opacity 0.3s ease;
+}
 .tripsBtn:hover {
 border: 1px solid white;
 }

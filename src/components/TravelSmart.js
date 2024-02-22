@@ -31,17 +31,15 @@ import AddTrip_Button from "./AddTrip_Button";
 import Notification from "./Notification";
 import { generalScript } from "./Miami.mjs";
 import TripsPage from "./Trips";
+import Lottie from "lottie-react";
+import animationData from "./assets/loading-page.json";
 
 function TravelSmart() {
   const { currentUser, info } = useAuth();
   const cityDD = useRef();
   const cityBtn = useRef();
   const rotate = useRef();
-  const [trips, setTrips] = useState([]);
-  const [dbTrips, setDbTrips] = useState();
-  const [loading, setLoading] = useState(true);
-  const [f, setF] = useState([]);
-  const [seed, setSeed] = useState(sessionStorage.getItem("city"));
+  const [user, setUser] = useState(false);
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
@@ -72,93 +70,16 @@ function TravelSmart() {
   //to make proper updates to the database without relying on a state change for the variable above.
   //Thus preventing the component from re-rendering. Also results in array changes to be global.
 
-  const txtArr = {
-    txt0: "PLAN YOUR TRIPS",
-    txt1: "BROWSE A CITY'S BEST",
-    txt2: "DISCOVER NEW PLACES",
-    txt3: "FIND YOUR NEXT FAVORITE",
-  };
-
-  let i = 0;
-
-  const handleBackgroundImg = {
-    homeImg: useRef(),
-    introBackground: useRef(),
-    intro: useRef(),
-    fillerClicked: false,
-    handleFillerClick: function () {
-      const filler = document.getElementsByClassName("filler");
-      const length = filler.length;
-      for (let i = 0; i < length; i++) {
-        filler[i].addEventListener("click", () => {
-          this.fillerClicked = true;
-          filler[i].style.transition = "none";
-          filler[i].style.height = "100%";
-
-          this.intro.current.firstElementChild.innerHTML = txtArr[`txt${i}`];
-          const image = require(`./assets/backgroundimg${i}.jpg)`);
-          this.homeImg.current.src = image;
-        });
-      }
-    },
-    handleFillers: function (index, text, img) {
-      const filler = document.getElementsByClassName("filler");
-      for (let i = 0; i < filler.length; i++) {
-        filler[index].style.height = "100%";
-      }
-
-      this.intro.current.firstElementChild.innerHTML = text;
-      const image = require(`./assets/backgroundimg${img}.jpg`);
-      this.homeImg.current.src = image;
-
-      if (i === 3) {
-        this.intro.current.firstElementChild.style.opacity = 1;
-        this.intro.current.childNodes[1].style.opacity = 1;
-      }
-    },
-    loopTopPage: function () {
-      if (this.fillerClicked === true) {
-        return;
-      }
-      setTimeout(() => {
-        this.intro.current.firstElementChild.style.opacity = 0;
-        this.intro.current.childNodes[1].style.opacity = 0;
-        setTimeout(() => {
-          this.handleFillers(i, txtArr[`txt${i}`], i);
-          this.intro.current.firstElementChild.style.opacity = 1;
-          this.intro.current.childNodes[1].style.opacity = 1;
-        }, 500);
-        if (i < 3) {
-          i = i + 1;
-          this.loopTopPage();
-        }
-      }, 5000);
-    },
-  };
-
   useEffect(() => {
     if (currentUser) {
       function loadPage() {
-        if (!info.trips) {
+        if (!info.name) {
           window.setTimeout(loadPage, 200);
         } else {
+          setUser(true);
           info.favorites.map((place) =>
             !favoritesArr.includes(place) ? favoritesArr.push(place) : null
           );
-          setTrips(Object.entries(info.trips));
-          setDbTrips(info.trips);
-          setLoading(false);
-          setF(favoritesArr);
-          checkElements();
-          function checkElements() {
-            if (!handleBackgroundImg.intro.current.firstElementChild) {
-              window.setTimeout(checkElements, 200);
-            } else {
-              handleBackgroundImg.handleFillerClick();
-              handleBackgroundImg.handleFillers(0, txtArr.txt0, 0);
-              handleBackgroundImg.loopTopPage();
-            }
-          }
         }
       }
       loadPage();
@@ -176,6 +97,7 @@ function TravelSmart() {
 
       setTimeout(() => {
         generalScript();
+        window.history.pushState(null, null, "http://localhost:3000/Home");
       }, 2000);
     } else {
       window.location.replace("https://travelsmartweb.onrender.com/login");
@@ -342,7 +264,11 @@ function TravelSmart() {
 
   return (
     <>
-      <HomeHeader />
+      <HomeHeader name={info.name} />
+      <div id="lottie">
+        <Lottie animationData={animationData} />
+      </div>
+      <div id="lottie-bg"></div>
 
       {/* this button is programatically clicked by the renderTopPicks() function in the Miami.mjs file in order to load in images 
     of places. */}
@@ -407,8 +333,8 @@ function TravelSmart() {
             <button id="write_a_review">Write a Review</button>
           </div>
         </div>
-        <div id="intro" ref={handleBackgroundImg.introBackground}>
-          <div ref={handleBackgroundImg.intro} id="intro-text">
+        <div id="intro">
+          <div id="intro-text">
             <h1></h1>
             <div id="img-tracker">
               <div>
@@ -426,7 +352,7 @@ function TravelSmart() {
             </div>
           </div>
 
-          <img ref={handleBackgroundImg.homeImg} />
+          <img id="homeimg" src="/assets/backgroundimg1.jpeg" />
         </div>
 
         <section id="cities">
@@ -574,7 +500,7 @@ function TravelSmart() {
                         xmlns="http://www.w3.org/2000/svg"
                         height="1em"
                         viewBox="0 0 512 512"
-                        class="favorite"
+                        className="favorite"
                       >
                         <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path>
                       </svg>
@@ -638,166 +564,107 @@ function TravelSmart() {
             </div>
             <hr />
 
-            <i className="fa fa-solid fa-angle-down">
-              <div id="dropdown2">
-                <h4>Category</h4>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    className="checkbox"
-                    id="Start-Your-Day"
-                    value="Start Your Day"
-                    category="type"
-                    condition1="Inexpensive_Condition_live_markers"
-                    condition2="Inexpensive_Condition_all_markers"
-                    name="checkbox"
-                  />
-                  <p>Start Your Day&nbsp;&nbsp;</p>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    className="checkbox"
-                    id="A-Night-Out"
-                    value="A Night Out"
-                    category="type"
-                    condition1="Inexpensive_Condition_live_markers"
-                    condition2="Inexpensive_Condition_all_markers"
-                    name="checkbox"
-                  />
-                  <p>A Night Out&nbsp;&nbsp;</p>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    className="checkbox"
-                    id="Dining"
-                    value="Dining"
-                    category="type"
-                    condition1="Inexpensive_Condition_live_markers"
-                    condition2="Inexpensive_Condition_all_markers"
-                    name="checkbox"
-                  />
-
-                  <p>Dining&nbsp;&nbsp;</p>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    className="checkbox"
-                    id="Chill-Night"
-                    value="Chill Night"
-                    category="type"
-                    condition1="Inexpensive_Condition_live_markers"
-                    condition2="Inexpensive_Condition_all_markers"
-                    name="checkbox"
-                  />
-                  <p>Chill Night&nbsp;&nbsp;</p>
-                </div>
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    className="checkbox"
-                    id="Activities"
-                    value="Activites"
-                    category="type"
-                    condition1="Inexpensive_Condition_live_markers"
-                    condition2="Inexpensive_Condition_all_markers"
-                    name="checkbox"
-                  />
-                  <p>Activities&nbsp;&nbsp;</p>
-                </div>
+            <div id="dropdown2">
+              <h4>Category</h4>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  id="Start-Your-Day"
+                  value="Start Your Day"
+                  category="type"
+                  condition1="Inexpensive_Condition_live_markers"
+                  condition2="Inexpensive_Condition_all_markers"
+                  name="checkbox"
+                />
+                <p>Start Your Day&nbsp;&nbsp;</p>
               </div>
-            </i>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  id="A-Night-Out"
+                  value="A Night Out"
+                  category="type"
+                  condition1="Inexpensive_Condition_live_markers"
+                  condition2="Inexpensive_Condition_all_markers"
+                  name="checkbox"
+                />
+                <p>A Night Out&nbsp;&nbsp;</p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  id="Dining"
+                  value="Dining"
+                  category="type"
+                  condition1="Inexpensive_Condition_live_markers"
+                  condition2="Inexpensive_Condition_all_markers"
+                  name="checkbox"
+                />
+
+                <p>Dining&nbsp;&nbsp;</p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  id="Chill-Night"
+                  value="Chill Night"
+                  category="type"
+                  condition1="Inexpensive_Condition_live_markers"
+                  condition2="Inexpensive_Condition_all_markers"
+                  name="checkbox"
+                />
+                <p>Chill Night&nbsp;&nbsp;</p>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  className="checkbox"
+                  id="Activities"
+                  value="Activites"
+                  category="type"
+                  condition1="Inexpensive_Condition_live_markers"
+                  condition2="Inexpensive_Condition_all_markers"
+                  name="checkbox"
+                />
+                <p>Activities&nbsp;&nbsp;</p>
+              </div>
+            </div>
           </li>
-          {/* <i className="fa fa-solid fa-angle-down">
-                <div id="dropdown">
-                <h4 className="Area">Area</h4>
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="Brickell"
-                      className="checkboxA"
-                      value="Brickell"
-                      name="checkbox"
-                    />
-                    Brickell&nbsp;&nbsp;
-                  </div>
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="Wynwood"
-                      className="checkboxA"
-                      value="Wynwood"
-                      name="checkbox"
-                    />
-                    Wynwood&nbsp;&nbsp;
-                  </div>
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="Miami Beach"
-                      className="checkboxA"
-                      value="Miami Beach"
-                      name="checkbox"
-                    />
-                    Miami Beach&nbsp;&nbsp;
-                  </div>
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="Coconut Grove"
-                      className="checkboxA"
-                      value="Coconut Grove"
-                      name="checkbox"
-                    />
-                    Coconut Grove&nbsp;&nbsp;
-                  </div>
-                  <div>
-                    <input
-                      type="checkbox"
-                      id="Coral Gables"
-                      className="checkboxA"
-                      value="Coral Gables"
-                      name="checkbox"
-                    />
-                    Coral Gables&nbsp;&nbsp;
-                  </div>
-                </div>
-              </i>
-             
-          </li> */}
-          <button id="filters-cancel">Hide</button>
+          <button id="filters-cancel">Done</button>
         </ul>
         <div id="map-organizer">
           <div id="map-overlay">
@@ -815,9 +682,7 @@ function TravelSmart() {
             </div>
             <div id="cityDD" ref={cityDD} onClick={handleCityChange}>
               {cities.map((city) => (
-                <a key={city} onClick={(e) => setSeed(e.target.textContent)}>
-                  {city}
-                </a>
+                <a key={city}>{city}</a>
               ))}
             </div>
             <h2 id="best-places-text">Best places in Miami</h2>
