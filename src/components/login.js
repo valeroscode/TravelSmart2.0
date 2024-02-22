@@ -39,7 +39,7 @@ function LoginForm() {
     try {
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      window.location.replace(window.location.href + "Home");
+      window.open(window.location.href + "Home");
     } catch {
       alert("failed to login");
     }
