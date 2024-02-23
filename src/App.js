@@ -1,3 +1,4 @@
+import React from "react";
 import TravelSmart from "./components/TravelSmart";
 import TripsPage from "./components/Trips";
 import LoginForm from "./components/login";
@@ -13,18 +14,16 @@ function App() {
     <>
       <AuthProvider>
         <div className="App">
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<LoginForm />}></Route>
-              <Route path="place" element={<PlaceContent />} />
-              <Route path="Home" element={<TravelSmart />} />
-              <Route path="trips" element={<TripsPage />} />
-              <Route path="login" element={<LoginForm />}></Route>
-              <Route path="signup" element={<Signup />}></Route>
-              <Route path="Search-Results" element={<Results />}></Route>
-              <Route path="MyTrip" element={<TripPlanner />}></Route>
-            </Routes>
-          </BrowserRouter>
+          <Routes>
+            <Route path="/" element={<LoginForm />}></Route>
+            <Route path="place" element={<PlaceContent />} />
+            <Route path="Home" element={<TravelSmart />} />
+            <Route path="trips" element={<TripsPage />} />
+            <Route path="login" element={<LoginForm />}></Route>
+            <Route path="signup" element={<Signup />}></Route>
+            <Route path="Search-Results" element={<Results />}></Route>
+            <Route path="MyTrip" element={<TripPlanner />}></Route>
+          </Routes>
         </div>
       </AuthProvider>
     </>
