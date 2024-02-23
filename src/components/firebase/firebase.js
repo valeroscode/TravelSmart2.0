@@ -1,15 +1,10 @@
 import { initializeApp } from "firebase/app";
 import {
   getFirestore,
-  collection,
-  getDocs,
-  addDoc,
   setDoc,
-  Timestamp,
   updateDoc,
   doc,
   getDoc,
-  FieldValue,
 } from "firebase/firestore/lite";
 import { getAuth } from "firebase/auth";
 

@@ -2,17 +2,12 @@ import "./styles/Miami.css";
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPaperPlane,
-  faAngleDown,
   faHome,
   faX,
   faBars,
   faChevronDown,
-  faMagnifyingGlass,
   faCar,
-  faPlaneDeparture,
   faMap,
-  faCompass,
   faPersonWalking,
   faPersonBiking,
   faBarsStaggered,
@@ -39,7 +34,6 @@ function TravelSmart() {
   const cityDD = useRef();
   const cityBtn = useRef();
   const rotate = useRef();
-  const [user, setUser] = useState(false);
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
@@ -58,14 +52,6 @@ function TravelSmart() {
     }
   }
 
-  // window.addEventListener('click', (e) => {
-  //   const target = e.target.parentNode.parentNode
-  //   if (target.classList.contains('click-favorite')) {
-  //   target.style.color = 'red'
-  //   docMethods.updateFavorites(string, e.target.getAttribute('name'))
-  //   }
-  // })
-
   //This array is a copy of the favorites state hook and used
   //to make proper updates to the database without relying on a state change for the variable above.
   //Thus preventing the component from re-rendering. Also results in array changes to be global.
@@ -76,7 +62,7 @@ function TravelSmart() {
         if (!info.name) {
           window.setTimeout(loadPage, 200);
         } else {
-          setUser(true);
+   
           info.favorites.map((place) =>
             !favoritesArr.includes(place) ? favoritesArr.push(place) : null
           );
@@ -97,10 +83,14 @@ function TravelSmart() {
 
       setTimeout(() => {
         generalScript();
-        window.history.pushState(null, null, "http://localhost:3000/Home");
+        window.history.pushState(
+          null,
+          null,
+          "https://travelsmart2-0.onrender.com/#/Home"
+        );
       }, 2000);
     } else {
-      window.location.replace("https://travelsmartweb.onrender.com/login");
+      window.location.replace("https://travelsmartweb.onrender.com/#s/login");
     }
   }, []);
 
@@ -153,9 +143,6 @@ function TravelSmart() {
   const homePage = useRef();
   const hideMapBtn = useRef();
   const showMapBtn = useRef();
-
-  const home = `<svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path fill="#ffffff" d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>`;
-  const map = `<svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path fill="#ffffff" d="M384 476.1L192 421.2V35.9L384 90.8V476.1zm32-1.2V88.4L543.1 37.5c15.8-6.3 32.9 5.3 32.9 22.3V394.6c0 9.8-6 18.6-15.1 22.3L416 474.8zM15.1 95.1L160 37.2V423.6L32.9 474.5C17.1 480.8 0 469.2 0 452.2V117.4c0-9.8 6-18.6 15.1-22.3z"/></svg>`;
 
   //Shows map
   function showMap(e) {

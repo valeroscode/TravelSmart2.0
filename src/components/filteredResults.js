@@ -1,15 +1,6 @@
-import React, { useEffect, useState, createElement, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPaperPlane,
-  faHouse,
-  faAngleDown,
-  faUser,
-  faBars,
-  faChevronRight,
-  faMagnifyingGlass,
-  faFire,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Miami.css";
 import "./styles/Miami2.css";
 import allPlaces from "./allMarkers.mjs";
@@ -64,7 +55,7 @@ function Results() {
           };
           var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
-            if (status == "OK") {
+            if (status === "OK") {
               if (!parent.innerText.includes(data.name)) {
                 let li = document.createElement("li");
                 const image = require(`./assets/${data.name}.jpg`);

@@ -1,11 +1,8 @@
 import React, { useState, useRef } from "react";
-import { addDoc, collection } from "@firebase/firestore";
-// import { db, emailList } from "./firebase.mjs";
 import { useForm } from "react-hook-form";
 import "./styles/signup.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
-import LoginForm from "./login";
 import { docMethods } from "./firebase/firebase";
 
 function Signup() {

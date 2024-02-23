@@ -1,29 +1,23 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import "./styles/login.css";
 import { Link } from "react-router-dom";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
-import Signup from "./registrationForm";
 import { useAuth } from "./contexts/AuthContext";
-import { docMethods } from "./firebase/firebase";
 import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const navigate = useNavigate();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
   } = useForm();
 
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
-  const [emailErr, setEmailErr] = useState("");
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -37,14 +31,11 @@ function LoginForm() {
 
   async function OnLogin(email, password) {
     try {
-      setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
       navigate("/Home");
     } catch {
       alert("failed to login");
     }
-
-    setLoading(false);
   }
 
   return (
@@ -80,7 +71,6 @@ function LoginForm() {
               ref={emailRef}
               onChange={(e) => handleInputChange(e)}
             />
-            <p className="errorEmail">{emailErr}</p>
             {errors.email?.type === "required" && (
               <p className="error">Email is required</p>
             )}

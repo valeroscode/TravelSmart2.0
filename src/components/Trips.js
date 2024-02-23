@@ -2,10 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import "./styles/Trips.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPaperPlane,
-  faAngleDown,
-  faUser,
-  faHouse,
   faCheck,
   faX,
   faChevronRight,
@@ -13,36 +9,23 @@ import {
   faCalendar,
   faChevronLeft,
   faClock,
-  faMagnifyingGlass,
-  faFire,
 } from "@fortawesome/free-solid-svg-icons";
 import allPlaces from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
-import animationData from "./assets/section-loading.json";
+
 import {
   tripObj,
   tripDates,
   dateObj,
-  learnMoreAboutPlace,
 } from "./getPlaceInfo.mjs";
 
 function TripsPage() {
   var duplicates = (array) =>
     array.filter((item, index) => array.indexOf(item) === index);
 
-  const defaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: animationData,
-    rendererSettings: {
-      preserveAspectRatio: "xMidYMid slice",
-    },
-  };
-
   const trackerDate = new Date();
   const trackerMonth = trackerDate.getMonth();
-  const trackerYear = trackerDate.getFullYear();
 
   const months = [
     "January",
@@ -57,15 +40,6 @@ function TripsPage() {
     "October",
     "November",
     "December",
-  ];
-  const daysoftheweek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
   ];
 
   const currentDate = useRef(),
@@ -194,12 +168,7 @@ function TripsPage() {
           i <= parseInt(tripObj.To.split(" ")[0]);
           i++
         ) {
-          const current = new Date(
-            `${tripObj.From.split(" ")[1]} ${i}, ${
-              tripObj.From.split(" ")[2]
-            } 23:15:00`
-          );
-          const dayofweek = daysoftheweek[current.getDay()];
+     
           const fullDay = `${tripObj.From.split(" ")[1]} ${i}`;
           if (!tripDates.includes(fullDay)) {
             tripDates.push(fullDay);
@@ -544,8 +513,6 @@ function TripsPage() {
       }
     },
   };
-
-  const calendarSVG = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"/></svg>`;
 
   let defineTrip = {
     where: function (e) {

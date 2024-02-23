@@ -343,6 +343,11 @@ width: 19rem;
     width: 19rem;
 }
 
+#budget-f .results-img div {
+    top: -13rem;
+    left: 1rem;
+}
+
 .results-img div {
 position: relative;
 top: -1rem;
@@ -546,7 +551,6 @@ opacity: 0;
 position: absolute;
 width: 30rem;
 height: 75vh;
-left: 36rem;
 background-color: white;
 font-family: 'Roboto Condensed', sans-serif;
 color: black;
@@ -559,6 +563,8 @@ padding-bottom: 2rem;
 -o-transition:height 0.3s ease;
 transition:height 0.3s ease;
 border-radius: 10px;
+left: -5.5rem;
+top: 8rem;
 }
 .dropdown-downsize {
 height: 15rem;
@@ -1137,6 +1143,13 @@ color: white;
     #budget-f hr {
         display: none;
     }
+
+@media screen and (min-width: 1530px) {
+    #filteredResults_List .results-img img {
+        top: 1.25rem;
+    }
+}
+
 @media screen and (max-width: 1668px) {
 #budget-best-section {
 margin: 0 15rem 14rem 15rem;
@@ -1161,7 +1174,18 @@ margin: 0 15rem 14rem 15rem;
         position: relative;
         bottom: 1.5rem;
         }
+        #filteredResults_List .results-img div {
+            top: -14.5rem;
+            }
+            .results-img div p {
+                padding-top: 0.75rem;
+            }
         
+}
+@media screen and (min-width: 1600px) {
+    #filteredResults_List .results-img div {
+        top: -15.5rem;
+    }
 }
 @media screen and (max-width: 1300px) {
 #budget-best-section {
@@ -1176,7 +1200,6 @@ height: fit-content;
 }
 #placeList ul li img {
 height: 13.5rem;
-width: 6rem;
 }
 .results-div .line {
 position: absolute;
@@ -1243,9 +1266,8 @@ left: 3.8rem;
 }
 
 #budget-f .results-div .results-img {
-height: 13rem;
-max-width: 11rem;
-min-width: 11rem;
+height: 16rem;
+min-width: 20rem;
 }
 #results-content h6 {
 width: 60%;
@@ -1322,6 +1344,9 @@ height: 30rem;
 }
  #budget-f .results-div:hover .line {
 display: none;
+}
+#budget-f .results-div #results-content h6 {
+    width: 80%;
 }
 }
 

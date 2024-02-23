@@ -3,20 +3,13 @@ import "./styles/Miami2.css";
 import React, { useEffect, useState, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faPaperPlane,
   faHeart,
-  faAngleDown,
-  faUser,
-  faBars,
   faFireFlameCurved,
   faChevronRight,
-  faMagnifyingGlass,
-  faFire,
 } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
 import allPlaces from "./allMarkers.mjs";
 import PlaceHome from "./PlaceHome";
-import { Link } from "react-router-dom";
 import AddTrip_Button from "./AddTrip_Button";
 import {
   handleTripAdderPopup,
@@ -228,7 +221,6 @@ function PlaceContent() {
   }
 
   const priceLS = localStorage.getItem("price");
-  const isInt = typeof priceLS === "number";
 
   const priceStyles = {
     1: { color: priceLS >= 1 ? "black" : "lightgray" },

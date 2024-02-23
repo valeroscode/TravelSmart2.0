@@ -1,9 +1,7 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faPlaneDeparture, faX } from "@fortawesome/free-solid-svg-icons";
+import { faX } from "@fortawesome/free-solid-svg-icons";
 import "./styles/xBtn.css"
-import { Link } from "react-router-dom";
-import { useAuth } from './contexts/AuthContext'
 
 function XButton () {
 

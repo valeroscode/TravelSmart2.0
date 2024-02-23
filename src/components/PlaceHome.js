@@ -6,7 +6,6 @@ import {
   faHouse,
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
-import allMarkers from "./allMarkers.mjs";
 import { applied_filters } from "./getPlaceInfo.mjs";
 import "./styles/Navbar.css";
 import allPlaces from "./allMarkers.mjs";
@@ -48,8 +47,6 @@ function PlaceHome() {
   );
 
   let overlay_on = false;
-  var blue = { r: 46, g: 100, b: 254 };
-  var white = { r: 255, g: 255, b: 255 };
 
   let newArr;
   var count = 0;
@@ -334,14 +331,11 @@ function PlaceHome() {
     filterContainer.current.style.display = "none";
   }
 
-  const [error, setError] = useState("");
-
   async function handleLogout() {
-    setError("");
     try {
       await logout();
     } catch {
-      setError("Failed to log out");
+      alert("failed to log out")
     }
   }
 

@@ -3,18 +3,9 @@ import "./styles/Planner.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
-  faAngleDown,
   faEnvelope,
   faPencil,
-  faCheck,
-  faX,
-  faChevronRight,
-  faRightLong,
   faCalendar,
-  faChevronLeft,
-  faClock,
-  faMagnifyingGlass,
-  faFire,
 } from "@fortawesome/free-solid-svg-icons";
 import allPlaces from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
@@ -26,23 +17,15 @@ function TripPlanner() {
   const budgetBreakdown = useRef();
   const datesDiv = useRef();
   const favoritesList = useRef();
-  const tripDetails = useRef();
-  const tripCity = useRef();
   const tripName = useRef();
   const tripDetailsList = useRef();
   const loadAnimation = useRef();
   const chevron = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>`;
   const pin = `<svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M384 192c0 87.4-117 243-168.3 307.2c-12.3 15.3-35.1 15.3-47.4 0C117 435 0 279.4 0 192C0 86 86 0 192 0S384 86 384 192z"/></svg>`;
   const [dbTrips, setDbTrips] = useState();
-  const [sent, setSent] = useState(false);
-  const [email, setEmail] = useState("");
-  const [favoritesListSt, setFavoritesList] = useState(false);
   const [budgetChange, setBudgetChange] = useState(false);
   const [remainingBudget, setRemainingBudget] = useState();
   const [userCreds, setUserCreds] = useState();
-  const setBudget = document.getElementsByClassName("set-budget");
-  const tripLi = document.getElementsByClassName("trip-overview-li");
-  const placeName = document.getElementsByClassName("middle-div");
   const months = [
     "January",
     "February",
@@ -57,7 +40,6 @@ function TripPlanner() {
     "November",
     "December",
   ];
-  let favoritesObj = {};
   const placesIn_City = allPlaces.filter(
     (p) => p.city === sessionStorage.getItem("city")
   );
@@ -390,7 +372,6 @@ function TripPlanner() {
   }
 
   if (document.getElementsByClassName("time-title")) {
-    const time = document.getElementsByClassName("time-title");
     const t = document.getElementsByClassName("time");
     for (let i = 0; i < t.length; i++) {
       t[i].addEventListener("change", (e) => {
@@ -513,7 +494,6 @@ function TripPlanner() {
   }
 
   function setName(e) {
-    const box = e.target.closest("#inner-box");
     const h1 = document.getElementById("trip-name");
     const editor = document.getElementById("editNameElems");
     h1.style.display = "block";
@@ -660,14 +640,11 @@ function TripPlanner() {
     }
   }
 
-  const [error, setError] = useState("");
-
   async function handleLogout() {
-    setError("");
     try {
       await logout();
     } catch {
-      setError("Failed to log out");
+      alert("Failed to log out");
     }
   }
 

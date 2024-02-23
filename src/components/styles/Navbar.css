@@ -346,14 +346,14 @@ top: 0;
 }
 .dropdown-div {
 left: -5.5rem;
-top: 1.9rem;
+top: 8rem;
 }
 }
 
 @media screen and (min-width: 1481px) {
 .dropdown-div {
     left: -3.5rem;
-    top: 3.3rem;
+    top: 7.3rem;
 }
 }
 

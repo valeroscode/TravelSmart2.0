@@ -12,9 +12,7 @@ import { useAuth } from "./contexts/AuthContext";
 
 function HomeHeader({ name }) {
   const account = useRef();
-  const { currentUser, info, logout } = useAuth();
-  const [user, setUser] = useState(false);
-  const [firstname, setFirstname] = useState("");
+  const { currentUser, logout } = useAuth();
   const [places_InCity, setPlaces_InCity] = useState([]);
   const [cities, setCities] = useState([]);
 

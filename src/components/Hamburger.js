@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faHouse, faPlaneDeparture, faX } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faHouse, faX } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Navbar.css"
 import { Link } from "react-router-dom";
 import { useAuth } from './contexts/AuthContext'
@@ -8,13 +8,11 @@ import { useAuth } from './contexts/AuthContext'
 function Hamburger () {
     const { currentUser, info, logout } = useAuth();
     const user = currentUser;
-    const [error, setError] = useState('')
     async function handleLogout() {
-        setError('')
         try {
           await logout()
         } catch {
-          setError('Failed to log out')
+          alert('Failed to log out')
         }
       }
 

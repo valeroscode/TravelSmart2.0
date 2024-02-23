@@ -2479,16 +2479,16 @@ font-size: 1.3rem;
 }
 .showall-text {
 opacity: 1;
-    position: relative;
-    bottom: 5rem;
-    color: black;
-    font-size: 1rem;
-padding-left: 1rem;
+position: relative;
+bottom: 5rem;
+color: black;
+font-size: 1rem;
+padding-left: 0.5rem;
 background-color: white;
 width: fit-content;
 padding-right: 0.5rem;
-    font-weight: 800;
-    left: 0.5rem;
+font-weight: 800;
+left: 0.5rem;
 }
 .lowerDiv {
 position: relative;
@@ -2525,7 +2525,6 @@ width: fit-content;
 font-weight: 800;
 margin: 0;
 color: white;
-bottom: 0.8rem;
 }
 .price-showall {
 position: relative;
