@@ -14,13 +14,13 @@ import {
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: `AIzaSyDWO6HLLc9RoUOp8TWAe67UtuXhYGvhhPI`,
-  authDomain: `maps-api-c3a7a.firebaseapp.com`,
-  projectId: `maps-api-c3a7a`,
-  storageBucket: `maps-api-c3a7a.appspot.com`,
-  messagingSenderId: `821736278520`,
-  appId: `821736278520:web:83f7e32f63110c09d6ae0d`,
-  measurementId: `8Z3ETEL3BD`,
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJ_ID,
+  storageBucket: process.env.REACT_APP_BUCKET,
+  messagingSenderId: process.env.REACT_APP_SENDER_ID,
+  appId: process.env.REACT_APP_APPID,
+  measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
