@@ -155,7 +155,7 @@ function PlaceHome() {
   });
 
   function searchResults() {
-    document.getElementById("google-map").appendChild(document.body);
+    document.append(document.getElementById("google-map"))
     if (newArr) {
       if (newArr.length > 0) {
         applied_filters.splice(0, applied_filters.length);
