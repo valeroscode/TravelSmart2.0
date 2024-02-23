@@ -564,7 +564,7 @@ padding-bottom: 2rem;
 transition:height 0.3s ease;
 border-radius: 10px;
 left: -5.5rem;
-top: 8rem;
+top: 4rem;
 }
 .dropdown-downsize {
 height: 15rem;
@@ -1279,10 +1279,19 @@ height: 19rem;
     top: 17rem;
 }
 #budget-f .results-div:hover .line {
+top: 15rem;
+}
+#budget-f .results-div:hover .line {
     width: 19rem;
 }
 #budget-section {
     top: 4.5rem;
+}
+#top-rated .results-div .results-img div p {
+    bottom: unset;
+    }
+#budget-f .results-img div {
+    top: unset;
 }
 }
 

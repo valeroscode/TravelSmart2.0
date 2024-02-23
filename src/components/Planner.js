@@ -290,8 +290,6 @@ function TripPlanner() {
     expenses.Transportation =
       info.trips[sessionStorage.getItem("trip")].Expenses.Transportation;
 
-    setTripBudget(tripBudget);
-
     const d = info.trips[sessionStorage.getItem("trip")].Dates;
 
     datesDiv.current.textContent = `${
@@ -526,6 +524,9 @@ function TripPlanner() {
       ] = parseInt(span.innerText);
       docMethods.updateTrips(userCreds, dbTrips);
       setDbTrips(dbTrips);
+      tripBudget[e.target.closest(".cost-div").title] = span.innerText;
+      setTripBudget(tripBudget);
+      expenses.percentages();
     } else {
       span.innerHTML = `<input id='newInput' value='${span.innerText}' />`;
       const input = document.getElementById("newInput");
@@ -545,7 +546,8 @@ function TripPlanner() {
       parent.replaceChild(span, document.getElementById("newInputBudget"));
       docMethods.updateTrips(userCreds, dbTrips);
       setDbTrips(dbTrips);
-
+      tripBudget.total = value;
+      setTripBudget(tripBudget);
       e.target.textContent = "Edit Budget";
     } else {
       const span1 = e.target.previousElementSibling;
