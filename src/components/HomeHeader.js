@@ -90,6 +90,7 @@ function HomeHeader({ name }) {
     sessionStorage.setItem("city", cityInput.current.value);
     if (searchInput.current.value !== "" && cityInput.current.value !== "") {
       document.body.append(document.getElementById("google-map"));
+      document.getElementById("google-map").style.display = "none";
       const str = searchInput.current.value.toString();
       sessionStorage.setItem("filters", str.toUpperCase());
       sessionStorage.setItem("total", 1);

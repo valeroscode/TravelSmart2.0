@@ -1279,7 +1279,7 @@ height: 19rem;
     top: 17rem;
 }
 #budget-f .results-div:hover .line {
-    width: 11rem;
+    width: 19rem;
 }
 #budget-section {
     top: 4.5rem;
@@ -1328,7 +1328,7 @@ flex-direction: column;
 width: 25rem;
 }
 #placeList .results-div:hover .line {
-width: 11rem;
+width: 19rem;
 }
 #placeList {
 top: 17rem;

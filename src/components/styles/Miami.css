@@ -1633,6 +1633,7 @@ transition: opacity 0.2s ease;
     margin: 0;
     height: 100vh;
     overflow: none;
+    display: block;
     width: 100vw;
     position: relative;
     left: 0.5rem;
