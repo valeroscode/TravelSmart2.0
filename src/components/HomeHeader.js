@@ -89,7 +89,7 @@ function HomeHeader({ name }) {
   function searchPlaces(e) {
     sessionStorage.setItem("city", cityInput.current.value);
     if (searchInput.current.value !== "" && cityInput.current.value !== "") {
-      document.append(document.getElementById("google-map"))
+      document.body.append(document.getElementById("google-map"));
       const str = searchInput.current.value.toString();
       sessionStorage.setItem("filters", str.toUpperCase());
       sessionStorage.setItem("total", 1);
