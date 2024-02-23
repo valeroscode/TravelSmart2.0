@@ -155,6 +155,7 @@ function PlaceHome() {
   });
 
   function searchResults() {
+    document.getElementById("google-map").appendChild(document.body);
     if (newArr) {
       if (newArr.length > 0) {
         applied_filters.splice(0, applied_filters.length);
@@ -335,7 +336,7 @@ function PlaceHome() {
     try {
       await logout();
     } catch {
-      alert("failed to log out")
+      alert("failed to log out");
     }
   }
 
@@ -462,24 +463,18 @@ function PlaceHome() {
           <li>
             {window.innerWidth <= 881 ? <Hamburger /> : null}
             <button id="tripsBtn" className="b-1" value="My Trips">
-              {!window.location.href.includes("/Trips") ? (
-                <Link to="/Home" ref={tripsBtn}>
-                  Home
-                </Link>
-              ) : (
-                <Link
-                  onClick={() =>
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 100)
-                  }
-                  to="/Home"
-                  ref={homeBtn}
-                >
-                  Home&nbsp;&nbsp;
-                  <FontAwesomeIcon icon={faHouse} />
-                </Link>
-              )}
+              <Link
+                onClick={() =>
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 100)
+                }
+                to="/Home"
+                ref={homeBtn}
+              >
+                Home&nbsp;&nbsp;
+                <FontAwesomeIcon icon={faHouse} />
+              </Link>
             </button>
             <br />
           </li>

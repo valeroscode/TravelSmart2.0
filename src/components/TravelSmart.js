@@ -90,7 +90,7 @@ function TravelSmart() {
         );
       }, 2000);
     } else {
-      window.location.replace("https://travelsmartweb.onrender.com/#s/login");
+      window.location.replace("https://travelsmartweb.onrender.com/#/login");
     }
   }, []);
 

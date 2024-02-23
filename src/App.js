@@ -19,7 +19,6 @@ function App() {
               <Route path="/" element={<LoginForm />}></Route>
               <Route path="place" element={<PlaceContent />} />
               <Route path="Home" element={<TravelSmart />} />
-              <Route path="trips" element={<TripsPage />} />
               <Route path="login" element={<LoginForm />}></Route>
               <Route path="signup" element={<Signup />}></Route>
               <Route path="Search-Results" element={<Results />}></Route>
