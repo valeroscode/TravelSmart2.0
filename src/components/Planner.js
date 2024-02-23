@@ -100,17 +100,17 @@ function TripPlanner() {
     Club: 0,
     total: function () {
       //ParseInt is used to prevent the compiler from adding these values as strings
-      return (
+      this.totalSpent =
         parseInt(this.Hotel) +
         parseInt(this.Transportation) +
         parseInt(this.Theater) +
         parseInt(this.Coffee) +
         parseInt(this.Resturant) +
-        parseInt(this.Club)
-      );
+        parseInt(this.Club);
     },
+    totalSpent: 0,
     percentages: function () {
-      const total = this.total();
+      const total = this.totalSpent;
 
       if (this.Hotel !== 0) {
         this.HotelDOM.current.style.setProperty(
