@@ -93,6 +93,7 @@ function Results() {
   const sorryText = useRef();
 
   useEffect(() => {
+    document.getElementById("google-map").style.display = "none";
     //Array containing all places in the current city
     for (let i = 0; i < allPlaces_inCity.length; i++) {
       renderResults(ul.current, allPlaces_inCity[i]);
