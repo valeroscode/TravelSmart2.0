@@ -169,7 +169,9 @@ function PlaceHome() {
         applied_filters.pop();
         sessionStorage.setItem("total", catScore + typeScore + areaScore);
         sessionStorage.setItem("filters", applied_filters);
-        window.location.replace("Search-Results");
+        window.location.replace(
+          "https://travelsmart2-0.onrender.com/#/Search-Results"
+        );
       }
     }
   }
@@ -189,12 +191,10 @@ function PlaceHome() {
       dropdownDiv.classList.add("dropdown-div");
       navElements.current.appendChild(dropdownDiv);
       for (let i = 0; i < currCity.length; i++) {
-      
         const a = document.createElement("a");
         a.classList.add("anchor");
         a.innerHTML =
           `<div class="div-wrapper-search"><p class="DDtitle">${currCity[i].name}</p>` +
-
           `<div class="wrapper-place" style="
           display: flex;
           align-items: center;

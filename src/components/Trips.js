@@ -645,7 +645,7 @@ function TripsPage() {
     sessionStorage.setItem("trip", e.target.getAttribute("name"));
     sessionStorage.setItem("city", e.target.getAttribute("city"));
 
-    window.open("/MyTrip");
+    window.open("https://travelsmart2-0.onrender.com/#/MyTrip");
   }
 
   function timeFromTrip(trip) {

@@ -57,13 +57,13 @@ function HomeHeader({ name }) {
 
         if (e.target === searchInput.current) {
           const arr = [];
-            allPlaces.map((place) =>
-              !arr.includes(place.style) ? arr.push(place.style) : null
-            );
-            allPlaces.map((place) =>
-              !arr.includes(place.category) ? arr.push(place.category) : null
-            );
-            setPlaces_InCity(arr);
+          allPlaces.map((place) =>
+            !arr.includes(place.style) ? arr.push(place.style) : null
+          );
+          allPlaces.map((place) =>
+            !arr.includes(place.category) ? arr.push(place.category) : null
+          );
+          setPlaces_InCity(arr);
         }
         dropdown.style.display = "flex";
       }
@@ -94,7 +94,9 @@ function HomeHeader({ name }) {
       const str = searchInput.current.value.toString();
       sessionStorage.setItem("filters", str.toUpperCase());
       sessionStorage.setItem("total", 1);
-      window.location.replace("Search-Results");
+      window.location.replace(
+        "https://travelsmart2-0.onrender.com/#/Search-Results"
+      );
     } else {
       alert("Input fields incomplete");
     }

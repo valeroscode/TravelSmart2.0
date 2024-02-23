@@ -126,10 +126,9 @@ export function placePageSuggestions() {
     }
   }
 
-  arr2 = [];  
+  arr2 = [];
 
-  window.open("http://localhost:3000/place")
-
+  window.open("https://travelsmart2-0.onrender.com/#/place");
 }
 
 export function matchingKeyInputs(e, name, element) {
