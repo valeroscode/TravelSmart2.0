@@ -1561,6 +1561,8 @@ width: 40%;
         width: 5.1rem;
     }
     #filteredResults_List .results-img img {
+        height: 100%;
+        width: 100%;
         opacity: 1;
 
     }

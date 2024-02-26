@@ -333,7 +333,7 @@ function TripPlanner() {
             <div class='budgeting'><a>$</a><div class='set-budget'><span>${planBudget}</span>
             </div><button class='set-budget-place'>Set</button></div>
             </div>
-            <input type="time" placeholder='hh:mm' class="time-itin" dayIndex='${
+            <input type="time" class="time-itin" dayIndex='${
               i + 1
             }' trip='${sessionStorage.getItem("trip")}' place='${String(
           plan[i][`Day ${i + 1}`][iter].split("|")[0]
@@ -620,7 +620,7 @@ function TripPlanner() {
     <div class='budgeting'><a>$</a><div class='set-budget'><span>${budget}</span>
     </div><button class='set-budget-place'>Set</button></div>
     </div>
-    <input type="time" placeholder='hh:mm' class="time-itin" trip='${sessionStorage.getItem(
+    <input type="time" class="time-itin" trip='${sessionStorage.getItem(
       "trip"
     )}' 
     place='${name}'value=${time} name="time" min="00:00" max="23:59" />
