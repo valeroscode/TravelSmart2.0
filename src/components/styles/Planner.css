@@ -794,9 +794,10 @@ input[type="time"]:before {
     align-items: center;
     margin-right: 1rem;
     padding: 1rem;
-    color: #151515;
-    background-color: white;
+    color: white;
+    background-color: #2E64FE;
     border: 1px solid #151515;
+    font-weight: 800;
 }
 
 .placeName {

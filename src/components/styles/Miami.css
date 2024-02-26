@@ -1348,7 +1348,7 @@ bottom: 0.25rem;
 .rec-container-item .item-quick-info {
 font-size: 0.8rem;
 font-weight: 600;
-bottom: 1.7rem;
+bottom: 1.4rem;
 }
 .item-quick-info svg {
 fill: green;
@@ -2396,7 +2396,7 @@ border-radius: 7px;
 }
 .instructions-showall {
 position: relative;
-bottom: 24.5rem;
+bottom: 23.5rem;
 left: 7rem;
 font-weight: 800;
 color: white;
@@ -2668,7 +2668,6 @@ color: black;
 @media screen and (max-width: 1619px) {
 #filtersList {
 top: 5rem;
-overflow-y: scroll;
 overflow-x: hidden;
 position: absolute;
 }
@@ -2699,8 +2698,8 @@ fill: gray;
 height: 110vh;
 }
 .instruction-toppick {
-position: relative;
-left: 5rem;
+    left: 4.2rem;
+    position: relative;
 }
 }
 

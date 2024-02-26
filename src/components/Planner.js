@@ -86,7 +86,7 @@ function TripPlanner() {
     }
   }
 
-  const expenses = {
+  const [expenses, setExpenses] = useState({
     HotelDOM: useRef(),
     transportDOM: useRef(),
     entDOM: useRef(),
@@ -100,17 +100,18 @@ function TripPlanner() {
     Club: 0,
     total: function () {
       //ParseInt is used to prevent the compiler from adding these values as strings
-      this.totalSpent =
+      return (
         parseInt(this.Hotel) +
         parseInt(this.Transportation) +
         parseInt(this.Theater) +
         parseInt(this.Coffee) +
         parseInt(this.Resturant) +
-        parseInt(this.Club);
+        parseInt(this.Club)
+      );
     },
     totalSpent: 0,
     percentages: function () {
-      const total = this.totalSpent;
+      const total = this.total();
 
       if (this.Hotel !== 0) {
         this.HotelDOM.current.style.setProperty(
@@ -177,7 +178,7 @@ function TripPlanner() {
         this.nightDOM.current.textContent = `0%`;
       }
     },
-  };
+  });
 
   const favoritesUL = useRef();
 
@@ -215,7 +216,6 @@ function TripPlanner() {
       let string = currentUser.email.toString();
       string = currentUser.metadata.createdAt + string.substring(0, 8);
       setUserCreds(string);
-    } else {
     }
   }, []);
 
@@ -360,6 +360,7 @@ function TripPlanner() {
       const add = document.createElement("li");
       add.innerHTML = `${pin}<h4>Add a place</h4>`;
       add.classList.add("add-li");
+      add.setAttribute("dayIndex", i + 1);
       li.appendChild(add);
     }
 
@@ -367,6 +368,8 @@ function TripPlanner() {
     setTimeout(() => {
       loadAnimation.current.style.display = "none";
     }, 310);
+
+    setExpenses(expenses);
   }
 
   if (document.getElementsByClassName("time-title")) {
@@ -418,6 +421,7 @@ function TripPlanner() {
     }
   }
 
+  const [currDay, setCurrDay] = useState(0);
   function handleListClicks(e) {
     let txt = e.target.innerText;
     const parent = e.target.closest(".place-planned");
@@ -451,6 +455,7 @@ function TripPlanner() {
       }</span>`;
       e.target.style.opacity = 0;
     } else if (e.target.closest(".add-li")) {
+      setCurrDay(e.target.closest(".add-li").getAttribute("dayIndex"));
       favoritesList.current.style.right = 0;
       if (window.innerWidth > 704) {
         favoritesList.current.style.width = "26rem";
@@ -527,7 +532,8 @@ function TripPlanner() {
       tripBudget[e.target.closest(".cost-div").title] = span.innerText;
       setTripBudget(tripBudget);
       expenses.percentages();
-    } else {
+      setExpenses(expenses);
+    } else if (e.target.innerHTML === "Edit") {
       span.innerHTML = `<input id='newInput' value='${span.innerText}' />`;
       const input = document.getElementById("newInput");
       input.focus();
@@ -621,7 +627,7 @@ function TripPlanner() {
     </div>
     </div>
     <div class='trip-div-btns'>
-    <button place='${name}' trip='${sessionStorage.getItem(
+    <button dayIndex='${currDay}' place='${name}' trip='${sessionStorage.getItem(
         "trip"
       )}' class='delete-plan'>Delete</button>
     </div>
@@ -638,6 +644,7 @@ function TripPlanner() {
       setDbTrips(dbTrips);
       setBudgetChange((budgetChange) => !budgetChange);
       expenses.percentages();
+      setExpenses(expenses);
       newNode.removeAttribute("id");
     }
   }
@@ -818,9 +825,9 @@ function TripPlanner() {
                       {place.name}
                     </p>
                     <div className="placeAtts">
-                      <p>{place.category} | </p>
-                      <p> {place.area}| </p>
-                      <p>{dollar.repeat(place.price)}</p>
+                      <p> {place.category}&nbsp; | &nbsp;</p>
+                      <p> {place.area} &nbsp;| &nbsp;</p>
+                      <p> {dollar.repeat(place.price)}</p>
                     </div>
                     <div className="budget-time-section">
                       <div className="budgeting-slider">

@@ -28,6 +28,7 @@ function PlaceContent() {
   const addressText = useRef();
 
   const { currentUser, info } = useAuth();
+  const [favorites, setFavorites] = useState([]);
 
   const heart = useRef();
 
@@ -48,6 +49,7 @@ function PlaceContent() {
           heart.current.firstElementChild.classList.add("favorite");
           heart.current.lastChild.textContent = "ADDED!";
         }
+        setFavorites(info.favorites);
       }, 2500);
     }
     var geocoderRev = new window.google.maps.Geocoder();
@@ -178,24 +180,28 @@ function PlaceContent() {
 
   function handleFavoritesBtn(e) {
     if (currentUser) {
-      if (!info.favorites.includes(e.target.getAttribute("name"))) {
-        info.favorites.push(e.target.getAttribute("name"));
+      handleFavoritesNotifications(
+        favorites,
+        e.target,
+        e.target.firstElementChild
+      );
+      if (!favorites.includes(e.target.getAttribute("name"))) {
+        favorites.push(e.target.getAttribute("name"));
       } else {
-        info.favorites.splice(
-          info.favorites.indexOf(e.target.getAttribute("name")),
-          1
-        );
+        favorites.splice(favorites.indexOf(e.target.getAttribute("name")), 1);
       }
       //In the case that the user is only clicking the heart, a notification pops up and the favorites class is toggled
       let string = currentUser.email.toString();
       string = currentUser.metadata.createdAt + string.substring(0, 8);
-      handleFavoritesNotifications(e.target, e.target.firstElementChild);
-      docMethods.updateFavorites(string, info.favorites);
-      if (!info.favorites.includes(e.target.getAttribute("name"))) {
+      docMethods.updateFavorites(string, favorites);
+      setFavorites(favorites);
+      if (!favorites.includes(e.target.getAttribute("name"))) {
         heart.current.lastChild.textContent = "ADD TO FAVORITES";
       } else {
         heart.current.lastChild.textContent = "ADDED!";
       }
+    } else {
+      alert("Log into your account to add this as a favorite");
     }
   }
 

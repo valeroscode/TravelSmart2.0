@@ -17,6 +17,8 @@ export function learnMoreAboutPlace(
     !e.classList.contains("click-favorite") &&
     !e.classList.contains("trip-adder")
   ) {
+    const place = allPlaces.filter((place) => place.name === text);
+    localStorage.setItem("city", place[0].city);
     localStorage.setItem("current", text);
     localStorage.setItem("title", text);
     localStorage.setItem("rating", rating);
@@ -155,15 +157,12 @@ export function matchingKeyInputs(e, name, element) {
   }
 }
 
-export const favoritesArr = [];
-
-export function handleFavoritesNotifications(target, svg) {
+export function handleFavoritesNotifications(array, target, svg) {
   //Handles notifications and coloring hearts, does not handle updating the database
   const notification = document.getElementById("favorite-notification");
 
-  if (!favoritesArr.includes(target.getAttribute("name"))) {
+  if (!array.includes(target.getAttribute("name"))) {
     notification.style.right = "-20rem";
-    favoritesArr.push(target.getAttribute("name"));
     notification.innerHTML = `<strong>${target.getAttribute(
       "name"
     )}</strong> has been added to your favorites`;
@@ -178,9 +177,7 @@ export function handleFavoritesNotifications(target, svg) {
         notification.style.display = "none";
       }, 1000);
     }, 3000);
-  } else if (favoritesArr.includes(target.getAttribute("name"))) {
-    favoritesArr.splice(favoritesArr.indexOf(target.getAttribute("name")), 1);
-
+  } else if (array.includes(target.getAttribute("name"))) {
     notification.innerHTML = `<strong>${target.getAttribute(
       "name"
     )}</strong> has been removed from your favorites`;

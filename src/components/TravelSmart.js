@@ -18,7 +18,6 @@ import { useAuth } from "./contexts/AuthContext";
 import { docMethods } from "./firebase/firebase";
 import {
   learnMoreAboutPlace,
-  favoritesArr,
   handleFavoritesNotifications,
   handleTripAdderPopup,
 } from "./getPlaceInfo.mjs";
@@ -34,6 +33,7 @@ function TravelSmart() {
   const cityDD = useRef();
   const cityBtn = useRef();
   const rotate = useRef();
+  const [name, setName] = useState("");
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
@@ -56,16 +56,15 @@ function TravelSmart() {
   //to make proper updates to the database without relying on a state change for the variable above.
   //Thus preventing the component from re-rendering. Also results in array changes to be global.
 
+  const [favorites, setFavorites] = useState([]);
   useEffect(() => {
     if (currentUser) {
       function loadPage() {
         if (!info.name) {
           window.setTimeout(loadPage, 200);
         } else {
-   
-          info.favorites.map((place) =>
-            !favoritesArr.includes(place) ? favoritesArr.push(place) : null
-          );
+          setFavorites(info.favorites);
+          setName(info.name);
         }
       }
       loadPage();
@@ -102,7 +101,7 @@ function TravelSmart() {
     //Ensures that favorite hearts are consistant acorss several sections
     const favorite_btns = document.getElementsByClassName("click-favorite");
     for (let i = 0; i < favorite_btns.length; i++) {
-      if (info.favorites.includes(favorite_btns[i].getAttribute("name"))) {
+      if (favorites.includes(favorite_btns[i].getAttribute("name"))) {
         //fills in hearts in the top picks section
         favorite_btns[i].firstElementChild.firstElementChild.classList.add(
           "favorite"
@@ -152,6 +151,7 @@ function TravelSmart() {
     hideMapBtn.current.style.display = "flex";
     mapPage.current.classList.toggle("mapUp");
     mapPage.current.style.top = "0vh";
+    document.documentElement.style.overflowY = "hidden";
   }
 
   //Hides Map
@@ -162,6 +162,7 @@ function TravelSmart() {
     showMapBtn.current.style.display = "flex";
     mapPage.current.classList.toggle("mapUp");
     mapPage.current.style.top = "105vh";
+    document.documentElement.style.overflowY = "visible";
   }
 
   function renderImages_OnTopPicks() {
@@ -226,20 +227,28 @@ function TravelSmart() {
         return;
       } else {
         if (currentUser && e.target.classList.contains("click-favorite")) {
-          if (!info.favorites.includes(e.target.getAttribute("name"))) {
-            info.favorites.push(e.target.getAttribute("name"));
-            //In the case that the user is only clicking the heart, a notification pops up and the favorites class is toggled
+          if (!favorites.includes(e.target.getAttribute("name"))) {
             handleFavoritesNotifications(
+              favorites,
               e.target,
               e.target.firstElementChild.firstElementChild
             );
+            favorites.push(e.target.getAttribute("name"));
+            //In the case that the user is only clicking the heart, a notification pops up and the favorites class is toggled
+            setFavorites(favorites);
           } else {
-            info.favorites.splice(
-              info.favorites.indexOf(e.target.getAttribute("name")),
+            handleFavoritesNotifications(
+              favorites,
+              e.target,
+              e.target.firstElementChild.firstElementChild
+            );
+            favorites.splice(
+              favorites.indexOf(e.target.getAttribute("name")),
               1
             );
+            setFavorites(favorites);
           }
-          docMethods.updateFavorites(string, info.favorites);
+          docMethods.updateFavorites(string, favorites);
         }
 
         if (e.target.classList.contains("trip-adder")) {
@@ -251,7 +260,7 @@ function TravelSmart() {
 
   return (
     <>
-      <HomeHeader name={info.name} />
+      <HomeHeader name={name} />
       <div id="lottie">
         <Lottie animationData={animationData} />
       </div>

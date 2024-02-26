@@ -864,27 +864,6 @@ export function generalScript() {
       }, 500);
     }
 
-    //         for (let i = 0; i < favorite_btns.length; i++) {
-    //         //Scans all red hearts and pushes the name of thier respective place into the favorites array
-    //         setTimeout(() => {
-    //         const favored = favorite_btns[i].firstElementChild.style.fill === 'red'
-    //         if (favored && !favorites.includes(favorite_btns[i].getAttribute('name'))) {
-    //           favorites.push(favorite_btns[i].getAttribute('name'));
-    //         }
-
-    //         }, 2000)
-
-    //       favorite_btns[i].addEventListener('click', () => {
-    //         if (!favorites.includes(favorite_btns[i].getAttribute('name'))) {
-    //         favorites.push(favorite_btns[i].getAttribute('name'));
-    //         } else {
-    //         favorites.splice(favorites.indexOf(favorite_btns[i].getAttribute("name")), 1);
-    //         }
-
-    //       })
-
-    // }
-
     let currentCity = sessionStorage.getItem("city");
     //Array containing all places in the current city
     let allPlaces_inCity = allmarkers.filter((m) => m.city === currentCity);
