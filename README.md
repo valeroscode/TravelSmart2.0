@@ -4,7 +4,7 @@ This project was made with React and uses a large amount of vanilla JS and integ
 
 ## Features
 <br>
--Discover hotspots accross multiple cities in the US and abroad. <br>
+*Discover hotspots accross multiple cities in the US and abroad. <br>
 -Get essential information about places such as opening and closing times, address, phone number, reviews, ratings, and more. <br>
 -Create and plan trips, adding places to your trips as you explore or save places to your favorites so they can be added later. <br>
 -Looking for a specific kind of place to visit? Such as a Mexican resturant in Miami? Use filters to find exatly what you're looking for. <br>
