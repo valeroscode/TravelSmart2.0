@@ -11,10 +11,36 @@ This project was made with React and uses a large amount of vanilla JS and integ
 -Get time and distance estimates from your stay to the places you want to visit using the directions feature in the map. <br>
 -As part of your planning, set an overall budget for your trip, individual budgets for each place you visit, your hotel budget, and transportation budget. <br>
 
-### `npm start`
+## Pages
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### `Home Page`
+The home page consists of 2 distinct sections:
+<br>
+
+#### Home
+
+##### Searchbar
+This section is what users see when the page loads. At the top of this section is the header which includes a search bar. <br>
+The first search bar handles the category of place you want to search, the second search bar handles the city. 
+
+##### Trips
+Trips can be accessed from the home page by clicking 'plan trip'
+
+##### All Places
+All places within the website can be seen at the bottom of the home page. From here places can be added to a trip or clicked on if the user wants to be directed to a dedicated page for that place. 
+
+#### Map
+<br>
+The map has multiple features:
+
+##### Click on a marker or place on the left section for a modal for quick information on the place (such as address, phone, opening times, and more).
+##### Click on the filters button to access map filters which allow users to narrow their search. 
+For example: Say a user wants to find the more inexpensive coffee shops in Miami that also have a high rating. They would check off Start Your Day, Inexpensive, and Best Rated.
+
+##### Click on "Get Directions" to get time and distance estimates for either walking, biking, or driving from one point to another. 
+##### Change the city with the City dropdown menu at the top of the left section. 
+
+
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
