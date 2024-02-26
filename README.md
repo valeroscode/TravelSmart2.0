@@ -1,10 +1,15 @@
-# Getting Started with Create React App
+# TRAVEL SMART
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a React project with a large amount of vanilla JS
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+Discover hotspots accross multiple cities in the US and abroad.
+Get essential information about places such as opening and closing times, address, phone number, reviews, ratings, and more. 
+Create and plan trips, adding places to your trips as you explore or save places to your favorites so they can be added later.
+Looking for a specific kind of place to visit? Such as a Mexican resturant in Miami? Use filters to find exatly what you're looking for. 
+Get time and distance estimates from your stay to the places you want to visit using the directions feature in the map. 
+As part of your planning, set an overall budget for your trip, individual budgets for each place you visit, your hotel budget, and transportation budget. 
 
 ### `npm start`
 
