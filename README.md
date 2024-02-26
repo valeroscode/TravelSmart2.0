@@ -1,15 +1,15 @@
 # TRAVEL SMART
 
-This is a React project with a large amount of vanilla JS
+This project was made with React and uses a large amount of vanilla JS, integrates a non-relational database, 
 
 ## Features
 
-Discover hotspots accross multiple cities in the US and abroad.
-Get essential information about places such as opening and closing times, address, phone number, reviews, ratings, and more. 
-Create and plan trips, adding places to your trips as you explore or save places to your favorites so they can be added later.
-Looking for a specific kind of place to visit? Such as a Mexican resturant in Miami? Use filters to find exatly what you're looking for. 
-Get time and distance estimates from your stay to the places you want to visit using the directions feature in the map. 
-As part of your planning, set an overall budget for your trip, individual budgets for each place you visit, your hotel budget, and transportation budget. 
+Discover hotspots accross multiple cities in the US and abroad. <br>
+Get essential information about places such as opening and closing times, address, phone number, reviews, ratings, and more. <br>
+Create and plan trips, adding places to your trips as you explore or save places to your favorites so they can be added later. <br>
+Looking for a specific kind of place to visit? Such as a Mexican resturant in Miami? Use filters to find exatly what you're looking for. <br>
+Get time and distance estimates from your stay to the places you want to visit using the directions feature in the map. <br>
+As part of your planning, set an overall budget for your trip, individual budgets for each place you visit, your hotel budget, and transportation budget. <br>
 
 ### `npm start`
 
