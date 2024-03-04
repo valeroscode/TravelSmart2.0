@@ -673,7 +673,7 @@ function TripPlanner() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: email,
+        emails: email,
         title: title,
         plans: plans,
       }),
