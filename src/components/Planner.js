@@ -190,6 +190,7 @@ function TripPlanner() {
           window.setTimeout(loadData, 400);
         } else {
           setDbTrips(info.trips);
+          setPlan(dbTrips[sessionStorage.getItem("trip")]);
           if (tripDetailsList.current.children.length === 0) {
             getTripDetails();
           }
@@ -217,8 +218,6 @@ function TripPlanner() {
       let string = currentUser.email.toString();
       string = currentUser.metadata.createdAt + string.substring(0, 8);
       setUserCreds(string);
-
-      setPlan(dbTrips[sessionStorage.getItem("trip")]);
     }
   }, []);
 
