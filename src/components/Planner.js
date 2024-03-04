@@ -26,6 +26,7 @@ function TripPlanner() {
   const [budgetChange, setBudgetChange] = useState(false);
   const [remainingBudget, setRemainingBudget] = useState();
   const [userCreds, setUserCreds] = useState();
+  const [plan, setPlan] = useState("");
   const months = [
     "January",
     "February",
@@ -216,6 +217,8 @@ function TripPlanner() {
       let string = currentUser.email.toString();
       string = currentUser.metadata.createdAt + string.substring(0, 8);
       setUserCreds(string);
+
+      setPlan(dbTrips[sessionStorage.getItem("trip")]);
     }
   }, []);
 
@@ -397,6 +400,7 @@ function TripPlanner() {
           docMethods.updateTrips(userCreds, dbTrips);
           setDbTrips(dbTrips);
         }
+        setPlan(plan);
         return;
       });
     }
@@ -417,6 +421,8 @@ function TripPlanner() {
           setDbTrips(dbTrips);
           e.target.closest(".place-planned").parentNode.remove();
         }
+
+        setPlan(dbTrips[tripName.current.textContent].Plans);
       });
     }
   }
@@ -533,6 +539,7 @@ function TripPlanner() {
       setTripBudget(tripBudget);
       expenses.percentages();
       setExpenses(expenses);
+      setPlan(dbTrips[sessionStorage.getItem("trip")]);
     } else if (e.target.innerHTML === "Edit") {
       span.innerHTML = `<input id='newInput' value='${span.innerText}' />`;
       const input = document.getElementById("newInput");
@@ -646,6 +653,7 @@ function TripPlanner() {
       expenses.percentages();
       setExpenses(expenses);
       newNode.removeAttribute("id");
+      setPlan(dbTrips[tripName.current.textContent]);
     }
   }
 
@@ -655,6 +663,32 @@ function TripPlanner() {
     } catch {
       alert("Failed to log out");
     }
+  }
+
+  function handleSendingPlans(email, title, plans) {
+    console.log(title);
+    console.log(plans);
+    fetch("http://localhost:3000/mail/send", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        title: title,
+        plans: plans,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) return res.json();
+        return res.json().then((json) => Promise.reject(json));
+      })
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((e) => {
+        console.error(e.error);
+      });
   }
 
   return (
@@ -707,7 +741,11 @@ function TripPlanner() {
                 <button
                   className="email-btn"
                   onClick={() =>
-                    alert("This feature is currently in development")
+                    handleSendingPlans(
+                      "avalero.software@gmail.com",
+                      tripName.current.textContent,
+                      plan.toString()
+                    )
                   }
                 >
                   <FontAwesomeIcon icon={faEnvelope} />
