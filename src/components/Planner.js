@@ -665,9 +665,8 @@ function TripPlanner() {
   }
 
   function handleSendingPlans(email, title, plans) {
-    console.log(title);
-    console.log(plans);
-    fetch("http://localhost:3000/mail/send", {
+
+    fetch(`http://localhost:3000/mail/send`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -682,10 +681,9 @@ function TripPlanner() {
         if (res.ok) return res.json();
         return res.json().then((json) => Promise.reject(json));
       })
-      .then(({ data }) => {
-        console.log(data);
-      })
+      .then(({ data }) => {})
       .catch((e) => {
+        alert("something went wrong... the developer has been notified.");
         console.error(e.error);
       });
   }
