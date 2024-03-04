@@ -190,7 +190,7 @@ function TripPlanner() {
           window.setTimeout(loadData, 400);
         } else {
           setDbTrips(info.trips);
-          setPlan(dbTrips[sessionStorage.getItem("trip")]);
+          setPlan(info.trips[sessionStorage.getItem("trip")]);
           if (tripDetailsList.current.children.length === 0) {
             getTripDetails();
           }
