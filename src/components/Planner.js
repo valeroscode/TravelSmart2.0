@@ -667,7 +667,7 @@ function TripPlanner() {
     }
   }
 
-  const [str, setStr] = useState("");
+  let planString;
 
   function planToString() {
     let plansStr = [];
@@ -687,7 +687,7 @@ function TripPlanner() {
     }
 
     const stringified = plansStr.join();
-    setStr(stringified.replaceAll(",", ""));
+    planString = stringified.replaceAll(",", "");
   }
 
   function handleSendingPlans(email, title) {
@@ -701,7 +701,7 @@ function TripPlanner() {
       body: JSON.stringify({
         emails: emailToString,
         title: title,
-        plans: str,
+        plans: planString,
       }),
     })
       .then((res) => {
