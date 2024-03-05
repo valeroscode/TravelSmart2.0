@@ -668,7 +668,8 @@ function TripPlanner() {
   }
 
   function handleSendingPlans(email, title, plans) {
-    const emailToString = email.split(" ").join();
+    let emailToString = String(email).replace(" ", ",");
+    console.log(plans);
     fetch(`http://localhost:3000/mail/send`, {
       method: "POST",
       headers: {

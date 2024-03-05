@@ -948,7 +948,8 @@ input[type="time"]:before {
 
 #modalBG {
     position: fixed;
-    display: flex;
+    display: none;
+    opacity: 0;
     justify-content: center;
     align-items: center;
     height: 100%;
