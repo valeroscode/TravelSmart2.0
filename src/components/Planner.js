@@ -693,7 +693,7 @@ function TripPlanner() {
   function handleSendingPlans(email, title) {
     let emailToString = String(email).replace(" ", ",");
     planToString();
-    fetch(`http://localhost:3000/mail/send`, {
+    fetch(`https://travelsmart-backend.onrender.com/mail/send`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
