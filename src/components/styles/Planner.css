@@ -946,6 +946,21 @@ input[type="time"]:before {
     animation-fill-mode: forwards;
 }
 
+#modalBG {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s linear;
+    -o-transition: opacity 0.3s linear; /* opera */
+    -ms-transition: opacity 0.3s linear; /* IE 10 */
+    -moz-transition: opacity 0.3s linear; /* Firefox */
+    -webkit-transition: opacity 0.3s linear; /*safari and chrome */
+}
+
 #emailModal {
     display: none;
     opacity: 0;
@@ -957,6 +972,34 @@ input[type="time"]:before {
     -ms-transition: opacity 0.3s linear; /* IE 10 */
     -moz-transition: opacity 0.3s linear; /* Firefox */
     -webkit-transition: opacity 0.3s linear; /*safari and chrome */
+    position: relative;
+    padding: 3rem;
+    width: fit-content;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#emailModal h3 {
+    font-family: 'Roboto Condensed';
+}
+
+#emailXOut {
+    width: fit-content;
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: whitesmoke;
+    color: black;
+    border-radius: 50px;
+}
+
+#sender {
+    height: fit-content;
 }
 
 @keyframes moveCircle {

@@ -21,6 +21,7 @@ function TripPlanner() {
   const tripDetailsList = useRef();
   const loadAnimation = useRef();
   const emailModal = useRef();
+  const modalBG = useRef();
   const emailInput = useRef();
   const chevron = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>`;
   const pin = `<svg xmlns="http://www.w3.org/2000/svg" height="16" width="12" viewBox="0 0 384 512"><path d="M384 192c0 87.4-117 243-168.3 307.2c-12.3 15.3-35.1 15.3-47.4 0C117 435 0 279.4 0 192C0 86 86 0 192 0S384 86 384 192z"/></svg>`;
@@ -685,7 +686,11 @@ function TripPlanner() {
       })
       .then(() => {
         alert("Email(s) Sent");
-        emailModal.current.style.display = "none";
+        setTimeout(() => {
+          modalBG.current.style.display = "none";
+          emailModal.current.style.display = "none";
+        }, 350);
+        modalBG.current.style.opacity = 0;
         emailModal.current.style.opacity = 0;
       })
       .catch((e) => {
@@ -744,8 +749,12 @@ function TripPlanner() {
                 <button
                   className="email-btn"
                   onClick={() => {
+                    modalBG.current.style.display = "flex";
                     emailModal.current.style.display = "flex";
-                    emailModal.current.style.opacity = 1;
+                    setTimeout(() => {
+                      modalBG.current.style.opacity = 1;
+                      emailModal.current.style.opacity = 1;
+                    }, 50);
                   }}
                 >
                   <FontAwesomeIcon icon={faEnvelope} />
@@ -935,33 +944,40 @@ function TripPlanner() {
         </p>
       </footer>
 
-      <div ref={emailModal} id="emailModal">
-        <button
-          onClick={(e) => {
-            e.target.parentNode.style.display = "none";
-            e.target.parentNode.style.opacity = 0;
-          }}
-          id="emailXOut"
-        >
-          X
-        </button>
-        <h3>Let's send those plans.</h3>
-        <input
-          ref={emailInput}
-          type="text"
-          placeholder="Emails: (you can type multiple seperate by a space)"
-        ></input>
-        <button
-          onClick={() =>
-            handleSendingPlans(
-              emailInput.current.value,
-              tripName.current.textContent,
-              plan.toString()
-            )
-          }
-        >
-          Send
-        </button>
+      <div id="modalBG" ref={modalBG}>
+        <div ref={emailModal} id="emailModal">
+          <button
+            onClick={(e) => {
+              setTimeout(() => {
+                modalBG.current.style.display = "none";
+                e.target.parentNode.style.display = "none";
+              }, 350);
+              modalBG.current.style.opacity = 1;
+              e.target.parentNode.style.opacity = 0;
+            }}
+            id="emailXOut"
+          >
+            X
+          </button>
+          <h3>Let's send those plans.</h3>
+          <input
+            ref={emailInput}
+            type="text"
+            placeholder="Emails: (you can type multiple seperate by a space)"
+          ></input>
+          <button
+            id="sender"
+            onClick={() =>
+              handleSendingPlans(
+                emailInput.current.value,
+                tripName.current.textContent,
+                plan.toString()
+              )
+            }
+          >
+            Send
+          </button>
+        </div>
       </div>
 
       <div ref={loadAnimation} id="planning-time">
