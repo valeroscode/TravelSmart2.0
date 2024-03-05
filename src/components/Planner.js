@@ -667,9 +667,32 @@ function TripPlanner() {
     }
   }
 
-  function handleSendingPlans(email, title, plans) {
+  const [str, setStr] = useState("");
+
+  function planToString() {
+    let plansStr = [];
+    for (let i = 0; i < plan.Plans.length; i++) {
+      const dayPlans = plan.Plans[i][`Day ${i + 1}`];
+      const pArr = [];
+      for (let j = 0; j < dayPlans.length; j++) {
+        let p;
+        const split = dayPlans[j].split("|");
+        p = `<p>${split[0] !== undefined ? split[0] : ""}</p><p>Time: ${
+          split[1] !== undefined ? split[1] : ""
+        }</p>
+        <p>Budget: ${split[2] !== undefined ? split[2] : ""}</p>`;
+        pArr.push(p);
+      }
+      plansStr.push(`<h3>Day ${i + 1}</h3><br/><div>${pArr.join()}</div>`);
+    }
+
+    const stringified = plansStr.join();
+    setStr(stringified.replaceAll(",", ""));
+  }
+
+  function handleSendingPlans(email, title) {
     let emailToString = String(email).replace(" ", ",");
-    console.log(plans);
+    planToString();
     fetch(`http://localhost:3000/mail/send`, {
       method: "POST",
       headers: {
@@ -678,7 +701,7 @@ function TripPlanner() {
       body: JSON.stringify({
         emails: emailToString,
         title: title,
-        plans: plans,
+        plans: str,
       }),
     })
       .then((res) => {
@@ -971,8 +994,7 @@ function TripPlanner() {
             onClick={() =>
               handleSendingPlans(
                 emailInput.current.value,
-                tripName.current.textContent,
-                plan.toString()
+                tripName.current.textContent
               )
             }
           >

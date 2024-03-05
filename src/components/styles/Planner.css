@@ -982,6 +982,10 @@ input[type="time"]:before {
     flex-direction: column;
 }
 
+#emailModal input {
+    width: 20rem;
+}
+
 #emailModal h3 {
     font-family: 'Roboto Condensed';
 }
