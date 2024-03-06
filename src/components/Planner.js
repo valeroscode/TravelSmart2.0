@@ -691,7 +691,7 @@ function TripPlanner() {
   }
 
   function handleSendingPlans(email, title) {
-    let emailToString = String(email).replace(" ", ",");
+    let emailToString = String(email).replaceAll(" ", ",");
     planToString();
     fetch(`https://travelsmart-backend.onrender.com/mail/send`, {
       method: "POST",
