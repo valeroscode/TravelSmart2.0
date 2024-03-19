@@ -3,10 +3,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 
-#body {
+#bodySignup {
     display: flex;
     justify-content: center;
-    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 32%, rgba(0,212,255,1) 100%);
+    background: white;
     height: 100vh;
     width: 100vw;
     position: absolute;
@@ -113,10 +113,9 @@ button {
     font-weight: 500;
 }
 .FP {
-    color: gray;
-    font-size: 0.7rem;
-    cursor: pointer;
-    margin-right: 1rem;
+    color: lightgray;
+    font-size: 1rem;
+    margin-right: 0rem;
     margin-top: 0.5rem;
 
 }
@@ -126,9 +125,6 @@ button {
     cursor: pointer;
     margin-top: 0;
     margin-bottom: 0.2rem;
-}
-.FP:hover {
-    color: black;
 }
 
 .loginBtn {
@@ -165,9 +161,6 @@ color: white;
     font-weight: 200;
     transition: ease-out 0.2s;
     border-radius: 3px;
-}
-#NoAcc-signup:hover {
-    transform: scale(1.05);
 }
 .SU:hover {
     background-color: #2E64FE;

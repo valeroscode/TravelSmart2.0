@@ -7,13 +7,13 @@ import Signup from "./components/registrationForm";
 import PlaceContent from "./components/PlaceContent";
 import TripPlanner from "./components/Planner";
 import Results from "./components/filteredResults";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
     <>
       <AuthProvider>
-        <HashRouter>
+        <BrowserRouter>
           <div className="App">
             <Routes>
               <Route path="/" element={<LoginForm />}></Route>
@@ -25,7 +25,7 @@ function App() {
               <Route path="MyTrip" element={<TripPlanner />}></Route>
             </Routes>
           </div>
-        </HashRouter>
+        </BrowserRouter>
       </AuthProvider>
     </>
   );

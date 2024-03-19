@@ -1,4 +1,4 @@
-import allPlaces from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 //Used to redirect the user and display information when they click on a specific place
 export function learnMoreAboutPlace(
   text,
@@ -130,7 +130,7 @@ export function placePageSuggestions() {
 
   arr2 = [];
 
-  window.open("https://travelsmart2-0.onrender.com/#/place");
+  window.open("https://travelsmart2-0.onrender.com/place");
 }
 
 export function matchingKeyInputs(e, name, element) {

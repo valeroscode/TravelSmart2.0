@@ -1,46 +1,7 @@
-import allPlaces from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 import { learnMoreAboutPlace, handleTripAdderPopup } from "./getPlaceInfo.mjs";
 
 export function generalScript() {
-  //Intersection Observers for the home page
-  const interObs = {
-    exploreHere: document.getElementById("explore-here"),
-    citiesList: document.getElementById("cities-list"),
-    yourTrips: document.getElementById("your-trips-text"),
-    tripsCon: document.getElementById("trips-con"),
-    searchText: document.getElementById("searchText"),
-    changeCityText: document.getElementById("change-city-showall"),
-    showAllDivs: document.getElementById("allPlacesContainer"),
-    observerTitle: new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle("fadeDown", entry.isIntersecting);
-      });
-    }),
-    observerCities: new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle("fadeUp", entry.isIntersecting);
-      });
-    }),
-    observerTripsTxt: new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle("fadeLeft", entry.isIntersecting);
-      });
-    }),
-    observerTripsList: new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        entry.target.classList.toggle("fadeRight", entry.isIntersecting);
-      });
-    }),
-  };
-
-  interObs.observerTitle.observe(interObs.exploreHere);
-  interObs.observerCities.observe(interObs.citiesList);
-  interObs.observerTripsTxt.observe(interObs.yourTrips);
-  interObs.observerTripsList.observe(interObs.tripsCon);
-  interObs.observerTripsTxt.observe(interObs.searchText);
-  interObs.observerTripsList.observe(interObs.changeCityText);
-  interObs.observerCities.observe(interObs.showAllDivs);
-
   let live_markers = [];
 
   localStorage.clear();
@@ -836,6 +797,10 @@ export function generalScript() {
             </div>
             </div>
             </div>`;
+
+            if (i === array.length - 1) {
+              newRec.style.paddingBottom = "2.5rem";
+            }
 
           //This will be used for the googleAPICalls function
           newRec.setAttribute("data-lat", marker.coords.lat);

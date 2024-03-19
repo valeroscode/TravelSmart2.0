@@ -7,7 +7,7 @@ import {
   faPencil,
   faCalendar,
 } from "@fortawesome/free-solid-svg-icons";
-import allPlaces from "./allMarkers.mjs";
+import { allPlaces } from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 import { Link } from "react-router-dom";
@@ -69,26 +69,6 @@ function TripPlanner() {
     transport: 0,
     other: 0,
   });
-
-  function binarySearch(target, array, number) {
-    const length = array.length;
-    const middle = Math.floor(length / 2);
-    if (array.length === 1 && array[0].name !== target) {
-      return;
-    } else {
-      if (target === array[middle].name) {
-        expenses[array[middle].category] =
-          parseInt(expenses[array[middle].category]) + parseInt(number);
-        return;
-      }
-      if (target < array[middle].name) {
-        return binarySearch(target, array.slice(0, middle), number);
-      }
-      if (target > array[middle].name) {
-        return binarySearch(target, array.slice(middle), number);
-      }
-    }
-  }
 
   const [expenses, setExpenses] = useState({
     HotelDOM: useRef(),
@@ -183,6 +163,26 @@ function TripPlanner() {
       }
     },
   });
+
+  function binarySearch(target, array, number) {
+    const length = array.length;
+    const middle = Math.floor(length / 2);
+    if (array.length === 1 && array[0].name !== target) {
+      return;
+    } else {
+      if (target === array[middle].name) {
+        expenses[array[middle].category] =
+          parseInt(expenses[array[middle].category]) + parseInt(number);
+        return;
+      }
+      if (target < array[middle].name) {
+        return binarySearch(target, array.slice(0, middle), number);
+      }
+      if (target > array[middle].name) {
+        return binarySearch(target, array.slice(middle), number);
+      }
+    }
+  }
 
   const favoritesUL = useRef();
 
@@ -564,6 +564,7 @@ function TripPlanner() {
       tripBudget.total = value;
       setTripBudget(tripBudget);
       e.target.textContent = "Edit Budget";
+      renderDetailedBreakdown();
     } else {
       const span1 = e.target.previousElementSibling;
       const input = document.createElement("input");
@@ -571,7 +572,6 @@ function TripPlanner() {
       input.value = String(span1.textContent).replace("$", "");
       parent.replaceChild(input, span1);
       input.focus();
-
       e.target.textContent = "Set New Budget";
     }
   }
@@ -907,11 +907,7 @@ function TripPlanner() {
                           <input type="text" placeholder="set budget" />
                         </div>
                       </div>
-                      <input
-                        type="time"
-                        placeholder="hh:mm"
-                        className="time-itin"
-                      />
+                      <input type="time" className="time-itin" />
                     </div>
                   </div>
                 </li>

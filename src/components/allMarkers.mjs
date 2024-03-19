@@ -1,4 +1,25 @@
-const allPlaces = [];
+const places = [];
+
+export const citiesArray = [
+  {
+    city: "Miami",
+    location: "Southeast United States",
+    description:
+      "A vibrant city where the sun always shines. Just don't come on spring break.",
+  },
+  {
+    city: "New York",
+    location: "Northeast United States",
+    description:
+      "How ya doin'? The city that never sleeps and has the best street food, just don't go in the winter.",
+  },
+  {
+    city: "Barcelona",
+    location: "Northeast Spain",
+    description:
+      "A beautiful city that the developer has never been to but REALLY wants to visit.",
+  },
+];
 
 //A collection of objects used to retrieve place information
 
@@ -379,7 +400,7 @@ const MrOmaKase = {
   type: "Dining",
   coords: { lat: 25.773584, lng: -80.190465 },
   content: `<p>MR. OMAKASE</p>`,
-  name: "MR. OMAKASE",
+  name: "Mr. Omakase",
   url: "utensils-solid.svg",
   placeID: `ChIJ5YlV6Vu32YgRPGaR6bFlMW8`,
   price: 4,
@@ -1298,7 +1319,7 @@ const cera23 = {
   sponsored: true,
 };
 
-allPlaces.push(
+places.push(
   TreeHouse,
   Do_Not_Sit,
   Bodega,
@@ -1362,4 +1383,4 @@ allPlaces.push(
   cera23
 );
 
-export default allPlaces;
+export const allPlaces = places;

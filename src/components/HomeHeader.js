@@ -6,8 +6,7 @@ import {
   faPlaneDeparture,
   faMagnifyingGlassLocation,
 } from "@fortawesome/free-solid-svg-icons";
-import allPlaces from "./allMarkers.mjs";
-import { Link } from "react-router-dom";
+import { allPlaces } from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
 
 function HomeHeader({ name }) {
@@ -34,8 +33,10 @@ function HomeHeader({ name }) {
   async function handleLogout() {
     try {
       await logout();
-    } catch {
-      alert("Failed to log out");
+      window.location.replace("http://localhost:3000/");
+    } catch (e) {
+      console.log(e.error);
+      alert("logout failed");
     }
   }
 
@@ -94,7 +95,7 @@ function HomeHeader({ name }) {
       sessionStorage.setItem("filters", str.toUpperCase());
       sessionStorage.setItem("total", 1);
       window.location.replace(
-        "https://travelsmart2-0.onrender.com/#/Search-Results"
+        "https://travelsmart2-0.onrender.com/Search-Results"
       );
     } else {
       alert("Input fields incomplete");
@@ -179,9 +180,7 @@ function HomeHeader({ name }) {
                 {currentUser ? (
                   <div className="user-name">
                     <p id="users-name">Hello, {name}</p>
-                    <button onClick={() => handleLogout()}>
-                      <Link to="/login">Log Out</Link>
-                    </button>
+                    <button onClick={() => handleLogout()}>Log Out</button>
                   </div>
                 ) : (
                   <div></div>

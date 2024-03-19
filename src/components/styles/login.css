@@ -1,25 +1,42 @@
-@import
-url('https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
 #body {
     display: flex;
-    justify-content: center;
-    background-color: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 32%, rgba(0,212,255,1) 100%);
+    justify-content: space-between;
+    background-color: white;
     height: 100vh;
     width: 100vw;
-    position: absolute;
+    position: relative;
     top: 0;
 }
+
+#login-title {
+    position: absolute;
+    left: 2rem;
+    top: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-title h1 {
+    font-family: "Roboto Condensed", sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
+#login-title .plane-login {
+margin-right: 1rem;
+}
+
 #login {
     height: fit-content;
-    width: 40%;
     background-color: white;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    top: 5rem;
-    box-shadow: 0px 8px 15px rgba(0,0,0,0.4);
+    justify-content: start;
+    align-items: start;
+    position: relative;
+    top: 10rem;
     font-weight: 200;
     border-radius: 4px;
 padding-top: 2rem;
@@ -31,10 +48,9 @@ padding-top: 2rem;
     width: 15rem;
     cursor: pointer;
     align-content: center;
-    border-radius: 0;
+    border-radius: 7px;
     background-color: gray;
     border: none;
-    border-radius: 3px;
 font-family: "Roboto Condensed", sans-serif;
     font-weight: 800;
 background-color: #2E64FE;
@@ -42,21 +58,89 @@ background-color: #2E64FE;
 .signupH1 {
     color: black;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 800;
     margin-bottom: 0.5rem;
-letter-spacing: 0.3rem;
 }
 .signupH1 h1 {
     position: relative;
     bottom: 0.3rem;
     margin-right: 0.2rem;
 font-weight: 800;
+font-size: 3.5rem;
+letter-spacing: 0.3rem;
+}
+
+.signupH1 input {
+
+}
+
+#login-text {
+    display: flex;
 }
 #username-login {
    display: block;
    margin-bottom: 0;
+   margin-left: 0;
+}
+
+#login-img {
+    width: 50%;
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    mask-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+#img-login-div {
+    width: 60%;
+}
+
+#signup-img {
+    width: 50%;
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+#signup-general {
+    position: relative;
+    top: 10rem;
+    right: 5rem;
+}
+
+#signupSubmit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+    border-radius: 7px;
+    font-weight: 700;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+#signup-general input {
+    background-color: whitesmoke;
+    border: 1px solid whitesmoke;
+    border-radius: 7px;
+    padding: 0.5rem;
+    margin-left: 0;
+    width: 100%;
+}
+
+#img-login-div img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#username-login input {
+    background-color: whitesmoke;
+    border: 1px solid whitesmoke;
+    border-radius: 7px;
+    padding: 0.5rem;
+    margin-left: 0;
+    width: 200%;
 }
 #pwlogin {
     display: block;
@@ -64,12 +148,12 @@ margin-bottom: 1rem;
 }
 #passwordfield-login {
 height: 1.5rem;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid gray;
-    width: 15rem;
-    border-radius: 0;
+margin-left: 0;
+background-color: whitesmoke;
+border: 1px solid whitesmoke;
+border-radius: 7px;
+padding: 0.5rem;
+width: 200%;
 }
 #emaillogin {
     height: 1.5rem;
@@ -91,43 +175,31 @@ button {
     cursor: pointer;
     align-content: center;
     border-radius: 0;
-    background-color: #637ade;
+    background-color: #2E64FE;
     font-family: 'Montserrat', sans-serif;
     border: none;
     color: white;
     font-weight: 500;
 }
 .FP {
-    color: gray;
-    font-size: 0.7rem;
-    cursor: pointer;
+    color: lightgray;
+    font-size: 1rem;
     margin-bottom: 0.2rem;
     margin-top: 0;
     position: relative;
-    right: 4rem;
+    right: 0rem;
 }
-.FP:hover {
-    color: black;
+
+#login-div-left {
+display: flex;
+flex-direction: column;
+margin-left: 10rem;
 }
+
 #NoAcc {
-    height: fit-content;
-    width: 40%;
-    background-color: whitesmoke;
+    color: lightgray;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 30rem;
-    box-shadow: 0px 8px 15px rgba(0,0,0,0.4);
-    font-family: 'Archivo Black', sans-serif;
-    font-weight: 200;
-transition: ease-out 0.2s;
-padding-bottom: 1rem;
-border-radius: 3px;
-}
-#NoAcc:hover {
-    transform: scale(1.05);
 }
 .trailAcc {
     position: relative;
@@ -148,27 +220,36 @@ border-radius: 3px;
     font-weight: 500;
 }
 .SU:hover {
-    background-color: #637ade;;
+    background-color: #637ade;
 }
 .gtsignup-Btn {
-    margin-top: 0;
 font-family: "Roboto Condensed", sans-serif;
-    font-weight: 800;
-background-color: #2E64FE;
-filter: grayscale(0.2);
-    border-radius: 3px;
-text-align: center;
-height: fit-content;
+font-weight: 800;
+margin-left: 0;
+outline: #0076CC;    
 }
 
 .gtsignup-Btn a {
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 600;
-    font-family: "Roboto Condensed", sans-serif;
+    color: #2E64FE;
+    font-size: 0.8rem;
+    letter-spacing: normal;
+    margin: 0;
+    text-decoration: underline;
 }
 a:visited {
     text-decoration: none;
+}
+
+@media screen and (max-width: 1643px) {
+    #img-login-div {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 1530px) {
+    #login-div-left {
+        margin-left: 2rem;
+    }
 }
 
 @media screen and (max-width: 1092px) {
@@ -178,6 +259,43 @@ width: 70vw;
 #NoAcc {
 width: 70vw;
 }
+}
+
+@media screen and (max-width: 867px) {
+    #img-login-div {
+        position: absolute;
+        left: 60%;
+        height: 100%;
+    }
+    #login-text svg {
+        display: none;
+    }
+  
+}
+
+@media screen and (max-width: 867px) {
+    .signup-con {
+    mask-image: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 100%);
+    }
+    .signup-div-left {
+        margin-left: 10rem;
+    }
+}
+
+@media screen and (max-width: 711px) {
+   #login-img {
+    -webkit-mask-image: linear-gradient(to right, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 1) 190%);
+    mask-image: linear-gradient(to right, rgba(255, 255, 255, 0) 30%, rgba(255, 255, 255, 1) 190%);
+   }
+}
+
+@media screen and (max-width: 548px) {
+    #signup-general input {
+        width: unset;
+       }
+    #signupSubmit {
+       width: fit-content;
+    }
 }
 
 @media screen and (max-width: 450px) {
@@ -199,4 +317,35 @@ font-size: 16px;
 #NoAcc {
     width: 86vw;
 }
+#login-img {
+    -webkit-mask-image: linear-gradient(to right, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 1) 240%);
+    mask-image: linear-gradient(to right, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 1) 240%);
+   }
+   #username-login input {
+    width: 100%;
+   }
+   #passwordfield-login {
+    width: 100%;
+   }
+   #login-notice {
+    font-size: 0.7rem;
+   }
+   #login {
+    top: 9rem;
+   }
 }
+
+@media screen and (max-width: 390px) {
+    #login-title h1 {
+        font-size: 1.5rem;
+    }
+    #login-title .plane-login {
+        font-size: 1.5rem;
+    }
+ }
+
+ @media screen and (max-width: 375px) {
+    #login {
+        top: 7rem;
+       }
+ }

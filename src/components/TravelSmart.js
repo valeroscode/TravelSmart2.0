@@ -11,9 +11,17 @@ import {
   faPersonWalking,
   faPersonBiking,
   faBarsStaggered,
+  faMagnifyingGlass,
+  faNewspaper,
+  faChevronRight,
+  faLocationDot,
+  faCompass,
+  faPlane,
+  faHeart,
+  faMoneyBillWave,
 } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "./HomeHeader";
-import allPlaces from "./allMarkers.mjs";
+import { allPlaces, citiesArray } from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
 import { docMethods } from "./firebase/firebase";
 import {
@@ -34,6 +42,11 @@ function TravelSmart() {
   const cityBtn = useRef();
   const rotate = useRef();
   const [name, setName] = useState("");
+  const [city, setCity] = useState("Miami");
+  const [avgRating, setAvgRating] = useState(0);
+  const cityImg = useRef();
+  const discMore = useRef();
+  const descBg = useRef();
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
@@ -50,6 +63,7 @@ function TravelSmart() {
         city[i].click();
       }
     }
+    markFavorites();
   }
 
   //This array is a copy of the favorites state hook and used
@@ -85,13 +99,26 @@ function TravelSmart() {
         window.history.pushState(
           null,
           null,
-          "https://travelsmart2-0.onrender.com/#/Home"
+          "https://travelsmart2-0.onrender.com/Home"
         );
       }, 2000);
     } else {
-      window.location.replace("https://travelsmartweb.onrender.com/#/login");
+      window.location.replace("https://travelsmartweb.onrender.com/login");
     }
   }, []);
+
+  useEffect(() => {
+    let total = 0;
+    const filtered = allPlaces.filter((p) => p.city === city);
+    filtered.map((p) => (total = total + p.rating));
+    setAvgRating(total / filtered.length);
+
+    cityImg.current.style.filter = "blur(3px)";
+
+    setTimeout(() => {
+      cityImg.current.style.filter = "blur(0px)";
+    }, 300);
+  }, [city]);
 
   setTimeout(() => {
     markFavorites();
@@ -104,6 +131,15 @@ function TravelSmart() {
       if (favorites.includes(favorite_btns[i].getAttribute("name"))) {
         //fills in hearts in the top picks section
         favorite_btns[i].firstElementChild.firstElementChild.classList.add(
+          "favorite"
+        );
+      } else if (
+        !favorites.includes(favorite_btns[i].getAttribute("name")) &&
+        favorite_btns[i].firstElementChild.firstElementChild.classList.contains(
+          "favorite"
+        )
+      ) {
+        favorite_btns[i].firstElementChild.firstElementChild.classList.remove(
           "favorite"
         );
       }
@@ -169,7 +205,7 @@ function TravelSmart() {
     //Renders images for the new top picks
     const recImg = document.getElementsByClassName("rec-item-image");
     const nodeLength = recImg.length;
-    console.log(recImg);
+
     for (let i = 0; i < nodeLength; i++) {
       recImg[i].src = require(`./assets/${recImg[i].getAttribute("name")}.jpg`);
     }
@@ -215,6 +251,8 @@ function TravelSmart() {
         }
         e.target.style.fontWeight = 800;
         e.target.style.color = "lightgray";
+
+        setCity(e.target.textContent);
       }
     },
     handleTripBtn_handleFavoritesBtn: function (e) {
@@ -352,66 +390,232 @@ function TravelSmart() {
         </div>
 
         <section id="cities">
-          <p id="whyTravel">
-            In the embrace of dawn's golden hues, one embarks on a journey that
-            transcends the boundaries of ordinary existence, venturing forth to
-            traverse the tapestry of our wondrous world. Each step echoes with
-            the rhythmic heartbeat of ancient lands, where whispers of the past
-            dance with the promises of the future. From the majesty of towering
-            peaks to the serenity of azure seas, the canvas of Earth unfolds
-            like a symphony, inviting the intrepid traveler to immerse
-            themselves in the harmonious melodies of diversity. Beneath the
-            celestial canopy, where constellations weave tales untold, cultures
-            intertwine like threads of an ethereal tapestry. The bustling
-            markets of Marrakech, the serene temples of Kyoto, and the vibrant
-            rhythms of Rio de Janeiro become chapters in an ever-expanding epic.
-            With each encounter, one discovers not just the beauty of landscapes
-            but the profound beauty of humanity. In the embrace of foreign
-            winds, beneath unfamiliar skies, the soul finds its resonance, and
-            the heart learns the universal language of connection. For in
-            traveling the world, one doesn't just explore the external; they
-            embark on a transformative odyssey, where every horizon is an
-            invitation to rediscover the boundless wonders that reside within.
-          </p>
-          <h2 id="explore-here">Explore here and abroad</h2>
-          <div id="cities-list">
-            <div className="city-container">
-              <img src={require("./assets/Miami.jpg")} loading="lazy" alt="" />
-              <div className="city-info">
-                <h5>Miami</h5>
-                <p>United States of America</p>
+          <div id="middle-organizer">
+            <img id="background-img" src="waves.jpg"></img>
+            <div id="organizer-city-rundown">
+              <h5>INFO</h5>
+              <h2>Explore here and abroad</h2>
+              <p>
+                Discover new places using our map and finder, add them to your
+                itinerary, and find the next one
+              </p>
+
+              <h4> Cities Avaliable </h4>
+
+              <div id="avaliable-cities">
+                <div>
+                  <img src="Miami.jpg"></img>
+                  <p>Miami, FL, USA</p>
+                  <h6
+                    city="Miami"
+                    onClick={(e) => setCity(e.target.getAttribute("city"))}
+                  >
+                    Explore City{" "}
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      style={{ color: "black" }}
+                    />
+                  </h6>
+                </div>
+                <div>
+                  <img src="New York.jpg"></img>
+                  <p>New York City, NY, USA</p>
+                  <h6
+                    city="New York"
+                    onClick={(e) => setCity(e.target.getAttribute("city"))}
+                  >
+                    Explore City{" "}
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      style={{ color: "black" }}
+                    />
+                  </h6>
+                </div>
+                <div>
+                  <img src="North Pole.jpg"></img>
+                  <p>North Pole, AK, USA</p>
+                  <h6>
+                    Explore City{" "}
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      style={{ color: "black" }}
+                    />
+                  </h6>
+                </div>
+                <div>
+                  <img src="Barcelona.jpg"></img>
+                  <p>Barcelona, Spain</p>
+                  <h6
+                    city="Barcelona"
+                    onClick={(e) => setCity(e.target.getAttribute("city"))}
+                  >
+                    Explore City{" "}
+                    <FontAwesomeIcon
+                      icon={faChevronRight}
+                      style={{ color: "black" }}
+                    />
+                  </h6>
+                </div>
               </div>
             </div>
+          </div>
 
-            <div className="city-container">
-              <img
-                src={require("./assets/New York.jpg")}
-                loading="lazy"
-                alt=""
-              />
-              <div className="city-info">
-                <h5>New York City</h5>
-                <p>United States of America</p>
+          <img id="city-disc-more-bg" ref={descBg} src={`${city}.jpg`}></img>
+          <div id="middle-organizer-discover">
+            <img src={`${city}.jpg`} ref={cityImg}></img>
+            <div id="disc-more-div" ref={discMore}>
+              <p id="location-name">
+                {citiesArray.map((c) => (c.city === city ? c.location : null))}
+              </p>
+              <h3>Explore {city}</h3>
+              <div id="avg-rating">
+                <div id="avg-rating-org">
+                  <p>Average Rating</p>
+                  <div id="rating-bg"></div>
+                  <div
+                    id="rating-bar"
+                    style={{ width: `${(avgRating / 5) * 100}%` }}
+                  ></div>
+                </div>
+                <p>{Math.round(avgRating * 10) / 10}/5</p>
               </div>
+              <p id="number-of-places">
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  style={{ color: "#e00000" }}
+                />{" "}
+                {allPlaces.filter((p) => p.city === city).length} places
+              </p>
+              <p>
+                {citiesArray.map((c) =>
+                  c.city === city ? c.description : null
+                )}
+              </p>
+              <button
+                onClick={() => {
+                  const children = document.getElementById(
+                    "change-city-showall"
+                  ).childNodes;
+                  for (let i = 0; i < children.length; i++) {
+                    if (children[i].textContent === city) {
+                      children[i].click();
+                    }
+                  }
+                  document.getElementById("searchText").scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                    inline: "nearest",
+                  });
+                }}
+              >
+                Discover More
+              </button>
             </div>
+          </div>
 
-            <div className="city-container">
-              <img src={require("./assets/North Pole.jpg")} alt="" />
-              <div className="city-info">
-                <h5>North Pole</h5>
-                <p>United States of America</p>
+          <div id="middle-organizer-2">
+            <div className="middle-org-h2">
+              <h2>Why </h2>{" "}
+              <h2 style={{ color: "#2E64FE", marginLeft: "0.8rem" }}>
+                {" "}
+                Choose Us
+              </h2>
+            </div>
+            <div id="why-choose-us">
+              <div id="col-1">
+                <div className="col-div">
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faMagnifyingGlass}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </div>
+                  <div>
+                    <h4>Find New Places</h4>
+                    <p>Using our map or search features and filters.</p>
+                  </div>
+                </div>
+
+                <div className="col-div">
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faNewspaper}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </div>
+                  <div>
+                    <h4>Get All The Info</h4>
+                    <p>
+                      From opening times to ratings, reviews, contact
+                      information and more.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="col-div">
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faCompass}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </div>
+                  <div>
+                    <h4>Get Directions</h4>
+                    <p>
+                      See how far your favorites places are from your hotel or
+                      next destination.
+                    </p>
+                  </div>
+                </div>
               </div>
-            </div>
+              <img id="lady" src="lady.png"></img>
+              <div id="col-2">
+                <div className="col-div">
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </div>
+                  <div>
+                    <h4>Save for later</h4>
+                    <p>
+                      Using the hearts, add places to your favorites to save
+                      them for later.
+                    </p>
+                  </div>
+                </div>
 
-            <div className="city-container">
-              <img
-                src={require("./assets/Barcelona.jpg")}
-                loading="lazy"
-                alt=""
-              />
-              <div className="city-info">
-                <h5>Barcelona</h5>
-                <p>Spain</p>
+                <div className="col-div">
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faPlane}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </div>
+                  <div>
+                    <h4>Create Trips</h4>
+                    <p>
+                      Create trips with just a few clicks and plan as you go.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="col-div">
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faMoneyBillWave}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </div>
+                  <div>
+                    <h4>Plan everything</h4>
+                    <p>
+                      Add places to your trip, plan your trips budget and get
+                      detailed breakdowns.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

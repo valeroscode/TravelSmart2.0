@@ -946,13 +946,13 @@ button:hover {
 }
 #intro {
     position: relative;
-    height: 90vh;
+    height: 82vh;
     width: 100vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: white;
-    mask-image: linear-gradient(rgb(255 255 255 / 1), rgb(255 255 255 / 1) 10%, rgb(255 255 255 / 1) 50%, rgb(255 255 255 / 1) 60%, rgb(255 255 255 / 1) 70%, rgb(255 255 255 / 0.9) 80%, rgb(255 255 255 / 0.7) 85%, rgb(255 255 255 / 0.55) 87%, rgb(255 255 255 / 0.5) 88%, rgb(255 255 255 / 0.45) 89%, rgb(255 255 255 / 0.4) 90%, rgb(255 255 255 / 0.3) 92%, rgb(255 255 255 / 0.25) 93%, rgb(255 255 255 / 0.2) 94%, rgb(255 255 255 / 0.15) 95%, rgb(255 255 255 / 0.1) 97%, rgb(255 255 255 / 0));
+    
 }
 #intro-text {
 height: 80%;
@@ -1016,6 +1016,8 @@ transition: all 0.3s ease;
 -o-transition:all 0.3s linear;
 transition:all 0.3s linear;
 object-fit: cover;
+-webkit-mask-image: linear-gradient(to top, transparent 5%, white 56%);
+    mask-image: linear-gradient(to top, transparent 5%, white 56%);
 }
 
 #intro-btns {
@@ -1043,6 +1045,7 @@ background-color: rgba(255, 255, 255, 1);
 -o-transition:height 5s linear;
 transition:height 5s linear;
 }
+
 #citySelect {
     pointer-events: all;
     cursor: pointer;
@@ -1068,6 +1071,7 @@ position: absolute;
 display: none;
 border-radius: 10px;
 z-index: 99999;
+font-family: "Roboto Condensed", sans-serif;
 -webkit-transition:height 0.5s linear;
 -moz-transition:height 0.5s linear;
 -o-transition:height 0.5s linear;
@@ -1167,6 +1171,7 @@ font-size: 0.9rem;
 margin-top: 0.8rem;
 background-color: #2E64FE;
 border-radius: 5px;
+font-family: "Roboto Condensed", sans-serif;
 }
 #map-overlay #hide-menu {
 width: fit-content;
@@ -1203,12 +1208,6 @@ overflow-x: hidden;
 padding-bottom: 5rem;
 }
 
-@media screen and (max-height: 1300px) {
-    #top-reccomendations-container {
-        height: 48vh;
-    }
-}
-
 @media screen and (max-height: 1010px) {
     #top-reccomendations-container {
         height: 66vh;
@@ -1219,6 +1218,41 @@ padding-bottom: 5rem;
     #top-reccomendations-container {
         height: 63vh;
     }
+    #avaliable-cities div img {
+        height: 15rem;
+        width: 11rem;
+        object-fit: cover;
+    }
+    #avaliable-cities div p {
+        bottom: 15.5rem;
+    }
+    #avaliable-cities div {
+        height: 15rem;
+    }
+    
+}
+
+@media screen and (max-width: 1011px) {
+    #why-choose-us {
+        flex-direction: column;
+    }
+    
+}
+
+@media screen and (max-width: 981px) {
+    #avaliable-cities {
+        width: 51rem;
+        overflow-x: scroll;
+        scrollbar-width: thin;
+    }
+}
+
+@media screen and (max-width: 864px) {
+  
+#avaliable-cities {
+        width: 45rem;
+   
+}
 }
 
 @media screen and (max-height: 830px) {
@@ -1465,103 +1499,324 @@ background-color: white;
     pointer-events: none;
 }
 
-#cities {
-    position: relative;
-    width: 100vw;
-    background-color: white;
+#middle-organizer {
     display: flex;
     justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 3rem 0;
-    padding-bottom: 7rem;
-    padding-top: 9rem;
-}
-
-#whyTravel {
-    position: absolute;
-    top: -2rem;
-    left: 1rem;
-    width: 98%;
-    font-size: 3rem;
-    color: #2E64FE;
-    opacity: 0.05;
-    line-height: 3rem;
-    z-index: 11;
-    font-family: 'Caveat', cursive;
-}
-
-#cities h2 {
     font-family: "Roboto Condensed", sans-serif;
-    font-weight: 800;
-    color: #151515;
-    position: absolute;
-    font-size: 6rem;
-    z-index: 1;
-    top: -3rem;
+    position: relative;
+    top: 10rem;
 }
 
-#cities-list {
+#organizer-city-rundown p {
+    color: white;
+}
+
+#organizer-city-rundown h2 {
+    font-size: 4rem;
+    margin-bottom: 0;
+    color: white;
+}
+
+#organizer-city-rundown h4 {
+background-color: #151515;
+padding: 0.5rem 1rem;
+color: white;
+width: fit-content;
+margin-bottom: 0;
+border-radius: 7px;
+position: relative;
+display: flex;
+}
+
+#middle-organizer-discover {
     display: flex;
-    flex-wrap: wrap;
-    margin: 0 7rem;
     justify-content: center;
-    align-items: center;
-    z-index: 12;
+    position: relative;
+    margin-top: 7rem;
+    margin-bottom: 5rem;
 }
 
-#cities-list .city-container {
-    height: 15rem;
-    width: 15rem;
+.middle-org-h2 {
+    position: absolute;
+    top: -8rem;
+    font-size: 2rem;
+    display: flex;
+}
+
+#why-choose-us {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#col-1 {
     display: flex;
     flex-direction: column;
-    margin: 1rem 1.5rem;
-    box-shadow: 0 0 61px 8px rgba(0,0,0,0.2);
+}
+
+.col-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 18rem;
+}
+
+.col-div h4 {
+    font-size: 1.4rem;
+    margin-bottom: 0;
+}
+
+.col-div p {
+    margin-top: 0;
+    color: gray;
+}
+
+.col-div svg {
+    background-color: #2E64FE;
     border-radius: 7px;
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    transition: all 0.2s linear;
+    padding: 0.5rem;
+    position: relative;
+    left: -1rem;
+    top: -0.2rem;
+
 }
 
-#cities-list .city-container img {
-    width: 100%;
-    height: 80%;
-    border-radius: 7px 7px 0 0;
-    background-color: #3BCA94;
+.col-div
+
+#col-2 {
+    display: flex;
+    flex-direction: column;
 }
 
-#cities-list .city-container .city-info {
+#lady {
+    height: 20rem;
+    margin-right: 2rem;
+    margin-left: 1rem;
+}
+
+#middle-organizer-discover img {
+    height: 18rem;
+    width: 24rem;
+    object-fit: cover;
+    border-radius: 7px;
+    box-shadow: 0px 0px 10px gray;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#avg-rating #rating-bar {
+    background-color: #151515;
+    width: 10rem;
+    height: 1rem;
+    position: relative;
+    bottom: 3rem;
+    border-radius: 7px;
+    -webkit-transition:all 0.3s linear;
+-moz-transition:all 0.3s linear;
+-o-transition:all 0.3s linear;
+transition:all 0.3s linear;
+}
+
+#avg-rating-org {
+    height: 0rem;
+}
+
+#rating-bg {
+    position: relative;
+    background-color: lightgray;
+    width: 14rem;
+    height: 1rem;
+    bottom: 2rem;
+    margin-right: 1rem;
+    border-radius: 7px;
+}
+
+#middle-organizer-discover h3 {
+    font-size: 2rem;
+    margin-bottom: 0;
+    margin-top: 0;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+#city-disc-more-bg {
+    position: relative;
+    height: 17rem;
+    width: 100vw;
+    top: 20rem;
+    z-index: -1;
+    opacity: 0.5;
+    object-fit: cover;
+    -webkit-transition:all 0.3s ease;
+-moz-transition:all 0.3s ease;
+-o-transition:all 0.3s ease;
+transition:all 0.3s ease;
+box-shadow: 0px 0px 20px gray;
+}
+
+#middle-organizer-discover #disc-more-div {
+    padding: 0 2rem;
     background-color: white;
-    border-radius: 0 0 7px 7px;
-    border: 1px solid whitesmoke;
+    position: relative;
+    right: 1rem;
+    border-radius: 0 7px 7px 0;
+    box-shadow: 0px 0px 10px gray;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#avg-rating {
+display: flex;
+}
+
+#middle-organizer-discover button {
+    font-family: "Roboto Condensed", sans-serif;
+    width: fit-content;
+    padding: 0.5rem;
+    height: fit-content;
+    border-radius: 3px;
+    background-color: whitesmoke;
+    font-weight: 800;
+    color: black;
+}
+
+#background-img {
+    position: absolute;
+    top: -5rem;
+    z-index: -1;
+    width: 100vw;
+    opacity: 0.7;
+    height: 33rem;
+    object-fit: cover;
+    box-shadow: 0px 0px 20px gray;
+}
+
+#organizer-city-rundown h5 {
+   text-align: left;
+   color: white;
+}
+
+#organizer-cities-img {
+    height: 25rem;
+    width: 20rem;
+    margin-left: 8rem;
+}
+
+#organizer-cities-img img {
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+    object-fit: cover;
+}
+
+#avaliable-cities {
+    display: flex;
+}
+
+#avaliable-cities div {
+    margin-top: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 4rem;
+}
+
+#avaliable-cities div p {
+    position: relative;
+    color: white;
+    font-weight: 800;
+    bottom: 17.5rem;
+    left: 1rem;
+}
+
+#avaliable-cities div h6 {
+    position: relative;
+    bottom: 7rem;
+    font-size: 1.01rem;
+    color: black;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 0 7px 0 7px;
+    width: fit-content;
+    pointer-events: all;
     cursor: pointer;
 }
 
-#cities-list .city-container .city-info h5 {
-    font-family: "Roboto Condensed", sans-serif;
-    font-size: 1.3rem;
-    font-weight: 800;
-    margin-bottom: 0.2rem;
-    margin-top: 0.5rem;
+#location-name {
+    margin-bottom: 0;
+    color: gray;
 }
 
-#cities-list .city-container .city-info p {
-    font-family: "Roboto Condensed", sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
+#number-of-places {
     margin-top: 0;
-    text-align: center;
 }
 
-#cities-list .city-container .city-info h3 {
-    font-family: 'Caveat', cursive;
+#avaliable-cities div img {
+    height: 18rem;
+    width: 14rem;
+    object-fit: cover;
+    border-radius: 7px;
 }
 
-#cities-list .city-container:hover {
-    height: 17rem;
-    width: 17rem;
+#middle-organizer-2 {
+    display: flex;
+    justify-content: center;
+    font-family: "Roboto Condensed", sans-serif;
+    position: relative;
+    top: 13rem;
+    margin-bottom: 20rem;
 }
+
+
+#organizer-city-rundown-2 h2 {
+    font-size: 3rem;
+    margin-bottom: 0;
+}
+
+#organizer-city-rundown-2 h5 {
+   text-align: left;
+}
+
+#organizer-cities-img-2 {
+    height: 25rem;
+    width: 20rem;
+    margin-right: 4rem;
+}
+
+#organizer-cities-img-2 img {
+    height: 100%;
+    width: 100%;
+    border-radius: 7px;
+    object-fit: cover;
+}
+
+#ready {
+   width: fit-content;
+   text-align: left;
+   font-size: 3rem;
+   font-weight: 800;
+   margin-right: 9rem;
+}
+
+@media screen and (max-width: 1110px) {
+    #middle-organizer {
+        margin:  0 3rem;
+        margin-bottom: 5rem;
+    }
+
+    #middle-organizer-2 {
+        margin:  0 3rem;
+    }
+    #organizer-cities-img {
+        margin-left: 4rem;
+    }
+    #cities {
+        margin-bottom: 14rem;
+    }
+}
+
 
 #transition {
     position: absolute;
@@ -2377,6 +2632,7 @@ font-weight: 800;
 height: 2rem;
 padding: 0 1rem;
 width: fit-content;
+border-radius: 7px;
 }
 .showall-tripbtn svg {
 position: relative;
@@ -2491,6 +2747,7 @@ width: fit-content;
 padding-right: 0.5rem;
 font-weight: 800;
 left: 0.5rem;
+border-radius: 0 7px 7px 0;
 }
 .lowerDiv {
 position: relative;
@@ -2809,12 +3066,6 @@ position: relative;
     left: 1.5rem;
     top: 0.1rem;
     font-size: 1.2rem;
-}
-.fa-magnifying-glass {
-    color: #2E64FE;
-    position: absolute;
-    left: 2rem;
-    bottom: 17rem;
 }
 .fa-thumbs-down {
     color: red;
@@ -3650,6 +3901,7 @@ width: 130%;
 #adding-to-trip {
 left: 7vh;
 }
+
 }
 
 @media screen and (max-width: 833px) {
@@ -3657,18 +3909,32 @@ left: 7vh;
 width: 80%;
 }
 #cities h2 {
-font-size: 5rem;
+font-size: 2.5rem;
 z-index: 1;
-top: 0;
-text-align: center;
+text-align: left;
 }
+
+
 #whyTravel {
 z-index: 7;
+}
+#organizer-city-rundown-2 h4 {
+display: none;
+}
+#avaliable-cities-2 {
+    display: none;
+}
+#searchText {
+    font-size: 2.5rem;
 }
 }
 
 
 @media screen and (max-width: 770px) {
+
+#middle-org-h2 {
+    display: none;
+}
 #explore-here {
 font-size: 4rem;
 }
@@ -3678,6 +3944,10 @@ margin: 0px 2rem;
 }
 
 @media screen and (max-width: 709px) {
+#avaliable-cities {
+        width: 38rem;
+   
+}
 .map {
 position: relative;
 left: 0;
@@ -3721,11 +3991,36 @@ width: 100vw;
 }
 }
 
+@media screen and (max-width: 683px) {
+#avaliable-cities {
+        width: 39rem;
+
+}
+
+    #middle-organizer-discover img {
+        width: 14rem;
+    }
+    }
+
 @media screen and (max-width: 639px) {
+#avaliable-cities {
+        width: 32rem;
+
+}
 #hideplaces-btn {
 position: absolute;
 top: 0;
 }
+}
+
+@media screen and (max-width: 700px) {
+    #cities h2 {
+        font-size: 4rem;
+        text-align: start;
+    }
+    #lady {
+        display: none;
+    }
 }
 
 @media only screen 
@@ -3869,6 +4164,26 @@ display: none;
 }
 
 @media screen and (max-width: 597px) {
+#avaliable-cities {
+        width: 89vw;
+ 
+}
+    #middle-organizer-discover img {
+        width: 10rem;
+    }
+
+#ready {
+    font-size: 3rem;
+    width: 90vw;
+}
+#ready-innerdiv {
+    width: 80vw;
+}
+
+#ready-innerdiv div {
+    margin-bottom: 1rem;
+} 
+
 #img-tracker {
 height: 55vh;
 top: 2vh;
@@ -3908,6 +4223,9 @@ width: 200%;
     #img-tracker {
         height: 29vh;
     }
+    #middle-organizer-discover img {
+        width: 8rem;
+    }
 }
 
 @media screen and (max-width: 489px) {
@@ -3918,6 +4236,27 @@ width: 100%;
 }
 
 @media screen and (max-width: 455px) {
+    #organizer-cities-img-2 {
+        width: unset;
+        height: unset;
+        margin-right: 2rem;
+    }
+    #middle-organizer-2 {
+        margin: 0 1rem;
+    }
+    #organizer-city-rundown-2 {
+        margin-left: 1rem;
+    }
+  
+    #middle-organizer-discover img {
+        display: none;
+    }
+    #middle-organizer-discover #disc-more-div {
+        padding: 0 2rem 2rem 2rem;
+        border-radius: 7px;
+        width: 20rem;
+        right: unset;
+    }
 #footer {
 position: relative;
 padding-top: 0;
@@ -3952,9 +4291,6 @@ display: none;
     margin: 0 2.5rem;
     height: 22rem;
 }
-#searchText {
-    padding-left: 0.5rem;
-}
 #title-city-options {
     padding: 0;
     flex-direction: column;
@@ -3973,13 +4309,24 @@ display: none;
     width: 30rem;
 }
 #cities h2 {
-    font-size: 3rem;
+    font-size: 2.5rem;
     top: 3rem;
-    text-align: center;
     padding: 0 0.2rem;
+}
+#organizer-cities-img {
+    margin-left: 1rem;
+}
+#middle-organizer {
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+middle-organizer-2 {
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 #cities {
 padding-top: 4rem;	
+position: relative;
 }
 #cities-list {
     margin-top: 9rem;
@@ -4006,6 +4353,11 @@ width: 140%;
 }
 
 @media screen and (max-width: 401px) {
+    #middle-organizer-discover #disc-more-div {
+      
+        width: 18rem;
+     
+    }
 .directions-p {
 width: fit-content;
 } 

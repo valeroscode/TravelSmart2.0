@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { applied_filters } from "./getPlaceInfo.mjs";
 import "./styles/Navbar.css";
-import allPlaces from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
 import { learnMoreAboutPlace } from "./getPlaceInfo.mjs";
 import { useAuth } from "./contexts/AuthContext";
@@ -168,7 +168,7 @@ function PlaceHome() {
         sessionStorage.setItem("total", catScore + typeScore + areaScore);
         sessionStorage.setItem("filters", applied_filters);
         window.location.replace(
-          "https://travelsmart2-0.onrender.com/#/Search-Results"
+          "https://travelsmart2-0.onrender.com/Search-Results"
         );
       }
     }
@@ -496,8 +496,6 @@ function PlaceHome() {
           )}
         </ul>
       </div>
-      {/* <div id="body">{search == false ? <PlaceContent/> : <Results/>}</div>
-    <div id="tripsSection">{trips === true ? <TripsPage/> : null}</div> */}
     </>
   );
 }

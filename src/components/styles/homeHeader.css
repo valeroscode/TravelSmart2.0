@@ -173,6 +173,7 @@ padding: 0 1rem 0 1rem;
     padding: 0.5rem;
     width: fit-content;
     margin-right: 7rem;
+    font-family: "Roboto Condensed", sans-serif;
 }
 .account {
   position: relative;
@@ -189,6 +190,9 @@ bottom: 0.5rem;
 padding: 0.5rem;
 border:none;
 color: white;
+border-radius: 7px;
+font-weight: 800;
+font-family: "Roboto Condensed", sans-serif;
 }
 .user-name button a {
 color: white;
@@ -373,9 +377,6 @@ font-size: 0.7rem;
 }
 
 @media screen and (max-width:1131px) {
-#place-search {
-width: 13vw;
-}
 .fa-magnifying-glass-location {
 left: 0;
 top: 0;
@@ -430,12 +431,24 @@ left: -2.5rem;
 #home-hamburger {
 top: 0;
 }
+#homesearch {
+  bottom: 3.5rem;
+}
 }
 
 @media screen and (max-width: 480px) {
 #search-bar-wrapper {
   position: relative;
-  right: 3rem;
+  right: 4rem;
+}
+#organizer-city-rundown-2 h4 {
+  display: none;
+}
+#middle-organizer-2 {
+  margin-bottom: 10rem;
+}
+#avaliable-cities-2 {
+  display: none;
 }
 .home-search-btn svg {
 font-size: 1.4rem;
@@ -536,11 +549,10 @@ min-width: 95px;
 }
 }
 
-
-@media screen and (max-width: 388px) {
-.first-input {
-left: 3.5rem;
-}
+@media screen and (max-width: 382px) {
+  .home-search-btn {
+    padding: 0 0.5rem 0 0.5rem;
+  }
 }
 
 @media screen and (max-width: 370px) {

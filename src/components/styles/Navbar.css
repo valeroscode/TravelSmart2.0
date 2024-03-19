@@ -180,7 +180,11 @@ display: flex;
 justify-content: center;
 align-items: center;
 font-weight: 800;
+border-radius: 7px;
 }
+.accBtn a {
+    color: white;
+} 
 .accBtn:nth-child(odd) {
 margin-right: 1rem;
 }
@@ -343,10 +347,6 @@ top: -0.5rem;
 }
 #logo {
 top: 0;
-}
-.dropdown-div {
-left: -5.5rem;
-top: 8rem;
 }
 }
 

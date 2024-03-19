@@ -10,15 +10,11 @@ import {
   faChevronLeft,
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
-import allPlaces from "./allMarkers.mjs";
+import { allPlaces } from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 
-import {
-  tripObj,
-  tripDates,
-  dateObj,
-} from "./getPlaceInfo.mjs";
+import { tripObj, tripDates, dateObj } from "./getPlaceInfo.mjs";
 
 function TripsPage() {
   var duplicates = (array) =>
@@ -168,7 +164,6 @@ function TripsPage() {
           i <= parseInt(tripObj.To.split(" ")[0]);
           i++
         ) {
-     
           const fullDay = `${tripObj.From.split(" ")[1]} ${i}`;
           if (!tripDates.includes(fullDay)) {
             tripDates.push(fullDay);
@@ -461,16 +456,20 @@ function TripsPage() {
   const unorderedList = useRef();
 
   useEffect(() => {
-    if (info.trips) {
-      setTimeout(() => {
+    function setData() {
+      if (Object.keys(info.trips).length !== 0) {
         setTrips(Object.entries(info.trips));
         //Trips with the strucutre as seen in the database
         setDbTrips(info.trips);
-      }, 2500);
+      
+      } else {
+        setInterval(() => {
+          setData();
+        }, 100);
+      }
     }
+    setData();
   }, []);
-
-  useEffect(() => {}, [trips]);
 
   let formFunctions = {
     placeholderGone: function (e) {
@@ -540,9 +539,6 @@ function TripsPage() {
       document.getElementById("whereto").value = e.target.textContent;
       e.target.parentNode.style.display = "none";
     },
-    Name: function (e) {
-      tripObj.Name = e.target.value;
-    },
     submit: function (e) {
       tripObj.Where = inputCityField.current.value;
       tripObj.Name = inputNameField.current.value;
@@ -565,7 +561,7 @@ function TripsPage() {
         }
 
         if (tripObj.Name !== "") {
-          dbTrips[tripObj.Name] = newTrip;
+          dbTrips[String(tripObj.Name)] = newTrip;
           docMethods.updateTrips(string, dbTrips);
           setDbTrips(dbTrips);
           setTimeout(() => {
@@ -612,7 +608,7 @@ function TripsPage() {
     sessionStorage.setItem("trip", e.target.getAttribute("name"));
     sessionStorage.setItem("city", e.target.getAttribute("city"));
 
-    window.open("https://travelsmart2-0.onrender.com/#/MyTrip");
+    window.open("https://travelsmart2-0.onrender.com/MyTrip");
   }
 
   function timeFromTrip(trip) {
@@ -692,47 +688,47 @@ function TripsPage() {
             </h2>
           </div>
           <ul id="trips-con" ref={unorderedList}>
-            {currentUser
-              ? trips.map((trip) => (
-                  <div key={trip[0]} className="trip-item">
-                    <img
-                      loading="lazy"
-                      src={require(`./assets/${trip[1].City}.jpg`)}
-                    ></img>
-                    <div className="trip-flex">
-                      <div>
-                        <h2>{trip[0]}</h2>
-                        <p>
-                          {trip[1].Dates[0]} -{" "}
-                          {trip[1].Dates[trip[1].Dates.length - 1]}
-                        </p>
-                        <h6>
-                          {trip[1].City}
-                          {timeFromTrip(trip)}
-                        </h6>
-                      </div>
-                      <div className="trip-section-btns">
-                        <button
-                          name={trip[0]}
-                          city={trip[1].City}
-                          onClick={(e) => getTripDetails(e)}
-                        >
-                          Plan Trip
-                        </button>
-                        <button
-                          name={trip[0]}
-                          onClick={(e) =>
-                            deleteTrip(e, e.target.getAttribute("name"))
-                          }
-                          className="delete-trip"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    </div>
+        
+
+            {trips.map((trip) => (
+              <div key={trip[0]} className="trip-item">
+                <img
+                  loading="lazy"
+                  src={require(`./assets/${trip[1].City}.jpg`)}
+                ></img>
+                <div className="trip-flex">
+                  <div>
+                    <h2>{trip[0]}</h2>
+                    <p>
+                      {trip[1].Dates[0]} -{" "}
+                      {trip[1].Dates[trip[1].Dates.length - 1]}
+                    </p>
+                    <h6>
+                      {trip[1].City}
+                      {timeFromTrip(trip)}
+                    </h6>
                   </div>
-                ))
-              : null}
+                  <div className="trip-section-btns">
+                    <button
+                      name={trip[0]}
+                      city={trip[1].City}
+                      onClick={(e) => getTripDetails(e)}
+                    >
+                      Plan Trip
+                    </button>
+                    <button
+                      name={trip[0]}
+                      onClick={(e) =>
+                        deleteTrip(e, e.target.getAttribute("name"))
+                      }
+                      className="delete-trip"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
           </ul>
         </div>
 
