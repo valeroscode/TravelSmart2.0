@@ -3,7 +3,7 @@ display: flex;
 justify-content: center;
 background-color: #2E64FE;
 position: fixed;
-width: 100%;
+width: 101%;
 justify-content: flex-start;
 height: 11vh;
 -webkit-transition: all 0.3s ease;
@@ -21,6 +21,7 @@ background-color: #2E64FE;
 top: -0.2rem;
 right: 1rem;
 position: fixed;
+border-radius: 7px;
 }
 #hamburger svg {
 pointer-events: none;
@@ -195,10 +196,11 @@ overflow-y: scroll;
 width: 70%;
 position: absolute;
 padding-bottom: 0;
-background-color: #2E64FE;
+background-color: rgba(0, 0, 0, 0);
 z-index: 12;
 padding-top: 0rem;
-top: 3rem;
+-ms-overflow-style: none;  /* Internet Explorer 10+ */
+scrollbar-width: none;  /* Firefox */
 }
 .filter-container:-webkit-scrollbar {
 display: none;
@@ -278,6 +280,7 @@ overflow-x: none;
 width: fit-content;
 padding-top: 0.5rem;
 padding-bottom: 0.5rem;
+width: 100%;
 }
 #categories-filter {
 font-family: 'Roboto Condensed', sans-serif;
@@ -307,7 +310,7 @@ position: relative;
 bottom: 8rem;
 padding-top: 1rem;
 z-index: 10;
-bottom: 2rem;
+bottom: 8rem;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -350,20 +353,6 @@ top: 0;
 }
 }
 
-@media screen and (min-width: 1481px) {
-.dropdown-div {
-    left: -3.5rem;
-    top: 7.3rem;
-}
-}
-
-@media screen and (min-width: 1800px) {
-.dropdown-div {
-    left: -3.5rem;
-    top: 6.78rem;
-}
-}
-
 @media screen and (max-width: 1443px) {
 #account-buttons {
 left: 5vw;
@@ -381,7 +370,7 @@ display: none;
 display: none;
 }
 #hamburger {
-top: 0.8rem;
+top: 1rem;
 }
 }
 
@@ -405,6 +394,7 @@ height: 10vh;
 .dropdown-div {
 left: -6rem;
 top: 4.45rem;
+width: 25rem;
 }
 }
 
@@ -416,9 +406,6 @@ right: 6rem;
 right: -2rem;
 width: 70vw;
 }
-.dropdown-div {
-left: -6rem;
-}
 }
 
 @media screen and (max-width: 820px) {
@@ -428,9 +415,7 @@ right: 0;
 left: -23.5vw;;
 width: 100vw;
 }
-.dropdown-div {
-left: -6rem;
-}
+
 }
 
 @media screen and (max-width: 540px) {
@@ -447,9 +432,7 @@ overflow-y: scroll;
 height: 90vh;
 left: -46vw;
 }
-.dropdown-div {
-left: -10rem;
-}
+
 }
 
 @media screen and (max-width: 740px) {
@@ -465,9 +448,10 @@ right: 1rem;
 right: 3rem;
 }
 .filter-container {
-position: relative;
+position: absolute;
 width: 100vw;
 left: -49vw;
+top: 0rem;
 }
 #filters-btn {
 position: relative;
@@ -483,7 +467,8 @@ right: 1.5rem;
 align-self: center;
 }
 .dropdown-div {
-    height: 61vh;
+    width: 22rem;
+    padding-left: 0.5rem;
 }
 }
 
@@ -498,19 +483,14 @@ right: 3rem;
 display: block;
 }
 .dropdown-div div img {
-height: 7rem;
-width: 10rem;
-position: relative;
-left: 3rem;
+width: 7rem;
+object-fit: cover;
 }
-.dropdown-div div .DDtitle {
-position: relative;
-left: 3rem;
+.dropdown-div a .DDtitle {
+    width: 70%;
 }
-.floater .DDp {
-margin: 0;
-position: relative;
-top: 3.5rem;
+.dropdown-div {
+    width: 20rem;
 }
 #hamburger {
 top: 0.7vh;

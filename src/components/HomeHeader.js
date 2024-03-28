@@ -69,8 +69,10 @@ function HomeHeader({ name }) {
     },
     handleClicksOutside_ofInputs: function (e) {
       if (e.target !== searchInput.current && e.target !== cityInput.current) {
+        if (cityDD && searchDD) {
         cityDD.current.style.display = "none";
         searchDD.current.style.display = "none";
+        }
       } else {
         return;
       }

@@ -1,4 +1,5 @@
-import {allPlaces} from "./allMarkers.mjs";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { allPlaces } from "./allMarkers.mjs";
 import { learnMoreAboutPlace, handleTripAdderPopup } from "./getPlaceInfo.mjs";
 
 export function generalScript() {
@@ -90,7 +91,7 @@ export function generalScript() {
     const directionsRenderer = new window.google.maps.DirectionsRenderer();
     //map options
     let options = {
-      Orlando: { lat: 28.5384, lng: -81.3789 },
+      Chicago: { lat: 41.8781, lng: -87.6298 },
       Miami: { lat: 25.7617, lng: -80.1918 },
       Tampa: { lat: 27.9517, lng: -82.4588 },
       "North Pole": { lat: 64.7552, lng: -147.3534 },
@@ -110,54 +111,8 @@ export function generalScript() {
     let allmarkers = [];
     var placeDetails = document.getElementById("placeDetails");
     const placeInfo = document.getElementById("placeInfo");
-    const route_info = document.getElementById("pullup_travelInfo");
-    const travel_info = document.getElementById("travelInfo");
     const gallery = document.getElementById("gallery");
 
-    if (route_info.outerText == "Hide") {
-      route_info.style.opacity = 1;
-    }
-
-    function pullup_directions() {
-      route_info.addEventListener("click", (e) => {
-        if (e.target.textContent === "Get Directions") {
-          travel_info.style.display = "block";
-          travel_info.style.opacity = 1;
-          travel_info.classList.add("slideDown");
-          setTimeout(() => {
-            route_info.textContent = `Hide`;
-          }, 50);
-
-          if (travel_info.classList.contains("slideUp")) {
-            travel_info.classList.remove("slideUp");
-          }
-        } else {
-          setTimeout(() => {
-            route_info.textContent = "Get Directions";
-          }, 50);
-          travel_info.classList.remove("slideDown");
-          travel_info.classList.add("slideUp");
-          inputText.value = "";
-          destination.value = "";
-          setTimeout(() => {
-            travel_info.style.display = "none";
-          }, 1000);
-        }
-      });
-    }
-
-    pullup_directions();
-
-    document.getElementById("directions-X").addEventListener("click", (e) => {
-      route_info.textContent = "Get Directions";
-      travel_info.classList.remove("slideDown");
-      travel_info.classList.add("slideUp");
-      inputText.value = "";
-      destination.value = "";
-      setTimeout(() => {
-        travel_info.style.display = "none";
-      }, 1000);
-    });
 
     let lastMarkerClicked = "";
 
@@ -636,10 +591,24 @@ export function generalScript() {
 
     showFiltersList_btn.addEventListener("click", () => {
       filtersList.style.display = "flex";
-      filtersList.style.width = "10vw";
+      filtersList.style.width = "15vw";
       filtersList.style.height = "fit-content";
-      if (window.innerWidth <= 1300) {
+      if (window.innerWidth >= 1300) {
         filtersList.style.height = "70vh";
+      } else if (window.innerWidth < 1300 && window.innerWidth >= 1000) {
+        filtersList.style.height = "60vh";
+      } else if (window.innerWidth < 1000 && window.innerWidth >= 800) {
+        filtersList.style.height = "40vh";
+      } else if (window.innerWidth < 800) {
+        filtersList.style.height = "49vh";
+      }
+
+      if (window.innerHeight <= 709) {
+        filtersList.style.top = "7%";
+        filtersList.style.right = 0;
+      } else {
+        filtersList.style.top = "15%";
+        filtersList.style.right = 0;
       }
     });
 
@@ -650,20 +619,11 @@ export function generalScript() {
     });
 
     const showMenu_btn = document.getElementById("show-menu");
-    const hideMenu_btn = document.getElementById("hide-menu");
     const mapOverlay = document.getElementById("map-overlay");
     const mapContainer = document.getElementById("map");
     const recsContainer = document.getElementById(
       "top-reccomendations-container"
     );
-
-    hideMenu_btn.addEventListener("click", () => {
-      mapOverlay.style.display = "none";
-      mapContainer.style.width = "100vw";
-      mapContainer.style.top = "0vh";
-      mapContainer.style.left = 0;
-      showMenu_btn.style.display = "block";
-    });
 
     showMenu_btn.addEventListener("click", () => {
       mapOverlay.style.display = "block";
@@ -798,9 +758,9 @@ export function generalScript() {
             </div>
             </div>`;
 
-            if (i === array.length - 1) {
-              newRec.style.paddingBottom = "2.5rem";
-            }
+          if (i === array.length - 1) {
+            newRec.style.paddingBottom = "2.5rem";
+          }
 
           //This will be used for the googleAPICalls function
           newRec.setAttribute("data-lat", marker.coords.lat);

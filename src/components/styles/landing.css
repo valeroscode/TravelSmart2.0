@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+#landing-main {
+    background-color: #DFC2DD;
+    height: fit-content;
+    position: relative;
+}
+#landing-nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-top: 2rem;
+}
+
+#landing-nav-left {
+    margin-left: 5rem;
+    display: flex;
+    align-items: center;
+}
+
+#landing-nav-left svg {
+    height: 1.5rem;
+}
+
+#landing-nav-left h1 {
+    margin-left: 0.5rem;
+    font-size: 1.8rem;
+}
+.travel {
+    font-weight: 800;
+}
+
+#landing-nav-right {
+    margin-right: 5rem;
+}
+
+
+#landing-nav-right button {
+    background-color: rgba(0, 0, 0, 0);
+    color: black;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    height: fit-content;
+}
+
+#landing-nav-right button:hover {
+    box-shadow: none;
+    color: gray;
+}
+
+#landing-feature-breakdown {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin-top: 8rem;
+    position: relative;
+    left: 5rem;
+}
+
+#landing-feature-breakdown p {
+    margin-bottom: 0;
+    margin-top: 5rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+#landing-feature-breakdown h2 {
+    font-size: 4rem;
+    font-weight: 800;
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-top: 0rem;
+}
+
+#feature-text {
+    width: 35%;
+}
+
+#feature-cards {
+    position: relative;
+    height: 45rem;
+    width: 50%;
+}
+
+#feature-cards img {
+    position: absolute;
+    width: 40rem;
+    height: 35rem;
+    transform: rotate(1deg);
+    cursor:grab;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#feature-cards img:nth-child(1) {
+    transform: rotate(-1deg);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+#scroll-down {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    margin-top: 5rem;
+    font-family: 'Roboto Condensed', sans-serif;
+    position: relative;
+    width: 100%;
+    right: 5rem;
+    bottom: 10rem;
+}
+
+#scroll-down h3 {
+    margin-right: 1rem;
+}
+
+#scroll-down svg {
+    border: 1px solid black;
+    padding: 1rem;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+#scroll-down svg:hover {
+    background-color: black;
+    color: white;
+}
+
+#landing-spotlight {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    margin-top: 10rem;
+    position: relative;
+    flex-direction: column;
+    width: 100%;
+}
+
+#landing-spotlight-text {
+    font-family: 'Roboto Condensed', sans-serif;
+    margin-left: 5rem;
+}
+
+.in {
+    font-weight: 800;
+    font-size: 2rem;
+    margin-bottom: 0;
+}
+
+.impacts {
+    font-weight: 500;
+    font-size: 2rem;
+    margin-top: 0;
+}
+
+#landing-spotlight-content {
+    position: relative;
+    left: 5rem;
+}
+
+#landing-spotlight-content img:first-child {
+    height: 40rem;
+    width: 30rem;
+    object-fit: cover;
+}
+
+.spotlight-wrapper {
+    width: 30rem;
+    position: relative;
+}
+
+.spotlight-wrapper h4 {
+    font-size: 1.6rem;
+    margin: 0;
+}
+
+.spotlight-wrapper p {
+    margin: 0;
+    font-size: 1.5rem;
+    color: #151515;
+}
+
+.testimonial-text {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 1.5rem;
+    width: fit-content;
+    background-color: #151515;
+    color: white;
+    padding: 1rem 2rem 4rem 1rem;
+    width: 50%;
+    position: absolute;
+    top: 35%;
+    left: 5%;
+    opacity: 0;
+    -webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+}
+
+.from {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(-90deg);
+    top: 4rem;
+    right: -5rem;
+}
+
+.spotlight-wrapper:hover .testimonial-text {
+    opacity: 1;
+}
+
+.from div {
+    background-color: #151515;
+    height: 0.5rem;
+    width: 0.5rem;
+    border-radius: 100%;
+    margin-right: 0.5rem;
+}
+
+.from p {
+    font-size: 1rem;
+    font-size: 800;
+}
+

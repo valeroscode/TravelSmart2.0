@@ -1,15 +1,23 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Miami.css";
 import "./styles/Miami2.css";
-import {allPlaces} from "./allMarkers.mjs";
+import { allPlaces } from "./allMarkers.mjs";
 import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
 import AddTrip_Button from "./AddTrip_Button";
-import { handleTripAdderPopup, learnMoreAboutPlace } from "./getPlaceInfo.mjs";
+import {
+  handleTripAdderPopup,
+  learnMoreAboutPlace,
+  handleFavoritesNotifications,
+} from "./getPlaceInfo.mjs";
 import Notification from "./Notification";
 import PlaceHome from "./PlaceHome";
+import Footer from "./footer";
+import { set } from "react-hook-form";
+import { useAuth } from "./contexts/AuthContext";
+import { docMethods } from "./firebase/firebase";
 
 function Results() {
   const budgetF = useRef();
@@ -17,6 +25,21 @@ function Results() {
   const highlyRatedSec = useRef();
   const lottie = useRef();
   const lottieBg = useRef();
+  const ul = useRef();
+  const topRated = useRef();
+
+  const list = [];
+  const topRatedArr = [];
+  const budget = [];
+
+  const [listState, setListState] = useState([]);
+  const [topRatedState, setTopRatedState] = useState([]);
+  const [budgetState, setBudgetState] = useState([]);
+  const [favorites, setFavorites] = useState([]);
+
+  const { currentUser, info } = useAuth();
+
+  let counter = 0;
 
   let applied_filters = sessionStorage.getItem("filters").split("/ ,");
 
@@ -40,11 +63,12 @@ function Results() {
         ? placeScore++
         : null
     );
+
     if (placeScore === parseInt(sessionStorage.getItem("total"))) {
-      populateWithInfo();
+      populateWithInfo(parent, data);
     }
 
-    function populateWithInfo() {
+    function populateWithInfo(parent, data) {
       var geocoder = new window.google.maps.Geocoder();
       geocoder.geocode({ placeId: data.placeID }, function (results, status) {
         //All that is needed is the reviews because all other attributes can be retrieved from the allPlaces array
@@ -56,30 +80,29 @@ function Results() {
           var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
             if (status === "OK") {
+              if (parent === undefined) {
+                return;
+              }
               if (!parent.innerText.includes(data.name)) {
-                let li = document.createElement("li");
-                const image = require(`./assets/${data.name}.jpg`);
-                li.innerHTML =
-                  `<div area='${data.area}' name='${data.name}' 
-           type='${data.type}' rating='${data.rating}' price='${data.price}' 
-           favorite='${data.favorite}'
-            class="results-div">
-            <i class="fa fa-regular fa-heart"></i>
-            <div class="line"></div><div class="results-img">
-            <img class='place-img' src='${image}'/>
-            <div id='rating-div'><p>${data.rating}</p></div></div>` +
-                  `<div id="results-content">` +
-                  `<h5 class='place-name'>${data.name}</h5>` +
-                  `<h6>${place.reviews[0].text}</h6>` +
-                  `<div class='div-btm'>` +
-                  `<p>${data.category} · ${data.area}</p>` +
-                  `<h4 id='adder' class='trip-adder' name='${data.name}'>Add to trip ${chevron}` +
-                  `</div></div>` +
-                  `</div>` +
-                  "<hr/>";
+                data.reviews = place.reviews[0].text;
+                data.author_name = place.reviews[0].author_name;
+                if (parent === budgetF.current) {
+                  budget.push(data);
+                }
 
-                parent.appendChild(li);
-                li.classList.add("slideFadeIn");
+                if (parent === topRated.current) {
+                  topRatedArr.push(data);
+                }
+
+                if (parent === ul.current) {
+                  list.push(data);
+                }
+
+                if (counter === allPlaces_inCity.length) {
+                  setListState([...list]);
+                  setTopRatedState([...topRatedArr]);
+                  setBudgetState([...budget]);
+                }
               }
             }
           });
@@ -88,14 +111,11 @@ function Results() {
     }
   }
 
-  const ul = useRef();
-  const topRated = useRef();
-  const sorryText = useRef();
-
   useEffect(() => {
     document.getElementById("google-map").style.display = "none";
     //Array containing all places in the current city
     for (let i = 0; i < allPlaces_inCity.length; i++) {
+      counter++;
       renderResults(ul.current, allPlaces_inCity[i]);
       if (allPlaces[i].rating >= 3.5) {
         renderResults(topRated.current, allPlaces_inCity[i]);
@@ -103,20 +123,54 @@ function Results() {
       if (allPlaces[i].price <= 2) {
         renderResults(budgetF.current, allPlaces_inCity[i]);
       }
-      if (i === allPlaces_inCity.length - 1) {
-        setTimeout(() => {
-          if (ul.current.children.length === 2) {
-            sorryText.current.style.display = "flex";
-          }
-        }, 1500);
+    }
+
+    if (currentUser) {
+      function loadPage() {
+        if (!info.favorites) {
+          window.setTimeout(loadPage, 200);
+        } else {
+          setFavorites(info.favorites);
+          markFavorites();
+        }
       }
+      loadPage();
     }
   }, []);
 
+  useEffect(() => {
+    console.log("state changed ooooo");
+  }, [listState, topRatedState, budgetState]);
+
   //Handles clicks for each card
   function handleCardClicks(e, name) {
+    console.log(e.target.classList);
     if (e.target.classList.contains("trip-adder")) {
       handleTripAdderPopup(e);
+    } else if (e.target.classList.contains("fa-heart")) {
+      if (currentUser) {
+        if (!favorites.includes(name)) {
+          handleFavoritesNotifications(
+            favorites,
+            e.target,
+            e.target.firstElementChild
+          );
+          favorites.push(name);
+          //In the case that the user is only clicking the heart, a notification pops up and the favorites class is toggled
+          setFavorites(favorites);
+        } else {
+          handleFavoritesNotifications(
+            favorites,
+            e.target,
+            e.target.firstElementChild
+          );
+          favorites.splice(favorites.indexOf(name), 1);
+          setFavorites(favorites);
+        }
+        let string = currentUser.email.toString();
+        string = currentUser.metadata.createdAt + string.substring(0, 8);
+        docMethods.updateFavorites(string, favorites);
+      }
     } else {
       const place = allPlaces.filter((place) => place.name === name);
       learnMoreAboutPlace(
@@ -134,6 +188,30 @@ function Results() {
     }
   }
 
+  function markFavorites() {
+    //Ensures that favorite hearts are consistant acorss several sections
+
+    const favorite_btns = document.getElementsByClassName("fa-heart");
+    for (let i = 0; i < favorite_btns.length; i++) {
+      console.log(favorite_btns[i]);
+      if (favorites.includes(favorite_btns[i].getAttribute("name"))) {
+        //fills in hearts in the top picks section
+        favorite_btns[i].firstElementChild.firstElementChild.classList.add(
+          "favorite"
+        );
+      } else if (
+        !favorites.includes(favorite_btns[i].getAttribute("name")) &&
+        favorite_btns[i].firstElementChild.firstElementChild.classList.contains(
+          "favorite"
+        )
+      ) {
+        favorite_btns[i].firstElementChild.firstElementChild.classList.remove(
+          "favorite"
+        );
+      }
+    }
+  }
+
   return (
     <>
       <PlaceHome />
@@ -142,8 +220,19 @@ function Results() {
       </div>
       <div id="lottie-bg" ref={lottieBg}></div>
       <section id="parent-section" style={{ backgroundColor: "white" }}>
-        <section id="budget-best-section">
-          <section ref={budgetSec} id="budget-section">
+        <section
+          id="budget-best-section"
+          style={
+            budgetState.length === 0 && topRatedState.length === 0
+              ? { display: "none" }
+              : null
+          }
+        >
+          <section
+            ref={budgetSec}
+            id="budget-section"
+            style={budgetState.length === 0 ? { display: "none" } : null}
+          >
             <h5 id="budget-text">
               <p>MOST BUDGET FRIENDLY</p>
               <div></div>
@@ -157,9 +246,56 @@ function Results() {
                   e.target.closest(".results-div").getAttribute("name")
                 )
               }
-            ></ul>
+            >
+              {budgetState.map((place) => (
+                <li className="slideFadeIn">
+                  <div
+                    area={place.area}
+                    name={place.name}
+                    type={place.type}
+                    rating={place.rating}
+                    price={place.price}
+                    favorite={place.favorite}
+                    className="results-div"
+                  >
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      style={{ color: "lightgray" }}
+                    />
+                    <div className="line"></div>
+                    <div className="results-img">
+                      <img
+                        className="place-img"
+                        src={require(`./assets/${place.name}.jpg`)}
+                      ></img>
+                      <div id="rating-div">
+                        <p>{place.rating}</p>
+                      </div>
+                    </div>
+                    <div id="results-content">
+                      <h5 className="place-name">{place.name}</h5>
+                      <h6>{place.reviews}</h6>
+                      <h6 className="author-name">- {place.author_name}</h6>
+                      <div className="div-btm">
+                        <p>
+                          {place.category} · {place.area}
+                        </p>
+                        <h4 id="adder" className="trip-adder" name={place.name}>
+                          Add to trip
+                        </h4>
+                      </div>
+                    </div>
+                    <hr />
+                  </div>
+                </li>
+              ))}
+            </ul>
           </section>
-          <section ref={highlyRatedSec} id="highly-rated-section">
+          <section
+            ref={highlyRatedSec}
+            id="highly-rated-section"
+            style={topRatedState.length === 0 ? { display: "none" } : null}
+          >
             <h5 id="top-rated-text">
               TOP RATED SPOTS
               <div></div>
@@ -173,10 +309,57 @@ function Results() {
                   e.target.closest(".results-div").getAttribute("name")
                 )
               }
-            ></ul>
+            >
+              {topRatedState.map((place) => (
+                <li className="slideFadeIn">
+                  <div
+                    area={place.area}
+                    name={place.name}
+                    type={place.type}
+                    rating={place.rating}
+                    price={place.price}
+                    favorite={place.favorite}
+                    className="results-div"
+                  >
+                    <FontAwesomeIcon
+                      icon={faHeart}
+                      style={{ color: "lightgray" }}
+                    />
+                    <div className="line"></div>
+                    <div className="results-img">
+                      <img
+                        className="place-img"
+                        src={require(`./assets/${place.name}.jpg`)}
+                      ></img>
+                      <div id="rating-div">
+                        <p>{place.rating}</p>
+                      </div>
+                    </div>
+                    <div id="results-content">
+                      <h5 className="place-name">{place.name}</h5>
+                      <div className="div-btm">
+                        <p>
+                          {place.category} · {place.area}
+                        </p>
+                        <h4 id="adder" className="trip-adder" name={place.name}>
+                          Add to trip
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </section>
         </section>
-        <section id="placeList">
+        <section
+          id="placeList"
+          style={
+            budgetState.length === 0 && topRatedState.length === 0
+              ? { top: "6rem" }
+              : null
+          }
+        >
           <ul
             id="filteredResults_List"
             ref={ul}
@@ -187,25 +370,71 @@ function Results() {
               )
             }
           >
-            <h6>
+            <h6 className="filter-summary">
               <FontAwesomeIcon
                 icon={faPaperPlane}
                 className="fa-paper-plane backdrop-plane"
+                style={{ color: "#2e64fe" }}
               />
               {applied_filters}
             </h6>
 
-            <p ref={sorryText} className="no-results-text">
-              OOPS! There's no places that match the filters you chose. Try a
-              different search.
-            </p>
+            {listState.map((place) => (
+              <li className="slideFadeIn">
+                <div
+                  area={place.area}
+                  name={place.name}
+                  type={place.type}
+                  rating={place.rating}
+                  price={place.price}
+                  favorite={place.favorite}
+                  className="results-div"
+                >
+                  <FontAwesomeIcon
+                      icon={faHeart}
+                      style={{ color: "lightgray" }}
+                    />
+                  <div className="line"></div>
+                  <div className="results-img">
+                    <img
+                      className="place-img"
+                      src={require(`./assets/${place.name}.jpg`)}
+                    ></img>
+                    <div id="rating-div">
+                      <p>{place.rating}</p>
+                    </div>
+                  </div>
+                  <div id="results-content">
+                    <h5 className="place-name">{place.name}</h5>
+                    <h6 className="review-text">{place.reviews}</h6>
+                    <h6 className="author-name">- {place.author_name}</h6>
+                    <div className="div-btm">
+                      <p>
+                        {place.category} · {place.area}
+                      </p>
+                      <h4 id="adder" className="trip-adder" name={place.name}>
+                        Add to trip
+                      </h4>
+                    </div>
+                  </div>
+                  <hr />
+                </div>
+              </li>
+            ))}
+
+            {listState.length !== 0 ? null : (
+              <p className="no-results-text">
+                OOPS! There's no places that match the filters you chose. Try a
+                different search.
+              </p>
+            )}
           </ul>
         </section>
 
         <Notification />
         <AddTrip_Button />
-   
       </section>
+      <Footer />
     </>
   );
 }

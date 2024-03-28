@@ -519,9 +519,7 @@ min-width: 110px;
 .rec-container-item img {
 width: 8rem;
 }
-.rec-container-item {
-margin-top: 2rem;
-}
+
 .rec-container-item:hover .animatedbar {
 width: 8rem;
 right: 9rem;

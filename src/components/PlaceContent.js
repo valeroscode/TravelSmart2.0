@@ -8,7 +8,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
-import {allPlaces} from "./allMarkers.mjs";
+import { allPlaces } from "./allMarkers.mjs";
 import PlaceHome from "./PlaceHome";
 import AddTrip_Button from "./AddTrip_Button";
 import {
@@ -21,6 +21,7 @@ import { useAuth } from "./contexts/AuthContext";
 import { docMethods } from "./firebase/firebase";
 import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
+import Footer from "./footer";
 
 function PlaceContent() {
   const [serves, setServes] = useState("");
@@ -392,19 +393,7 @@ function PlaceContent() {
 
       <Notification />
       <AddTrip_Button />
-      <Helmet>
-        <script
-          src="./src/Miami.jsx"
-          type="module"
-          crossorigin="anonymous"
-          async
-        />
-
-        <script
-          src="https://kit.fontawesome.com/b3a13ef491.js"
-          crossorigin="anonymous"
-        ></script>
-      </Helmet>
+      <Footer />
     </>
   );
 }

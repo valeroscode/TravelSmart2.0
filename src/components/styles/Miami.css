@@ -552,6 +552,7 @@ height: fit-content;
 margin-right: 1rem;
 font-weight: 800;
 font-family: "Roboto Condensed", sans-serif;
+border-radius: 7px;
 }
 #filtersList:focus {
 outline: none;
@@ -729,18 +730,7 @@ height: fit-content;
         height: 0;
     }
 }
-#pullup_travelInfo {
-color: white;
-background-color: #2E64FE;
-border-radius: 7px; 
-width: fit-content;
-height: fit-content;
-min-width: 0;
-min-height: 35px;
-font-size: 1rem;
-padding: 0.5rem;
-font-weight: 600;
-}
+
 #transportation {
 background-color: whitesmoke;
 border-radius: 10px;
@@ -937,7 +927,7 @@ button:hover {
     display: flex;
     flex-direction: column;
     height: fit-content;
-    width: 100vw;
+    width: 100%;
     position: relative;
     z-index: 999;
     padding-top: 10rem;
@@ -947,7 +937,7 @@ button:hover {
 #intro {
     position: relative;
     height: 82vh;
-    width: 100vw;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -957,16 +947,16 @@ button:hover {
 #intro-text {
 height: 80%;
 display: grid;
-position: absolute;
+position: relative;
 top: 21vh;
-left: 25vw;
+left: -23vw;
 }
 #intro h1 {
     position: absolute;
 font-family: "Roboto Condensed", sans-serif;
     color: white;
 font-weight: 800;
-font-size: 5.5rem;
+font-size: 4.5rem;
 letter-spacing: 0.5rem;
 z-index: 100;
 width: 30%;
@@ -1007,17 +997,13 @@ transition:all 1s linear;
 position: absolute;
 height: 88vh;
 width: 100vw;
--webkit-transition: all 0.3s ease;
--moz-transition: all 0.3s ease;
--o-transition: all 0.3s ease;
-transition: all 0.3s ease;
 -webkit-transition:all 0.3s linear;
 -moz-transition:all 0.3s linear;
 -o-transition:all 0.3s linear;
 transition:all 0.3s linear;
 object-fit: cover;
--webkit-mask-image: linear-gradient(to top, transparent 5%, white 56%);
-    mask-image: linear-gradient(to top, transparent 5%, white 56%);
+-webkit-mask-image: linear-gradient(to top, transparent 0%, white 30%);
+    mask-image: linear-gradient(to top, transparent 0%, white 30%);
 }
 
 #intro-btns {
@@ -1050,11 +1036,10 @@ transition:height 5s linear;
     pointer-events: all;
     cursor: pointer;
     font-family: 'Roboto Condensed';
-    font-weight: 800;
-    background: #FFD804;
+    font-weight: 400;
     width: fit-content;
     margin-bottom: 0.5rem;
-    padding: 0 0.5rem;
+    padding: 0 0.5rem 0 0;
     border-radius: 7px;
 }
 #citySelect-text {
@@ -1089,11 +1074,6 @@ font-size: 0.9rem;
 #cityDD a:hover {
 background-color: lightgray;
 }
-#hide-menu {
-margin-top: 0;
-margin-bottom: 0.5rem;
-border: 1px solid black;
-}
 #show-menu {
 position: absolute;
 top: 3rem;
@@ -1113,8 +1093,12 @@ height: fit-content;
     position: absolute;
     padding: 1rem;
     padding-left: 2rem;
-    padding-top: 4rem;
+    padding-top: 5rem;
     border-radius: 7px;
+    -webkit-transition:all 0.3s ease;
+-moz-transition:all 0.3s ease;
+-o-transition:all 0.3s ease;
+transition:all 0.3s ease;
 }
 
 #map-overlay h2 {
@@ -1173,25 +1157,34 @@ background-color: #2E64FE;
 border-radius: 5px;
 font-family: "Roboto Condensed", sans-serif;
 }
-#map-overlay #hide-menu {
-width: fit-content;
-height: fit-content;
-border: none;
-background-color: whitesmoke;
-color: #2E64FE;
-}
 #map-overlay #show-filtersList {
-    margin-right: 1rem;
+    margin: 0 1rem 0 0;
     width: fit-content;
     padding: 0.5rem;
     border-radius: 5px;
+    height: 100%;
     font-weight: 800;
     font-size: 0.9rem;
     font-family: 'Roboto Condensed';
     height: fit-content;
 }
+#map-overlay #pullup_travelInfo {
+    margin-right: 1rem;
+    width: fit-content;
+    padding: 0.5rem;
+    height: 100%;
+    border-radius: 5px;
+    font-weight: 800;
+    font-size: 0.9rem;
+    font-family: 'Roboto Condensed';
+    height: fit-content;
+    color: white;
+}
 .button-div-map {
 display: flex;
+justify-content: start;
+align-items: center;
+margin-top: 1rem;
 }
 #map-overlay button:nth-child(last) {
 margin-top: 1rem;
@@ -1206,6 +1199,10 @@ margin-bottom: 2rem;
 margin-top: 1rem;
 overflow-x: hidden;
 padding-bottom: 5rem;
+-webkit-transition:all 0.3s ease;
+-moz-transition:all 0.3s ease;
+-o-transition:all 0.3s ease;
+transition:all 0.3s ease;
 }
 
 @media screen and (max-height: 1010px) {
@@ -1244,6 +1241,7 @@ padding-bottom: 5rem;
         width: 51rem;
         overflow-x: scroll;
         scrollbar-width: thin;
+        height: 20rem;
     }
 }
 
@@ -1465,6 +1463,10 @@ background-color: white;
 .mapUp {
 }
 
+#homePage {
+    position: relative;
+}
+
 
 #map-btn {
     position: fixed;
@@ -1480,6 +1482,7 @@ background-color: white;
     justify-content: center;
     align-items: center;
     z-index: 9000000;
+    text-align: center;
     pointer-events: all;
     cursor: pointer;
     opacity: 0;
@@ -1487,6 +1490,7 @@ background-color: white;
     -moz-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
     transition: all 0.2s ease;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -1644,7 +1648,7 @@ transition:all 0.3s linear;
 #city-disc-more-bg {
     position: relative;
     height: 17rem;
-    width: 100vw;
+    width: 100%;
     top: 20rem;
     z-index: -1;
     opacity: 0.5;
@@ -1698,6 +1702,7 @@ display: flex;
 #organizer-city-rundown h5 {
    text-align: left;
    color: white;
+   padding-left: 0.2rem;
 }
 
 #organizer-cities-img {
@@ -1767,6 +1772,7 @@ display: flex;
     position: relative;
     top: 13rem;
     margin-bottom: 20rem;
+    display: none;
 }
 
 
@@ -2563,6 +2569,11 @@ margin-bottom: 3rem;
     z-index: 9000000000;
     pointer-events: all;
     cursor: pointer;
+    opacity: 0;
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    transition:all 0.3s ease;
 }
 #footer {
     text-align: center;
@@ -3542,12 +3553,6 @@ z-index: 9000000000;
     }
 }
 
-
-@media screen and (min-width: 1281px) {
-#intro-text {
-left: 27vw;
-}
-}
 @media screen and (max-width: 1281px) {
 #dropdown3 {
 max-height: 6.5rem;
@@ -3894,6 +3899,27 @@ bottom: 0.5rem;
 display: inline;
 }
 
+#mobile-pull-up {
+    background-color: lightgray;
+    height: 0.5rem;
+    width: fit-content;
+    text-align: center;
+    color: lightgray;
+    padding: 0.2rem 1rem;
+    border-radius: 15px;
+    font-size: 0.5rem;
+}
+
+#mobile-pull-up-bd {
+    width: 93%;
+    background-color: rgba(0, 0, 0, 0);
+    height: 1rem;
+    position: relative;
+    display: none;
+    justify-content: center;
+    bottom: 1rem;
+}
+
 @media screen and (max-width:909px) {
 .rec-container-item h4 {
 width: 130%;
@@ -3944,6 +3970,10 @@ margin: 0px 2rem;
 }
 
 @media screen and (max-width: 709px) {
+
+#mobile-pull-up-bd {
+    display: flex;
+}
 #avaliable-cities {
         width: 38rem;
    
@@ -3963,11 +3993,21 @@ padding: 0.5rem;
 width: 6rem;
 }
 #map-organizer {
-flex-direction: column;
+flex-direction: column-reverse;
 }
-#map-overlay {
-width: 100vw;
+
+#citySelect {
+    font-weight: 600;
 }
+#map-overlay h6 {
+    display: none;
+}
+
+#top-reccomendations-container {
+    overflow-y: scroll;
+    height: 30%;
+}
+
 .rec-container-item {
 width: 90vw;
 }
@@ -3980,10 +4020,6 @@ width: 350%;
 }
 .map {
 width: 100vw;
-}
-
-#intro-text {
-    left: 10vw;
 }
 
 #intro-text h1 {
@@ -4027,9 +4063,6 @@ top: 0;
   and (max-device-width: 709px)
   and (-webkit-min-device-pixel-ratio: 2)
   and (orientation: portrait) {
-#hide-menu {
-display: none;
-}
 .rec-container-item img {
 display: block;
 height: 100%;
@@ -4044,7 +4077,7 @@ left: 7.5%;
 }
 #map-organizer {
 display: flex;
-flex-direction: column;
+flex-direction: column-reverse;
 }
 #map-overlay {
 width: 100vw;
@@ -4107,9 +4140,6 @@ z-index: 100000;
 #QRCode {
 display: none;
 }
-#organizer {
-width: 105vw;
-}
 #footer {
     top: 0;
 }
@@ -4127,10 +4157,41 @@ background-color: white;
 width: 100%;
 left: 0;
 padding: 0.5rem;
+padding-top: 1.5rem;
+height: 20%;
+}
+#backBtn {
+    top: -5rem;
 }
 #top-reccomendations-container {
-overflow: visible;
-height: 100%;
+
+}
+#filters-disclosed {
+    display: none;
+}
+#map-overlay {
+    height: 40%;
+    padding: 1rem;
+    border-radius: 7px;
+}
+#footer-map #map-btn-map {
+    bottom: 37%;
+}
+.button-div-map {
+   
+    flex-direction: row;
+    margin-top: 1rem;
+    
+}
+#filtersList {
+    padding-right: 4rem;
+    top: 40%;
+}
+#map-overlay #pullup_travelInfo {
+    display: none;
+}
+#map-overlay hr {
+    display: none;
 }
 .App {
 overflow: visible;
@@ -4165,7 +4226,7 @@ display: none;
 
 @media screen and (max-width: 597px) {
 #avaliable-cities {
-        width: 89vw;
+        width: 96vw;
  
 }
     #middle-organizer-discover img {
@@ -4189,31 +4250,8 @@ height: 55vh;
 top: 2vh;
 left: 2vw;
 }
-#map-organizer {
-flex-direction: column;
-}
-#map-overlay {
-width: 100vw;
-overflow-y: scroll;
-}
-.map {
-display: none;
-}
-#top-reccomendations-container {
-overflow-y: scroll;
-overflow-x: hidden;
-height: 75vh;
-}
-.rec-container-item img {
-display: block;
-width: 12rem;
-}
-.rec-container-item {
-width: 28rem;
-}
-.rec-container-item h4 {
-width: 200%;
-}
+
+
 }
 
 @media screen and (max-width: 503px) {
@@ -4246,6 +4284,10 @@ width: 100%;
     }
     #organizer-city-rundown-2 {
         margin-left: 1rem;
+    }
+
+    #organizer-city-rundown {
+        margin: 0 1rem;
     }
   
     #middle-organizer-discover img {
@@ -4285,7 +4327,7 @@ display: none;
     justify-content: center;
     background-color: white;
     position: relative;
-    left: -0.5rem;
+    align-items: center;
 }
 .showAllDiv {
     margin: 0 2.5rem;
@@ -4296,17 +4338,7 @@ display: none;
     flex-direction: column;
 }
 #change-city-showall {
-    padding: 2rem 1rem 2rem 0rem;
-}
-#your-trips .your-trips-h2 {
-    font-family: 'Roboto Condensed', sans-serif;
-    font-size: 6rem;
-    left: -11rem;
-    color: black;
-    position: absolute;
-    z-index: 1;
-    top: -9rem;
-    width: 30rem;
+    padding: 2rem 0rem 2rem 0rem;
 }
 #cities h2 {
     font-size: 2.5rem;
@@ -4315,10 +4347,6 @@ display: none;
 }
 #organizer-cities-img {
     margin-left: 1rem;
-}
-#middle-organizer {
-    margin-left: 1rem;
-    margin-right: 1rem;
 }
 middle-organizer-2 {
     margin-left: 1rem;
@@ -4339,7 +4367,7 @@ position: relative;
 height: 300vh;
 }
 #intro-text {
-left: 5vw;
+left: -42vw;
 }
 .rec-container-item img {
 width: 8rem;
@@ -4371,9 +4399,6 @@ width: 4rem;
 .rec-container-item h4 {
 width: 100%;
 }
-.rec-container-item img {
-display: none;
-}
 #intro-text h1 {
     left: 3rem;
 }
@@ -4384,10 +4409,7 @@ display: none;
     position: relative;
     left: -0.5rem;
     }
-    .showAllDiv {
-        position: relative;
-        left: -1rem;
-    }
+   
 }
 
 @media screen and (max-width: 361px) {

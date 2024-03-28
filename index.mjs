@@ -63,3 +63,4 @@ router.post("/send", async (req, res) => {
   main(emails, title, plans);
   res.json({ msg: "sent" });
 });
+

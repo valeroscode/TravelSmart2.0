@@ -8,6 +8,8 @@ import PlaceContent from "./components/PlaceContent";
 import TripPlanner from "./components/Planner";
 import Results from "./components/filteredResults";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Builder from "./builder";
+import Landing from "./components/Landing";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
               <Route path="signup" element={<Signup />}></Route>
               <Route path="Search-Results" element={<Results />}></Route>
               <Route path="MyTrip" element={<TripPlanner />}></Route>
+              <Route path="build" element={<Builder />}></Route>
+              <Route path="landing" element={<Landing />}></Route>
             </Routes>
           </div>
         </BrowserRouter>

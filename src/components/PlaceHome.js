@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { applied_filters } from "./getPlaceInfo.mjs";
 import "./styles/Navbar.css";
-import {allPlaces} from "./allMarkers.mjs";
+import { allPlaces } from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
 import { learnMoreAboutPlace } from "./getPlaceInfo.mjs";
 import { useAuth } from "./contexts/AuthContext";
@@ -40,7 +40,41 @@ function PlaceHome() {
         setFirstname(info.name);
       }, 500);
     }
-  });
+
+    window.addEventListener("scroll", (e) => {
+      if (window.scrollY > 0) {
+        header.current.style.backgroundColor = "#f5f5f5";
+        header.current.style.boxShadow = "0 0.5rem 1rem rgba(0, 0, 0, 0.1)";
+        plane.current.style.color = "#2E64FE";
+        logo.current.style.color = "#2E64FE";
+        navElements.current.style.backgroundColor = "#f5f5f5";
+        helloUser.current.style.color = "#2E64FE";
+        for (
+          let i = 0;
+          i < document.getElementsByClassName("b-1").length;
+          i++
+        ) {
+          document.getElementsByClassName("b-1")[i].style.color = "#2E64FE";
+        }
+        document.getElementById("homelink").style.color = "#2E64FE";
+      } else {
+        header.current.style.backgroundColor = "#2E64FE";
+        header.current.style.boxShadow = "none";
+        plane.current.style.color = "white";
+        logo.current.style.color = "white";
+        navElements.current.style.backgroundColor = "#2E64FE";
+        helloUser.current.style.color = "white";
+        for (
+          let i = 0;
+          i < document.getElementsByClassName("b-1").length;
+          i++
+        ) {
+          document.getElementsByClassName("b-1")[i].style.color = "white";
+        }
+        document.getElementById("homelink").style.color = "white";
+      }
+    });
+  }, []);
 
   const currCity = allPlaces.filter(
     (place) => place.city === sessionStorage.getItem("city")
@@ -402,7 +436,7 @@ function PlaceHome() {
                     <div className="filter-count"></div>
                     <div id="areas-container" ref={areasCon}>
                       {areas.map((area) => (
-                        <div className="filters">
+                        <div className="filters" key={area}>
                           <p>{area}</p>
                           <input type="checkbox" name="" id="" />
                         </div>
@@ -424,7 +458,7 @@ function PlaceHome() {
                     <div className="filter-count"></div>
                     <div id="categories-container">
                       {categories.map((cat) => (
-                        <div className="filters">
+                        <div className="filters" key={cat}>
                           <p>{cat}</p>
                           <input type="checkbox" name="" id="" />
                         </div>
@@ -439,7 +473,7 @@ function PlaceHome() {
                     <div className="filter-count"></div>
                     <div id="types-container">
                       {types.map((type) => (
-                        <div className="filters">
+                        <div className="filters" key={type}>
                           <p>{type}</p>
                           <input type="checkbox" name="" id="" />
                         </div>
@@ -464,6 +498,7 @@ function PlaceHome() {
             {window.innerWidth <= 881 ? <Hamburger /> : null}
             <button id="tripsBtn" className="b-1" value="My Trips">
               <Link
+                id="homelink"
                 onClick={() =>
                   setTimeout(() => {
                     window.location.reload();

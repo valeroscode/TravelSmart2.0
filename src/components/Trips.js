@@ -16,7 +16,15 @@ import { useAuth } from "./contexts/AuthContext";
 
 import { tripObj, tripDates, dateObj } from "./getPlaceInfo.mjs";
 
-function TripsPage() {
+function TripsPage({ info }) {
+  const { currentUser } = useAuth();
+
+  console.log(info);
+
+  let string = currentUser.email.toString();
+  string = currentUser.metadata.createdAt + string.substring(0, 8);
+  const unorderedList = useRef();
+
   var duplicates = (array) =>
     array.filter((item, index) => array.indexOf(item) === index);
 
@@ -448,29 +456,6 @@ function TripsPage() {
   //     tripCreated.style.display = "none";
   //     }, 2000)
 
-  const { currentUser, info } = useAuth();
-  const [trips, setTrips] = useState([]);
-  const [dbTrips, setDbTrips] = useState();
-  let string = currentUser.email.toString();
-  string = currentUser.metadata.createdAt + string.substring(0, 8);
-  const unorderedList = useRef();
-
-  useEffect(() => {
-    function setData() {
-      if (Object.keys(info.trips).length !== 0) {
-        setTrips(Object.entries(info.trips));
-        //Trips with the strucutre as seen in the database
-        setDbTrips(info.trips);
-      
-      } else {
-        setInterval(() => {
-          setData();
-        }, 100);
-      }
-    }
-    setData();
-  }, []);
-
   let formFunctions = {
     placeholderGone: function (e) {
       if (e.target.value !== "") {
@@ -561,13 +546,20 @@ function TripsPage() {
         }
 
         if (tripObj.Name !== "") {
-          dbTrips[String(tripObj.Name)] = newTrip;
-          docMethods.updateTrips(string, dbTrips);
-          setDbTrips(dbTrips);
+          if (info === undefined) {
+            let info = { [tripObj.Name]: newTrip };
+            docMethods.updateTrips(string, info);
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
+          } else {
+          info[String(tripObj.Name)] = newTrip;
+          docMethods.updateTrips(string, info);
           setTimeout(() => {
             window.location.reload();
           }, 300);
         }
+      }
       } else {
         sessionStorage.setItem("tripname", tripObj.Name);
         sessionStorage.setItem("days", tripDates.length);
@@ -598,8 +590,8 @@ function TripsPage() {
       "Deleting ",
       ""
     );
-    delete dbTrips[str];
-    docMethods.updateTrips(string, dbTrips);
+    delete info[str];
+    docMethods.updateTrips(string, info);
     document.getElementById("are-you-sure").style.display = "none";
     deletedTrip.remove();
   }
@@ -678,6 +670,8 @@ function TripsPage() {
     }, 350);
   }
 
+  console.log(info);
+
   return (
     <>
       <div onClick={(e) => formFunctions.changeInputField(e)}>
@@ -688,47 +682,51 @@ function TripsPage() {
             </h2>
           </div>
           <ul id="trips-con" ref={unorderedList}>
-        
-
-            {trips.map((trip) => (
-              <div key={trip[0]} className="trip-item">
-                <img
-                  loading="lazy"
-                  src={require(`./assets/${trip[1].City}.jpg`)}
-                ></img>
-                <div className="trip-flex">
-                  <div>
-                    <h2>{trip[0]}</h2>
-                    <p>
-                      {trip[1].Dates[0]} -{" "}
-                      {trip[1].Dates[trip[1].Dates.length - 1]}
-                    </p>
-                    <h6>
-                      {trip[1].City}
-                      {timeFromTrip(trip)}
-                    </h6>
-                  </div>
-                  <div className="trip-section-btns">
-                    <button
-                      name={trip[0]}
-                      city={trip[1].City}
-                      onClick={(e) => getTripDetails(e)}
-                    >
-                      Plan Trip
-                    </button>
-                    <button
-                      name={trip[0]}
-                      onClick={(e) =>
-                        deleteTrip(e, e.target.getAttribute("name"))
-                      }
-                      className="delete-trip"
-                    >
-                      Delete
-                    </button>
+            {info !== undefined ? (
+              Object.entries(info).map((trip) => (
+                <div key={trip[0]} className="trip-item">
+                  <img
+                    loading="lazy"
+                    src={require(`./assets/${trip[1].City}.jpg`)}
+                  ></img>
+                  <div className="trip-flex">
+                    <div>
+                      <h2>{trip[0]}</h2>
+                      <p>
+                        {trip[1].Dates[0]} -{" "}
+                        {trip[1].Dates[trip[1].Dates.length - 1]}
+                      </p>
+                      <h6>
+                        {trip[1].City}
+                        {timeFromTrip(trip)}
+                      </h6>
+                    </div>
+                    <div className="trip-section-btns">
+                      <button
+                        name={trip[0]}
+                        city={trip[1].City}
+                        onClick={(e) => getTripDetails(e)}
+                      >
+                        Plan Trip
+                      </button>
+                      <button
+                        name={trip[0]}
+                        onClick={(e) =>
+                          deleteTrip(e, e.target.getAttribute("name"))
+                        }
+                        className="delete-trip"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              ))
+            ) : (
+              <li>
+                <p style={{ fontSize: "1.5rem" }}>No Trips Planned...</p>
+              </li>
+            )}
           </ul>
         </div>
 
