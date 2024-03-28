@@ -54,11 +54,7 @@ function LoginForm() {
       <div id="body">
         <div id="login-div-left">
           <div id="login-title">
-            <FontAwesomeIcon
-              icon={faPaperPlane}
-              style={{ color: "#2e64fe" }}
-              className="plane-login"
-            />
+         
             <h1>Explore. Discover. Plan.</h1>
           </div>
           <div id="login">
@@ -80,7 +76,7 @@ function LoginForm() {
               <div id="NoAcc">
                 <p className="FP">Don't Have An Account?</p>
                 <a className="gtsignup-Btn">
-                  <Link to="/#/Signup">Sign Up</Link>
+                  <Link to="/Signup">Sign Up</Link>
                 </a>
               </div>
             </div>

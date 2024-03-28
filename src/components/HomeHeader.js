@@ -23,11 +23,13 @@ function HomeHeader({ name }) {
     setTimeout(() => {
       document.getElementById("users-name").style.opacity = 1;
     }, 500);
-    window.addEventListener("click", (e) => {
-      setTimeout(() => {
-        searchBar.handleClicksOutside_ofInputs(e);
-      }, 200);
-    });
+    if (window.location.pathname === "/#/home") {
+      window.addEventListener("click", (e) => {
+        setTimeout(() => {
+          searchBar.handleClicksOutside_ofInputs(e);
+        }, 200);
+      });
+    }
   }, []);
 
   async function handleLogout() {
@@ -70,8 +72,8 @@ function HomeHeader({ name }) {
     handleClicksOutside_ofInputs: function (e) {
       if (e.target !== searchInput.current && e.target !== cityInput.current) {
         if (cityDD && searchDD) {
-        cityDD.current.style.display = "none";
-        searchDD.current.style.display = "none";
+          cityDD.current.style.display = "none";
+          searchDD.current.style.display = "none";
         }
       } else {
         return;

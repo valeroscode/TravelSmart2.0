@@ -14,7 +14,11 @@ function AddTrip_Button() {
       setTimeout(() => {
         if (info.trips) {
           //Changed trips state to reflect trips in the database
-          setTrips(Object.entries(info.trips).filter((trip, index) => trip[1].City === sessionStorage.getItem("city")));
+          setTrips(
+            Object.entries(info.trips).filter(
+              (trip, index) => trip[1].City === sessionStorage.getItem("city")
+            )
+          );
           console.log(Object.entries(info.trips));
           setDbTrips(info.trips);
           //Sets loading to false to rerender the component once the trips variables have been set to match whats in the database

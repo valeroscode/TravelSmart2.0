@@ -63,8 +63,8 @@ function changeWidth(e) {
             <button onClick={() => sideBar.current.style.right = '-50%'} id='mobile-XOUT'><FontAwesomeIcon icon={faX} /></button>
             {user ? <div id="mobile-user-name"><p>Hello, {firstname} 👋</p>
             <button id="mobile-trips-btn" value="My Trips">
-            <Link to="/#/Home">Home&nbsp;&nbsp;<FontAwesomeIcon icon={faHouse} /></Link></button>
-            <button id='mobile-logout' onClick={() => handleLogout()}><Link to="/#/login">Log Out</Link></button></div> 
+            <Link to="/Home">Home&nbsp;&nbsp;<FontAwesomeIcon icon={faHouse} /></Link></button>
+            <button id='mobile-logout' onClick={() => handleLogout()}><Link to="/login">Log Out</Link></button></div> 
             : <div>
             <button id="header-login">
              LOG IN 
