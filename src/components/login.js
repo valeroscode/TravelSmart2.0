@@ -80,7 +80,7 @@ function LoginForm() {
               <div id="NoAcc">
                 <p className="FP">Don't Have An Account?</p>
                 <a className="gtsignup-Btn">
-                  <Link to="/Signup">Sign Up</Link>
+                  <Link to="/#/Signup">Sign Up</Link>
                 </a>
               </div>
             </div>

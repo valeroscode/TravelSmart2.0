@@ -10,7 +10,6 @@ import {
 import { allPlaces } from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
-import { Link } from "react-router-dom";
 import Footer from "./footer";
 import PlaceHome from "./PlaceHome";
 

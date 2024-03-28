@@ -202,7 +202,7 @@ function PlaceHome() {
         sessionStorage.setItem("total", catScore + typeScore + areaScore);
         sessionStorage.setItem("filters", applied_filters);
         window.location.replace(
-          "https://travelsmart2-0.onrender.com/Search-Results"
+          "https://travelsmart2-0.onrender.com/#/Search-Results"
         );
       }
     }
@@ -504,7 +504,7 @@ function PlaceHome() {
                     window.location.reload();
                   }, 100)
                 }
-                to="/Home"
+                to="/#/Home"
                 ref={homeBtn}
               >
                 Home&nbsp;&nbsp;
@@ -518,7 +518,7 @@ function PlaceHome() {
             <div id="account-buttons">
               <p ref={helloUser}>Hello, {firstname}</p>
               <button className="accBtn" onClick={() => handleLogout()}>
-                <Link to="/login">Log Out</Link>
+                <Link to="/#/login">Log Out</Link>
               </button>
             </div>
           ) : (

@@ -187,6 +187,7 @@ function Results() {
       );
     }
   }
+  
 
   function markFavorites() {
     //Ensures that favorite hearts are consistant acorss several sections

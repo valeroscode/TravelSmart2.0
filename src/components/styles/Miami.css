@@ -387,12 +387,7 @@ cursor: pointer;
 .hamburger {
     pointer-events: none;
 }
-#logIn:hover {
-    color: white;
-    background-color: #2E64FE;
-    animation: fadeIn 0.6s;
-    animation-fill-mode: forwards;
-}
+
 .closer {
     animation: closer 0.5s;
     animation-fill-mode: forwards;
