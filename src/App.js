@@ -18,7 +18,6 @@ function App() {
         <HashRouter>
           <div className="App">
             <Routes>
-              <Route path="/" element={<LoginForm />}></Route>
               <Route path="place" element={<PlaceContent />} />
               <Route path="Home" element={<TravelSmart />} />
               <Route path="login" element={<LoginForm />}></Route>
@@ -26,7 +25,7 @@ function App() {
               <Route path="Search-Results" element={<Results />}></Route>
               <Route path="MyTrip" element={<TripPlanner />}></Route>
               <Route path="build" element={<Builder />}></Route>
-              <Route path="landing" element={<Landing />}></Route>
+              <Route path="/" element={<Landing />}></Route>
             </Routes>
           </div>
         </HashRouter>

@@ -282,7 +282,7 @@ text-align: left;
 position: relative;
 width: 100%;
 background-color: #EBECF0;
-top: 8rem;
+margin-top: 14rem;
 padding-bottom: 10rem;
 }
 #placeList ul {
@@ -1455,7 +1455,7 @@ top: 6.5rem;
 left: 0.6rem;
 }
 #place-container {
-margin-left: 0.5rem;
+margin-left: 5rem;
 }
 .suggestedPlace img {
 height: 4rem;
@@ -1533,6 +1533,10 @@ top: 15rem;
 
 #bottom-page-container {
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
     
     #suggestionsSec {
