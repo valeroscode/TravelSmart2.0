@@ -12,11 +12,31 @@
     width: 100%;
 }
 #landing-nav {
+    position: fixed;
     display: flex;
     width: 100%;
     justify-content: space-between;
     font-family: 'Roboto Condensed', sans-serif;
-    margin-top: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    z-index: 90000000;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#lottie-div-landing {
+    position: absolute;
+    width: 10rem;
+    z-index: -1;
+    right: 8rem;
+    top: 1.5rem;
+    opacity: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 #landing-nav-left {

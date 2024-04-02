@@ -13,6 +13,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { allPlaces } from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
+import Lottie from "lottie-react";
+import animationData from "./assets/scribble.json";
 
 function Landing() {
   const landingMain = useRef();
@@ -20,6 +22,8 @@ function Landing() {
   const spotlightCursor = useRef();
   const chevleft = useRef();
   const chevright = useRef();
+  const landingNav = useRef();
+  const lottieLanding = useRef();
 
   const category = useRef();
   const content = useRef();
@@ -65,6 +69,20 @@ function Landing() {
     }, 4000);
 
     document.getElementsByClassName("App")[0].style.overflowY = "hidden";
+
+    if (window.location.pathname === "/") {
+      window.addEventListener("scroll", () => {
+        if (window.scrollY > 0) {
+          landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
+        } else {
+          landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0)";
+        }
+
+        if (window.scrollY > 400) {
+          lottieLanding.current.style.opacity = 1;
+        }
+      });
+    }
   }, []);
 
   var xp = 0,
@@ -184,7 +202,7 @@ function Landing() {
   return (
     <>
       <section id="landing-main" ref={landingMain}>
-        <section id="landing-nav">
+        <section id="landing-nav" ref={landingNav}>
           <div id="landing-nav-left">
             <FontAwesomeIcon icon={faPaperPlane} style={{ color: "black" }} />
             <h1 className="travel">TRAVEL</h1>
@@ -192,6 +210,9 @@ function Landing() {
           </div>
           <div id="landing-nav-right">
             <Link to="/login">
+              <div id="lottie-div-landing"  ref={lottieLanding}>
+                <Lottie animationData={animationData} />
+              </div>
               <button>Get Started</button>
             </Link>
           </div>
@@ -386,7 +407,9 @@ function Landing() {
             <h4>Jay Cutler</h4>
             <p>Since 2022</p>
             <h3 className="testimonial-text-3">
-              Me and my freinds have planned countless trips with Travel Smart. It does not compare to it's competitors. Even my non planner friends love having the itinerary that I send them.
+              Me and my freinds have planned countless trips with Travel Smart.
+              It does not compare to it's competitors. Even my non planner
+              friends love having the itinerary that I send them.
             </h3>
 
             <div className="from">
@@ -401,7 +424,10 @@ function Landing() {
             <h4>Jack and Jill</h4>
             <p>Since 2022</p>
             <h3 className="testimonial-text-4">
-              We went up the hill of Travel Smart and have never looked back. We're using to to plan a trip to Chicago, our hometown. We know a lot of the spots but Travel Smart has opened us up to places we've never been to! Can't wait.
+              We went up the hill of Travel Smart and have never looked back.
+              We're using to to plan a trip to Chicago, our hometown. We know a
+              lot of the spots but Travel Smart has opened us up to places we've
+              never been to! Can't wait.
             </h3>
 
             <div className="from">
@@ -417,7 +443,9 @@ function Landing() {
             <h4>Ethan James</h4>
             <p>Since 2022</p>
             <h3 className="testimonial-text-2">
-              YAHHH BUDDY! Use Travel Smart. My son introduced me to it and we make trips together. It's so easy. It's easier to use Travel Smart than to get to Travel Smart on the web! That's how simple it is!
+              YAHHH BUDDY! Use Travel Smart. My son introduced me to it and we
+              make trips together. It's so easy. It's easier to use Travel Smart
+              than to get to Travel Smart on the web! That's how simple it is!
             </h3>
 
             <div className="from">
@@ -434,7 +462,15 @@ function Landing() {
         </div>
         <div id="landing-subs-input">
           <input type="text" placeholder="Enter your email"></input>
-          <button>SEND</button>
+          <button
+            onClick={() => {
+              alert(
+                "The backend code for this feature is under development. Please click one of the 'Get Started' buttons to use Travel Smart!"
+              );
+            }}
+          >
+            SEND
+          </button>
         </div>
       </section>
 
