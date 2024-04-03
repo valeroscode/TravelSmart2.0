@@ -472,7 +472,8 @@ function TravelSmart() {
                 <div>
                   <img src="North Pole.jpg"></img>
                   <p>North Pole, AK, USA</p>
-                  <h6>
+                  <h6 city="North Pole"
+                  onClick={(e) => setCity(e.target.getAttribute("city"))}>
                     Explore City{" "}
                     <FontAwesomeIcon
                       icon={faChevronRight}

@@ -49,6 +49,8 @@ left: 1rem;
 width: fit-content;
 height: fit-content;
 background-color: #2E64FE;
+border-radius: 7px;
+font-family: "Roboto Condensed", sans-serif;
 }
 #mobile-trips-btn a {
 color: white;
@@ -58,6 +60,8 @@ width: fit-content;
 height: fit-content;
 background-color: #2E64FE;
 display: block;
+border-radius: 7px;
+font-family: "Roboto Condensed", sans-serif;
 }
 #mobile-logout a {
 color: white;
@@ -472,6 +476,12 @@ align-self: center;
 }
 }
 
+@media screen and (max-width: 430px) {
+    .filter-container {
+        left: -45vw;
+    }
+}
+
 @media screen and (max-width: 412px) {
 #placeSearch {
 right: 3rem;
@@ -493,7 +503,7 @@ object-fit: cover;
     width: 20rem;
 }
 #hamburger {
-top: 0.7vh;
+top: 1.7vh;
 } 
 .filter-container {
     position: absolute;
@@ -506,7 +516,8 @@ top: 0.7vh;
 left: 1rem;
 }
 .filter-container {
-top: 4rem;
+top: 0.5rem;
+left: -42vw
 }
 }
 

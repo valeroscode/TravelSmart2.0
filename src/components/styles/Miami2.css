@@ -1555,6 +1555,9 @@ top: 15rem;
     }
 
 @media screen and (max-width: 1045px) {
+    #budget-text {
+        margin-bottom: 1rem;
+    }
 #budget-best-section {
 flex-direction: column;
 }
@@ -1622,6 +1625,9 @@ display: none;
     }
 
 @media screen and (max-width: 730px) {
+    #place-container {
+        margin-left: 1rem;
+    }
 #budget-f .results-div #results-content h5 {
 width: 20rem;
 text-align: left;
@@ -1759,13 +1765,17 @@ width: 40%;
     left: 0rem;
     top: -4rem;
     }
+    #budget-f .results-div {
+        margin-bottom: 0;
+    }
     .results-div svg {
         display: none;
     }
+    #highly-rated-section {
+        top: 0;
+    }
     #budget-section #rating-div {
-        position: absolute;
-        left: 17rem;
-        top: 0rem;
+        display: none;
     }
     #budget-f .results-div #results-content h6 {
         width: 46%;

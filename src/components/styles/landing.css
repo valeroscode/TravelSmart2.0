@@ -86,6 +86,7 @@
     position: relative;
 margin-left: 5rem;
 margin-right: 5rem;
+padding-top: 7rem;
 }
 
 #feature-icon svg {
@@ -217,7 +218,7 @@ margin-right: 5rem;
     display: flex;
     justify-content: start;
     align-items: start;
-    padding-top: 0rem;
+    padding-top: 2rem;
     position: relative;
     flex-direction: column;
     width: 100%;
@@ -431,6 +432,7 @@ transition: all 0.3s ease;
          -moz-transition: all 0.6s ease-out;
          -o-transition: all 0.6s ease-out;
          transition: all 0.6s ease-out;
+        
 }
 .burst-8:before {
     content: "";
@@ -957,8 +959,16 @@ transition: all 0.3s ease;
         height: 20rem;
     }
 
-    #landing-nav-right button {
+    #landing-nav-right {
         display: none;
+    }
+    #landing-subs {
+        text-align: center;
+    }
+    .testimonial-text-3 {
+        width: 60%;
+        bottom: 0%;
+    
     }
 }
 

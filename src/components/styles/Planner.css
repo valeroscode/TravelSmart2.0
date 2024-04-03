@@ -763,10 +763,11 @@ input[type="time"]:before {
 
 #favorites-list {
     position: fixed;
-    top: 6.5rem;
+    top: 0rem;
     right: -30rem;
     height: 100vh;
     width: 26rem;
+    z-index: 900;
     background-color: white;
     box-shadow: -2px 0px 25px gray;
     display: flex;
@@ -1122,6 +1123,13 @@ input[type="time"]:before {
         position: relative;
         top: -0.5rem;
     }
+
+    #favorites-list ul li {
+        flex-direction: column-reverse;
+    }
+    #favorites-list ul li button {
+        margin-top: 0;
+    }
 }
 
 @media screen and (max-width: 464px) {
@@ -1143,6 +1151,9 @@ input[type="time"]:before {
 @media screen and (max-width: 418px) {
     .middle-div a {
         font-size: 1.1rem;
+    }
+    #tripDetailsList {
+        margin-left: 1.5rem;
     }
 }
 
