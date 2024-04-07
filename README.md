@@ -1,44 +1,40 @@
 # TRAVEL SMART
 
-This project was made with React and uses a large amount of vanilla JS and integrates a non-relational database. 
+A platform that enables users to find the best places in multiple cities here and abroad while planning their trips.
+You can visit Travel Smart at https://travelsmart2-0.onrender.com/
 
-## Features
-<br>
- * Discover hotspots accross multiple cities in the US and abroad. <br>
--Get essential information about places such as opening and closing times, address, phone number, reviews, ratings, and more. <br>
--Create and plan trips, adding places to your trips as you explore or save places to your favorites so they can be added later. <br>
--Looking for a specific kind of place to visit? Such as a Mexican resturant in Miami? Use filters to find exatly what you're looking for. <br>
--Get time and distance estimates from your stay to the places you want to visit using the directions feature in the map. <br>
--As part of your planning, set an overall budget for your trip, individual budgets for each place you visit, your hotel budget, and transportation budget. <br>
+## Technology Used
+REACT | JS | FIREBASE
 
-## Pages
+### Table of Contents
+1. Technology
+   \t1a. Architecture
+2. Features Overview
+   \t2a. Landing 
+   \t2b. Home
+   \t2c. Planning
+   \t2d. Place
+   \t2e. Results
+3. Coming soon
+   \t3a. Goals
+   \t3b. Technology
+   \t3c. Features
 
-### `Home Page`
-The home page consists of 2 distinct sections:
-<br>
 
-#### Home
+## Technology
+### `a. Architecture`
+\t\t This project follows a component-based architecture, consisting of reusable components and eliminating redundancy thanks to the power of React.  
+###  `b. Components`
+\t\t **Frontend:** The frontend implements the UI using React with client side rendering. These React components communicate with the firestore database and call exported functions from the firebase.js file to read and write to the database. There are a number of plain JS files in this project that provide reusable functions for many components at various stages of the UX. The Miami.js file in particular is an exception to this because it's main purpose is to contain the google maps code which helps to declutter the Travelsmart.jsx file which would have otherwise been thousands of lines longer.
+\t\t **Database:** The database comes with it's own backend and is non-relational. The structure is as follows: each user has a document within the database assigned to them, it's accessed when they log in. This document stores non-sensative information like first and last name, a list of favorite places, and a map of maps (or, array of objects) that contains their planned trips, budgets for each trip, and other details. Sensative information like passwords are stored securely in firebase's built in authentication service. 
 
-##### Searchbar
-This section is what users see when the page loads. At the top of this section is the header which includes a search bar. <br>
-The first search bar handles the category of place you want to search, the second search bar handles the city. 
+## Features Overview
 
-##### Trips
-Trips can be accessed from the home page by clicking 'plan trip'
+### `a. Landing Page`
+\t\t This is a landing page that serves to inform users about the platform and convince them to create an account or login to an existing one. 
 
-##### All Places
-All places within the website can be seen at the bottom of the home page. From here places can be added to a trip or clicked on if the user wants to be directed to a dedicated page for that place. 
-
-#### Map
-<br>
-The map has multiple features:
-
-##### Click on a marker or place on the left section for a modal for quick information on the place (such as address, phone, opening times, and more).
-##### Click on the filters button to access map filters which allow users to narrow their search. 
-For example: Say a user wants to find the more inexpensive coffee shops in Miami that also have a high rating. They would check off Start Your Day, Inexpensive, and Best Rated.
-
-##### Click on "Get Directions" to get time and distance estimates for either walking, biking, or driving from one point to another. 
-##### Change the city with the City dropdown menu at the top of the left section. 
+### `b. Home Page`
+\t\t This page is the most feature rich and has the most code acting within it. 
 
 
 
