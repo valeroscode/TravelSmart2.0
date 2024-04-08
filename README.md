@@ -23,7 +23,7 @@ REACT | JS | FIREBASE
    3b. Technology
 
 ### 1. Technology
-**1a. Architecture`** <br>
+**1a. Architecture** <br>
 This project follows a component-based architecture, consisting of reusable components and eliminating redundancy thanks to the power of React.  
 
 ### `Components`
@@ -31,7 +31,7 @@ This project follows a component-based architecture, consisting of reusable comp
 
 <br>
 
-**1c. Database:** The database comes with it's own backend and is non-relational. The structure is as follows: each user has a document within the database assigned to them, it's accessed when they log in. This document stores non-sensative information like first and last name, a list of favorite places, and a map of maps (or, array of objects) that contains their planned trips, budgets for each trip, and other details. Sensative information like passwords are stored securely in firebase's built in authentication service. 
+**1c. Database:** The database used is firebase (find it here: https://firebase.google.com/) which comes with it's own backend and is non-relational. The structure is as follows: each user has a document within the database assigned to them, it's accessed when they log in. This document stores non-sensative information like first and last name, a list of favorite places, and a map of maps (or, array of objects) that contains their planned trips, budgets for each trip, and other details. Sensative information like passwords are stored securely in firebase's built in authentication service. 
 
 ### `2. Features Overview`
 **2a. Landing:** The landing page for Travel Smart closely follows the spotify design landing page design and exists to inform prospective users about the platform. 
