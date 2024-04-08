@@ -8,7 +8,10 @@ REACT | JS | FIREBASE
 
 ### Table of Contents
 1. Technology <br>
-   a. Architecture<br>
+   1a. Architecture<br>
+   Components<br>
+   1b. Frontend<br>
+   1c. Database<br>
 2. Features Overview<br>
    2a. Landing <br>
    2b. Home/Dashboard <br>
@@ -19,16 +22,16 @@ REACT | JS | FIREBASE
    3a. Goals<br>
    3b. Technology
 
-## Technology
-### `1. Architecture`
+### 1. Technology
+**1a. Architecture`** <br>
 This project follows a component-based architecture, consisting of reusable components and eliminating redundancy thanks to the power of React.  
 
-###  `Components`
-**1a. Frontend:** The frontend implements the UI using React with client side rendering. These React components communicate with the firestore database and call exported functions from the firebase.js file to read and write to the database. There are a number of plain JS files in this project that provide reusable functions for many components at various stages of the UX. The Miami.js file in particular is an exception to this because it's main purpose is to contain the google maps code which helps to declutter the Travelsmart.jsx file which would have otherwise been thousands of lines longer.
+### `Components`
+**1b. Frontend:** The frontend implements the UI using React with client side rendering. These React components communicate with the firestore database and call exported functions from the firebase.js file to read and write to the database. There are a number of plain JS files in this project that provide reusable functions for many components at various stages of the UX. The Miami.js file in particular is an exception to this because it's main purpose is to contain the google maps code which helps to declutter the Travelsmart.jsx file which would have otherwise been thousands of lines longer.
 
 <br>
 
-**1b. Database:** The database comes with it's own backend and is non-relational. The structure is as follows: each user has a document within the database assigned to them, it's accessed when they log in. This document stores non-sensative information like first and last name, a list of favorite places, and a map of maps (or, array of objects) that contains their planned trips, budgets for each trip, and other details. Sensative information like passwords are stored securely in firebase's built in authentication service. 
+**1c. Database:** The database comes with it's own backend and is non-relational. The structure is as follows: each user has a document within the database assigned to them, it's accessed when they log in. This document stores non-sensative information like first and last name, a list of favorite places, and a map of maps (or, array of objects) that contains their planned trips, budgets for each trip, and other details. Sensative information like passwords are stored securely in firebase's built in authentication service. 
 
 ### `2. Features Overview`
 **2a. Landing:** The landing page for Travel Smart closely follows the spotify design landing page design and exists to inform prospective users about the platform. 
