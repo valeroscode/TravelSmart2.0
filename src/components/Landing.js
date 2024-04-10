@@ -280,7 +280,7 @@ function Landing() {
         
           <Link to="/login">
           <div id="scroll-down" className="pulse">
-          <h3 ref={scrollDownText}>Start</h3>
+          <h3 ref={scrollDownText}>Get Started!</h3>
           <FontAwesomeIcon icon={faPlane} />
            </div>
           </Link> 
