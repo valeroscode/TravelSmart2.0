@@ -10,6 +10,7 @@ import {
   faLocationPin,
   faUser,
   faPlay,
+  faPlane
 } from "@fortawesome/free-solid-svg-icons";
 import { allPlaces } from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
@@ -77,11 +78,6 @@ function Landing() {
           landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
         } else {
           landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0)";
-        }
-
-        if (window.screenY > 700) {
-          scrollDownText.current.textContent = "Login!🛩️"
-          scrollDownText.current.classList.add('pulse')
         }
 
         if (window.scrollY > 400) {
@@ -283,9 +279,9 @@ function Landing() {
         </section>
         
           <Link to="/login">
-          <div id="scroll-down">
-          <h3 ref={scrollDownText}>Scroll Down</h3>
-          <FontAwesomeIcon icon={faArrowDown} />
+          <div id="scroll-down" className="pulse">
+          <h3 ref={scrollDownText}>Start</h3>
+          <FontAwesomeIcon icon={faPlane} />
            </div>
           </Link> 
           
