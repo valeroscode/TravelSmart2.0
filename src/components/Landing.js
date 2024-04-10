@@ -275,10 +275,19 @@ function Landing() {
             ></img>
           </div>
         </section>
-        <div id="scroll-down">
+        {
+          window.scrollY > 700 ? <Link to="/login">
+            <div id="scroll-down" className="pulse">
+          <h3>Login!🛩️</h3>
+           </div>
+          </Link> 
+          :
+          <div id="scroll-down">
           <h3>SCROLL DOWN</h3>
           <FontAwesomeIcon icon={faArrowDown} />
         </div>
+        }
+        
       </section>
 
       <section id="landing-new-features">
