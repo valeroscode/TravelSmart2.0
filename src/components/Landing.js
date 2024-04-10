@@ -24,6 +24,7 @@ function Landing() {
   const chevright = useRef();
   const landingNav = useRef();
   const lottieLanding = useRef();
+  const scrollDownText = useRef();
 
   const category = useRef();
   const content = useRef();
@@ -76,6 +77,11 @@ function Landing() {
           landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
         } else {
           landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0)";
+        }
+
+        if (window.screenY > 700) {
+          scrollDownText.current.textContent = "Login!🛩️"
+          scrollDownText.current.classList.add('pulse')
         }
 
         if (window.scrollY > 400) {
@@ -275,18 +281,14 @@ function Landing() {
             ></img>
           </div>
         </section>
-        {
-          window.scrollY > 700 ? <Link to="/login">
-            <div id="scroll-down" className="pulse">
-          <h3>Login!🛩️</h3>
+        
+          <Link to="/login">
+          <div id="scroll-down">
+          <h3 ref={scrollDownText}>Scroll Down</h3>
+          <FontAwesomeIcon icon={faArrowDown} />
            </div>
           </Link> 
-          :
-          <div id="scroll-down">
-          <h3>SCROLL DOWN</h3>
-          <FontAwesomeIcon icon={faArrowDown} />
-        </div>
-        }
+          
         
       </section>
 
