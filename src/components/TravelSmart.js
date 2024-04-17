@@ -102,11 +102,11 @@ function TravelSmart() {
         window.history.pushState(
           null,
           null,
-          "https://travelsmart2-0.onrender.com/#/Home"
+          "https://travelsmartweb.onrender.com/Home"
         );
       }, 2000);
     } else {
-      window.location.replace("https://travelsmartweb.onrender.com/#/login");
+      window.location.replace("https://travelsmartweb.onrender.com/login");
     }
   }, []);
 
@@ -304,21 +304,23 @@ function TravelSmart() {
     },
   };
 
-  const mapOverlay = useRef()
+  const mapOverlay = useRef();
 
   function bringUpMobileModal(e) {
     if (e.target.childNodes[0].textContent === "pull up") {
-    mapOverlay.current.style.height = "77%";
-    document.getElementById('top-reccomendations-container').style.height = "58%"
-    document.getElementById('map-btn-map').style.bottom = '79%'
-    e.target.childNodes[0].textContent = 'pull down'
-  } else {
-    mapOverlay.current.style.height = "40%";
-    document.getElementById('top-reccomendations-container').style.height = "30%"
-    document.getElementById('map-btn-map').style.bottom = '37%'
-    e.target.childNodes[0].textContent = 'pull up'
+      mapOverlay.current.style.height = "77%";
+      document.getElementById("top-reccomendations-container").style.height =
+        "58%";
+      document.getElementById("map-btn-map").style.bottom = "79%";
+      e.target.childNodes[0].textContent = "pull down";
+    } else {
+      mapOverlay.current.style.height = "40%";
+      document.getElementById("top-reccomendations-container").style.height =
+        "30%";
+      document.getElementById("map-btn-map").style.bottom = "37%";
+      e.target.childNodes[0].textContent = "pull up";
+    }
   }
-}
 
   return (
     <>
@@ -472,8 +474,10 @@ function TravelSmart() {
                 <div>
                   <img src="North Pole.jpg"></img>
                   <p>North Pole, AK, USA</p>
-                  <h6 city="North Pole"
-                  onClick={(e) => setCity(e.target.getAttribute("city"))}>
+                  <h6
+                    city="North Pole"
+                    onClick={(e) => setCity(e.target.getAttribute("city"))}
+                  >
                     Explore City{" "}
                     <FontAwesomeIcon
                       icon={faChevronRight}
@@ -907,9 +911,9 @@ function TravelSmart() {
         </ul>
         <div id="map-organizer">
           <div id="map-overlay" ref={mapOverlay}>
-          <div id="mobile-pull-up-bd" onClick={(e) => bringUpMobileModal(e)}>
-          <p id="mobile-pull-up">pull up</p>
-          </div>
+            <div id="mobile-pull-up-bd" onClick={(e) => bringUpMobileModal(e)}>
+              <p id="mobile-pull-up">pull up</p>
+            </div>
             <div id="citySelect" ref={cityBtn} onClick={() => selectCity()}>
               <div id="citySelect-text">Choose City:&nbsp;Miami&nbsp;</div>
               <FontAwesomeIcon
@@ -964,4 +968,4 @@ function TravelSmart() {
   );
 }
 
-export default TravelSmart
+export default TravelSmart;

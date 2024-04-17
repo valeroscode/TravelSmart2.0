@@ -99,7 +99,7 @@ function HomeHeader({ name }) {
       sessionStorage.setItem("filters", str.toUpperCase());
       sessionStorage.setItem("total", 1);
       window.location.replace(
-        "https://travelsmart2-0.onrender.com/#/Search-Results"
+        "https://travelsmartweb.onrender.com/Search-Results"
       );
     } else {
       alert("Input fields incomplete");

@@ -553,13 +553,13 @@ function TripsPage({ info }) {
               window.location.reload();
             }, 300);
           } else {
-          info[String(tripObj.Name)] = newTrip;
-          docMethods.updateTrips(string, info);
-          setTimeout(() => {
-            window.location.reload();
-          }, 300);
+            info[String(tripObj.Name)] = newTrip;
+            docMethods.updateTrips(string, info);
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
+          }
         }
-      }
       } else {
         sessionStorage.setItem("tripname", tripObj.Name);
         sessionStorage.setItem("days", tripDates.length);
@@ -600,7 +600,7 @@ function TripsPage({ info }) {
     sessionStorage.setItem("trip", e.target.getAttribute("name"));
     sessionStorage.setItem("city", e.target.getAttribute("city"));
 
-    window.open("https://travelsmart2-0.onrender.com/#/MyTrip");
+    window.open("https://travelsmartweb.onrender.com/MyTrip");
   }
 
   function timeFromTrip(trip) {

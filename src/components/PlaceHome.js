@@ -202,7 +202,7 @@ function PlaceHome() {
         sessionStorage.setItem("total", catScore + typeScore + areaScore);
         sessionStorage.setItem("filters", applied_filters);
         window.location.replace(
-          "https://travelsmart2-0.onrender.com/#/Search-Results"
+          "https://travelsmartweb.onrender.com/Search-Results"
         );
       }
     }
