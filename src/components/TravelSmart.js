@@ -102,11 +102,11 @@ function TravelSmart() {
         window.history.pushState(
           null,
           null,
-          "https://travelsmartweb.onrender.com/Home"
+          "https://travelsmart2-0.onrender.com/Home"
         );
       }, 2000);
     } else {
-      window.location.replace("https://travelsmartweb.onrender.com/login");
+      window.location.replace("https://travelsmart2-0.onrender.com/login");
     }
   }, []);
 
