@@ -1,6 +1,10 @@
 import express, { static as expressStatic } from "express";
-import { join } from "path";
+import { fileURLToPath } from "url";
+import { join, dirname } from "path";
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 // Serve static files from the 'build' directory
 app.use(expressStatic(join(__dirname, "/build")));
