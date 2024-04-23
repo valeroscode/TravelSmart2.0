@@ -18,8 +18,8 @@ RUN go build -o /go/bin/app
 FROM golang:1.20.4
 WORKDIR /app
 # Copy frontend build output from frontend-builder stage to current directory
-COPY --from=frontend-builder /app/build ./frontend
+COPY --from=frontend-builder /app/build ./
 # Copy backend binary from backend-builder stage to current directory
-COPY --from=backend-builder /go/bin/app ./backend/app
+COPY --from=backend-builder /go/bin/app ./backend
 # Set the command to run the backend binary
 CMD ["./backend/app"]
