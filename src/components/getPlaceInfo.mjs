@@ -26,7 +26,7 @@ export function learnMoreAboutPlace(
     localStorage.setItem("type", type);
     localStorage.setItem("area", area);
     localStorage.setItem("price", price);
-    localStorage.setItem("image", `${image}.jpg`);
+    localStorage.setItem("image", `../../public/${image}.jpg`);
     localStorage.setItem("favorite", favorite);
     localStorage.setItem("ID", id);
     localStorage.setItem("category", category);
@@ -106,7 +106,7 @@ export function placePageSuggestions() {
       localStorage.setItem("suggestion" + [i] + "title", finalRender[i].name);
       localStorage.setItem(
         "suggestion" + [i] + "image",
-        "./src/assets/" + finalRender[i].name + ".jpg"
+        finalRender[i].name + ".jpg"
       );
       localStorage.setItem(
         "suggestion" + [i] + "rating",

@@ -685,10 +685,7 @@ function TripsPage({ info }) {
             {info !== undefined ? (
               Object.entries(info).map((trip) => (
                 <div key={trip[0]} className="trip-item">
-                  <img
-                    loading="lazy"
-                    src={require(`./assets/${trip[1].City}.jpg`)}
-                  ></img>
+                  <img loading="lazy" src={`${trip[1].City}.jpg`}></img>
                   <div className="trip-flex">
                     <div>
                       <h2>{trip[0]}</h2>

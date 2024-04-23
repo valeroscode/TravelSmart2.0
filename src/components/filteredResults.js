@@ -187,7 +187,6 @@ function Results() {
       );
     }
   }
-  
 
   function markFavorites() {
     //Ensures that favorite hearts are consistant acorss several sections
@@ -267,7 +266,7 @@ function Results() {
                     <div className="results-img">
                       <img
                         className="place-img"
-                        src={require(`./assets/${place.name}.jpg`)}
+                        src={require(`../../public/${place.name}.jpg`)}
                       ></img>
                       <div id="rating-div">
                         <p>{place.rating}</p>
@@ -330,7 +329,7 @@ function Results() {
                     <div className="results-img">
                       <img
                         className="place-img"
-                        src={require(`./assets/${place.name}.jpg`)}
+                        src={require(`../../public/${place.name}.jpg`)}
                       ></img>
                       <div id="rating-div">
                         <p>{place.rating}</p>
@@ -392,14 +391,14 @@ function Results() {
                   className="results-div"
                 >
                   <FontAwesomeIcon
-                      icon={faHeart}
-                      style={{ color: "lightgray" }}
-                    />
+                    icon={faHeart}
+                    style={{ color: "lightgray" }}
+                  />
                   <div className="line"></div>
                   <div className="results-img">
                     <img
                       className="place-img"
-                      src={require(`./assets/${place.name}.jpg`)}
+                      src={require(`../../public/${place.name}.jpg`)}
                     ></img>
                     <div id="rating-div">
                       <p>{place.rating}</p>

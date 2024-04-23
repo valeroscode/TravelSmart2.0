@@ -252,7 +252,7 @@ function PlaceContent() {
               </p>
               <div id="placeImage">
                 <img
-                  src={require(`./assets/${localStorage.getItem(
+                  src={require(`../../public/${localStorage.getItem(
                     "current"
                   )}.jpg`)}
                   alt=""
@@ -355,7 +355,7 @@ function PlaceContent() {
                       </p>
                     </h3>
                     <img
-                      src={require(`./assets/${localStorage.getItem(
+                      src={require(`../../public/${localStorage.getItem(
                         `suggestion${index}title`
                       )}.jpg`)}
                       alt=""

@@ -1639,3 +1639,24 @@ places.push(
 );
 
 export const allPlaces = places;
+
+function convertObjectsToJSON(objects) {
+  let result = []; // Object to store the converted JSON objects
+
+  // Iterate through each object in the array
+  objects.forEach((obj) => {
+    const resObj = {};
+    const { name, ...rest } = obj; // Destructure the 'name' and rest of the object properties
+    rest.name = name;
+
+    // Create a new JSON object with 'name' as the key and the rest of the properties as nested object
+    resObj[name] = rest;
+    result.push(resObj[name]);
+  });
+
+  console.log(JSON.stringify(result, null, 2));
+
+  // Convert the result object to JSON format with indentation
+}
+
+convertObjectsToJSON(places);

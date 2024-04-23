@@ -215,7 +215,7 @@ function TravelSmart() {
     const nodeLength = recImg.length;
 
     for (let i = 0; i < nodeLength; i++) {
-      recImg[i].src = require(`./assets/${recImg[i].getAttribute("name")}.jpg`);
+      recImg[i].src = `${recImg[i].getAttribute("name")}.jpg`;
     }
 
     //Colors in hearts for favorites that are in the top picks & everywhere else
@@ -225,7 +225,7 @@ function TravelSmart() {
   const gallery = useRef();
   function findPlacePicture() {
     const gallery = document.getElementById("gallery");
-    gallery.src = require(`./assets/${gallery.getAttribute("name")}.jpg`);
+    gallery.src = `/${gallery.getAttribute("name")}.jpg`;
   }
 
   const viewAll = {
@@ -412,7 +412,7 @@ function TravelSmart() {
             </div>
           </div>
 
-          <img id="homeimg" src="/assets/backgroundimg1.jpeg" />
+          <img id="homeimg" src="backgroundimg1.jpeg" />
         </div>
 
         <section id="cities">
@@ -611,7 +611,6 @@ function TravelSmart() {
                   </div>
                 </div>
               </div>
-              <img id="lady" src="lady.png"></img>
               <div id="col-2">
                 <div className="col-div">
                   <div>
@@ -722,7 +721,7 @@ function TravelSmart() {
                 >
                   <a href="/place" target="_blank"></a>
                   <img
-                    src={require(`./assets/${place.name}.jpg`)}
+                    src={require(`../../public/${place.name}.jpg`)}
                     className="carousel-image"
                     loading="lazy"
                   ></img>

@@ -10,12 +10,11 @@ import {
   faLocationPin,
   faUser,
   faPlay,
-  faPlane
+  faPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { allPlaces } from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
-import animationData from "./assets/scribble.json";
 
 function Landing() {
   const landingMain = useRef();
@@ -24,7 +23,6 @@ function Landing() {
   const chevleft = useRef();
   const chevright = useRef();
   const landingNav = useRef();
-  const lottieLanding = useRef();
   const scrollDownText = useRef();
 
   const category = useRef();
@@ -78,10 +76,6 @@ function Landing() {
           landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
         } else {
           landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0)";
-        }
-
-        if (window.scrollY > 400) {
-          lottieLanding.current.style.opacity = 1;
         }
       });
     }
@@ -212,9 +206,6 @@ function Landing() {
           </div>
           <div id="landing-nav-right">
             <Link to="/login">
-              <div id="lottie-div-landing"  ref={lottieLanding}>
-                <Lottie animationData={animationData} />
-              </div>
               <button>Get Started</button>
             </Link>
           </div>
@@ -277,15 +268,13 @@ function Landing() {
             ></img>
           </div>
         </section>
-        
-          <Link to="/login">
+
+        <Link to="/login">
           <div id="scroll-down" className="pulse">
-          <h3 ref={scrollDownText}>Get Started!</h3>
-          <FontAwesomeIcon icon={faPlane} />
-           </div>
-          </Link> 
-          
-        
+            <h3 ref={scrollDownText}>Login/Register</h3>
+            <FontAwesomeIcon icon={faPlane} />
+          </div>
+        </Link>
       </section>
 
       <section id="landing-new-features">

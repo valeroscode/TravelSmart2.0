@@ -316,7 +316,7 @@ function TripPlanner() {
         if (planBudget === undefined) {
           planBudget = 0;
         }
-        const image = `/${plan[i][`Day ${i + 1}`][iter].split("|")[0]}.jpg`;
+        const image = `${plan[i][`Day ${i + 1}`][iter].split("|")[0]}.jpg`;
         const div = document.createElement("div");
         div.innerHTML = `<div number='${iter}' place='${String(
           plan[i][`Day ${i + 1}`][iter].split("|")[0]
@@ -614,7 +614,7 @@ function TripPlanner() {
       }
       const newNode = document.getElementById("newNode");
       const div = document.createElement("div");
-      const image = `/${name}.jpg`;
+      const image = require(`../../public/${name}.jpg`);
       div.innerHTML = `<div place='${name}' number='${
         parseInt(newNode.previousElementSibling.getAttribute("number")) + 1
       }' class='place-planned'>
@@ -727,9 +727,8 @@ function TripPlanner() {
   return (
     <>
       <section id="overall-page">
-      <PlaceHome />
+        <PlaceHome />
         <section id="main" onClick={(e) => hideFavoritesList(e)}>
-          
           <div id="main-section">
             <div id="trip-name-photo">
               <img src={`/${sessionStorage.getItem("city")}.jpg`} alt="" />

@@ -230,7 +230,7 @@ function PlaceHome() {
           `<div class="wrapper-place" style="
           display: flex;
           align-items: center;
-      "><img src="${currCity[i].name}.jpg" />
+      "><img src="../../public/${currCity[i].name}.jpg" />
            <div class="floater"><p class="DDp" style="display: flex;">${currCity[i].rating}${star}</p>` +
           `<p class="DDp">${currCity[i].area}</p>` +
           `<p class="DDp">${currCity[i].category}</p></div>
