@@ -28,6 +28,6 @@ COPY --from=frontend-builder /app/build ./
 # Expose the port on which the backend binary will listen (adjust as needed)
 EXPOSE 10000
 # Copy backend binary from backend-builder stage to current directory
-COPY --from=backend-builder /app/backend/app ./backend/app
+COPY --from=backend-builder /app/backend/app ./backend
 # Set the command to run the backend binary
 CMD ["./backend/app"]
