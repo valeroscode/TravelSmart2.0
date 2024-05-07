@@ -1,102 +1,87 @@
 package main
 
 import (
-	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
-type PlacesDoc struct {
-	ID     primitive.ObjectID `json:"_id,omitempty"`
-	Places []Place            `bson:"places,omitempty"`
+type Place struct {
+	Id          int     `json:"id"`
+	Category    string  `json:"category"`
+	Type        string  `json:"type"`
+	Coords      Coords  `json:"coords"`
+	Content     string  `json:"content"`
+	Url         *string `json:"url"`
+	Placeid     string  `json:"placeid"`
+	Price       int     `json:"price"`
+	Rating      float64 `json:"rating"`
+	Area        string  `json:"area"`
+	Active      bool    `json:"active"`
+	Inexpensive bool    `json:"inexpensive"`
+	Best        bool    `json:"best"`
+	Favorite    bool    `json:"favorite"`
+	Popular     bool    `json:"popular"`
+	City        string  `json:"city"`
+	Style       string  `json:"style"`
+	Serves      string  `json:"serves"`
+	Sponsored   bool    `json:"sponsored"`
+	Name        string  `json:"name"`
 }
 
-type Place struct {
-	Category    string                 `json:"category"`
-	Type        string                 `json:"type"`
-	Coords      map[string]interface{} `json:"coords" bson:"coords"`
-	Content     string                 `json:"content"`
-	Url         string                 `json:"url"`
-	PlaceID     string                 `json:"placeID"`
-	Price       int                    `json:"price"`
-	Rating      float64                `json:"rating"`
-	Area        string                 `json:"area"`
-	Active      bool                   `json:"active"`
-	Inexpensive bool                   `json:"Inexpensive"`
-	Best        bool                   `json:"Best"`
-	Favorite    bool                   `json:"favorite"`
-	Popular     bool                   `json:"popular"`
-	City        string                 `json:"city"`
-	Style       string                 `json:"style"`
-	Serves      string                 `json:"serves"`
-	Sponsored   bool                   `json:"sponsored"`
-	Name        string                 `json:"name"`
+type Coords struct {
+	Lat float64 `json:"lat"`
+	Lng float64 `json:"lng"`
+}
+
+type Database struct {
+	*sql.DB
+}
+
+type RequestBody struct {
+	City string `json:"city"`
 }
 
 func main() {
 
-	clientOptions := options.Client().ApplyURI("mongodb+srv://avalerosoftware:EnSuXjucfRfCcvEN@cluster0.pgjzzcc.mongodb.net/umacc?retryWrites=true&w=majority")
-
-	client, err := mongo.Connect(context.Background(), clientOptions)
+	err := godotenv.Load(".env")
 	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	connStr := os.Getenv("CONN_STR")
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		panic(err)
+	}
+	if err := db.Ping(); err != nil {
 		log.Fatal(err)
 	}
 
-	defer func() {
-		if err := client.Disconnect(context.Background()); err != nil {
-			log.Fatal("Error disconnecting from MongoDB:", err)
-		}
-	}()
-
-	// Ping the MongoDB server to verify connectivity
-	if err := client.Ping(context.Background(), nil); err != nil {
-		log.Fatal("Failed to ping MongoDB server:", err)
-	}
-
-	// Now you can use the client to interact with MongoDB
-	// Example: Get a collection from the database
-	collection := client.Database("TravelSmart").Collection("Places")
-
-	// Register the helloHandler function to handle requests to /hello
-	http.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-
-		w.Header().Set("Content-Type", "application/json")
-		cursor, err := collection.Find(context.Background(), bson.D{}, options.Find())
-		if err != nil {
-			log.Fatal("Error finding documents:", err)
-		}
-		if err := cursor.Err(); err != nil {
-			log.Fatal("Cursor error:", err)
-		}
-
-		var placesDoc PlacesDoc
-
-		for cursor.Next(context.Background()) {
-			if err := cursor.Decode(&placesDoc); err != nil {
-				log.Println("Error decoding document:", err)
-			}
-
-			if err := json.NewEncoder(w).Encode(placesDoc.Places); err != nil {
-				log.Println("Error encoding JSON:", err)
-				http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-				return
-			}
-
-		}
-
-		defer cursor.Close(context.Background())
-
+	http.HandleFunc("/places", func(w http.ResponseWriter, r *http.Request) {
+		getPlacesHandler(w, r, db)
 	})
 
-	// Determine the directory of the React build output (containing index.html)
+	defer db.Close()
+
+	http.HandleFunc("/createUser", createUserHandler(db))
+	http.HandleFunc("/getUser", getUserHandler(db))
+	http.HandleFunc("/deleteUser", deleteUserHandler(db))
+	http.HandleFunc("/updateFavorites", updateFavoritesHandler(db))
+	http.HandleFunc("/updateName", updateNameHandler(db))
+	http.HandleFunc("/createTrip", createTripHandler(db))
+	http.HandleFunc("/updateTripName", updateTripNameHandler(db))
+	http.HandleFunc("/updateTrip", updateTripHandler(db))
+	http.HandleFunc("/deleteTrip", deleteTripHandler(db))
+
 	reactBuildDir := "../build"
 
 	// Serve the index.html file for all routes except static assets
@@ -111,10 +96,82 @@ func main() {
 	// Serve static assets (e.g., JS, CSS, images)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(reactBuildDir+"/static"))))
 
-	// Start the HTTP server on port 10000
-	fmt.Println("Starting server on port 10000...")
-	if err := http.ListenAndServe(":10000", nil); err != nil {
+	fmt.Println("Server is listening on port 8080...")
+	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Printf("Error starting server: %s\n", err)
 	}
+}
 
+func getPlacesHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+	var requestBody RequestBody
+	jsonerr := json.NewDecoder(r.Body).Decode(&requestBody)
+	if jsonerr != nil {
+		log.Fatal(jsonerr)
+	}
+
+	var rows *sql.Rows
+	var err error
+
+	// Create the database query
+	query := "SELECT * FROM places"
+
+	// If a city is specified, add a WHERE clause to filter the results
+	if requestBody.City != "" {
+		query += " WHERE city = $1"
+		// Execute the query
+		vars := []interface{}{requestBody.City}
+		rows, err = db.Query(query, vars...)
+		if err != nil {
+			log.Fatal(err)
+		}
+	} else {
+		rows, err = db.Query(query)
+	}
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Create a slice to store the places
+	var places []Place
+
+	// Iterate over the rows and append to the slice
+	for rows.Next() {
+
+		var p Place
+
+		err := rows.Scan(
+			&p.Id,
+			&p.Category,
+			&p.Type,
+			&p.Coords.Lat,
+			&p.Coords.Lng,
+			&p.Content,
+			&p.Url,
+			&p.Placeid,
+			&p.Price,
+			&p.Rating,
+			&p.Area,
+			&p.Active,
+			&p.Inexpensive,
+			&p.Best,
+			&p.Favorite,
+			&p.Popular,
+			&p.City,
+			&p.Style,
+			&p.Serves,
+			&p.Sponsored,
+			&p.Name,
+		)
+		if err != nil {
+			http.Error(w, "Error scanning database row: "+err.Error(), 500)
+			return
+		}
+		places = append(places, p)
+	}
+
+	defer rows.Close()
+
+	// Encode the slice as JSON and write to the response
+	json.NewEncoder(w).Encode(places)
 }

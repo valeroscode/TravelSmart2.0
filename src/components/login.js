@@ -4,47 +4,47 @@ import "./styles/login.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { user } from "../userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useCookies } from "react-cookie";
 
 function LoginForm() {
-  const navigate = useNavigate();
+  const currentUser = useSelector((state) => state.user);
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "access_token",
+    "has_account",
+  ]);
+  const dispatch = useDispatch();
   const emailRef = useRef();
   const passwordRef = useRef();
-  const { login, logout, currentUser } = useAuth();
-
-  useEffect(() => {
-    async function handleLogout() {
-    await logout();
-    }
-    handleLogout()
-  }, [])
 
   const {
     register,
     formState: { errors },
   } = useForm();
 
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-
-  const handleInputChange = (e) => {
-    const { id, value } = e.target;
-    if (id === "emaillogin") {
-      setEmail(value);
-    }
-    if (id === "passwordfield-login") {
-      setPassword(value);
-    }
-  };
-
   async function OnLogin() {
-    try {
-      await login(emailRef.current.value, passwordRef.current.value)
-      setTimeout(() => {
-        navigate('/home')
-      }, 500)
-    } catch {
-      alert('Username or password is wrong')
-    }
+    fetch("http://localhost:8080/getUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(user(data.user));
+        setCookies("has_account", true);
+        setCookies("access_token", data.token);
+      })
+      .then(() => {
+        console.log(currentUser);
+        // window.location.replace("http://localhost:8080/home");
+      })
+      .catch((error) => console.error("Error:", error));
   }
 
   return (
@@ -52,7 +52,6 @@ function LoginForm() {
       <div id="body">
         <div id="login-div-left">
           <div id="login-title">
-         
             <h1>Explore. Discover. Plan.</h1>
           </div>
           <div id="login">
@@ -84,7 +83,6 @@ function LoginForm() {
                   },
                 })}
                 ref={emailRef}
-                onChange={(e) => handleInputChange(e)}
               />
               {errors.email?.type === "required" && (
                 <p className="error">Email is required</p>
@@ -106,7 +104,6 @@ function LoginForm() {
                   validate: { minLength: (v) => v.length >= 8 },
                 })}
                 ref={passwordRef}
-                onChange={(e) => handleInputChange(e)}
               />
               {errors.password?.type === "required" && (
                 <p className="error">Password is required</p>
@@ -115,14 +112,12 @@ function LoginForm() {
                 <p className="error">Password must be atleast 8 characters</p>
               )}
             </div>
-            <button
-              id="loginBtn"
-              type="submit"
-              onClick={() => OnLogin()}
-            >
+            <button id="loginBtn" type="submit" onClick={() => OnLogin()}>
               LOG IN
             </button>
-            <p id="login-notice">*Login credentials have been filled in for your convenience</p>
+            <p id="login-notice">
+              *Login credentials have been filled in for your convenience
+            </p>
           </div>
         </div>
         <div id="img-login-div">

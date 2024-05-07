@@ -8,6 +8,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { allPlaces } from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
+import { guest } from "../userSlice";
+import { useSelector, useDispatch } from "react-redux";
 
 function HomeHeader({ name }) {
   const account = useRef();
@@ -32,14 +34,8 @@ function HomeHeader({ name }) {
     }
   }, []);
 
-  async function handleLogout() {
-    try {
-      await logout();
-      window.location.replace("http://localhost:3000/");
-    } catch (e) {
-      console.log(e.error);
-      alert("logout failed");
-    }
+  function handleLogout() {
+    window.location.replace("http://localhost:8080/login");
   }
 
   const cityInput = useRef();

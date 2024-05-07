@@ -36,9 +36,13 @@ import TripsPage from "./Trips";
 import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
 import Footer from "./footer";
+import { useCookies } from "react-cookie";
+import { user } from "../userSlice";
+import { useSelector } from "react-redux";
 
 function TravelSmart() {
-  const { currentUser, info } = useAuth();
+  const currentUser = useSelector((state) => state.user);
+
   const cityDD = useRef();
   const cityBtn = useRef();
   const rotate = useRef();
@@ -49,6 +53,10 @@ function TravelSmart() {
   const cityImg = useRef();
   const discMore = useRef();
   const descBg = useRef();
+  const [cookies, setCookies, removeCookie] = useCookies([
+    "access_token",
+    "has_account",
+  ]);
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
@@ -74,40 +82,30 @@ function TravelSmart() {
 
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
-    if (currentUser) {
-      function loadPage() {
-        if (!info.name) {
-          window.setTimeout(loadPage, 200);
-        } else {
-          setFavorites(info.favorites);
-          setName(info.name);
-          setUserTrips(info.trips);
-        }
-      }
-      loadPage();
-      //Sets the default city
-      sessionStorage.setItem("city", "Miami");
-      const citiesInShowAll =
-        document.getElementsByClassName("city-in-show-all");
-      for (let i = 0; i < citiesInShowAll.length; i++) {
-        if (citiesInShowAll[i].textContent === sessionStorage.getItem("city")) {
-          citiesInShowAll[i].style.fontWeight = 800;
-          citiesInShowAll[i].style.color = "lightgray";
-          citiesInShowAll[i].click();
-        }
-      }
+    console.log(currentUser);
+    setFavorites(currentUser.favorites);
+    setName(currentUser.name);
+    setUserTrips(currentUser.trips);
 
-      setTimeout(() => {
-        generalScript();
-        window.history.pushState(
-          null,
-          null,
-          "https://travelsmart2-0.onrender.com/Home"
-        );
-      }, 2000);
-    } else {
-      window.location.replace("https://travelsmart2-0.onrender.com/login");
+    //Sets the default city
+    sessionStorage.setItem("city", "Miami");
+    const citiesInShowAll = document.getElementsByClassName("city-in-show-all");
+    for (let i = 0; i < citiesInShowAll.length; i++) {
+      if (citiesInShowAll[i].textContent === sessionStorage.getItem("city")) {
+        citiesInShowAll[i].style.fontWeight = 800;
+        citiesInShowAll[i].style.color = "lightgray";
+        citiesInShowAll[i].click();
+      }
     }
+
+    setTimeout(() => {
+      generalScript();
+      window.history.pushState(
+        null,
+        null,
+        "https://travelsmart2-0.onrender.com/Home"
+      );
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -324,7 +322,7 @@ function TravelSmart() {
 
   return (
     <>
-      <HomeHeader name={name} />
+      <HomeHeader name={currentUser.name} />
       <div id="lottie">
         <Lottie animationData={animationData} />
       </div>
@@ -663,7 +661,7 @@ function TravelSmart() {
           </div>
         </section>
 
-        <TripsPage info={userTrips} />
+        {/* <TripsPage info={userTrips} /> */}
 
         <div id="organizer">
           <div id="suggestions" ref={viewAll.suggestionsDiv}>

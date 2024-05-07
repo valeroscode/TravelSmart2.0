@@ -1,4 +1,5 @@
-[
+
+    "places": [
         {
           "category": "Club",
           "type": "Dining",
@@ -7,6 +8,7 @@
             "lng": -87.76698
           },
           "content": "<p>Stereo Nightclub</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJ98xxjIXMD4gRq435JSTHyiI",
           "price": 1,
           "rating": 4.3,
@@ -30,6 +32,7 @@
             "lng": -87.670632
           },
           "content": "<p>Surreal Nightlife & Bottle Service Chicago</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJGeaBT4fSD4gRBYjyQSf4BUI",
           "price": 3,
           "rating": 4.6,
@@ -53,6 +56,7 @@
             "lng": -87.806245
           },
           "content": "<p>On The Rocks Bar</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJ1TgxqSLLD4gRuzESNfCjTEk",
           "price": 1,
           "rating": 4.7,
@@ -76,6 +80,7 @@
             "lng": -87.812156
           },
           "content": "<p>Cafe Cubano</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJgWXnICbLD4gRC_Oto5r5K_A",
           "price": 1,
           "rating": 4.2,
@@ -99,6 +104,7 @@
             "lng": -87.812607
           },
           "content": "<p>Trattoria Peppino</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJrbziJybLD4gRRSTsQDG_nZM",
           "price": 2,
           "rating": 4.2,
@@ -122,6 +128,7 @@
             "lng": -87.824911
           },
           "content": "<p>Bertollis River Pizza</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJiVDMRyU1DogRFyRcBrj8wtc",
           "price": 1,
           "rating": 4.5,
@@ -145,6 +152,7 @@
             "lng": -87.802178
           },
           "content": "<p>L├⌐a French Cafe</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJvfPUVM80DogRoBTUdHUCkkA",
           "price": 1,
           "rating": 4.3,
@@ -168,6 +176,7 @@
             "lng": -87.80287
           },
           "content": "<p>The Little Gem Cafe</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJcxq5Dc80DogRFVh7cjkqKxs",
           "price": 2,
           "rating": 4.3,
@@ -191,6 +200,7 @@
             "lng": -87.630558
           },
           "content": "<p>Noodles and Company</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJ78NyRsUsDogR6AqyYoPrts4",
           "price": 1,
           "rating": 3.9,
@@ -214,6 +224,7 @@
             "lng": -87.647587
           },
           "content": "<p>Au Cheval</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJ78NyRsUsDogR6AqyYoPrts4",
           "price": 3,
           "rating": 4.6,
@@ -237,6 +248,7 @@
             "lng": -87.624672
           },
           "content": "<p>Remington's</p>",
+          "url": "utensils-solid.svg",
           "placeID": "ChIJfecaS6QsDogRYoT-1zdAdJE",
           "price": 2,
           "rating": 4.5,
@@ -260,7 +272,7 @@
             "lng": -87.624692
           },
           "content": "<p>The Gage</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJ5a8ra6QsDogRENtJLAp40AE",
           "price": 3,
           "rating": 4.5,
@@ -284,6 +296,7 @@
             "lng": -80.129439
           },
           "content": "<p>Treehouse</p>",
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJVeGMe5202YgRsKp9L9sZ_Tk",
           "price": 3,
           "rating": 3.7,
@@ -306,7 +319,7 @@
             "lng": -80.132295
           },
           "content": "<p>Do Not Sit On The Furniture</p>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJs2kjEG-ZEhQRB-lCHptoMwY",
           "price": 3,
           "rating": 3.9,
@@ -330,6 +343,7 @@
             "lng": -80.141624
           },
           "content": "<p>Bodega Taqueria y tequila (South Beach)</p>",
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJ812ECoi02YgRNjj8YJ8We_c",
           "price": 2,
           "rating": 4.3,
@@ -353,7 +367,7 @@
             "lng": -80.201077
           },
           "content": "<p>Booze Garden</p>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJC1lRwAi32YgRSVrpQlyMnpA",
           "price": 0,
           "rating": 4.1,
@@ -376,7 +390,7 @@
             "lng": -80.197861
           },
           "content": "<p>Racket</p>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJ5YI87a222YgRNNZQBDWpROk",
           "price": 2,
           "rating": 4.1,
@@ -399,7 +413,7 @@
             "lng": -80.199755
           },
           "content": "<h4>The Wharf</h4>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJl41ZjJC22YgRqNY20-g5Dgk",
           "price": 2,
           "rating": 4.5,
@@ -424,7 +438,7 @@
             "lng": -80.195185
           },
           "content": "<h4>Blackbird</h4>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJsRbg74S22YgRi0Phf5bJduk",
           "price": 2,
           "rating": 4.3,
@@ -448,6 +462,7 @@
             "lng": -147.34314
           },
           "content": "<p>Santa Claus House</p>",
+          "url": "christmasMarker.svg",
           "placeID": "ChIJAejzkU9NMlER0e0v550hQCg",
           "price": 1,
           "rating": 4.4,
@@ -471,7 +486,7 @@
             "lng": -147.328317
           },
           "content": "<p>Elf's Den Restaurant & Lounge</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJa2V6Ux5OMlEReeLdN_pi-s4",
           "price": 2,
           "rating": 4,
@@ -495,7 +510,7 @@
             "lng": -147.349444
           },
           "content": "<p>Santa's Work Shop</p>",
-          
+          "url": "christmasMarker.svg",
           "placeID": "ChIJQ_VXMCdNMlERywJ-JfnmCO4",
           "price": 0,
           "rating": 4.7,
@@ -519,7 +534,7 @@
             "lng": -80.262316
           },
           "content": "<p>Zits Sum</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJs_Wd-pW32YgRwoXizRaCwUc",
           "price": 2,
           "rating": 4.6,
@@ -542,7 +557,7 @@
             "lng": -80.191348
           },
           "content": "<p>Boia De</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJte0b2xux2YgRr8f-xaLb0jw",
           "price": 0,
           "rating": 4.7,
@@ -565,7 +580,7 @@
             "lng": -80.245048
           },
           "content": "<p>Ariete</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJEV1uzNq32YgReJLG9ncPUQQ",
           "price": 3,
           "rating": 4.4,
@@ -588,7 +603,7 @@
             "lng": -80.141078
           },
           "content": "<p>Macchialina</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJIUhk5oq02YgRsQu7AiC8UQU",
           "price": 3,
           "rating": 4.3,
@@ -611,7 +626,7 @@
             "lng": -80.242503
           },
           "content": "<p>Kr├╝s Kitchen</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJRYCei9u32YgRs41U3I3uTv8",
           "price": 2,
           "rating": 4.2,
@@ -634,7 +649,7 @@
             "lng": -80.192875
           },
           "content": "<p>Maty's</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJjdFMo4Sx2YgR8EBhV0U9nwg",
           "price": 0,
           "rating": 4.5,
@@ -657,7 +672,7 @@
             "lng": -80.312761
           },
           "content": "<p>Ghee Indian Kitchen</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJ_Un49qTH2YgRe6GmHfMFfcg",
           "price": 2,
           "rating": 4.3,
@@ -680,7 +695,7 @@
             "lng": -80.20096
           },
           "content": "<p>Zak the Baker</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJMVmQ-LK22YgRXCFmM480oqw",
           "price": 2,
           "rating": 4.5,
@@ -703,6 +718,7 @@
             "lng": -80.193483
           },
           "content": "<p>CMX Brickell City Centre</p>",
+          "url": "film-solid.svg",
           "placeID": "ChIJuzUnnoS22YgR-ZU72MU4bWs",
           "price": 3,
           "rating": 4,
@@ -725,7 +741,7 @@
             "lng": -80.14093
           },
           "content": "<p>Regal South Beach</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJt3GeTIa02YgRGWB8CDFVlcg",
           "price": 3,
           "rating": 4.3,
@@ -748,7 +764,7 @@
             "lng": -80.39288
           },
           "content": "<p>Regal Kendall Village</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJU05_GubA2YgRwq_EkBzIg7Y",
           "price": 2,
           "rating": 4.4,
@@ -771,7 +787,7 @@
             "lng": -80.28612
           },
           "content": "<p>AMC Sunset Place 24</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJUS8HNuXH2YgR82gMUELih4c",
           "price": 2,
           "rating": 4.2,
@@ -794,7 +810,7 @@
             "lng": -80.389682
           },
           "content": "<p>AMC Tamiami 18</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJU6hvlT-_2YgR8QLnEnh-hWo",
           "price": 2,
           "rating": 4.6,
@@ -817,7 +833,7 @@
             "lng": -80.33953
           },
           "content": "<p>Regal UA Falls</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJVUPSGZTG2YgRmzhoTSXAmy0",
           "price": 2,
           "rating": 3.9,
@@ -840,6 +856,7 @@
             "lng": -80.194088
           },
           "content": "<p>Vice City Bean</p>",
+          "url": "coffee.svg",
           "placeID": "ChIJPafykqW22YgRgVtxDd-DJUs",
           "price": 2,
           "rating": 4.6,
@@ -862,7 +879,7 @@
             "lng": -80.193826
           },
           "content": "<p>ALL DAY</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJ23awxKO22YgRT3o5P_CHuNM",
           "price": 2,
           "rating": 4.4,
@@ -885,7 +902,7 @@
             "lng": -80.190583
           },
           "content": "<p>Pasion del Cielo Coffee</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJURsbrYO22YgRtgS3ozGAlOM",
           "price": 1,
           "rating": 4.2,
@@ -908,7 +925,7 @@
             "lng": -80.271638
           },
           "content": "<p>White Rose Coffee</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJX4liOjW42YgR2cY4TxNPePk",
           "price": 1,
           "rating": 4.7,
@@ -931,7 +948,7 @@
             "lng": -80.242387
           },
           "content": "<p>Panther Coffee - Coconut Grove</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJf4Gym8-32YgRZbTDebFFNJk",
           "price": 2,
           "rating": 4.3,
@@ -954,7 +971,7 @@
             "lng": -80.350232
           },
           "content": "<p>Pinecrest Bakery - Kendall</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJM1QrajvH2YgRR-K0PA9LOyo",
           "price": 1,
           "rating": 4.1,
@@ -978,7 +995,7 @@
             "lng": -80.323317
           },
           "content": "<p>WFM Coffee Bar</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJnWYPc7zH2YgRfg5XxoeqKE8",
           "price": 2,
           "rating": 4.4,
@@ -1001,7 +1018,7 @@
             "lng": -74.002805
           },
           "content": "<p>Marquee New York</p>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJBwnlGrdZwokRpf61pMm860c",
           "price": 3,
           "rating": 2.9,
@@ -1024,7 +1041,7 @@
             "lng": -73.996215
           },
           "content": "<p>FREQ</p>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJ8wZN9U9YwokR3N6ejNpHsrw",
           "price": 2,
           "rating": 3.3,
@@ -1047,7 +1064,7 @@
             "lng": -74.003522
           },
           "content": "<p>PHD Rooftop Lounge at Dream Downtown</p>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJMRV7375ZwokRAfltF6Y-wYw",
           "price": 4,
           "rating": 3,
@@ -1071,7 +1088,7 @@
             "lng": -73.971573
           },
           "content": "<p>LAVO Nightclub</p>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJU_26rfpYwokRTNf2K1-7p8E",
           "price": 4,
           "rating": 2.8,
@@ -1095,7 +1112,7 @@
             "lng": -73.978397
           },
           "content": "<p>Retroclubnyc</p>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJvdeJLbtZwokROqH2C2ZqGIM",
           "price": 0,
           "rating": 4,
@@ -1119,7 +1136,7 @@
             "lng": -74.007771
           },
           "content": "<p>Crown Shy</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJ__9LNBZawokREnkOiVx7ydc",
           "price": 3,
           "rating": 4.6,
@@ -1143,7 +1160,7 @@
             "lng": -73.888434
           },
           "content": "<p>Roberto's</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJpb3wZof0wokREXE6p8y04O8",
           "price": 3,
           "rating": 4.5,
@@ -1167,7 +1184,7 @@
             "lng": -73.944479
           },
           "content": "<p>Sylvia's</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJb8Xw0wz2wokRXhp1-HSLvkI",
           "price": 2,
           "rating": 4.3,
@@ -1191,7 +1208,7 @@
             "lng": -73.981756
           },
           "content": "<p>Le Bernardin</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJV7QQ6kdZwokRax4615zpSGU",
           "price": 0,
           "rating": 4.3,
@@ -1215,7 +1232,7 @@
             "lng": -73.832185
           },
           "content": "<p>Szechuan Mountain House</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJ2WLOZg5gwokR-ZgAQ3W-sEQ",
           "price": 2,
           "rating": 4.5,
@@ -1239,7 +1256,7 @@
             "lng": -73.972611
           },
           "content": "<p>Peter Jay Sharp Theatre at Symphony Space</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJC-i7Fij2wokR_lChv61-vcM",
           "price": 1,
           "rating": 4.5,
@@ -1262,7 +1279,7 @@
             "lng": -73.993368
           },
           "content": "<p>Cinema Village</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJ3V0TyplZwokRQZas6j2ifL0",
           "price": 0,
           "rating": 4.3,
@@ -1285,7 +1302,7 @@
             "lng": -73.984079
           },
           "content": "<p>Film at Lincoln Center</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJF43lj19YwokRMxvojxjdudU",
           "price": 0,
           "rating": 4.7,
@@ -1308,7 +1325,7 @@
             "lng": -73.986212
           },
           "content": "<p>Village East by Angelika</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJy_q2gZ5ZwokRrG27bv1NgtU",
           "price": 0,
           "rating": 4.4,
@@ -1331,7 +1348,7 @@
             "lng": -73.989201
           },
           "content": "<p>Al Hirschfeld Theatre</p>",
-          
+          "url": "film-solid.svg",
           "placeID": "ChIJlTWPiFRYwokRF7JuJslWbaw",
           "price": 0,
           "rating": 4.7,
@@ -1354,7 +1371,7 @@
             "lng": -73.988898
           },
           "content": "<p>Frisson Espresso</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJJd-4_1NYwokRtEqmmFU9Z5o",
           "price": 2,
           "rating": 4.7,
@@ -1378,7 +1395,7 @@
             "lng": -73.735528
           },
           "content": "<p>Bibble & Sip</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJS_UX8OKJwokRxi-4C2mFaws",
           "price": 2,
           "rating": 4.5,
@@ -1402,7 +1419,7 @@
             "lng": -73.991795
           },
           "content": "<p>Breads Bakery</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJcWebfphZwokRRrPNZD7byJw",
           "price": 2,
           "rating": 4.6,
@@ -1426,7 +1443,7 @@
             "lng": -73.982636
           },
           "content": "<p>Gregorys Coffee</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJxb7V7_9YwokRsQh0iiKujvc",
           "price": 2,
           "rating": 4.1,
@@ -1450,7 +1467,7 @@
             "lng": -73.977752
           },
           "content": "<p>Zibetto Espresso Bar</p>",
-          
+          "url": "coffee.svg",
           "placeID": "ChIJkTLA-_lYwokRnx4vnaEIgS8",
           "price": 2,
           "rating": 4.6,
@@ -1474,7 +1491,7 @@
             "lng": 2.197064
           },
           "content": "<h4>Pacha Barcelona</h4>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJ6WzH1A6jpBIRW04lQGYa9To",
           "price": 3,
           "rating": 3.3,
@@ -1498,7 +1515,7 @@
             "lng": 2.175081
           },
           "content": "<h4>Moog</h4>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJjQYOeFeipBIRxerwu6p6GTk",
           "price": 2,
           "rating": 4.1,
@@ -1521,7 +1538,7 @@
             "lng": 2.168324
           },
           "content": "<h4>Disco City Hall</h4>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJf4Uux_OipBIRAl5nzzKhzW4",
           "price": 2,
           "rating": 3.9,
@@ -1545,7 +1562,7 @@
             "lng": 2.146859
           },
           "content": "<h4>Input</h4>",
-          
+          "url": "<svg xmlns=\"http://www.w3.org/2000/svg\" height=\"16\" width=\"16\" viewBox=\"0 0 512 512\"><path fill=\"#c054de\" d=\"M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm256 32a32 32 0 1 1 0-64 32 32 0 1 1 0 64zm-96-32a96 96 0 1 0 192 0 96 96 0 1 0 -192 0zM96 240c0-35 17.5-71.1 45.2-98.8S205 96 240 96c8.8 0 16-7.2 16-16s-7.2-16-16-16c-45.4 0-89.2 22.3-121.5 54.5S64 194.6 64 240c0 8.8 7.2 16 16 16s16-7.2 16-16z\"/></svg>",
           "placeID": "ChIJCzqCsneipBIRPFn44HNceBI",
           "price": 0,
           "rating": 4,
@@ -1568,7 +1585,7 @@
             "lng": 2.153199
           },
           "content": "<p>Disfrutar</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJTSzGu4WipBIRkznre9Zwis0",
           "price": 4,
           "rating": 4.8,
@@ -1592,7 +1609,7 @@
             "lng": 2.168391
           },
           "content": "<p>El Nacional Barcelona</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJM5FFbvKipBIRdWugDh577Ao",
           "price": 2,
           "rating": 4.4,
@@ -1616,7 +1633,7 @@
             "lng": 2.160054
           },
           "content": "<p>Con Gracia</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJUych0ZWipBIRYdSbrR8MEW8",
           "price": 3,
           "rating": 4.7,
@@ -1640,7 +1657,7 @@
             "lng": 2.163559
           },
           "content": "<p>UMA</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJp1NbA4WYpBIRGemH5XFZE50",
           "price": 4,
           "rating": 4.6,
@@ -1664,7 +1681,7 @@
             "lng": 2.166323
           },
           "content": "<p>Cera 23</p>",
-          
+          "url": "utensils-solid.svg",
           "placeID": "ChIJO9Q5t1-ipBIR6j1w_MTknys",
           "price": 2,
           "rating": 4.7,
@@ -1680,5 +1697,5 @@
           "sponsored": true,
           "name": "Cera 23"
         }
-]
-    
+      ]
+      
