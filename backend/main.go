@@ -86,6 +86,7 @@ func main() {
 
 	http.HandleFunc("/createUser", createUserHandler(db))
 	http.HandleFunc("/getUser", getUserHandler(db))
+	http.HandleFunc("/getUserData", getUserDataHandler(db))
 	http.HandleFunc("/deleteUser", deleteUserHandler(db))
 	http.HandleFunc("/updateFavorites", updateFavoritesHandler(db))
 	http.HandleFunc("/updateName", updateNameHandler(db))

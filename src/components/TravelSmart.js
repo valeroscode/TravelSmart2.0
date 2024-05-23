@@ -82,10 +82,22 @@ function TravelSmart() {
 
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
+    if (currentUser.data === null) {
+      fetch("http://localhost:8080/getUserData", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailRef.current.value,
+          password: passwordRef.current.value,
+        }),
+      });
+    }
+
     console.log(currentUser);
-    setFavorites(currentUser.favorites);
-    setName(currentUser.name);
-    setUserTrips(currentUser.trips);
+    setFavorites(currentUser.data.data.favorites);
+    setName(currentUser.data.data.name);
 
     //Sets the default city
     sessionStorage.setItem("city", "Miami");

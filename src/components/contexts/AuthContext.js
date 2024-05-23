@@ -50,10 +50,31 @@ export function AuthProvider({ children }) {
   }
 
   function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
+    fetch("http://localhost:8080/getUser", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setUser(data.user));
+        setCookies("has_account", true);
+        setCookies("access_token", data.token);
+      })
+      .then(() => {
+        console.log(currentUser);
+        navigate("/home");
+        // window.location.replace("http://localhost:8080/home");
+      })
+      .catch((error) => console.error("Error:", error));
   }
   function signup(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password)
+    return createUserWithEmailAndPassword(auth, email, password);
   }
 
   function logout() {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import TravelSmart from "./components/TravelSmart";
 import TripsPage from "./components/Trips";
 import LoginForm from "./components/login";
@@ -8,10 +8,10 @@ import PlaceContent from "./components/PlaceContent";
 import TripPlanner from "./components/Planner";
 import Results from "./components/filteredResults";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
-import Builder from "./builder";
 import Landing from "./components/Landing";
 
 function App() {
+
   return (
     <>
       <AuthProvider>
@@ -24,7 +24,6 @@ function App() {
               <Route path="signup" element={<Signup />}></Route>
               <Route path="Search-Results" element={<Results />}></Route>
               <Route path="MyTrip" element={<TripPlanner />}></Route>
-              <Route path="build" element={<Builder />}></Route>
               <Route path="/" element={<Landing />}></Route>
             </Routes>
           </div>

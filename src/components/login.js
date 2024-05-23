@@ -4,11 +4,12 @@ import "./styles/login.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { user } from "../userSlice";
+import { setUser } from "../userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 
 function LoginForm() {
+  const navigate = useNavigate();
   const currentUser = useSelector((state) => state.user);
   const [cookies, setCookies, removeCookie] = useCookies([
     "access_token",
@@ -24,7 +25,7 @@ function LoginForm() {
   } = useForm();
 
   async function OnLogin() {
-    fetch("http://localhost:8080/getUser", {
+    await fetch("http://localhost:8080/getUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -36,12 +37,13 @@ function LoginForm() {
     })
       .then((response) => response.json())
       .then((data) => {
-        dispatch(user(data.user));
+        dispatch(setUser(data.user));
         setCookies("has_account", true);
         setCookies("access_token", data.token);
       })
       .then(() => {
         console.log(currentUser);
+        navigate("/home");
         // window.location.replace("http://localhost:8080/home");
       })
       .catch((error) => console.error("Error:", error));
