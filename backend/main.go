@@ -49,6 +49,18 @@ type RequestBody struct {
 	City string `json:"city"`
 }
 
+func corsHandler(h http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET,HEAD,POST,PUT,OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token")
+		if r.Method == "OPTIONS" {
+			return
+		}
+		h.ServeHTTP(w, r)
+	})
+}
+
 func main() {
 
 	err := godotenv.Load(".env")
@@ -81,6 +93,7 @@ func main() {
 	http.HandleFunc("/updateTripName", updateTripNameHandler(db))
 	http.HandleFunc("/updateTrip", updateTripHandler(db))
 	http.HandleFunc("/deleteTrip", deleteTripHandler(db))
+	http.HandleFunc("/refresh", refreshHandler(db))
 
 	reactBuildDir := "../build"
 
@@ -88,14 +101,12 @@ func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// Construct the path to the index.html file
 		indexPath := filepath.Join(reactBuildDir, "index.html")
-
 		// Serve the index.html file
 		http.ServeFile(w, r, indexPath)
+		corsHandler(http.FileServer(http.Dir("../build")))
 	})
 
 	// Serve static assets (e.g., JS, CSS, images)
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(reactBuildDir+"/static"))))
-
 	fmt.Println("Server is listening on port 8080...")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Printf("Error starting server: %s\n", err)

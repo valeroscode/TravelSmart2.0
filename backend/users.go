@@ -135,11 +135,12 @@ func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	email := creds.Email
 	password := creds.Password
 
+	var id int
 	var storedHash string
 	var name string
-	var favorites *[]string
+	var favoritesBytes []byte
 	var trips json.RawMessage
-	quErr := db.QueryRow("SELECT password, name, favorites, trips FROM users WHERE email = $1", email).Scan(&storedHash, &name, &favorites, &trips)
+	quErr := db.QueryRow("SELECT id, password, name, favorites, trips FROM users WHERE email = $1", email).Scan(&id, &storedHash, &name, &favoritesBytes, &trips)
 	if quErr == sql.ErrNoRows {
 		http.Error(w, "Invalid email", http.StatusUnauthorized)
 		return
@@ -161,7 +162,23 @@ func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		log.Printf("Error unmarshaling trips data: %v", err)
 	}
 
+	var favorites *[]string
+	if favoritesBytes == nil {
+		// Set favorites to nil
+		favorites = nil
+	} else {
+		// Unmarshal the []byte slice into a slice of strings
+		var favorites []string
+		err := json.Unmarshal(favoritesBytes, &favorites)
+		if err != nil {
+			// Handle error
+		}
+
+		// Now 'favorites' contains the data retrieved from the "favorites" column as []string
+	}
+
 	combinedUser := User{
+		ID:        id,
 		Email:     email,
 		Name:      name,
 		Trips:     tripData,
@@ -204,6 +221,72 @@ func generateToken(user User) (string, error) {
 	}
 
 	return tokenString, nil
+}
+
+func getUserData(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+	var requestBody struct {
+		ID int `json:"id"`
+	}
+
+	jsonErr := json.NewDecoder(r.Body).Decode(&requestBody)
+	if jsonErr != nil {
+		http.Error(w, jsonErr.Error(), http.StatusBadRequest)
+		return
+	}
+
+	authHeader := r.Header.Get("Authorization")
+	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
+	// Verify the JWT token
+	valid, err := verifyJWT(jwtToken)
+	if !valid {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	var email string
+	var name string
+	var favoritesBytes []byte
+	var trips json.RawMessage
+	quErr := db.QueryRow("SELECT email, name, favorites, trips FROM users WHERE id = $1", requestBody.ID).Scan(&email, &name, &favoritesBytes, &trips)
+	if quErr != nil {
+		log.Printf("Error retrieving user data: %v", quErr)
+		http.Error(w, "Error retrieving user data", http.StatusInternalServerError)
+		return
+	}
+
+	var tripData Trips
+	err = json.Unmarshal(trips, &tripData)
+	if err != nil {
+		log.Printf("Error unmarshaling trips data: %v", err)
+	}
+
+	var favorites *[]string
+	if favoritesBytes == nil {
+		// Set favorites to nil
+		favorites = nil
+	} else {
+		// Unmarshal the []byte slice into a slice of strings
+		var favorites []string
+		err := json.Unmarshal(favoritesBytes, &favorites)
+		if err != nil {
+			// Handle error
+		}
+
+		// Now 'favorites' contains the data retrieved from the "favorites" column as []string
+	}
+
+	combinedUser := User{
+		Email:     email,
+		Name:      name,
+		Trips:     tripData,
+		Favorites: favorites, // Set Favorites to nil if it's null
+	}
+
+	json.NewEncoder(w).Encode(struct {
+		User User `json:"user"`
+	}{
+		User: combinedUser,
+	})
 }
 
 func updateFavorites(w http.ResponseWriter, r *http.Request, db *sql.DB) {
@@ -695,5 +778,12 @@ func deleteTripHandler(db *sql.DB) func(w http.ResponseWriter, r *http.Request) 
 	return func(w http.ResponseWriter, r *http.Request) {
 		r.Header.Set("Content-Type", "application/json")
 		deleteTrip(w, r, db)
+	}
+}
+
+func refreshHandler(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		r.Header.Set("Content-Type", "application/json")
+		getUserData(w, r, db)
 	}
 }
