@@ -1,4 +1,4 @@
-import { allPlaces } from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 //Used to redirect the user and display information when they click on a specific place
 export function learnMoreAboutPlace(
   text,

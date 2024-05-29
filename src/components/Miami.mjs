@@ -3,6 +3,7 @@ import { allPlaces } from "./allMarkers.mjs";
 import { learnMoreAboutPlace, handleTripAdderPopup } from "./getPlaceInfo.mjs";
 
 export function generalScript() {
+  console.log(allPlaces);
   let live_markers = [];
 
   localStorage.clear();
@@ -113,7 +114,6 @@ export function generalScript() {
     const placeInfo = document.getElementById("placeInfo");
     const gallery = document.getElementById("gallery");
 
-
     let lastMarkerClicked = "";
 
     function createMarker(props) {
@@ -161,6 +161,7 @@ export function generalScript() {
       marker.addListener("click", (e) => {
         lastMarkerClicked = marker.name;
         gallery.setAttribute("name", marker.name);
+        gallery.setAttribute("url", marker.url);
         //Place info is requested only for the specific marker the user clicks on
         googleAPICalls(
           marker.getPosition().lat(),

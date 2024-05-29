@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { applied_filters } from "./getPlaceInfo.mjs";
 import "./styles/Navbar.css";
-import { allPlaces } from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
 import { learnMoreAboutPlace } from "./getPlaceInfo.mjs";
 import { useAuth } from "./contexts/AuthContext";

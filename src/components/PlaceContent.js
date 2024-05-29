@@ -8,7 +8,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
-import { allPlaces } from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 import PlaceHome from "./PlaceHome";
 import AddTrip_Button from "./AddTrip_Button";
 import {

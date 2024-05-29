@@ -86,7 +86,7 @@ func main() {
 
 	http.HandleFunc("/createUser", createUserHandler(db))
 	http.HandleFunc("/getUser", getUserHandler(db))
-	http.HandleFunc("/getUserData", getUserDataHandler(db))
+	http.HandleFunc("/getUserData", refreshHandler(db))
 	http.HandleFunc("/deleteUser", deleteUserHandler(db))
 	http.HandleFunc("/updateFavorites", updateFavoritesHandler(db))
 	http.HandleFunc("/updateName", updateNameHandler(db))
@@ -98,16 +98,15 @@ func main() {
 
 	reactBuildDir := "../build"
 
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir(reactBuildDir+"/static"))))
 	// Serve the index.html file for all routes except static assets
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// Construct the path to the index.html file
 		indexPath := filepath.Join(reactBuildDir, "index.html")
 		// Serve the index.html file
 		http.ServeFile(w, r, indexPath)
-		corsHandler(http.FileServer(http.Dir("../build")))
 	})
 
-	// Serve static assets (e.g., JS, CSS, images)
 	fmt.Println("Server is listening on port 8080...")
 	if err := http.ListenAndServe(":8080", nil); err != nil {
 		fmt.Printf("Error starting server: %s\n", err)

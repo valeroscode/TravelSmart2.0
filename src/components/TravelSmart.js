@@ -21,7 +21,7 @@ import {
   faMoneyBillWave,
 } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "./HomeHeader";
-import { allPlaces, citiesArray } from "./allMarkers.mjs";
+import { citiesArray, allPlaces } from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
 import { docMethods } from "./firebase/firebase";
 import {
@@ -37,11 +37,9 @@ import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
 import Footer from "./footer";
 import { useCookies } from "react-cookie";
-import { user } from "../userSlice";
-import { useSelector } from "react-redux";
 
 function TravelSmart() {
-  const currentUser = useSelector((state) => state.user);
+  const { currentUser } = useAuth();
 
   const cityDD = useRef();
   const cityBtn = useRef();
@@ -82,23 +80,6 @@ function TravelSmart() {
 
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
-    if (currentUser.data === null) {
-      fetch("http://localhost:8080/getUserData", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: emailRef.current.value,
-          password: passwordRef.current.value,
-        }),
-      });
-    }
-
-    console.log(currentUser);
-    setFavorites(currentUser.data.data.favorites);
-    setName(currentUser.data.data.name);
-
     //Sets the default city
     sessionStorage.setItem("city", "Miami");
     const citiesInShowAll = document.getElementsByClassName("city-in-show-all");
@@ -119,6 +100,10 @@ function TravelSmart() {
       );
     }, 2000);
   }, []);
+
+  useEffect(() => {
+    setName(currentUser.name);
+  }, [currentUser]);
 
   useEffect(() => {
     let total = 0;
@@ -225,7 +210,7 @@ function TravelSmart() {
     const nodeLength = recImg.length;
 
     for (let i = 0; i < nodeLength; i++) {
-      recImg[i].src = `${recImg[i].getAttribute("name")}.jpg`;
+      recImg[i].src = `${recImg[i].getAttribute("url")}`;
     }
 
     //Colors in hearts for favorites that are in the top picks & everywhere else
@@ -235,7 +220,7 @@ function TravelSmart() {
   const gallery = useRef();
   function findPlacePicture() {
     const gallery = document.getElementById("gallery");
-    gallery.src = `/${gallery.getAttribute("name")}.jpg`;
+    gallery.src = `${gallery.getAttribute("url")}`;
   }
 
   const viewAll = {
@@ -334,7 +319,7 @@ function TravelSmart() {
 
   return (
     <>
-      <HomeHeader name={currentUser.name} />
+      <HomeHeader name={name} />
       <div id="lottie">
         <Lottie animationData={animationData} />
       </div>
@@ -731,7 +716,7 @@ function TravelSmart() {
                 >
                   <a href="/place" target="_blank"></a>
                   <img
-                    src={require(`../../public/${place.name}.jpg`)}
+                    src={place.url}
                     className="carousel-image"
                     loading="lazy"
                   ></img>

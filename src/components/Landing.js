@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./styles/landing.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,8 +15,13 @@ import {
 import { allPlaces } from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
+import greece1 from "./assets/greece1.jpg";
+import coolnew from "./assets/coolnew.jpg";
+import miamiwaves from "./assets/miamiwaves.jpg";
+import createitin from "./assets/createitin.jpg";
 
 function Landing() {
+  const [cities, setCities] = useState([]);
   const landingMain = useRef();
   const spotlight = useRef();
   const spotlightCursor = useRef();
@@ -73,9 +78,9 @@ function Landing() {
     if (window.location.pathname === "/") {
       window.addEventListener("scroll", () => {
         if (window.scrollY > 0) {
-          landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0.7)";
+          landingNav.current.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
         } else {
-          landingNav.current.style.backgroundColor = "rgba(255, 255, 255, 0)";
+          landingNav.current.style.backgroundColor = "rgba(0, 0, 0, 0)";
         }
       });
     }
@@ -200,13 +205,13 @@ function Landing() {
       <section id="landing-main" ref={landingMain}>
         <section id="landing-nav" ref={landingNav}>
           <div id="landing-nav-left">
-            <FontAwesomeIcon icon={faPaperPlane} style={{ color: "black" }} />
+            <FontAwesomeIcon icon={faPaperPlane} style={{ color: "white" }} />
             <h1 className="travel">TRAVEL</h1>
-            <h1 className="smart">SMART</h1>
+            <h1 className="travel">SMART</h1>
           </div>
           <div id="landing-nav-right">
             <Link to="/login">
-              <button>Get Started</button>
+              <button>GET STARTED</button>
             </Link>
           </div>
         </section>
@@ -229,40 +234,40 @@ function Landing() {
               className="landing-card one"
               src="findeasy.png"
               style={{ pointerEvents: "none" }}
-              color="#FFD0D5"
+              color="#A76000"
               deg="1deg"
             ></img>
             <img
               className="landing-card two"
               src="design.jpg"
               style={{ pointerEvents: "none" }}
-              color="#A4C9D8"
+              color="#003643"
               deg="2deg"
             ></img>
             <img
               className="landing-card three"
               src="inform.png"
               style={{ pointerEvents: "none" }}
-              color="#ACDBF6"
+              color="#1A4D31"
               deg="3deg"
             ></img>
             <img
               className="landing-card four"
               src="newcities.jpg"
               style={{ pointerEvents: "none" }}
-              color="#FFD0D5"
+              color="#332511"
               deg="4deg"
             ></img>
             <img
               className="landing-card five"
               src="showcase2.png"
               style={{ pointerEvents: "none" }}
-              color="#FFBC4B"
+              color="#281C7C"
               deg="5deg"
             ></img>
             <img
               className="landing-card six"
-              src="showcase1.png"
+              src={greece1}
               id="dragable"
               deg="6deg"
             ></img>
@@ -278,51 +283,50 @@ function Landing() {
       </section>
 
       <section id="landing-new-features">
-        <h2>New Features</h2>
+        <h2>Why Travel Smart?</h2>
         <div id="new-features-content">
           <div className="bigdiv">
-            <img src="googlemap.png"></img>
+            <img src={coolnew}></img>
             <h5>Explore</h5>
-            <h4>Google Maps Integration</h4>
+            <h4>Find Cool New Places With Ease</h4>
             <p>
-              Thanks to the power of google maps, you can now see vital and
-              accurate place information like opening times, ratings, and more.
-            </p>
-          </div>
-          <div className="smdiv">
-            <img src="heart.png"></img>
-            <h5>Q+A</h5>
-            <h4>Why add to your favorites?</h4>
-            <p>
-              Your favorites are the way you save places that you want to visit
-              but don't know how they'll fit into your trip just yet. You can
-              evaluate later and add them to your trip from the trip planner.
-            </p>
-          </div>
-          <div className="smdiv">
-            <img src="landingbudgeting.png"></img>
-            <h5>Planning</h5>
-            <h4>How to plan for expenses?</h4>
-            <p>
-              Travel Smart has a built in budgeting system that lets you set a
-              trip budget, set budgets for each place you'll visit and other
-              essentials like hotel and transportation.
+              Traveling to a near or faraway land and don't know where to get
+              started? How about those of you who end up going to the same
+              places in your current city? Travel Smart solves both problems!
+              It's never been easier to explore cities here and aborad.
             </p>
           </div>
           <div className="bigdiv">
+            <img src="heart.png"></img>
+            <h5>Make Memories</h5>
+            <h4>We Help You Have A Good Time</h4>
+            <p>
+              We list the most highly rated places so you don't have to scour
+              the internet. We also prioritize budget friendly establishments
+              and activities so you can have a good time regardless of finances.
+            </p>
+          </div>
+          <div className="bigdiv">
+            <img src={createitin}></img>
+            <h5>Planning</h5>
+            <h4>Create Itineraries And Budgets</h4>
+            <p>
+              A well planned trip helps you see more and experience more. Our
+              planning and budgeting system is intuative and easy, send out your
+              itinerary to your travel buddies and get to exploring!
+            </p>
+          </div>
+          {/* <div className="bigdiv">
             <img src="findeasy.png"></img>
             <span id="manyh5">
               <h5>The Best</h5>
-              <h5 className="nexth5">Dining</h5>
-              <h5 className="nexth5">Bars</h5>
-              <h5 className="nexth5">Places</h5>
             </span>
             <h4>Find it easily</h4>
             <p>
               Finding those places you want to visit is a breeze. For those who
               don't know a city, Travel Smart is your tour guide.
             </p>
-          </div>
+          </div> */}
         </div>
       </section>
 
@@ -358,20 +362,22 @@ function Landing() {
         </div>
 
         <div id="landing-spotlight-text">
-          <h2 className="in">In the Spotlight</h2>
-          <h2 className="impacts">See how Travel Smart impacts travel</h2>
+          <h2 className="in">City Leaderboard</h2>
+          <h2 className="impacts">
+            Which 5 places are users traveling to the most?
+          </h2>
         </div>
 
         <div id="landing-spotlight-content">
           <div className="spotlight-wrapper">
             <div className="burst-8"></div>
-            <img src="couple.jpg" className="coupleimg"></img>
-            <h4>Dan & Sherrol</h4>
-            <p>Since 2018</p>
+            <img src="New York Landing.jpg" className="coupleimg"></img>
+            <h4>The City That Never Sleeps</h4>
+            <p>50 trips planned</p>
             <h3 className="testimonial-text">
-              Travel smart has enabled us to plan 5 europe trips and 3 US trips.
-              The tools are so easy to use and make travel planning an absolute
-              breeze. Couldn't recommend it more.
+              New York City, bustling with life, is a vibrant metropolis of
+              towering skyscrapers, cultural diversity, and endless
+              possibilities.
             </h3>
 
             <div className="from">
@@ -382,66 +388,13 @@ function Landing() {
 
           <div className="spotlight-wrapper">
             <div className="burst-8"></div>
-            <img src="portrait2.jpg" className="small-img"></img>
-            <h4>Carl Townsend</h4>
-            <p>Since 2022</p>
+            <img src="Miami Landing.jpg" className="small-img"></img>
+            <h4>An Expensive Paradise</h4>
+            <p>40 trips planned</p>
             <h3 className="testimonial-text-2">
-              I'll put it this way, technology is difficult to use, Travel Smart
-              isn't. From the beginning it was intuative and easy to use. I've
-              been using it for 4 years now and I've never looked back.
-            </h3>
-
-            <div className="from">
-              <div></div>
-              <h6>LAS VEGAS</h6>
-            </div>
-          </div>
-
-          <div className="spotlight-wrapper">
-            <div className="burst-8"></div>
-            <img src="portrait3.jpg" className="med-img"></img>
-            <h4>Jay Cutler</h4>
-            <p>Since 2022</p>
-            <h3 className="testimonial-text-3">
-              Me and my freinds have planned countless trips with Travel Smart.
-              It does not compare to it's competitors. Even my non planner
-              friends love having the itinerary that I send them.
-            </h3>
-
-            <div className="from">
-              <div></div>
-              <h6>NEW YORK</h6>
-            </div>
-          </div>
-
-          <div className="spotlight-wrapper">
-            <div className="burst-8"></div>
-            <img src="couple2.jpg" className="seclg-img"></img>
-            <h4>Jack and Jill</h4>
-            <p>Since 2022</p>
-            <h3 className="testimonial-text-4">
-              We went up the hill of Travel Smart and have never looked back.
-              We're using to to plan a trip to Chicago, our hometown. We know a
-              lot of the spots but Travel Smart has opened us up to places we've
-              never been to! Can't wait.
-            </h3>
-
-            <div className="from">
-              <div></div>
-              <h6>CHICAGO</h6>
-            </div>
-          </div>
-
-          <div className="spotlight-wrapper">
-            <div className="burst-8"></div>
-            <div className="six-pointed-star"></div>
-            <img src="portrait5.jpg" className="small-img"></img>
-            <h4>Ethan James</h4>
-            <p>Since 2022</p>
-            <h3 className="testimonial-text-2">
-              YAHHH BUDDY! Use Travel Smart. My son introduced me to it and we
-              make trips together. It's so easy. It's easier to use Travel Smart
-              than to get to Travel Smart on the web! That's how simple it is!
+              Miami, a sun-soaked paradise, boasts stunning beaches, vibrant
+              nightlife, and a melting pot of cultures, offering endless
+              excitement and relaxation.
             </h3>
 
             <div className="from">
@@ -449,7 +402,75 @@ function Landing() {
               <h6>MIAMI</h6>
             </div>
           </div>
+
+          <div className="spotlight-wrapper">
+            <div className="burst-8"></div>
+            <img src="Tokyo Landing.jpg" className="med-img"></img>
+            <h4>Serene & Exciting</h4>
+            <p>33 trips planned</p>
+            <h3 className="testimonial-text-3">
+              Tokyo, a pulsating megacity, blends ancient tradition with
+              cutting-edge technology, offering a sensory overload of neon-lit
+              streets, bustling markets, and serene temples.
+            </h3>
+
+            <div className="from">
+              <div></div>
+              <h6>TOKYO</h6>
+            </div>
+          </div>
+
+          <div className="spotlight-wrapper">
+            <div className="burst-8"></div>
+            <img src="Rome Landing.jpg" className="seclg-img"></img>
+            <h4>Ancient Charm</h4>
+            <p>20 trips planned</p>
+            <h3 className="testimonial-text-4">
+              Rome, the Eternal City, exudes ancient charm with its majestic
+              ruins, picturesque piazzas, and mouthwatering cuisine, captivating
+              visitors with its timeless allure.
+            </h3>
+
+            <div className="from">
+              <div></div>
+              <h6>ROME</h6>
+            </div>
+          </div>
+
+          <div className="spotlight-wrapper">
+            <div className="burst-8"></div>
+            <div className="six-pointed-star"></div>
+            <img src="Nashville Landing.jpg" className="small-img"></img>
+            <h4>The Country Capital</h4>
+            <p>16 trips planned</p>
+            <h3 className="testimonial-text-2">
+              Nashville, the heart of country music, welcomes visitors with its
+              lively honky-tonks, southern hospitality, and rich musical
+              heritage, promising an unforgettable experience in Music City.
+            </h3>
+
+            <div className="from">
+              <div></div>
+              <h6>NASHVILLE</h6>
+            </div>
+          </div>
         </div>
+      </section>
+
+      <section id="allcities">
+        <h2>ALL CITIES</h2>
+        <ul>
+          <li>Miami</li>
+          <li>New York City</li>
+          <li>Chicago</li>
+          <li>Nashville</li>
+          <li>Rome</li>
+          <li>Seoul</li>
+          <li>Tokyo</li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
       </section>
 
       <section id="landing-subs">
@@ -472,7 +493,7 @@ function Landing() {
 
       <section id="landing-convert">
         <div id="convert-left">
-          <img src="travelpainting.jpg"></img>
+          <img src={miamiwaves}></img>
           <div id="convert-start-app">
             <Link to="/login">
               <FontAwesomeIcon icon={faPlay} />
@@ -505,7 +526,7 @@ function Landing() {
             your account.
           </p>
           <Link to="/login">
-            <button>Get Started</button>
+            <button>GET STARTED</button>
           </Link>
         </div>
       </section>

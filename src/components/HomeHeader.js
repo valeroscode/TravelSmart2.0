@@ -6,10 +6,8 @@ import {
   faPlaneDeparture,
   faMagnifyingGlassLocation,
 } from "@fortawesome/free-solid-svg-icons";
-import { allPlaces } from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
-import { guest } from "../userSlice";
-import { useSelector, useDispatch } from "react-redux";
 
 function HomeHeader({ name }) {
   const account = useRef();
@@ -180,6 +178,7 @@ function HomeHeader({ name }) {
                 {currentUser ? (
                   <div className="user-name">
                     <p id="users-name">Hello, {name}</p>
+                    <img></img>
                     <button onClick={() => handleLogout()}>Log Out</button>
                   </div>
                 ) : (

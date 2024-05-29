@@ -3,17 +3,17 @@ package main
 import (
 	"database/sql"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"log"
+	"math"
 	"net/http"
 	"os"
 	"strings"
 	"time"
 
-	"github.com/go-redis/redis/v8"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/lib/pq"
+	"github.com/patrickmn/go-cache"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -24,6 +24,12 @@ type User struct {
 	Password  string    `json:"password"`
 	Favorites *[]string `json:"favorites"`
 	Trips     Trips     `json:"trips"`
+}
+
+type UserData struct {
+	Name  string `json:"name"`
+	Email string `json:"email"`
+	Trips Trips  `json:"trips"`
 }
 
 type tripDetails struct {
@@ -51,7 +57,9 @@ type Credentials struct {
 	Password string `json:"password"`
 }
 
-var client *redis.Client
+type allCache struct {
+	data *cache.Cache
+}
 
 func createUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
@@ -127,6 +135,34 @@ func createUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	json.NewEncoder(w).Encode(user)
 }
 
+func newCache() *allCache {
+	const (
+		defaultExpiration = 5 * time.Minute
+		purgeTime         = 10 * time.Minute
+	)
+	Cache := cache.New(defaultExpiration, purgeTime)
+	return &allCache{
+		data: Cache,
+	}
+}
+
+func (c *allCache) read(id string) (item []byte, ok bool) {
+	data, ok := c.data.Get(id)
+	if ok {
+		log.Println("from cache")
+		res, err := json.Marshal(data.(UserData))
+		if err != nil {
+			log.Fatal("Error")
+		}
+		return res, true
+	}
+	return nil, false
+}
+
+func (c *allCache) update(id string, userdata UserData) {
+	c.data.Set(id, userdata, cache.DefaultExpiration)
+}
+
 func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	var creds Credentials
@@ -166,27 +202,11 @@ func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		log.Printf("Error unmarshaling trips data: %v", err)
 	}
 
-	var favorites *[]string
-	if favoritesBytes == nil {
-		// Set favorites to nil
-		favorites = nil
-	} else {
-		// Unmarshal the []byte slice into a slice of strings
-		var favorites []string
-		err := json.Unmarshal(favoritesBytes, &favorites)
-		if err != nil {
-			// Handle error
-		}
-
-		// Now 'favorites' contains the data retrieved from the "favorites" column as []string
-	}
-
 	combinedUser := User{
-		ID:        id,
-		Email:     email,
-		Name:      name,
-		Trips:     tripData,
-		Favorites: favorites,
+		ID:    id,
+		Email: email,
+		Name:  name,
+		Trips: tripData,
 	}
 
 	// Generate a token
@@ -195,6 +215,14 @@ func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	userData := UserData{
+		Name:  name,
+		Email: email,
+		Trips: tripData,
+	}
+
+	fmt.Println(userData)
 
 	// Return the token and user data
 	json.NewEncoder(w).Encode(struct {
@@ -206,6 +234,49 @@ func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	})
 }
 
+func getUserData(w http.ResponseWriter, r *http.Request, db *sql.DB) {
+	// Extract the JWT token from the Authorization header
+	authHeader := r.Header.Get("Authorization")
+	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
+	// Verify the JWT token
+	valid, err := verifyJWT(jwtToken)
+	if valid == -1 {
+		http.Error(w, err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	intID := int(math.Round(valid))
+
+	var name string
+	var favoritesBytes []byte
+	var trips json.RawMessage
+	quErr := db.QueryRow("SELECT name, favorites, trips FROM users WHERE id = $1", intID).Scan(&name, &favoritesBytes, &trips)
+	if quErr != nil {
+		log.Printf("Error retrieving user data: %v", quErr)
+		http.Error(w, "Error retrieving user data", http.StatusInternalServerError)
+		return
+	}
+
+	var tripData Trips
+	err = json.Unmarshal(trips, &tripData)
+	if err != nil {
+		log.Printf("Error unmarshaling trips data: %v", err)
+	}
+
+	userData := UserData{
+		Name:  name,
+		Trips: tripData,
+	}
+
+	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(struct {
+		User UserData `json:"user"`
+	}{
+		User: userData,
+	})
+
+}
+
 func generateToken(user User) (string, error) {
 	jwtSecret := os.Getenv("JWT_SECRET")
 	// Create a new token
@@ -214,8 +285,6 @@ func generateToken(user User) (string, error) {
 	// Set the token claims
 	claims := token.Claims.(jwt.MapClaims)
 	claims["user_id"] = user.ID
-	claims["email"] = user.Email
-	claims["name"] = user.Name
 	claims["exp"] = time.Now().Add(time.Hour * 24).Unix() // Token expires in 24 hours
 
 	// Sign the token with a secret key
@@ -228,13 +297,6 @@ func generateToken(user User) (string, error) {
 }
 
 func updateFavorites(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-
-	cache := NewCache(client)
-	userID := r.FormValue("userID")
-	cachedID, err := cache.GetUserID(userID)
-	if err != nil {
-		log.Printf("Cache error: %v", err)
-	}
 
 	var requestBody struct {
 		Operation string `json:"operation"`
@@ -251,8 +313,8 @@ func updateFavorites(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	authHeader := r.Header.Get("Authorization")
 	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
 	// Verify the JWT token
-	valid, err := verifyJWT(jwtToken, cachedID)
-	if !valid {
+	valid, err := verifyJWT(jwtToken)
+	if valid == -1 {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
@@ -260,15 +322,15 @@ func updateFavorites(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	switch requestBody.Operation {
 	case "append":
 		var currentArray sql.NullString
-		err = db.QueryRow("SELECT favorites FROM users WHERE id = $1", cachedID).Scan(&currentArray)
+		err = db.QueryRow("SELECT favorites FROM users WHERE id = $1", valid).Scan(&currentArray)
 		if currentArray.Valid {
-			_, err = db.Exec("UPDATE users SET favorites = ARRAY_APPEND(favorites, $1) WHERE id = $2", requestBody.Item, cachedID)
+			_, err = db.Exec("UPDATE users SET favorites = ARRAY_APPEND(favorites, $1) WHERE id = $2", requestBody.Item, valid)
 			if err != nil {
 				log.Println(err)
 			}
 		} else {
 			array := []string{requestBody.Item}
-			_, err = db.Exec("UPDATE users SET favorites = $1 WHERE id = $2", pq.Array(array), cachedID)
+			_, err = db.Exec("UPDATE users SET favorites = $1 WHERE id = $2", pq.Array(array), valid)
 			if err != nil {
 				log.Println(err)
 			}
@@ -280,7 +342,7 @@ func updateFavorites(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		}
 
 	case "remove":
-		_, err = db.Exec("UPDATE users SET favorites = CASE WHEN favorites IS NULL OR favorites = '{}' THEN '{}' ELSE ARRAY_REMOVE(favorites, $1) END WHERE id = $2", requestBody.Item, cachedID)
+		_, err = db.Exec("UPDATE users SET favorites = CASE WHEN favorites IS NULL OR favorites = '{}' THEN '{}' ELSE ARRAY_REMOVE(favorites, $1) END WHERE id = $2", requestBody.Item, valid)
 		if err != nil {
 			log.Println(err)
 		}
@@ -292,15 +354,9 @@ func updateFavorites(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 func updateName(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
-	cache := NewCache(client)
-	userID := r.FormValue("userID")
-	cachedID, err := cache.GetUserID(userID)
-	if err != nil {
-		log.Printf("Cache error: %v", err)
-	}
-
 	var requestBody struct {
-		Name string `json:"name"`
+		Email string `json:"email"`
+		Name  string `json:"name"`
 	}
 
 	jsonErr := json.NewDecoder(r.Body).Decode(&requestBody)
@@ -313,20 +369,20 @@ func updateName(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	authHeader := r.Header.Get("Authorization")
 	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
 	// Verify the JWT token
-	valid, err := verifyJWT(jwtToken, cachedID)
-	if !valid {
+	valid, err := verifyJWT(jwtToken)
+	if valid == -1 {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
 
-	_, err = db.Exec("UPDATE users SET name = $1 WHERE id = $2", requestBody.Name, cachedID)
+	_, err = db.Exec("UPDATE users SET name = $1 WHERE id = $2", requestBody.Name, valid)
 	if err != nil {
 		log.Println(err)
 	}
 
 }
 
-func verifyJWT(token string, userID string) (bool, error) {
+func verifyJWT(token string) (float64, error) {
 	jwtSecret := os.Getenv("JWT_SECRET")
 	// Parse the JWT token
 	parsedToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
@@ -338,7 +394,7 @@ func verifyJWT(token string, userID string) (bool, error) {
 		return []byte(jwtSecret), nil
 	})
 	if err != nil {
-		return false, err
+		return -1, err
 	}
 
 	// Check if the token is valid
@@ -346,71 +402,14 @@ func verifyJWT(token string, userID string) (bool, error) {
 		exp := claims["exp"]
 		if exp != nil {
 			if exp.(float64) < float64(time.Now().Unix()) {
-				return false, nil
+				return -1, nil
 			}
 		}
-		// Extract the user's email from the claims
-		claimUserID, ok := claims["email"].(string)
-		if !ok || claimUserID != userID {
-			return false, errors.New("user ID mismatch")
-		}
-		return true, nil
+		// Extract the user's id from the claims
+		claimUserID := claims["user_id"]
+		return claimUserID.(float64), nil
 	}
-	return false, nil
-}
-
-func getUserData(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-
-	cache := NewCache(client)
-	userID := r.FormValue("userID")
-	cachedID, err := cache.GetUserID(userID)
-	if err != nil {
-		log.Printf("Cache error: %v", err)
-	}
-
-	// Extract the JWT token from the Authorization header
-	authHeader := r.Header.Get("Authorization")
-	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
-	// Verify the JWT token
-	valid, err := verifyJWT(jwtToken, cachedID)
-	if !valid {
-		http.Error(w, err.Error(), http.StatusUnauthorized)
-		return
-	}
-
-	var name string
-	var favorites *[]string
-	var trips json.RawMessage
-	quErr := db.QueryRow("SELECT name, favorites, trips FROM users WHERE id = $1", cachedID).Scan(&name, &favorites, &trips)
-	if quErr == sql.ErrNoRows {
-		http.Error(w, "Invalid email", http.StatusUnauthorized)
-		return
-	}
-	if quErr != nil {
-		log.Printf("Error retrieving user data: %v", quErr)
-		http.Error(w, "Error retrieving user data", http.StatusInternalServerError)
-		return
-	}
-
-	var tripData Trips
-	err = json.Unmarshal(trips, &tripData)
-	if err != nil {
-		log.Printf("Error unmarshaling trips data: %v", err)
-	}
-
-	combinedUser := User{
-		Email:     cachedID,
-		Name:      name,
-		Trips:     tripData,
-		Favorites: favorites, // Set Favorites to nil if it's null
-	}
-
-	// Return the token and user data
-	json.NewEncoder(w).Encode(struct {
-		User User `json:"user"`
-	}{
-		User: combinedUser,
-	})
+	return -1, nil
 }
 
 func deleteUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
@@ -458,13 +457,6 @@ func deleteUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 func createTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
-	cache := NewCache(client)
-	userID := r.FormValue("userID")
-	cachedID, err := cache.GetUserID(userID)
-	if err != nil {
-		log.Printf("Cache error: %v", err)
-	}
-
 	var requestBody struct {
 		Name     string              `json:"name"`
 		City     string              `json:"city"`
@@ -484,8 +476,8 @@ func createTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	authHeader := r.Header.Get("Authorization")
 	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
 	// Verify the JWT token
-	valid, err := verifyJWT(jwtToken, cachedID)
-	if !valid {
+	valid, err := verifyJWT(jwtToken)
+	if valid == -1 {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
@@ -504,7 +496,7 @@ func createTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	query := "SELECT trips FROM users WHERE id = $1"
 
-	row := db.QueryRow(query, cachedID)
+	row := db.QueryRow(query, valid)
 	var tripsJSON []byte
 	switch err := row.Scan(&tripsJSON); {
 	case err != nil:
@@ -529,20 +521,13 @@ func createTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	//Update the user row with the new trip data
 	query = "UPDATE users SET trips = $1 WHERE id = $2"
-	_, err = db.Exec(query, tripsJSON, cachedID)
+	_, err = db.Exec(query, tripsJSON, valid)
 	if err != nil {
 		return
 	}
 }
 
 func updateTripName(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-
-	cache := NewCache(client)
-	userID := r.FormValue("userID")
-	cachedID, err := cache.GetUserID(userID)
-	if err != nil {
-		log.Printf("Cache error: %v", err)
-	}
 
 	var requestBody struct {
 		Newname  string              `json:"newname"`
@@ -564,8 +549,8 @@ func updateTripName(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	authHeader := r.Header.Get("Authorization")
 	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
 	// Verify the JWT token
-	valid, err := verifyJWT(jwtToken, cachedID)
-	if !valid {
+	valid, err := verifyJWT(jwtToken)
+	if valid == -1 {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
@@ -575,7 +560,7 @@ func updateTripName(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	trips.Trips = make(map[string]tripDetails)
 
 	query := "SELECT trips FROM users WHERE id = $1"
-	row := db.QueryRow(query, cachedID)
+	row := db.QueryRow(query, valid)
 
 	var tripsJSON []byte
 	switch err := row.Scan(&tripsJSON); {
@@ -609,20 +594,13 @@ func updateTripName(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	query = "UPDATE users SET trips = $1 WHERE id = $2"
-	_, err = db.Exec(query, tripsJSON, cachedID)
+	_, err = db.Exec(query, tripsJSON, valid)
 	if err != nil {
 		return
 	}
 }
 
 func updateTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-
-	cache := NewCache(client)
-	userID := r.FormValue("userID")
-	cachedID, err := cache.GetUserID(userID)
-	if err != nil {
-		log.Printf("Cache error: %v", err)
-	}
 
 	var requestBody struct {
 		Trip     string              `json:"tripname"`
@@ -643,8 +621,8 @@ func updateTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	authHeader := r.Header.Get("Authorization")
 	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
 	// Verify the JWT token
-	valid, err := verifyJWT(jwtToken, cachedID)
-	if !valid {
+	valid, err := verifyJWT(jwtToken)
+	if valid == -1 {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
@@ -654,7 +632,7 @@ func updateTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	trips.Trips = make(map[string]tripDetails)
 
 	query := "SELECT trips FROM users WHERE id = $1"
-	row := db.QueryRow(query, cachedID)
+	row := db.QueryRow(query, valid)
 
 	var tripsJSON []byte
 	switch err := row.Scan(&tripsJSON); {
@@ -686,7 +664,7 @@ func updateTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	query = "UPDATE users SET trips = $1 WHERE id = $2"
-	_, err = db.Exec(query, tripsJSON, cachedID)
+	_, err = db.Exec(query, tripsJSON, valid)
 	if err != nil {
 		return
 	}
@@ -694,13 +672,6 @@ func updateTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 }
 
 func deleteTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
-
-	cache := NewCache(client)
-	userID := r.FormValue("userID")
-	cachedID, err := cache.GetUserID(userID)
-	if err != nil {
-		log.Printf("Cache error: %v", err)
-	}
 
 	var requestBody struct {
 		Email string `json:"email"`
@@ -717,8 +688,8 @@ func deleteTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	authHeader := r.Header.Get("Authorization")
 	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
 	// Verify the JWT token
-	valid, err := verifyJWT(jwtToken, cachedID)
-	if !valid {
+	valid, err := verifyJWT(jwtToken)
+	if valid == -1 {
 		http.Error(w, err.Error(), http.StatusUnauthorized)
 		return
 	}
@@ -727,7 +698,7 @@ func deleteTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	trips.Trips = make(map[string]tripDetails)
 
 	query := "SELECT trips FROM users WHERE id = $1"
-	row := db.QueryRow(query, cachedID)
+	row := db.QueryRow(query, valid)
 
 	var tripsJSON []byte
 	switch err := row.Scan(&tripsJSON); {
@@ -747,7 +718,7 @@ func deleteTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	query = "UPDATE users SET trips = $1 WHERE id = $2"
-	_, err = db.Exec(query, tripsJSON, cachedID)
+	_, err = db.Exec(query, tripsJSON, valid)
 	if err != nil {
 		return
 	}
@@ -763,13 +734,6 @@ func getUserHandler(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		r.Header.Set("Content-Type", "application/json")
 		getUser(w, r, db)
-	}
-}
-
-func getUserDataHandler(db *sql.DB) func(w http.ResponseWriter, r *http.Request) {
-	return func(w http.ResponseWriter, r *http.Request) {
-		r.Header.Set("Content-Type", "application/json")
-		getUserData(w, r, db)
 	}
 }
 

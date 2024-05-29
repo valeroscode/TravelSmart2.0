@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import "./styles/Miami.css";
 import "./styles/Miami2.css";
-import { allPlaces } from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
 import AddTrip_Button from "./AddTrip_Button";

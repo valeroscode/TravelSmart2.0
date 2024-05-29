@@ -10,7 +10,7 @@ import {
   faChevronLeft,
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
-import { allPlaces } from "./allMarkers.mjs";
+import {allPlaces} from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 

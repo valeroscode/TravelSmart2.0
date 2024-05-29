@@ -4,18 +4,12 @@ import "./styles/login.css";
 import { Link } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { setUser } from "../userSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { useCookies } from "react-cookie";
 
 function LoginForm() {
+  const { login } = useAuth();
   const navigate = useNavigate();
-  const currentUser = useSelector((state) => state.user);
-  const [cookies, setCookies, removeCookie] = useCookies([
-    "access_token",
-    "has_account",
-  ]);
-  const dispatch = useDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
   const emailRef = useRef();
   const passwordRef = useRef();
 
@@ -25,28 +19,8 @@ function LoginForm() {
   } = useForm();
 
   async function OnLogin() {
-    await fetch("http://localhost:8080/getUser", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        dispatch(setUser(data.user));
-        setCookies("has_account", true);
-        setCookies("access_token", data.token);
-      })
-      .then(() => {
-        console.log(currentUser);
-        navigate("/home");
-        // window.location.replace("http://localhost:8080/home");
-      })
-      .catch((error) => console.error("Error:", error));
+    await login(emailRef.current.value, passwordRef.current.value);
+    navigate("/home");
   }
 
   return (
