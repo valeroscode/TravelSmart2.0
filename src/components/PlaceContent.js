@@ -8,7 +8,7 @@ import {
   faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Helmet } from "react-helmet";
-import {allPlaces} from "./allMarkers.mjs";
+import { allPlaces } from "./allMarkers.mjs";
 import PlaceHome from "./PlaceHome";
 import AddTrip_Button from "./AddTrip_Button";
 import {
@@ -22,37 +22,28 @@ import { docMethods } from "./firebase/firebase";
 import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
 import Footer from "./footer";
+import HomeHeader from "./HomeHeader";
 
 function PlaceContent() {
   const [serves, setServes] = useState("");
   const [style, setStyle] = useState("");
   const addressText = useRef();
+  const [name, setName] = useState("");
 
-  const { currentUser, info } = useAuth();
+  const { currentUser } = useAuth();
   const [favorites, setFavorites] = useState([]);
 
   const heart = useRef();
 
   useEffect(() => {
     for (let i = 0; i < allPlaces.length; i++) {
-      if (typeof window !== "undefined") {
-        if (localStorage.getItem("current").includes(allPlaces[i].name)) {
-          const m = allPlaces[i];
-          setServes(m.serves);
-          setStyle(m.style);
-        }
+      if (localStorage.getItem("current").includes(allPlaces[i].name)) {
+        const m = allPlaces[i];
+        setServes(m.serves);
+        setStyle(m.style);
       }
     }
 
-    if (currentUser) {
-      setTimeout(() => {
-        if (info.favorites.includes(heart.current.getAttribute("name"))) {
-          heart.current.firstElementChild.classList.add("favorite");
-          heart.current.lastChild.textContent = "ADDED!";
-        }
-        setFavorites(info.favorites);
-      }, 2500);
-    }
     var geocoderRev = new window.google.maps.Geocoder();
     geocoderRev.geocode(
       { placeId: localStorage.getItem("ID") },
@@ -76,6 +67,15 @@ function PlaceContent() {
       }
     );
   }, []);
+
+  useEffect(() => {
+    // if (currentUser.favorites.includes(heart.current.getAttribute("name"))) {
+    //   heart.current.firstElementChild.classList.add("favorite");
+    //   heart.current.lastChild.textContent = "ADDED!";
+    // }
+    setFavorites(currentUser.favorites);
+    setName(currentUser.name);
+  }, [currentUser]);
 
   function writeReview(e) {
     const rw = document.getElementById("reviewWriting");
@@ -113,7 +113,9 @@ function PlaceContent() {
           return;
         }
         yr.innerHTML =
-          `<h4>${currentUser ? info.name + "  (You)" : "Your Review"}</h4>` +
+          `<h4>${
+            currentUser ? currentUser.name + "  (You)" : "Your Review"
+          }</h4>` +
           `<p>${ff.value}</p>` +
           `<p>Rating: ${rf.value}/5</p><br/>`;
       }
@@ -140,9 +142,8 @@ function PlaceContent() {
   const lottie = useRef();
   const lottieBg = useRef();
   function renderReviews(item) {
-    // if (reviews && reviews.childNodes.length === 0) {
     if (reviewsCon.current) {
-      if (reviewsCon.current.childNodes.length < 6) {
+      if (reviewsCon.current.childNodes.length < 12) {
         const div = document.createElement("div");
         reviewsCon.current.appendChild(div);
         div.innerHTML =
@@ -238,7 +239,7 @@ function PlaceContent() {
 
   return (
     <>
-      <PlaceHome />
+      <HomeHeader name={name} />
       <div ref={lottie} id="lottie">
         <Lottie animationData={animationData} />
       </div>

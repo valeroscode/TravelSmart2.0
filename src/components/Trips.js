@@ -10,19 +10,17 @@ import {
   faChevronLeft,
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
-import {allPlaces} from "./allMarkers.mjs";
+import { allPlaces } from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 
 import { tripObj, tripDates, dateObj } from "./getPlaceInfo.mjs";
 
-function TripsPage({ info }) {
+function TripsPage() {
   const { currentUser } = useAuth();
+  const [info, setInfo] = useState({});
 
-  console.log(info);
-
-  let string = currentUser.email.toString();
-  string = currentUser.metadata.createdAt + string.substring(0, 8);
+  let string = "";
   const unorderedList = useRef();
 
   var duplicates = (array) =>
@@ -81,6 +79,11 @@ function TripsPage({ info }) {
   useEffect(() => {
     renderCalendar(dateObj.currYear, dateObj.currMonth);
   }, []);
+
+  useEffect(() => {
+    console.log(currentUser.trips.trips);
+    setInfo(currentUser.trips.trips);
+  }, [currentUser]);
 
   function selectDates(e, month, year, day) {
     if (
@@ -604,7 +607,7 @@ function TripsPage({ info }) {
   }
 
   function timeFromTrip(trip) {
-    if (trip[1].Year > dateObj.currYear) {
+    if (trip.year > dateObj.currYear) {
       return (
         <a style={{ color: "#053AD1" }}>
           <FontAwesomeIcon icon={faCalendar} style={{ color: "#053AD1" }} />{" "}
@@ -613,9 +616,9 @@ function TripsPage({ info }) {
       );
     }
     if (
-      months[trackerMonth] === trip[1].Dates[0].split(" ")[0] &&
-      trip[1].Dates[0].split(" ")[1] - dateObj.date.getDate() <= 10 &&
-      trip[1].Dates[0].split(" ")[1] - dateObj.date.getDate() >= 1
+      months[trackerMonth] === trip.dates[0].split(" ")[0] &&
+      trip.dates[0].split(" ")[1] - dateObj.date.getDate() <= 10 &&
+      trip.dates[0].split(" ")[1] - dateObj.date.getDate() >= 1
     ) {
       return (
         <a style={{ color: "green" }}>
@@ -624,7 +627,7 @@ function TripsPage({ info }) {
         </a>
       );
     } else if (
-      months.indexOf(trip[1].Dates[0].split(" ")[0]) - trackerMonth ===
+      months.indexOf(trip.dates[0].split(" ")[0]) - trackerMonth ===
       1
     ) {
       return (
@@ -633,18 +636,15 @@ function TripsPage({ info }) {
           Next Month
         </a>
       );
-    } else if (
-      months.indexOf(trip[1].Dates[0].split(" ")[0]) - trackerMonth >
-      0
-    ) {
+    } else if (months.indexOf(trip.dates[0].split(" ")[0]) - trackerMonth > 0) {
       return (
         <a id="months-away" style={{ color: "#FDB135" }}>
-          {months.indexOf(trip[1].Dates[0].split(" ")[0]) - trackerMonth} Months
+          {months.indexOf(trip.dates[0].split(" ")[0]) - trackerMonth} Months
           Away
         </a>
       );
     } else if (
-      trip[1].Dates.includes(
+      trip.dates.includes(
         `${months[dateObj.currMonth]} ${trackerDate.getDate()}`
       )
     ) {
@@ -670,8 +670,6 @@ function TripsPage({ info }) {
     }, 350);
   }
 
-  console.log(info);
-
   return (
     <>
       <div onClick={(e) => formFunctions.changeInputField(e)}>
@@ -683,31 +681,30 @@ function TripsPage({ info }) {
           </div>
           <ul id="trips-con" ref={unorderedList}>
             {info !== undefined ? (
-              Object.entries(info).map((trip) => (
-                <div key={trip[0]} className="trip-item">
-                  <img loading="lazy" src={`${trip[1].City}.jpg`}></img>
+              Object.entries(info).map(([key, value]) => (
+                <div key={key} className="trip-item">
+                  <img loading="lazy" src={`${value.city}.jpg`}></img>
                   <div className="trip-flex">
                     <div>
-                      <h2>{trip[0]}</h2>
+                      <h2>{key}</h2>
                       <p>
-                        {trip[1].Dates[0]} -{" "}
-                        {trip[1].Dates[trip[1].Dates.length - 1]}
+                        {value.dates[0]} - {value.dates[value.dates.length - 1]}
                       </p>
                       <h6>
-                        {trip[1].City}
-                        {timeFromTrip(trip)}
+                        {value.city}
+                        {timeFromTrip(value)}
                       </h6>
                     </div>
                     <div className="trip-section-btns">
                       <button
-                        name={trip[0]}
-                        city={trip[1].City}
+                        name={key}
+                        city={value.city}
                         onClick={(e) => getTripDetails(e)}
                       >
                         Plan Trip
                       </button>
                       <button
-                        name={trip[0]}
+                        name={key}
                         onClick={(e) =>
                           deleteTrip(e, e.target.getAttribute("name"))
                         }

@@ -18,17 +18,19 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (cookies.access_token) {
-      fetch("localhost:8080/getUserData", {
+    if (cookies.access_token && window.location.pathname !== "trips") {
+      fetch("http://localhost:8080/getUserData", {
         method: "GET",
         headers: {
           Authorization: "Bearer " + cookies.access_token,
           "Content-Type": "application/json",
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          return response.json();
+        })
         .then((data) => {
-          setCurrentUser(data);
+          setCurrentUser(data.user);
         })
         .catch((err) => {
           console.error(err);

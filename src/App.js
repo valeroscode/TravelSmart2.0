@@ -18,6 +18,7 @@ function App() {
           <div className="App">
             <Routes>
               <Route path="place" element={<PlaceContent />} />
+              <Route path="trips" element={<TripsPage />}></Route>
               <Route path="Home" element={<TravelSmart />} />
               <Route path="login" element={<LoginForm />}></Route>
               <Route path="signup" element={<Signup />}></Route>

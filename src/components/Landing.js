@@ -11,16 +11,38 @@ import {
   faUser,
   faPlay,
   faPlane,
+  faBurst,
+  faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
-import { allPlaces } from "./allMarkers.mjs";
 import { Link } from "react-router-dom";
 import Lottie from "lottie-react";
-import greece1 from "./assets/greece1.jpg";
+import makemems from "./assets/makemems.jpg";
 import coolnew from "./assets/coolnew.jpg";
 import miamiwaves from "./assets/miamiwaves.jpg";
 import createitin from "./assets/createitin.jpg";
+import withopts from "./assets/withoptions.jpg";
+import withease from "./assets/withease.jpg";
+import fromto from "./assets/fromto.jpg";
+import greece1 from "./assets/greece1.jpg";
+import moroco1 from "./assets/moroco1.jpg";
+import easyusephone from "./assets/easyuse (1).png";
+import easyusecomp from "./assets/easyuse (2).png";
+import withothers from "./assets/waterfall.jpg";
+import thekiss from "./assets/thekiss.jpg";
+import desert from "./assets/desert.jpg";
+import planflowers from "./assets/planflowers.jpg";
+import icelandwaterfall from "./assets/icelandwaterfall.jpg";
+import kobe from "./assets/kobe.jpg";
+import nylanding from "./assets/New York Landing.jpg";
+import mialanding from "./assets/Miami Landing.jpg";
+import romelanding from "./assets/Rome Landing.jpg";
+import tokyoLanding from "./assets/Tokyo Landing.jpg";
+import nashvillelanding from "./assets/Nashville Landing.jpg";
+import { allPlaces } from "./allMarkers.mjs";
+import { useCookies } from "react-cookie";
 
 function Landing() {
+  const [cookies] = useCookies(["access_token"]);
   const [cities, setCities] = useState([]);
   const landingMain = useRef();
   const spotlight = useRef();
@@ -29,6 +51,7 @@ function Landing() {
   const chevright = useRef();
   const landingNav = useRef();
   const scrollDownText = useRef();
+  const landingNavBtn = useRef();
 
   const category = useRef();
   const content = useRef();
@@ -42,24 +65,15 @@ function Landing() {
     {
       category: "EXPLORE",
       content:
-        "From the USA to Australia: Finding Cool Places has Never Been Easier",
+        "From The USA to Tokyo, Finding Cool Places has Never Been Easier",
     },
     {
       category: "PLAN",
-      content: "Designing Your Getaway: Travel Smart has all the tools",
-    },
-    {
-      category: "DISCOVER",
-      content: "Inform Yourself: Travel Smart has all the info you need",
-    },
-    {
-      category: "BEHIND THE SCENES",
-      content: "New Cities and places added every week",
+      content: "Plan Your Trips & Weekend Getaways With Ease",
     },
     {
       category: "EXPLORE",
-      content:
-        "Thanks to Google Maps, you can plan your trips with a bird's eye view",
+      content: "With Options For All, Small and Big Budget, Here and Aborad",
     },
     {
       category: "BEHIND THE SCENES",
@@ -79,10 +93,53 @@ function Landing() {
       window.addEventListener("scroll", () => {
         if (window.scrollY > 0) {
           landingNav.current.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+          landingNavBtn.current.style.borderRadius = "0px";
+          landingNavBtn.current.style.backgroundColor = "#8A05FF";
+          landingNavBtn.current.style.color = "white";
         } else {
           landingNav.current.style.backgroundColor = "rgba(0, 0, 0, 0)";
+          landingNavBtn.current.style.borderRadius = "0px 0px 0px 20px";
+          landingNavBtn.current.style.backgroundColor = "white";
+          landingNavBtn.current.style.color = "black";
         }
       });
+    }
+
+    const citiesArr = [];
+
+    for (let i = 0; i < allPlaces.length; i++) {
+      if (!citiesArr.includes(allPlaces[i].city)) {
+        citiesArr.push(allPlaces[i].city);
+      }
+    }
+
+    setCities(citiesArr);
+
+    const whyItems = document.getElementsByClassName("why-item");
+
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = 1;
+          setTimeout(() => {
+            entry.target.style.backgroundColor = "black";
+            entry.target.firstElementChild.style.opacity = 1;
+            entry.target.childNodes[1].style.opacity = 1;
+          }, 500);
+        } else {
+          entry.target.style.opacity = 0;
+          setTimeout(() => {
+            entry.target.style.backgroundColor = "rgba(0,0,0,0)";
+            entry.target.firstElementChild.style.opacity = 0;
+            entry.target.childNodes[1].style.opacity = 0;
+          }, 500);
+        }
+      });
+    });
+
+    for (let i = 0; i < whyItems.length; i++) {
+      obs.observe(whyItems[i]);
+      console.log(whyItems[i].childNodes[1]);
     }
   }, []);
 
@@ -102,7 +159,7 @@ function Landing() {
     }
   }
 
-  let currentCard = 5;
+  let currentCard = 3;
   let broughtBackCard = 0;
 
   function switchCards() {
@@ -110,9 +167,9 @@ function Landing() {
 
     const switchCard = () => {
       if (currentCard === 0) {
-        currentCard = 5;
+        currentCard = 3;
         function bringBackCards() {
-          if (broughtBackCard === 5) {
+          if (broughtBackCard === 3) {
             broughtBackCard = 0;
             setTimeout(() => {
               for (let i = 0; i < cards.length; i++) {
@@ -209,114 +266,122 @@ function Landing() {
             <h1 className="travel">TRAVEL</h1>
             <h1 className="travel">SMART</h1>
           </div>
-          <div id="landing-nav-right">
-            <Link to="/login">
-              <button>GET STARTED</button>
+          {cookies.access_token ? (
+            <Link to="/home">
+              <div id="landing-nav-right" ref={landingNavBtn}>
+                <p>Dashboard</p>
+              </div>
             </Link>
-          </div>
+          ) : (
+            <Link to="/login">
+              <div id="landing-nav-right" ref={landingNavBtn}>
+                <p>Get Started</p>
+              </div>
+            </Link>
+          )}
         </section>
 
         <section id="landing-feature-breakdown">
           <div id="feature-icon">
-            <FontAwesomeIcon icon={faPaperPlane} />
+            <FontAwesomeIcon className="paper-plane" icon={faPaperPlane} />
+            <FontAwesomeIcon className="burst-top" icon={faBurst} />
           </div>
           <div id="feature-text" ref={ftText}>
             <p id="feature-text-category" ref={category}>
               WELCOME
             </p>
             <h2 id="feature-text-content" ref={content}>
-              Welcome to Travel Smart: An All-In-One Travel Planner for Those
-              That Want to See the World
+              Here To Help You Make Memories
             </h2>
+            <Link to="/login">
+              <button className="get-started-below-h2">START NOW</button>
+            </Link>
           </div>
+
           <div id="feature-cards">
             <img
-              className="landing-card one"
-              src="findeasy.png"
-              style={{ pointerEvents: "none" }}
-              color="#A76000"
-              deg="1deg"
-            ></img>
-            <img
-              className="landing-card two"
-              src="design.jpg"
-              style={{ pointerEvents: "none" }}
-              color="#003643"
-              deg="2deg"
-            ></img>
-            <img
               className="landing-card three"
-              src="inform.png"
+              src={fromto}
               style={{ pointerEvents: "none" }}
               color="#1A4D31"
               deg="3deg"
             ></img>
             <img
               className="landing-card four"
-              src="newcities.jpg"
+              src={withease}
               style={{ pointerEvents: "none" }}
-              color="#332511"
+              color="#08496F"
               deg="4deg"
             ></img>
             <img
               className="landing-card five"
-              src="showcase2.png"
+              src={withopts}
               style={{ pointerEvents: "none" }}
-              color="#281C7C"
+              color="#A45F11"
               deg="5deg"
             ></img>
             <img
               className="landing-card six"
-              src={greece1}
+              src={makemems}
               id="dragable"
               deg="6deg"
             ></img>
           </div>
         </section>
-
-        <Link to="/login">
-          <div id="scroll-down" className="pulse">
-            <h3 ref={scrollDownText}>Login/Register</h3>
-            <FontAwesomeIcon icon={faPlane} />
-          </div>
-        </Link>
       </section>
 
       <section id="landing-new-features">
         <h2>Why Travel Smart?</h2>
-        <div id="new-features-content">
-          <div className="bigdiv">
-            <img src={coolnew}></img>
-            <h5>Explore</h5>
-            <h4>Find Cool New Places With Ease</h4>
-            <p>
-              Traveling to a near or faraway land and don't know where to get
-              started? How about those of you who end up going to the same
-              places in your current city? Travel Smart solves both problems!
-              It's never been easier to explore cities here and aborad.
-            </p>
+        <div id="why-ts">
+          <div className="why-item">
+            <h4>Explore</h4>
+            <p>We help you find cool new places.</p>
+            <img src={icelandwaterfall} className="why-img"></img>
           </div>
-          <div className="bigdiv">
-            <img src="heart.png"></img>
-            <h5>Make Memories</h5>
-            <h4>We Help You Have A Good Time</h4>
-            <p>
-              We list the most highly rated places so you don't have to scour
-              the internet. We also prioritize budget friendly establishments
-              and activities so you can have a good time regardless of finances.
-            </p>
+
+          <div className="why-item">
+            <h4>Plan</h4>
+            <p>We make trip planning a breeze.</p>
+            <img src={planflowers} className="why-img"></img>
           </div>
-          <div className="bigdiv">
-            <img src={createitin}></img>
-            <h5>Planning</h5>
-            <h4>Create Itineraries And Budgets</h4>
-            <p>
-              A well planned trip helps you see more and experience more. Our
-              planning and budgeting system is intuative and easy, send out your
-              itinerary to your travel buddies and get to exploring!
-            </p>
+
+          <div className="why-item">
+            <h4>Discover</h4>
+            <p>Find out what your city has to offer.</p>
+            <img src={kobe} className="why-img"></img>
           </div>
-          {/* <div className="bigdiv">
+
+          <div className="why-item">
+            <h4>Plan with others</h4>
+            <p>Going with a group? We got you covered.</p>
+            <img src={withothers} className="why-img"></img>
+          </div>
+        </div>
+
+        <div id="new-features-content-2">
+          <h4>But Most Of All...</h4>
+          <h2>We Help You Make Memories.</h2>
+        </div>
+
+        <div id="easy-to-use-div">
+          <div id="easy-text">
+            <h2>So, Ready To Plan Your Next Adventure?</h2>
+            <p>
+              Travel Smart is a hub, where people discover new places and
+              visualize the best moments, faciliating the best memories.
+            </p>
+            <Link to="/login">
+              <button className="get-started-below-memory">START NOW</button>
+            </Link>
+          </div>
+          <div id="easy-imgs">
+            <FontAwesomeIcon icon={faBurst} />
+            <img src={easyusephone} className="easy-use-phone"></img>
+            <img src={easyusecomp} className="easy-use-laptop"></img>
+          </div>
+        </div>
+
+        {/* <div className="bigdiv">
             <img src="findeasy.png"></img>
             <span id="manyh5">
               <h5>The Best</h5>
@@ -327,7 +392,6 @@ function Landing() {
               don't know a city, Travel Smart is your tour guide.
             </p>
           </div> */}
-        </div>
       </section>
 
       <section
@@ -371,7 +435,7 @@ function Landing() {
         <div id="landing-spotlight-content">
           <div className="spotlight-wrapper">
             <div className="burst-8"></div>
-            <img src="New York Landing.jpg" className="coupleimg"></img>
+            <img src={nylanding} className="coupleimg"></img>
             <h4>The City That Never Sleeps</h4>
             <p>50 trips planned</p>
             <h3 className="testimonial-text">
@@ -388,7 +452,7 @@ function Landing() {
 
           <div className="spotlight-wrapper">
             <div className="burst-8"></div>
-            <img src="Miami Landing.jpg" className="small-img"></img>
+            <img src={mialanding} className="small-img"></img>
             <h4>An Expensive Paradise</h4>
             <p>40 trips planned</p>
             <h3 className="testimonial-text-2">
@@ -405,7 +469,7 @@ function Landing() {
 
           <div className="spotlight-wrapper">
             <div className="burst-8"></div>
-            <img src="Tokyo Landing.jpg" className="med-img"></img>
+            <img src={tokyoLanding} className="med-img"></img>
             <h4>Serene & Exciting</h4>
             <p>33 trips planned</p>
             <h3 className="testimonial-text-3">
@@ -422,7 +486,7 @@ function Landing() {
 
           <div className="spotlight-wrapper">
             <div className="burst-8"></div>
-            <img src="Rome Landing.jpg" className="seclg-img"></img>
+            <img src={romelanding} className="seclg-img"></img>
             <h4>Ancient Charm</h4>
             <p>20 trips planned</p>
             <h3 className="testimonial-text-4">
@@ -440,7 +504,7 @@ function Landing() {
           <div className="spotlight-wrapper">
             <div className="burst-8"></div>
             <div className="six-pointed-star"></div>
-            <img src="Nashville Landing.jpg" className="small-img"></img>
+            <img src={nashvillelanding} className="small-img"></img>
             <h4>The Country Capital</h4>
             <p>16 trips planned</p>
             <h3 className="testimonial-text-2">
@@ -458,24 +522,17 @@ function Landing() {
       </section>
 
       <section id="allcities">
-        <h2>ALL CITIES</h2>
+        <h2>ALL {cities.length} CITIES YOU CAN EXPLORE</h2>
         <ul>
-          <li>Miami</li>
-          <li>New York City</li>
-          <li>Chicago</li>
-          <li>Nashville</li>
-          <li>Rome</li>
-          <li>Seoul</li>
-          <li>Tokyo</li>
-          <li></li>
-          <li></li>
-          <li></li>
+          {cities.map((city) => (
+            <li>{city}</li>
+          ))}
         </ul>
       </section>
 
       <section id="landing-subs">
         <div id="landing-subs-text">
-          <h2>Want Travel Smart Updates like new cities sent to your inbox?</h2>
+          <h2>Want Updates like New Cities Sent To Your Inbox?</h2>
         </div>
         <div id="landing-subs-input">
           <input type="text" placeholder="Enter your email"></input>
@@ -503,7 +560,9 @@ function Landing() {
         </div>
 
         <div id="convert-right">
-          <h2>START NOW</h2>
+          <Link to="/login">
+            <h2>START NOW</h2>
+          </Link>
           <div id="convert-reasons">
             <div>
               <FontAwesomeIcon icon={faLocationPin} />

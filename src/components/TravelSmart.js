@@ -45,7 +45,6 @@ function TravelSmart() {
   const cityBtn = useRef();
   const rotate = useRef();
   const [name, setName] = useState("");
-  const [userTrips, setUserTrips] = useState({});
   const [city, setCity] = useState("Miami");
   const [avgRating, setAvgRating] = useState(0);
   const cityImg = useRef();
@@ -657,8 +656,6 @@ function TravelSmart() {
             </div>
           </div>
         </section>
-
-        {/* <TripsPage info={userTrips} /> */}
 
         <div id="organizer">
           <div id="suggestions" ref={viewAll.suggestionsDiv}>

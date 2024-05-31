@@ -6,7 +6,7 @@ import {
   faPlaneDeparture,
   faMagnifyingGlassLocation,
 } from "@fortawesome/free-solid-svg-icons";
-import {allPlaces} from "./allMarkers.mjs";
+import { allPlaces } from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
 
 function HomeHeader({ name }) {
@@ -100,13 +100,6 @@ function HomeHeader({ name }) {
     }
   }
 
-  function openTripCreator() {
-    document.getElementById("new-trip").style.display = "flex";
-    setTimeout(() => {
-      document.getElementById("new-trip").style.opacity = "1";
-    }, 100);
-  }
-
   return (
     <>
       <div id="home-title">
@@ -167,19 +160,21 @@ function HomeHeader({ name }) {
             </div>
             <div id="acc-and-trip">
               <button
-                onClick={() => openTripCreator()}
+                onClick={() => window.location.replace("localhost:8080/trips")}
                 className="tripsBtn"
                 value="My Trips"
               >
-                Create Trip&nbsp;&nbsp;
+                Plan Trips&nbsp;&nbsp;
                 <FontAwesomeIcon icon={faPlaneDeparture} />
               </button>
               <div ref={account} className="account">
                 {currentUser ? (
                   <div className="user-name">
                     <p id="users-name">Hello, {name}</p>
-                    <img></img>
-                    <button onClick={() => handleLogout()}>Log Out</button>
+                    <img id="account-photo"></img>
+                    <div id="account-side-pannel">
+                      <button onClick={() => handleLogout()}>Log Out</button>
+                    </div>
                   </div>
                 ) : (
                   <div></div>
