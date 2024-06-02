@@ -413,14 +413,11 @@ function TravelSmart() {
           <div id="middle-organizer">
             <img id="background-img" src="waves.jpg"></img>
             <div id="organizer-city-rundown">
-              <h5>INFO</h5>
               <h2>Explore here and abroad</h2>
               <p>
                 Discover new places using our map and finder, add them to your
                 itinerary, and find the next one
               </p>
-
-              <h4> Cities Avaliable </h4>
 
               <div id="avaliable-cities">
                 <div>
@@ -439,11 +436,28 @@ function TravelSmart() {
                 </div>
                 <div>
                   <img src="Chicago.jpg"></img>
-                  <p>Chicago, IL, USA</p>
+                  <p className="city-name">Chicago, IL, USA</p>
                   <h6
                     city="Chicago"
                     onClick={(e) => setCity(e.target.getAttribute("city"))}
                   >
+                    <h4 className="number-of-places">
+                      <FontAwesomeIcon
+                        icon={faLocationDot}
+                        style={{ color: "#e00000" }}
+                      />{" "}
+                      {allPlaces.filter((p) => p.city === city).length} places
+                    </h4>
+                    <div id="avg-rating">
+                      <div id="avg-rating-org">
+                        <div id="rating-bg"></div>
+                        <div
+                          id="rating-bar"
+                          style={{ width: `${(avgRating / 5) * 100}%` }}
+                        ></div>
+                      </div>
+                      <h4>{Math.round(avgRating * 10) / 10}/5</h4>
+                    </div>
                     Explore City{" "}
                     <FontAwesomeIcon
                       icon={faChevronRight}

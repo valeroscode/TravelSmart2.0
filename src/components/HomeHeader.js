@@ -172,9 +172,6 @@ function HomeHeader({ name }) {
                   <div className="user-name">
                     <p id="users-name">Hello, {name}</p>
                     <img id="account-photo"></img>
-                    <div id="account-side-pannel">
-                      <button onClick={() => handleLogout()}>Log Out</button>
-                    </div>
                   </div>
                 ) : (
                   <div></div>

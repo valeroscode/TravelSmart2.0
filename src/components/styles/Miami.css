@@ -1466,8 +1466,8 @@ background-color: white;
 #map-btn {
     position: fixed;
     bottom: 2rem;
-    background-color: #2E64FE;
-    color: white;
+    background-color: white;
+    color: black;
     font-family: "Roboto Condensed", sans-serif;
     border-radius: 100px;
     padding: 0 1rem;
@@ -1516,16 +1516,6 @@ background-color: white;
     color: white;
 }
 
-#organizer-city-rundown h4 {
-background-color: #151515;
-padding: 0.5rem 1rem;
-color: white;
-width: fit-content;
-margin-bottom: 0;
-border-radius: 7px;
-position: relative;
-display: flex;
-}
 
 #middle-organizer-discover {
     display: flex;
@@ -1608,7 +1598,7 @@ display: flex;
 
 #avg-rating #rating-bar {
     background-color: #151515;
-    width: 10rem;
+    width: 8rem;
     height: 1rem;
     position: relative;
     bottom: 3rem;
@@ -1626,7 +1616,7 @@ transition:all 0.3s linear;
 #rating-bg {
     position: relative;
     background-color: lightgray;
-    width: 14rem;
+    width: 13rem;
     height: 1rem;
     bottom: 2rem;
     margin-right: 1rem;
@@ -1670,6 +1660,8 @@ box-shadow: 0px 0px 20px gray;
 
 #avg-rating {
 display: flex;
+position: absolute;
+bottom: 5rem;
 }
 
 #middle-organizer-discover button {
@@ -1690,6 +1682,7 @@ display: flex;
     width: 100vw;
     opacity: 0.7;
     height: 33rem;
+    filter: grayscale(60%);
     object-fit: cover;
     box-shadow: 0px 0px 20px gray;
 }
@@ -1717,10 +1710,18 @@ display: flex;
     display: flex;
 }
 
-#avaliable-cities div {
+#avaliable-cities div { 
     margin-top: 0.5rem;
     margin-right: 0.5rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#avaliable-cities div:hover {
+    filter: grayscale(70%);
 }
 
 #avaliable-cities div p {
@@ -1738,7 +1739,7 @@ display: flex;
     color: black;
     background-color: white;
     padding: 0.5rem;
-    border-radius: 0 7px 0 7px;
+    border-radius: 0px;
     width: fit-content;
     pointer-events: all;
     cursor: pointer;
@@ -1749,15 +1750,18 @@ display: flex;
     color: gray;
 }
 
-#number-of-places {
+.number-of-places {
     margin-top: 0;
+    position: absolute;
+    bottom: 12rem;
+    left: 1rem;
 }
 
 #avaliable-cities div img {
     height: 18rem;
     width: 14rem;
     object-fit: cover;
-    border-radius: 7px;
+    border-radius: 0px;
 }
 
 #middle-organizer-2 {
@@ -2551,8 +2555,8 @@ margin-bottom: 3rem;
 #footer-map #map-btn-map {
     position: fixed;
     bottom: 2rem;
-    background-color: #2E64FE;
-    color: white;
+    background-color: white;
+    color: black;
     font-family: "Roboto Condensed", sans-serif;
     border-radius: 100px;
     padding: 0 1rem;
