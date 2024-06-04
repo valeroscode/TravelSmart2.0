@@ -159,18 +159,10 @@ function HomeHeader({ name }) {
               </div>
             </div>
             <div id="acc-and-trip">
-              <button
-                onClick={() => window.location.replace("localhost:8080/trips")}
-                className="tripsBtn"
-                value="My Trips"
-              >
-                Plan Trips&nbsp;&nbsp;
-                <FontAwesomeIcon icon={faPlaneDeparture} />
-              </button>
               <div ref={account} className="account">
                 {currentUser ? (
                   <div className="user-name">
-                    <p id="users-name">Hello, {name}</p>
+                    <p id="users-name">{name}</p>
                     <img id="account-photo"></img>
                   </div>
                 ) : (

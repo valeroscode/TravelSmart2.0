@@ -42,11 +42,26 @@ function TravelSmart() {
   const { currentUser } = useAuth();
 
   const cityDD = useRef();
+  const helloUser = useRef();
+  const chooseCityInput = useRef();
+  const chooseCityInputField = useRef();
+  const expCityBtn = useRef();
+  const setCityBtn = useRef();
   const cityBtn = useRef();
   const rotate = useRef();
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
+  const [cities, setCities] = useState([])
+  const [confirmExpCity, setConfirmExpCity] = useState(false)
   const [avgRating, setAvgRating] = useState(0);
+  const [expCityOn, setExpCityOn] = useState(false)
+  const [filtersActive, setFiltersActive] = useState([])
+  const [priceActive, setPriceActive] = useState([])
+  const [filterDD, setFilterDD] = useState(false)
+  const [priceDD, setPriceDD] = useState(false)
+  const [filteredPlaces, setFilteredPlaces] = useState([])
+  const [checkboxs, setCheckboxes] = useState(0)
+  const [priceCheckboxes, setPriceCheckboxes] = useState(0)
   const cityImg = useRef();
   const discMore = useRef();
   const descBg = useRef();
@@ -79,6 +94,21 @@ function TravelSmart() {
 
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
+    let citiesArr = [];
+
+  //Populates array with all cities
+  for (let i = 0; i < allPlaces.length; i++) {
+    if (!citiesArr.includes(allPlaces[i].city)) {
+      citiesArr.push(allPlaces[i].city);
+    }
+  }
+
+  allPlaces_inCity.map((place) => place.score = 0)
+  setAllPlaces_inCity(allPlaces_inCity)
+
+  setFilteredPlaces(allPlaces_inCity)
+
+  setCities(citiesArr)
     //Sets the default city
     sessionStorage.setItem("city", "Miami");
     const citiesInShowAll = document.getElementsByClassName("city-in-show-all");
@@ -140,15 +170,6 @@ function TravelSmart() {
           "favorite"
         );
       }
-    }
-  }
-
-  let cities = [];
-
-  //Populates array with all cities
-  for (let i = 0; i < allPlaces.length; i++) {
-    if (!cities.includes(allPlaces[i].city)) {
-      cities.push(allPlaces[i].city);
     }
   }
 
@@ -233,29 +254,7 @@ function TravelSmart() {
     searchAll: useRef(),
     suggSection: useRef(),
     handleCitySwitch_ViewAll: function (e) {
-      //Handles places within a city being rendered in the div once the user clicks on a different city
-      if (cities.includes(e.target.textContent)) {
-        //Sets the new city is session sessionstorage
-        sessionStorage.setItem("city", e.target.textContent);
-        //Loops through the children of the dropdown menu in the map modal and bolds the new city's text
-        for (let i = 0; i < e.target.parentNode.children.length; i++) {
-          e.target.parentNode.childNodes[i].style.fontWeight = 400;
-        }
-        e.target.style.fontWeight = 800;
-
-        //Sets current city in the variable
-        switchCity();
-
-        //Boldens the city that was just selected within the #allPlacesContainer
-        for (let i = 0; i < this.citiesShowAll.current.childNodes.length; i++) {
-          this.citiesShowAll.current.childNodes[i].style.fontWeight = 200;
-          this.citiesShowAll.current.childNodes[i].style.color = "black";
-        }
-        e.target.style.fontWeight = 800;
-        e.target.style.color = "lightgray";
-
-        setCity(e.target.textContent);
-      }
+      
     },
     handleTripBtn_handleFavoritesBtn: function (e) {
       let string = currentUser.email.toString();
@@ -314,6 +313,28 @@ function TravelSmart() {
       document.getElementById("map-btn-map").style.bottom = "37%";
       e.target.childNodes[0].textContent = "pull up";
     }
+  }
+
+  function compareScores(attr, checked, type) {
+  
+    for (let i = 0; i < allPlaces_inCity.length; i++) {
+      if (allPlaces_inCity[i].category === attr && checked && type === "category") {
+        allPlaces_inCity[i].score++
+      } else if (allPlaces_inCity[i].category === attr && !checked && type === "category") {
+        allPlaces_inCity[i].score--
+      } else if (allPlaces_inCity[i].price === attr && checked && type === "price") {
+        allPlaces_inCity[i].score++
+      } else if (allPlaces_inCity[i].price === attr && !checked && type === "price") {
+        allPlaces_inCity[i].score--
+      }
+    }
+    setAllPlaces_inCity(allPlaces_inCity)
+    const newResults = allPlaces_inCity.filter((place) => place.score === priceCheckboxes + checkboxs)
+    setFilteredPlaces(newResults)
+
+    console.log(checkboxs + priceCheckboxes)
+
+    console.log(filteredPlaces)
   }
 
   return (
@@ -387,27 +408,248 @@ function TravelSmart() {
             <button id="write_a_review">Write a Review</button>
           </div>
         </div>
-        <div id="intro">
-          <div id="intro-text">
-            <h1></h1>
-            <div id="img-tracker">
-              <div>
-                <div className="filler"></div>
+        <div id="hello-user" ref={helloUser}>
+            <h2>Hello {name.split(" ")[0]},</h2>
+            <h4>What would you like to do today?</h4>
+            <div id="home-buttons">
+              <button id="plan-a-trip">Plan a new trip</button>
+              <button ref={expCityBtn} id="exp-a-city" onClick={() => {
+                if (!expCityOn) {
+helloUser.current.style.paddingBottom = "3rem"
+chooseCityInput.current.style.opacity = 1;
+expCityBtn.current.style.backgroundColor = "black";
+expCityBtn.current.style.color = "white";
+setExpCityOn(true)
+                } else {
+                  helloUser.current.style.paddingBottom = "0rem"
+chooseCityInput.current.style.opacity = 0;
+expCityBtn.current.style.backgroundColor = "white";
+expCityBtn.current.style.color = "black";
+setExpCityOn(false)
+                }
+              }}>Explore a city</button>
+            </div>
+
+            <div id="choosing-city" ref={chooseCityInput}>
+              <div id="input-DD-choose-city">
+             <input ref={chooseCityInputField}  onKeyUp={(e) => {
+              const citieslist = document.getElementsByClassName('city-to-exp');
+              const inputValue = String(e.target.value).toLocaleLowerCase();
+                 for (let i = 0; i < citieslist.length; i++) {
+                  if (e.target.value !== "") {
+                  if (String(citieslist[i].textContent).toLocaleLowerCase().includes(inputValue)) {
+                           citieslist[i].style.display = "block";
+                  } else {
+                    citieslist[i].style.display = "none"
+                  }
+                } else {
+                  citieslist[i].style.display = "none"
+                }
+                 }
+             }} type="text" placeholder="Choose City"/>
+
+<button ref={setCityBtn} onClick={() => {
+  sessionStorage.setItem("city", chooseCityInputField.current.value)
+  setCityBtn.current.style.backgroundColor = "black"
+                    chooseCityInputField.current.style.border = "3px solid black"
+                    setConfirmExpCity(true)
+                    viewAll.suggestionsDiv.current.style.opacity = 1;
+                    viewAll.suggestionsDiv.current.style.top = "0rem";
+}}>Set</button>
+             
+              
               </div>
-              <div>
-                <div className="filler"></div>
+              <ul onClick={(e) => {
+                console.log(e.target.classList.contains("city-to-exp"))
+                  if (e.target.classList.contains("city-to-exp")) {
+                    chooseCityInputField.current.value = e.target.textContent;
+                    e.target.style.display = 'none';
+                    setCityBtn.current.style.backgroundColor = "#8A05FF"
+                    chooseCityInputField.current.style.border = "3px solid #8A05FF"
+                  }
+              }}>
+                <li className="city-to-exp">Miami</li>
+                <li className="city-to-exp">New York</li>
+                <li className="city-to-exp">Copenhegan</li>
+                 {
+                  cities.map((city) => (
+                    <li className="city-to-exp">{city}</li>
+                  ))
+                 }
+              </ul>
+             
+            </div>
+        </div>
+
+        <TripsPage/>
+
+        { confirmExpCity ?
+        <div id="filters-and-results">
+        <div id="organizer">
+          
+          <div id="suggestions" ref={viewAll.suggestionsDiv}>
+            <div id="title-city-options">
+              <h1
+                style={{ display: "flex" }}
+                ref={viewAll.searchText}
+                id="searchText"
+              >
+                Results In {sessionStorage.getItem('city')}
+              </h1>
+
+              
+
+              <div id="filters-and-placecount">
+               <div>
+                <h4 onClick={() => {
+                  if (filterDD) {
+                    setFilterDD(false)
+                  } else {
+                    setFilterDD(true)
+                  }
+                }}>Filters ({filtersActive.length}) ▼</h4>
+                
+                  {
+                    
+                    filterDD ?
+                    <ul onClick={(e) => {
+                      console.log(e.target.tagName)
+                        if (e.target.tagName === 'INPUT') {
+                          if(checkboxs === 0) {
+                          setCheckboxes(1)
+                          }
+                          compareScores(e.target.getAttribute('name'), e.target.checked, "category")
+                        }
+                        
+                    }}>
+                <li>Resturants <input type="checkbox" name="Resturant"/></li>
+                <li>Parks <input type="checkbox" name="Park"/></li>
+                <li>Bars <input type="checkbox" name="Bar"/></li>
+                <li>Meuseums <input type="checkbox" name="Museum"/></li>
+                <li>Clubs <input type="checkbox" name="Club"/></li>
+                <li>Coffee Shops <input type="checkbox" name="Cafe"/></li>
+                </ul>
+                : null
+                  }
+               </div>
+
+               <div>
+                <h4 onClick={() => {
+                  if (priceDD) {
+                    setPriceDD(false)
+                  } else {
+                    setPriceDD(true)
+                  }
+                }}>Price ({priceActive.length}) ▼</h4>
+                
+                  {
+                    
+                    priceDD ?
+                    <ul onClick={(e) => {
+                      if (e.target.tagName === 'li') {
+                        if (checkboxs === 0) {
+                        setPriceCheckboxes(1)
+                        }
+                        compareScores(e.target.getAttribute('price'), e.target.checked, "price")
+                      }
+                      
+                  }}>
+                    <li>$ <input type="checkbox" price={1}/></li>
+                <li>$$ <input type="checkbox" price={2}/></li>
+                <li>$$$ <input type="checkbox" price={3}/></li>
+                <li>$$$$ <input type="checkbox" price={4}/></li>
+                </ul>
+                : null
+                  }
+                
+                
+               </div>
+
+               <p>{filteredPlaces.length} Places</p>
               </div>
-              <div>
-                <div className="filler"></div>
-              </div>
-              <div>
-                <div className="filler"></div>
-              </div>
+          
+            </div>
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Place name, tacos, gourmet..."
+                name="search"
+                ref={viewAll.searchAll}
+                style={{ width: "60%" }}
+              />
+            <div
+              ref={viewAll.allPlacesContainer}
+              id="allPlacesContainer"
+              onClick={(e) => viewAll.handleTripBtn_handleFavoritesBtn(e)}
+            >
+              {filteredPlaces.map((place) => (
+                <div
+                  className="showAllDiv"
+                  onClick={(e) =>
+                    learnMoreAboutPlace(
+                      place.name,
+                      place.rating,
+                      place.type,
+                      place.area,
+                      place.price,
+                      place.name,
+                      place.favorite,
+                      place.category,
+                      place.placeID,
+                      e.target
+                    )
+                  }
+                >
+                  <a href="/place" target="_blank"></a>
+                  <div className="name-and-rating">
+                  <p className="showall-text">{place.name}</p>
+                  <p className="ratingdd">
+                    {parseFloat(place.rating) % 1 !== 0
+                      ? place.rating
+                      : `${place.rating}.0`}
+                  </p>
+                  </div>
+                  <div className="lowerDiv">
+                    <p className="cat-showall">{place.category}</p>
+                    <p className="style-showall">{place.style}</p>
+                    <p className="serves-showall">{place.serves}</p>
+                  </div>
+                  <div className="interactable-showall">
+                  <button
+                    className="showall-tripbtn trip-adder"
+                    name={place.name}
+                  >
+                    Add to Trip
+                  </button>
+                  <p
+                      className="click-favorite showall-heart"
+                      name={place.name}
+                      aria-hidden="true"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="1em"
+                        viewBox="0 0 512 512"
+                        className="favorite"
+                      >
+                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path>
+                      </svg>
+                    </p>
+                  <div className="infoDiv-showall">
+                    <p className="area-showall">{place.area}</p>
+                    <p className="price-showall">
+                      {"$".repeat(parseInt(place.price))}
+                    </p>
+                  </div>
+                  </div>
+                  <a className="see-imgs" target="_blank" href={`https://www.google.com/search?q=${place.name}&sca_esv=03047b03c4b9cd9d&sca_upv=1&sxsrf=ADLYWILgzRTFudLq4zqNYw8eEFajutqqOA:1717445774174&source=hp&biw=1536&bih=730&ei=jiReZsKECOLfp84Pt5OM2Q4&iflsig=AL9hbdgAAAAAZl4yntxQz9UCBdnIlSkmNMW5d3qcFKh-&ved=0ahUKEwjCg6eKoMCGAxXi78kDHbcJI-sQ4dUDCA8&uact=5&oq=tatam&gs_lp=EgNpbWciBXRhdGFtMggQABiABBixAzIIEAAYgAQYsQMyCBAAGIAEGLEDMggQABiABBixAzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjED1DuA1jKDXABeACQAQCYAVGgAYIDqgEBNbgBA8gBAPgBAYoCC2d3cy13aXotaW1nmAIGoAKfA6gCCsICBxAjGCcY6gLCAgQQIxgnwgILEAAYgAQYsQMYgwGYAweSBwE2oAeKGw&sclient=img&udm=2`}>See Images</a>
+                  <p className="instructions-showall">Click to learn more</p>
+                </div>
+              ))}
             </div>
           </div>
-
-          <img id="homeimg" src="backgroundimg1.jpeg" />
-        </div>
+        </div></div>
+        : null}
 
         <section id="cities">
           <div id="middle-organizer">
@@ -542,25 +784,7 @@ function TravelSmart() {
                   c.city === city ? c.description : null
                 )}
               </p>
-              <button
-                onClick={() => {
-                  const children = document.getElementById(
-                    "change-city-showall"
-                  ).childNodes;
-                  for (let i = 0; i < children.length; i++) {
-                    if (children[i].textContent === city) {
-                      children[i].click();
-                    }
-                  }
-                  document.getElementById("searchText").scrollIntoView({
-                    behavior: "smooth",
-                    block: "start",
-                    inline: "nearest",
-                  });
-                }}
-              >
-                Discover More
-              </button>
+             
             </div>
           </div>
 
@@ -671,107 +895,7 @@ function TravelSmart() {
           </div>
         </section>
 
-        <div id="organizer">
-          <div id="suggestions" ref={viewAll.suggestionsDiv}>
-            <div id="title-city-options">
-              <h1
-                style={{ display: "flex" }}
-                ref={viewAll.searchText}
-                id="searchText"
-              >
-                Where we goin'?
-              </h1>
-              <div
-                ref={viewAll.citiesShowAll}
-                onClick={(e) => viewAll.handleCitySwitch_ViewAll(e)}
-                id="change-city-showall"
-              >
-                {cities.map((city) => (
-                  <p className="city-in-show-all" key={city}>
-                    {city}
-                  </p>
-                ))}
-              </div>
-            </div>
-            <div ref={viewAll.searchAll} id="search">
-              <input
-                id="searchInput"
-                type="text"
-                placeholder="Search by place name, type of place, or area"
-                name="search"
-                style={{ width: "60%" }}
-              />
-            </div>
-            <div
-              ref={viewAll.allPlacesContainer}
-              id="allPlacesContainer"
-              onClick={(e) => viewAll.handleTripBtn_handleFavoritesBtn(e)}
-            >
-              {allPlaces_inCity.map((place) => (
-                <div
-                  className="showAllDiv"
-                  onClick={(e) =>
-                    learnMoreAboutPlace(
-                      place.name,
-                      place.rating,
-                      place.type,
-                      place.area,
-                      place.price,
-                      place.name,
-                      place.favorite,
-                      place.category,
-                      place.placeID,
-                      e.target
-                    )
-                  }
-                >
-                  <a href="/place" target="_blank"></a>
-                  <img
-                    src={place.url}
-                    className="carousel-image"
-                    loading="lazy"
-                  ></img>
-                  <p className="showall-text">{place.name}</p>
-                  <p className="ratingdd">
-                    {parseFloat(place.rating) % 1 !== 0
-                      ? place.rating
-                      : `${place.rating}.0`}
-                  </p>
-                  <div className="lowerDiv">
-                    <p className="cat-showall">{place.category}</p>
-                    <p
-                      className="click-favorite showall-heart"
-                      name={place.name}
-                      aria-hidden="true"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 512 512"
-                        className="favorite"
-                      >
-                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path>
-                      </svg>
-                    </p>
-                  </div>
-                  <button
-                    className="showall-tripbtn trip-adder"
-                    name={place.name}
-                  >
-                    Add to Trip
-                  </button>
-                  <div className="infoDiv-showall">
-                    <p className="area-showall">{place.area}</p>
-                    <p className="price-showall">
-                      {"$".repeat(parseInt(place.price))}
-                    </p>
-                  </div>
-                  <p className="instructions-showall">Click to learn more</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+       
       </section>
       <Notification />
       <AddTrip_Button />

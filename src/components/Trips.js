@@ -81,8 +81,8 @@ function TripsPage() {
   }, []);
 
   useEffect(() => {
-    console.log(currentUser.trips.trips);
-    setInfo(currentUser.trips.trips);
+    console.log(currentUser.trips);
+    setInfo(currentUser.trips);
   }, [currentUser]);
 
   function selectDates(e, month, year, day) {
@@ -676,7 +676,7 @@ function TripsPage() {
         <div id="your-trips">
           <div className="trips-title">
             <h2 className="your-trips-h2" id="your-trips-text">
-              Your Trips
+              Trips
             </h2>
           </div>
           <ul id="trips-con" ref={unorderedList}>
@@ -701,7 +701,7 @@ function TripsPage() {
                         city={value.city}
                         onClick={(e) => getTripDetails(e)}
                       >
-                        Plan Trip
+                        Edit Trip
                       </button>
                       <button
                         name={key}
