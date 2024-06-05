@@ -81,7 +81,6 @@ function TripsPage() {
   }, []);
 
   useEffect(() => {
-    console.log(currentUser.trips);
     setInfo(currentUser.trips);
   }, [currentUser]);
 
@@ -672,7 +671,7 @@ function TripsPage() {
 
   return (
     <>
-      <div onClick={(e) => formFunctions.changeInputField(e)}>
+      <div onClick={(e) => formFunctions.changeInputField(e)} id="trips-comp-container">
         <div id="your-trips">
           <div className="trips-title">
             <h2 className="your-trips-h2" id="your-trips-text">
@@ -718,7 +717,7 @@ function TripsPage() {
               ))
             ) : (
               <li>
-                <p style={{ fontSize: "1.5rem" }}>No Trips Planned...</p>
+                <div style={{ fontSize: "1.5rem" }}><p style={{color: "white", margin: "0"}}>No trips planned right now</p><button style={{width: "fit-content", fontWeight: 600, color: "white", backgroundColor: "#8A05FF", height: "100%", fontFamily: "'Roboto Condensed', sans-serif"}}>Start Planning</button></div>
               </li>
             )}
           </ul>

@@ -18,75 +18,7 @@ export function generalScript() {
     const mapOrg = document.getElementById("map-organizer");
     var map = window.map;
     mapOrg.appendChild(liveMap);
-    if (liveMap.hasChildNodes()) {
-      document.getElementById("lottie").style.display = "none";
-      document.getElementById("lottie-bg").style.display = "none";
-      document.getElementById("map-btn").style.opacity = 1;
 
-      const txtArr = {
-        txt0: "PLAN YOUR TRIPS",
-        txt1: "BROWSE A CITY'S BEST",
-        txt2: "DISCOVER NEW PLACES",
-        txt3: "FIND YOUR NEXT FAVORITE",
-      };
-
-      let i = 0;
-
-      const handleBackgroundImg = {
-        homeImg: document.getElementById("homeimg"),
-        intro: document.getElementById("intro-text"),
-        fillerClicked: false,
-        handleFillerClick: function () {
-          const filler = document.getElementsByClassName("filler");
-          const length = filler.length;
-          for (let i = 0; i < length; i++) {
-            filler[i].addEventListener("click", () => {
-              this.fillerClicked = true;
-              filler[i].style.transition = "none";
-              filler[i].style.height = "100%";
-
-              this.intro.firstElementChild.innerHTML = txtArr[`txt${i}`];
-              this.homeImg.src = `/backgroundimg${i}.jpeg`;
-            });
-          }
-        },
-        handleFillers: function (index, text, img) {
-          const filler = document.getElementsByClassName("filler");
-          for (let i = 0; i < filler.length; i++) {
-            filler[index].style.height = "100%";
-          }
-
-          this.intro.firstElementChild.innerHTML = text;
-          this.homeImg.src = `/backgroundimg${img}.jpeg`;
-
-          if (i === 3) {
-            this.intro.firstElementChild.style.opacity = 1;
-            this.intro.childNodes[1].style.opacity = 1;
-          }
-        },
-        loopTopPage: function () {
-          if (this.fillerClicked === true) {
-            return;
-          }
-          setTimeout(() => {
-            this.intro.firstElementChild.style.opacity = 0;
-            this.intro.childNodes[1].style.opacity = 0;
-            setTimeout(() => {
-              this.handleFillers(i, txtArr[`txt${i}`], i);
-              this.intro.firstElementChild.style.opacity = 1;
-              this.intro.childNodes[1].style.opacity = 1;
-            }, 500);
-            if (i < 3) {
-              i = i + 1;
-              this.loopTopPage();
-            }
-          }, 5000);
-        },
-      };
-      handleBackgroundImg.handleFillerClick();
-      handleBackgroundImg.handleFillers(0, txtArr.txt0, 0);
-      handleBackgroundImg.loopTopPage();
-    }
     liveMap.classList.add("map");
     const directionsService = new window.google.maps.DirectionsService();
     const directionsRenderer = new window.google.maps.DirectionsRenderer();

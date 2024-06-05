@@ -1198,9 +1198,12 @@ color: white;
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: #2E64FE;
+    align-items: center;
+    background-color: #8A05FF;
     color: white;
-    padding: 2.5rem 15rem 2.5rem 15rem;
+    width: 100%;
+    padding: 2.5rem;
+    margin-top: 10rem;
 }
 
 #footer-main-cities h4 {
@@ -1216,16 +1219,11 @@ color: white;
 #main-footer-section {
     display: flex;
     align-items: center;
-    background-color: #2E64FE;
+    background-color: #8A05FF;
     color: white;
-    padding: 2.5rem;
-    padding-left: 0;
+    padding: 1.5rem 0 5.5rem 0;
     align-items: flex-start;
     justify-content: space-between;
-}
-
-#footer-main-child-1 {
-    display: flex;
 }
 
 #footer-main-child-2 {
@@ -1236,7 +1234,6 @@ color: white;
 
 #subscribe-info input {
     margin-left: 0;
-    border-radius: 7px;
     border: none;
     margin: 0;
     height: 100%;
@@ -1246,10 +1243,9 @@ color: white;
 }
 
 #subscribe-info button {
-    background-color: white;
-    color: #2E64FE;
+    background-color: black;
+    color: white;
     border: none;
-    border-radius: 7px;
     height: 2rem;
     margin-left: 0.5rem;
     width: fit-content;
@@ -1323,7 +1319,6 @@ color: white;
     display: flex;
     flex-direction: column;
     margin-right: 5rem;
-    padding-left: 2rem;
 }
 
 #contact-footer h4 {
@@ -1351,16 +1346,6 @@ color: white;
 #footer-main-cities div p {
     margin-right: 1rem;
     margin-top: 0;
-}
-
-.legal-notice {
-    text-align: center;
-    font-weight: 200;
-}
-
-#footer-bottom svg {
-    height: 1.2rem;
-    margin-right: 1rem;
 }
 
 #results-content .review-text {
@@ -1618,9 +1603,6 @@ display: none;
     #contact-footer {
         padding-left: 0;
         margin-top: 2rem;
-    }
-    .legal-notice {
-        text-align: left;
     }
     }
 

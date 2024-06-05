@@ -58,10 +58,175 @@
     }
 }
 
+#hello-user-section {
+    position: relative;
+}
+
+#photo-credits {
+    position: absolute;
+    bottom: 1rem;
+    left: 9rem;
+}
+
+#photo-credits a {
+    color: gray;
+    font-family: "Roboto Condensed", sans-serif;
+    cursor: pointer;
+}
+
+#photo-credits a:hover {
+    color: black;
+}
+
+
+#hello-user-section img:nth-child(1) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 0rem;
+    opacity: 0.2;
+}
+
+#hello-user-section img:nth-child(2) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 0rem;
+    left: 15rem;
+    opacity: 0.2;
+}
+
+#hello-user-section img:nth-child(3) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 0rem;
+    left: 30rem;
+    opacity: 0.2;
+}
+
+#hello-user-section img:nth-child(4) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 15rem;
+    left: 30rem;
+    opacity: 0.2;
+}
+
+#hello-user-section img:nth-child(5) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 15rem;
+    left: 45rem;
+    opacity: 0.2;
+}
+
+#hello-user-section img:nth-child(6) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 15rem;
+    left: 60rem;
+    opacity: 0.2;
+}
+
+#hello-user-section img:nth-child(7) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 30rem;
+    left: 60rem;
+    opacity: 0.2;
+    object-position: 50% 100%;
+}
+
+#hello-user-section img:nth-child(8) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 30rem;
+    left: 75rem;
+    opacity: 0.2;
+    object-position: 50% 100%;
+}
+
+#hello-user-section img:nth-child(9) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 30rem;
+    left: 90rem;
+    opacity: 0.2;
+    object-position: 50% 100%;
+}
+
+#hello-user-section img:nth-child(10) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 30rem;
+    left: 105rem;
+    opacity: 0.2;
+    object-position: 50% 100%;
+}
+
+#hello-user-section img:nth-child(11) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 0rem;
+    right: 0rem;
+    opacity: 0.2;
+    object-position: 50% 100%;
+}
+
+#hello-user-section img:nth-child(12) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    bottom: 0rem;
+    right: 15rem;
+    opacity: 0.2;
+    object-position: 50% 100%;
+}
+
+#hello-user-section img:nth-child(13) {
+    height: 15rem;
+    width: 15rem;
+    object-fit: cover;
+    position: absolute;
+    top: 0rem;
+    left: 0rem;
+    opacity: 0.2;
+    object-position: 50% 100%;
+}
+
+#hello-user-section svg {
+    position: absolute;
+    height: 22rem;
+    z-index: -1;
+    opacity: 0.3;
+}
+
+
 #hello-user {
     position: relative;
     width: 100%;
-    height: 35rem;
+    height: 80vh;
     margin-top: 0;
     display: flex;
     text-align: left;
@@ -118,7 +283,8 @@
 #choosing-city li {
     display: none;
     border: 2px solid whitesmoke;
-    width: 96%;
+    width: 44.5%;
+    background-color: white;
     padding: 0.5rem 0 0.5rem 0.5rem;
     font-family: "Roboto Condensed", sans-serif;
     font-weight: 600;
@@ -166,6 +332,27 @@
     font-size: 1.2rem;
 }
 
+#make-default-div {
+    opacity: 0;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+#make-default-div button {
+    margin-top: 0.5rem;
+    height: fit-content;
+    background-color: #151515;
+    box-shadow: none;
+    color: white;
+}
+
+#make-default-div p {
+    margin-top: 0.3rem;
+    width: 70%;
+}
+
 #home-buttons {
     display: flex;
 }
@@ -178,6 +365,7 @@
 #home-buttons button:nth-child(2) {
     background-color: white;
     color: black;
+    border: 2px solid black;
 }
 
 .fadeRight {
@@ -637,39 +825,36 @@ margin-right: 0.5rem;
     align-items: start;
     z-index: 910;
     width: 0vw;
-    height: fit-content;
-    top: 12rem;
+    height: 100%;
+    top: 0;
     display: none;
-    background-color: white;
     pointer-events: all;
     -webkit-transition: width 0.5s ease;
     -moz-transition: width 0.5s ease;
     -o-transition: width 0.5s ease;
     transition: width 0.5s ease;
 padding-left: 1.5rem;
-padding-top: 1.5rem;
+padding-top: 7rem;
 background-color: white;
 padding-left: 2rem;
 padding-right: 1rem;
 padding-bottom: 2rem;
 right: 1.5rem;
-border-radius: 7px;
-box-shadow: -1px -1px 10px gray;
 }
 .filter-btns {
 position: relative;
 top: 1rem;
 }
 #filters-cancel {
-background-color: #2E64FE;
+background-color: black;
 color: white;
 margin-top: 1rem;
 width: fit-content;
 height: fit-content;
 margin-right: 1rem;
 font-weight: 800;
+width: 100%;
 font-family: "Roboto Condensed", sans-serif;
-border-radius: 7px;
 }
 #filtersList:focus {
 outline: none;
@@ -1045,25 +1230,9 @@ button:hover {
     flex-direction: row;
     width: 100vw;
     font-family: 'Roboto Condensed';
+    box-shadow: 0 0 70px 20px gray;
 }
 
-
-#citySelect {
-    pointer-events: all;
-    cursor: pointer;
-    font-family: 'Roboto Condensed';
-    font-weight: 400;
-    width: fit-content;
-    margin-bottom: 0.5rem;
-    padding: 0 0.5rem 0 0;
-    border-radius: 7px;
-}
-#citySelect-text {
-    display: inline;
-    background-clip: text;
-    background-color: black;
-    -webkit-text-fill-color: transparent;
-}
 #cityDD {
 background-color: whitesmoke;
 min-height: fit-content;
@@ -1131,12 +1300,7 @@ margin: 0;
 margin-top: 1rem;
 margin-bottom: 0.5rem;
 }
-#map-overlay h6 {
-color: black;
-font-weight: 500;
-font-size: 1rem;
-margin: 0;
-}
+
 
 .disclosed-sponsor {
 position: relative;
@@ -1170,18 +1334,17 @@ bottom: 0;
 padding: 0.5rem;
 font-size: 0.9rem;
 margin-top: 0.8rem;
-background-color: #2E64FE;
-border-radius: 5px;
+background-color: #8A05FF;
 font-family: "Roboto Condensed", sans-serif;
 }
 #map-overlay #show-filtersList {
     margin: 0 1rem 0 0;
     width: fit-content;
     padding: 0.5rem;
-    border-radius: 5px;
     height: 100%;
     font-weight: 800;
-    font-size: 0.9rem;
+    background-color: black;
+    font-size: 1.2rem;
     font-family: 'Roboto Condensed';
     height: fit-content;
 }
@@ -1240,7 +1403,7 @@ transition:all 0.3s ease;
     #avaliable-cities div p {
         bottom: 15.5rem;
     }
-    #avaliable-cities div {
+    #avaliable-cities .city-div {
         height: 15rem;
     }
     
@@ -1529,26 +1692,23 @@ background-color: white;
     justify-content: center;
     font-family: "Roboto Condensed", sans-serif;
     position: relative;
-    top: 0rem;
+    top: 5rem;
+}
+
+#organizer-city-rundown {
+    width: 100%;
+    margin: 0 10rem;
 }
 
 #organizer-city-rundown p {
     color: white;
+    font-size: 1.3rem;
 }
 
 #organizer-city-rundown h2 {
     font-size: 4rem;
     margin-bottom: 0;
     color: white;
-}
-
-
-#middle-organizer-discover {
-    display: flex;
-    justify-content: center;
-    position: relative;
-    margin-top: 7rem;
-    margin-bottom: 5rem;
 }
 
 .middle-org-h2 {
@@ -1610,36 +1770,55 @@ background-color: white;
     margin-left: 1rem;
 }
 
-#middle-organizer-discover img {
-    height: 18rem;
-    width: 24rem;
-    object-fit: cover;
-    border-radius: 7px;
-    box-shadow: 0px 0px 10px gray;
-    -webkit-transition: all 0.3s ease;
-    -moz-transition: all 0.3s ease;
-    -o-transition: all 0.3s ease;
-    transition: all 0.3s ease;
+.avg-rating-org {
+    opacity: 0;
+    transform: translateY(-10px);
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    transition:all 0.3s ease;
 }
 
-#avg-rating #rating-bar {
+.avg-rating .rating-bg {
+    position: relative;
+    background-color: whitesmoke;
+    width: 13rem;
+    height: 1rem;
+    bottom: 2rem;
+    margin-right: 1rem;
+    border-radius: 7px;   
+}
+
+.avg-rating .rating-bar {
     background-color: #151515;
     width: 8rem;
     height: 1rem;
     position: relative;
     bottom: 3rem;
     border-radius: 7px;
-    -webkit-transition:all 0.3s linear;
--moz-transition:all 0.3s linear;
--o-transition:all 0.3s linear;
-transition:all 0.3s linear;
+    -webkit-transition:all 0.7s linear;
+-moz-transition:all 0.7s linear;
+-o-transition:all 0.7s linear;
+transition:all 0.7s linear;
 }
 
-#avg-rating-org {
-    height: 0rem;
+.avg-rating-number {
+    width: 8rem;
+    color: white;
+    height: fit-content;
+    position: relative;
+    right: 13.5rem;
+    bottom: 1.5rem;
+    font-size: 1rem;
+    opacity: 0;
+    transform: translateY(-10px);
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    transition:all 0.3s ease;
 }
 
-#rating-bg {
+.rating-bg {
     position: relative;
     background-color: lightgray;
     width: 13rem;
@@ -1647,13 +1826,6 @@ transition:all 0.3s linear;
     bottom: 2rem;
     margin-right: 1rem;
     border-radius: 7px;
-}
-
-#middle-organizer-discover h3 {
-    font-size: 2rem;
-    margin-bottom: 0;
-    margin-top: 0;
-    font-family: "Roboto Condensed", sans-serif;
 }
 
 #city-disc-more-bg {
@@ -1671,34 +1843,10 @@ transition:all 0.3s ease;
 box-shadow: 0px 0px 20px gray;
 }
 
-#middle-organizer-discover #disc-more-div {
-    padding: 0 2rem;
-    background-color: white;
-    position: relative;
-    right: 1rem;
-    border-radius: 0 7px 7px 0;
-    box-shadow: 0px 0px 10px gray;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-}
-
-#avg-rating {
+.avg-rating {
 display: flex;
 position: absolute;
 bottom: 5rem;
-}
-
-#middle-organizer-discover button {
-    font-family: "Roboto Condensed", sans-serif;
-    width: fit-content;
-    padding: 0.5rem;
-    height: fit-content;
-    border-radius: 3px;
-    background-color: whitesmoke;
-    font-weight: 800;
-    color: black;
 }
 
 #background-img {
@@ -1736,7 +1884,7 @@ bottom: 5rem;
     display: flex;
 }
 
-#avaliable-cities div { 
+#avaliable-cities .city-div { 
     margin-top: 0.5rem;
     margin-right: 0.5rem;
     margin-bottom: 3rem;
@@ -1746,9 +1894,26 @@ bottom: 5rem;
     transition: all 0.3s ease;
 }
 
-#avaliable-cities div:hover {
+#avaliable-cities .city-div:hover {
     filter: grayscale(70%);
 }
+
+#avaliable-cities .city-div:hover .number-of-places {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+#avaliable-cities .city-div:hover .avg-rating-org {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+#avaliable-cities .city-div:hover .avg-rating-number {
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+
 
 #avaliable-cities div p {
     position: relative;
@@ -1760,7 +1925,7 @@ bottom: 5rem;
 
 #avaliable-cities div h6 {
     position: relative;
-    bottom: 6.5rem;
+    bottom: 7.45rem;
     font-size: 1.01rem;
     color: black;
     background-color: white;
@@ -1779,8 +1944,15 @@ bottom: 5rem;
 .number-of-places {
     margin-top: 0;
     position: absolute;
-    bottom: 12rem;
+    bottom: 11rem;
     left: 1rem;
+    color: white;
+    opacity: 0;
+    transform: translateY(-10px);
+    -webkit-transition:all 0.3s ease;
+-moz-transition:all 0.3s ease;
+-o-transition:all 0.3s ease;
+transition:all 0.3s ease;
 }
 
 #avaliable-cities div img {
@@ -1788,16 +1960,6 @@ bottom: 5rem;
     width: 14rem;
     object-fit: cover;
     border-radius: 0px;
-}
-
-#middle-organizer-2 {
-    display: flex;
-    justify-content: center;
-    font-family: "Roboto Condensed", sans-serif;
-    position: relative;
-    top: 13rem;
-    margin-bottom: 20rem;
-    display: none;
 }
 
 
@@ -1833,9 +1995,6 @@ bottom: 5rem;
 
 @media screen and (max-width: 1110px) {
 
-    #middle-organizer-2 {
-        margin:  0 3rem;
-    }
     #organizer-cities-img {
         margin-left: 4rem;
     }
@@ -1979,6 +2138,13 @@ opacity: 1;
     text-align: center;
 }
 
+#filters-and-placecount ul {
+    margin-top: 0;
+    position: absolute;
+    width: 10rem;
+    z-index: 10;
+}
+
 #filters-and-placecount div h4 {
     color: black;
     font-weight: 600;
@@ -1988,11 +2154,6 @@ opacity: 1;
     margin-bottom: 0;
     cursor: pointer;
     margin-right: 1rem;
-}
-
-#filters-and-placecount div ul {
-    display: unset;
-    position: relative;
 }
 
 #filters-and-placecount div li {
@@ -2612,7 +2773,7 @@ flex-wrap: wrap;
 overflow: visible;
 justify-content: start;
 background-color: white;
-height: 60vh;
+height: 70vh;
 padding-left: 11rem;
 padding-right: 11rem;
 overflow-y: scroll;
@@ -2625,13 +2786,19 @@ overflow-y: scroll;
     pointer-events: all;
     z-index: 1000;
 }
-.see-imgs:hover {
-    color: black;
-}
 
 .see-imgs:visited {
     color: gray;
 }
+
+.see-imgs:hover .anchor-nav{
+    color: black;
+}
+
+.see-imgs:hover .anchor-nav{
+    pointer-events: none;
+}
+
 .showAllDiv {
 margin: 2rem 2rem 0 0;
 height: fit-content;
@@ -2674,12 +2841,12 @@ justify-content: center;
 align-items: center;
 }
 .instructions-showall {
-position: relative;
-bottom: 23.5rem;
-left: 7rem;
-font-weight: 800;
-color: white;
-opacity: 0;
+    position: relative;
+    bottom: 0rem;
+    left: 0.5rem;
+    font-weight: 800;
+    color: #8a05ff;
+    opacity: 0;
 -webkit-transition:opacity 0.2s ease;
 -moz-transition:opacity 0.2s ease;
 -o-transition:opacity 0.2s ease;
@@ -4028,13 +4195,6 @@ width: 6rem;
 flex-direction: column-reverse;
 }
 
-#citySelect {
-    font-weight: 600;
-}
-#map-overlay h6 {
-    display: none;
-}
-
 #top-reccomendations-container {
     overflow-y: scroll;
     height: 30%;
@@ -4065,9 +4225,6 @@ width: 100vw;
 
 }
 
-    #middle-organizer-discover img {
-        width: 14rem;
-    }
     }
 
 @media screen and (max-width: 639px) {
@@ -4261,9 +4418,7 @@ display: none;
         width: 96vw;
  
 }
-    #middle-organizer-discover img {
-        width: 10rem;
-    }
+
 
 #ready {
     font-size: 3rem;
@@ -4293,9 +4448,7 @@ left: 2vw;
     #img-tracker {
         height: 29vh;
     }
-    #middle-organizer-discover img {
-        width: 8rem;
-    }
+
 }
 
 @media screen and (max-width: 489px) {
@@ -4317,9 +4470,7 @@ width: 100%;
         height: unset;
         margin-right: 2rem;
     }
-    #middle-organizer-2 {
-        margin: 0 1rem;
-    }
+
     #organizer-city-rundown-2 {
         margin-left: 1rem;
     }
@@ -4328,15 +4479,6 @@ width: 100%;
         margin: 0 1rem;
     }
   
-    #middle-organizer-discover img {
-        display: none;
-    }
-    #middle-organizer-discover #disc-more-div {
-        padding: 0 2rem 2rem 2rem;
-        border-radius: 7px;
-        width: 20rem;
-        right: unset;
-    }
 #footer {
 position: relative;
 padding-top: 0;
@@ -4384,10 +4526,7 @@ display: none;
 #organizer-cities-img {
     margin-left: 1rem;
 }
-middle-organizer-2 {
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
+
 #cities {
 padding-top: 4rem;	
 position: relative;
@@ -4417,11 +4556,7 @@ width: 140%;
 }
 
 @media screen and (max-width: 401px) {
-    #middle-organizer-discover #disc-more-div {
-      
-        width: 18rem;
-     
-    }
+
 .directions-p {
 width: fit-content;
 } 

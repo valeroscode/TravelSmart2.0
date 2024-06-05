@@ -19,6 +19,7 @@ import {
   faPlane,
   faHeart,
   faMoneyBillWave,
+  faBurst
 } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "./HomeHeader";
 import { citiesArray, allPlaces } from "./allMarkers.mjs";
@@ -31,12 +32,27 @@ import {
 } from "./getPlaceInfo.mjs";
 import AddTrip_Button from "./AddTrip_Button";
 import Notification from "./Notification";
+import ExploreCity from "./ExploreCity";
 import { generalScript } from "./Miami.mjs";
 import TripsPage from "./Trips";
 import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
 import Footer from "./footer";
 import { useCookies } from "react-cookie";
+import icelandwater from "./assets/icelandwater.jpg"
+import greeksunset from "./assets/greeksunset.jpg"
+import miaminight from "./assets/miaminight.jpg"
+import hawailighthouse from "./assets/hawailighthouse.jpg"
+import spanishpillers from "./assets/spanishpillers.jpg"
+import littolkiss from "./assets/littolkiss.jpg"
+import spanishart from "./assets/spanishart.jpg"
+import spanishwindow from "./assets/spanishwindow.jpg"
+import spanishtunnel from "./assets/spanishtunnel.jpg"
+import spanisharch from "./assets/spanisharch.jpg"
+import greekruins from "./assets/greekruins.jpg"
+import greekcoast from "./assets/greekcoast.jpg"
+import greeekflowers from "./assets/greeekflowers.jpg"
+
 
 function TravelSmart() {
   const { currentUser } = useAuth();
@@ -49,26 +65,16 @@ function TravelSmart() {
   const setCityBtn = useRef();
   const cityBtn = useRef();
   const rotate = useRef();
+  const selectCityUl = useRef();
+  const defaultDiv = useRef();
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
   const [cities, setCities] = useState([])
   const [confirmExpCity, setConfirmExpCity] = useState(false)
   const [avgRating, setAvgRating] = useState(0);
   const [expCityOn, setExpCityOn] = useState(false)
-  const [filtersActive, setFiltersActive] = useState([])
-  const [priceActive, setPriceActive] = useState([])
-  const [filterDD, setFilterDD] = useState(false)
-  const [priceDD, setPriceDD] = useState(false)
-  const [filteredPlaces, setFilteredPlaces] = useState([])
-  const [checkboxs, setCheckboxes] = useState(0)
-  const [priceCheckboxes, setPriceCheckboxes] = useState(0)
-  const cityImg = useRef();
   const discMore = useRef();
-  const descBg = useRef();
-  const [cookies, setCookies, removeCookie] = useCookies([
-    "access_token",
-    "has_account",
-  ]);
+
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
@@ -106,8 +112,6 @@ function TravelSmart() {
   allPlaces_inCity.map((place) => place.score = 0)
   setAllPlaces_inCity(allPlaces_inCity)
 
-  setFilteredPlaces(allPlaces_inCity)
-
   setCities(citiesArr)
     //Sets the default city
     sessionStorage.setItem("city", "Miami");
@@ -140,11 +144,6 @@ function TravelSmart() {
     filtered.map((p) => (total = total + p.rating));
     setAvgRating(total / filtered.length);
 
-    cityImg.current.style.filter = "blur(3px)";
-
-    setTimeout(() => {
-      cityImg.current.style.filter = "blur(0px)";
-    }, 300);
   }, [city]);
 
   setTimeout(() => {
@@ -247,15 +246,11 @@ function TravelSmart() {
     //Refs to elements
     allPlacesContainer: useRef(),
     gridViewBtn: useRef(),
-    suggestionsDiv: useRef(),
     searchText: useRef(),
     citiesShowAll: useRef(),
     arrows: useRef(),
     searchAll: useRef(),
     suggSection: useRef(),
-    handleCitySwitch_ViewAll: function (e) {
-      
-    },
     handleTripBtn_handleFavoritesBtn: function (e) {
       let string = currentUser.email.toString();
       string = currentUser.metadata.createdAt + string.substring(0, 8);
@@ -315,35 +310,9 @@ function TravelSmart() {
     }
   }
 
-  function compareScores(attr, checked, type) {
-  
-    for (let i = 0; i < allPlaces_inCity.length; i++) {
-      if (allPlaces_inCity[i].category === attr && checked && type === "category") {
-        allPlaces_inCity[i].score++
-      } else if (allPlaces_inCity[i].category === attr && !checked && type === "category") {
-        allPlaces_inCity[i].score--
-      } else if (allPlaces_inCity[i].price === attr && checked && type === "price") {
-        allPlaces_inCity[i].score++
-      } else if (allPlaces_inCity[i].price === attr && !checked && type === "price") {
-        allPlaces_inCity[i].score--
-      }
-    }
-    setAllPlaces_inCity(allPlaces_inCity)
-    const newResults = allPlaces_inCity.filter((place) => place.score === priceCheckboxes + checkboxs)
-    setFilteredPlaces(newResults)
-
-    console.log(checkboxs + priceCheckboxes)
-
-    console.log(filteredPlaces)
-  }
-
   return (
     <>
       <HomeHeader name={name} />
-      <div id="lottie">
-        <Lottie animationData={animationData} />
-      </div>
-      <div id="lottie-bg"></div>
 
       {/* this button is programatically clicked by the renderTopPicks() function in the Miami.mjs file in order to load in images 
     of places. */}
@@ -408,6 +377,28 @@ function TravelSmart() {
             <button id="write_a_review">Write a Review</button>
           </div>
         </div>
+
+        <section id="hello-user-section">
+        <img src={icelandwater}></img>
+        <img src={greeksunset}></img>
+        <img src={miaminight}></img>
+        <img src={hawailighthouse}></img>
+        <img src={littolkiss}></img>
+        <img src={spanishpillers}></img>
+        <img src={spanishart}></img>
+        <img src={spanisharch}></img>
+        <img src={spanishtunnel}></img>
+        <img src={spanishwindow}></img>
+<img src={greekruins}></img>
+<img src={greekcoast}></img>
+<img src={greeekflowers}></img>
+
+<FontAwesomeIcon icon={faBurst} />
+
+        <div id="photo-credits">
+        <a href="https://knt-travel.squarespace.com/" target="_blank">Photography by Karina N Tohmé</a>
+        </div>
+        
         <div id="hello-user" ref={helloUser}>
             <h2>Hello {name.split(" ")[0]},</h2>
             <h4>What would you like to do today?</h4>
@@ -449,23 +440,27 @@ setExpCityOn(false)
              }} type="text" placeholder="Choose City"/>
 
 <button ref={setCityBtn} onClick={() => {
-  sessionStorage.setItem("city", chooseCityInputField.current.value)
-  setCityBtn.current.style.backgroundColor = "black"
-                    chooseCityInputField.current.style.border = "3px solid black"
-                    setConfirmExpCity(true)
-                    viewAll.suggestionsDiv.current.style.opacity = 1;
-                    viewAll.suggestionsDiv.current.style.top = "0rem";
-}}>Set</button>
-             
+                    sessionStorage.setItem("city", chooseCityInputField.current.value);
+                    setCityBtn.current.style.backgroundColor = "black";
+                    chooseCityInputField.current.style.border = "3px solid black";
+                    setConfirmExpCity(true);
+                    window.scrollTo({
+                      top: 800,
+                      behavior: "smooth",
+                    });
+}}>Set</button> 
               
               </div>
-              <ul onClick={(e) => {
-                console.log(e.target.classList.contains("city-to-exp"))
+
+              
+              <ul ref={selectCityUl} onClick={(e) => {
                   if (e.target.classList.contains("city-to-exp")) {
                     chooseCityInputField.current.value = e.target.textContent;
                     e.target.style.display = 'none';
                     setCityBtn.current.style.backgroundColor = "#8A05FF"
                     chooseCityInputField.current.style.border = "3px solid #8A05FF"
+                    selectCityUl.current.style.display = 'none'
+                    defaultDiv.current.style.opacity = 1;
                   }
               }}>
                 <li className="city-to-exp">Miami</li>
@@ -477,210 +472,37 @@ setExpCityOn(false)
                   ))
                  }
               </ul>
+
+              <div id="make-default-div" ref={defaultDiv}>
+              <button id="make-default">Make {sessionStorage.getItem('city')} my default city</button>
+              <p>note: by doing this you wont need to set the city anymore, you can change your default city anytime.</p>
+              </div>
              
             </div>
         </div>
-
-        <TripsPage/>
+        </section>
 
         { confirmExpCity ?
-        <div id="filters-and-results">
-        <div id="organizer">
-          
-          <div id="suggestions" ref={viewAll.suggestionsDiv}>
-            <div id="title-city-options">
-              <h1
-                style={{ display: "flex" }}
-                ref={viewAll.searchText}
-                id="searchText"
-              >
-                Results In {sessionStorage.getItem('city')}
-              </h1>
-
-              
-
-              <div id="filters-and-placecount">
-               <div>
-                <h4 onClick={() => {
-                  if (filterDD) {
-                    setFilterDD(false)
-                  } else {
-                    setFilterDD(true)
-                  }
-                }}>Filters ({filtersActive.length}) ▼</h4>
-                
-                  {
-                    
-                    filterDD ?
-                    <ul onClick={(e) => {
-                      console.log(e.target.tagName)
-                        if (e.target.tagName === 'INPUT') {
-                          if(checkboxs === 0) {
-                          setCheckboxes(1)
-                          }
-                          compareScores(e.target.getAttribute('name'), e.target.checked, "category")
-                        }
-                        
-                    }}>
-                <li>Resturants <input type="checkbox" name="Resturant"/></li>
-                <li>Parks <input type="checkbox" name="Park"/></li>
-                <li>Bars <input type="checkbox" name="Bar"/></li>
-                <li>Meuseums <input type="checkbox" name="Museum"/></li>
-                <li>Clubs <input type="checkbox" name="Club"/></li>
-                <li>Coffee Shops <input type="checkbox" name="Cafe"/></li>
-                </ul>
-                : null
-                  }
-               </div>
-
-               <div>
-                <h4 onClick={() => {
-                  if (priceDD) {
-                    setPriceDD(false)
-                  } else {
-                    setPriceDD(true)
-                  }
-                }}>Price ({priceActive.length}) ▼</h4>
-                
-                  {
-                    
-                    priceDD ?
-                    <ul onClick={(e) => {
-                      if (e.target.tagName === 'li') {
-                        if (checkboxs === 0) {
-                        setPriceCheckboxes(1)
-                        }
-                        compareScores(e.target.getAttribute('price'), e.target.checked, "price")
-                      }
-                      
-                  }}>
-                    <li>$ <input type="checkbox" price={1}/></li>
-                <li>$$ <input type="checkbox" price={2}/></li>
-                <li>$$$ <input type="checkbox" price={3}/></li>
-                <li>$$$$ <input type="checkbox" price={4}/></li>
-                </ul>
-                : null
-                  }
-                
-                
-               </div>
-
-               <p>{filteredPlaces.length} Places</p>
-              </div>
-          
-            </div>
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Place name, tacos, gourmet..."
-                name="search"
-                ref={viewAll.searchAll}
-                style={{ width: "60%" }}
-              />
-            <div
-              ref={viewAll.allPlacesContainer}
-              id="allPlacesContainer"
-              onClick={(e) => viewAll.handleTripBtn_handleFavoritesBtn(e)}
-            >
-              {filteredPlaces.map((place) => (
-                <div
-                  className="showAllDiv"
-                  onClick={(e) =>
-                    learnMoreAboutPlace(
-                      place.name,
-                      place.rating,
-                      place.type,
-                      place.area,
-                      place.price,
-                      place.name,
-                      place.favorite,
-                      place.category,
-                      place.placeID,
-                      e.target
-                    )
-                  }
-                >
-                  <a href="/place" target="_blank"></a>
-                  <div className="name-and-rating">
-                  <p className="showall-text">{place.name}</p>
-                  <p className="ratingdd">
-                    {parseFloat(place.rating) % 1 !== 0
-                      ? place.rating
-                      : `${place.rating}.0`}
-                  </p>
-                  </div>
-                  <div className="lowerDiv">
-                    <p className="cat-showall">{place.category}</p>
-                    <p className="style-showall">{place.style}</p>
-                    <p className="serves-showall">{place.serves}</p>
-                  </div>
-                  <div className="interactable-showall">
-                  <button
-                    className="showall-tripbtn trip-adder"
-                    name={place.name}
-                  >
-                    Add to Trip
-                  </button>
-                  <p
-                      className="click-favorite showall-heart"
-                      name={place.name}
-                      aria-hidden="true"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 512 512"
-                        className="favorite"
-                      >
-                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path>
-                      </svg>
-                    </p>
-                  <div className="infoDiv-showall">
-                    <p className="area-showall">{place.area}</p>
-                    <p className="price-showall">
-                      {"$".repeat(parseInt(place.price))}
-                    </p>
-                  </div>
-                  </div>
-                  <a className="see-imgs" target="_blank" href={`https://www.google.com/search?q=${place.name}&sca_esv=03047b03c4b9cd9d&sca_upv=1&sxsrf=ADLYWILgzRTFudLq4zqNYw8eEFajutqqOA:1717445774174&source=hp&biw=1536&bih=730&ei=jiReZsKECOLfp84Pt5OM2Q4&iflsig=AL9hbdgAAAAAZl4yntxQz9UCBdnIlSkmNMW5d3qcFKh-&ved=0ahUKEwjCg6eKoMCGAxXi78kDHbcJI-sQ4dUDCA8&uact=5&oq=tatam&gs_lp=EgNpbWciBXRhdGFtMggQABiABBixAzIIEAAYgAQYsQMyCBAAGIAEGLEDMggQABiABBixAzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjED1DuA1jKDXABeACQAQCYAVGgAYIDqgEBNbgBA8gBAPgBAYoCC2d3cy13aXotaW1nmAIGoAKfA6gCCsICBxAjGCcY6gLCAgQQIxgnwgILEAAYgAQYsQMYgwGYAweSBwE2oAeKGw&sclient=img&udm=2`}>See Images</a>
-                  <p className="instructions-showall">Click to learn more</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div></div>
+        <ExploreCity places={allPlaces_inCity}/>
         : null}
+
+<TripsPage/>
 
         <section id="cities">
           <div id="middle-organizer">
             <img id="background-img" src="waves.jpg"></img>
             <div id="organizer-city-rundown">
               <h2>Explore here and abroad</h2>
-              <p>
-                Discover new places using our map and finder, add them to your
-                itinerary, and find the next one
-              </p>
 
               <div id="avaliable-cities">
-                <div>
-                  <img src="Miami.jpg"></img>
-                  <p>Miami, FL, USA</p>
+         
+                {
+                  cities.map((city) => (
+                  <div className="city-div">
+                  <img src={`${city}.jpg`}></img>
+                  <p className="city-name">{city}</p>
                   <h6
-                    city="Miami"
-                    onClick={(e) => setCity(e.target.getAttribute("city"))}
-                  >
-                    Explore City{" "}
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      style={{ color: "black" }}
-                    />
-                  </h6>
-                </div>
-                <div>
-                  <img src="Chicago.jpg"></img>
-                  <p className="city-name">Chicago, IL, USA</p>
-                  <h6
-                    city="Chicago"
+                    city={city}
                     onClick={(e) => setCity(e.target.getAttribute("city"))}
                   >
                     <h4 className="number-of-places">
@@ -690,15 +512,15 @@ setExpCityOn(false)
                       />{" "}
                       {allPlaces.filter((p) => p.city === city).length} places
                     </h4>
-                    <div id="avg-rating">
-                      <div id="avg-rating-org">
-                        <div id="rating-bg"></div>
+                    <div className="avg-rating">
+                      <div className="avg-rating-org">
+                        <div className="rating-bg"></div>
                         <div
-                          id="rating-bar"
+                          className="rating-bar"
                           style={{ width: `${(avgRating / 5) * 100}%` }}
                         ></div>
                       </div>
-                      <h4>{Math.round(avgRating * 10) / 10}/5</h4>
+                      <h4 className="avg-rating-number">{Math.round(avgRating * 10) / 10}/5</h4>
                     </div>
                     Explore City{" "}
                     <FontAwesomeIcon
@@ -707,192 +529,14 @@ setExpCityOn(false)
                     />
                   </h6>
                 </div>
-                <div>
-                  <img src="New York.jpg"></img>
-                  <p>New York City, NY, USA</p>
-                  <h6
-                    city="New York"
-                    onClick={(e) => setCity(e.target.getAttribute("city"))}
-                  >
-                    Explore City{" "}
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      style={{ color: "black" }}
-                    />
-                  </h6>
-                </div>
-                <div>
-                  <img src="North Pole.jpg"></img>
-                  <p>North Pole, AK, USA</p>
-                  <h6
-                    city="North Pole"
-                    onClick={(e) => setCity(e.target.getAttribute("city"))}
-                  >
-                    Explore City{" "}
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      style={{ color: "black" }}
-                    />
-                  </h6>
-                </div>
-                <div>
-                  <img src="Barcelona.jpg"></img>
-                  <p>Barcelona, Spain</p>
-                  <h6
-                    city="Barcelona"
-                    onClick={(e) => setCity(e.target.getAttribute("city"))}
-                  >
-                    Explore City{" "}
-                    <FontAwesomeIcon
-                      icon={faChevronRight}
-                      style={{ color: "black" }}
-                    />
-                  </h6>
-                </div>
+                  ))
+                }
+              
               </div>
             </div>
           </div>
 
-          <img id="city-disc-more-bg" ref={descBg} src={`${city}.jpg`}></img>
-          <div id="middle-organizer-discover">
-            <img src={`${city}.jpg`} ref={cityImg}></img>
-            <div id="disc-more-div" ref={discMore}>
-              <p id="location-name">
-                {citiesArray.map((c) => (c.city === city ? c.location : null))}
-              </p>
-              <h3>Explore {city}</h3>
-              <div id="avg-rating">
-                <div id="avg-rating-org">
-                  <p>Average Rating</p>
-                  <div id="rating-bg"></div>
-                  <div
-                    id="rating-bar"
-                    style={{ width: `${(avgRating / 5) * 100}%` }}
-                  ></div>
-                </div>
-                <p>{Math.round(avgRating * 10) / 10}/5</p>
-              </div>
-              <p id="number-of-places">
-                <FontAwesomeIcon
-                  icon={faLocationDot}
-                  style={{ color: "#e00000" }}
-                />{" "}
-                {allPlaces.filter((p) => p.city === city).length} places
-              </p>
-              <p>
-                {citiesArray.map((c) =>
-                  c.city === city ? c.description : null
-                )}
-              </p>
-             
-            </div>
-          </div>
-
-          <div id="middle-organizer-2">
-            <div className="middle-org-h2">
-              <h2>Why </h2>{" "}
-              <h2 style={{ color: "#2E64FE", marginLeft: "0.8rem" }}>
-                {" "}
-                Choose Us
-              </h2>
-            </div>
-            <div id="why-choose-us">
-              <div id="col-1">
-                <div className="col-div">
-                  <div>
-                    <FontAwesomeIcon
-                      icon={faMagnifyingGlass}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </div>
-                  <div>
-                    <h4>Find New Places</h4>
-                    <p>Using our map or search features and filters.</p>
-                  </div>
-                </div>
-
-                <div className="col-div">
-                  <div>
-                    <FontAwesomeIcon
-                      icon={faNewspaper}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </div>
-                  <div>
-                    <h4>Get All The Info</h4>
-                    <p>
-                      From opening times to ratings, reviews, contact
-                      information and more.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="col-div">
-                  <div>
-                    <FontAwesomeIcon
-                      icon={faCompass}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </div>
-                  <div>
-                    <h4>Get Directions</h4>
-                    <p>
-                      See how far your favorites places are from your hotel or
-                      next destination.
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div id="col-2">
-                <div className="col-div">
-                  <div>
-                    <FontAwesomeIcon
-                      icon={faHeart}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </div>
-                  <div>
-                    <h4>Save for later</h4>
-                    <p>
-                      Using the hearts, add places to your favorites to save
-                      them for later.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="col-div">
-                  <div>
-                    <FontAwesomeIcon
-                      icon={faPlane}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </div>
-                  <div>
-                    <h4>Create Trips</h4>
-                    <p>
-                      Create trips with just a few clicks and plan as you go.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="col-div">
-                  <div>
-                    <FontAwesomeIcon
-                      icon={faMoneyBillWave}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </div>
-                  <div>
-                    <h4>Plan everything</h4>
-                    <p>
-                      Add places to your trip, plan your trips budget and get
-                      detailed breakdowns.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    
         </section>
 
        
@@ -1043,21 +687,13 @@ setExpCityOn(false)
             <div id="mobile-pull-up-bd" onClick={(e) => bringUpMobileModal(e)}>
               <p id="mobile-pull-up">pull up</p>
             </div>
-            <div id="citySelect" ref={cityBtn} onClick={() => selectCity()}>
-              <div id="citySelect-text">Choose City:&nbsp;Miami&nbsp;</div>
-              <FontAwesomeIcon
-                icon={faChevronDown}
-                ref={rotate}
-                id="rotating"
-              />
-            </div>
+
             <div id="cityDD" ref={cityDD} onClick={handleCityChange}>
               {cities.map((city) => (
                 <a key={city}>{city}</a>
               ))}
             </div>
-            <h2 id="best-places-text">Best places in Miami</h2>
-            <h6>according to your preferances</h6>
+            <h2 id="best-places-text">Let's Explore {city}</h2>
             <div className="button-div-map">
               <button id="show-filtersList">
                 <FontAwesomeIcon icon={faBarsStaggered} />
