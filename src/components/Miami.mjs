@@ -244,13 +244,13 @@ export function generalScript() {
                       starRating +
                       "</h1></strong>" +
                       `  ` +
-                      `<p>` +
+                      `<h4>` +
                       `${place.rating}/5` +
                       " · " +
                       priceLevel +
                       " · " +
                       category +
-                      `</p>` +
+                      `</h4>` +
                       `<p>${place.formatted_address}</p>` +
                       `<p id='placePhone'>${place.formatted_phone_number}</p>` +
                       `<div id="dropdown3">` +
@@ -260,7 +260,7 @@ export function generalScript() {
                       `<div id="APPEND_HERE">
                   <button id="place-button" class='infocard-btn' role='button' target="_blank">Learn More</button>
                   <button id="add-button" name='${place.name}' class='infocard-btn trip-adder' role='button' target="_blank">Add to Trip</button>
-                  <a class="place-imgs-link">See Images</a>
+                  <a class="place-imgs-link" href="https://www.google.com/search?q=${place.name}&sca_esv=03047b03c4b9cd9d&sca_upv=1&sxsrf=ADLYWILgzRTFudLq4zqNYw8eEFajutqqOA:1717445774174&source=hp&biw=1536&bih=730&ei=jiReZsKECOLfp84Pt5OM2Q4&iflsig=AL9hbdgAAAAAZl4yntxQz9UCBdnIlSkmNMW5d3qcFKh-&ved=0ahUKEwjCg6eKoMCGAxXi78kDHbcJI-sQ4dUDCA8&uact=5&oq=tatam&gs_lp=EgNpbWciBXRhdGFtMggQABiABBixAzIIEAAYgAQYsQMyCBAAGIAEGLEDMggQABiABBixAzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjED1DuA1jKDXABeACQAQCYAVGgAYIDqgEBNbgBA8gBAPgBAYoCC2d3cy13aXotaW1nmAIGoAKfA6gCCsICBxAjGCcY6gLCAgQQIxgnwgILEAAYgAQYsQMYgwGYAweSBwE2oAeKGw&sclient=img&udm=2" target="_blank">See Images</a>
                   <div>` +
                       `<br>` +
                       `<br>` +
@@ -635,9 +635,8 @@ export function generalScript() {
           newRec.innerHTML =
             `<div class="rec-container-item" name='${
               marker.name
-            }'><img class='rec-item-image' name='${
-              marker.name
-            }' src=''></img><div class="item-info"><h4>${[i + 1]}. ${
+            }'>
+            <div class="item-info"><h4>${[i + 1]}. ${
               marker.name
             }</h4>` +
             `<div class="middle-org"><p class='yellowstar'>${starPrinter.repeat(

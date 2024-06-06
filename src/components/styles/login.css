@@ -26,6 +26,7 @@
 
 #login-title .plane-login {
 margin-right: 1rem;
+color: black;
 }
 
 #login {
@@ -113,7 +114,8 @@ letter-spacing: 0.3rem;
     justify-content: center;
     align-items: center;
     padding: 1rem 2rem;
-    border-radius: 7px;
+    margin-top: 2rem;
+    background-color: black;
     font-weight: 700;
     font-family: "Roboto Condensed", sans-serif;
 }
@@ -121,8 +123,7 @@ letter-spacing: 0.3rem;
 #signup-general input {
     background-color: whitesmoke;
     border: 1px solid whitesmoke;
-    border-radius: 7px;
-    padding: 0.5rem;
+    padding: 1rem;
     margin-left: 0;
     width: 100%;
 }
@@ -163,7 +164,7 @@ width: 200%;
 }
 input:focus {
     outline: none;
-    border-color: #0076CC;
+    border-color: rgb(138, 5, 255);
 }
 button {
     margin-top: 0.7rem;
@@ -172,7 +173,6 @@ button {
     cursor: pointer;
     align-content: center;
     border-radius: 0;
-    background-color: #2E64FE;
     font-family: 'Montserrat', sans-serif;
     border: none;
     color: white;

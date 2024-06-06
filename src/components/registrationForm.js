@@ -6,19 +6,9 @@ import { useAuth } from "./contexts/AuthContext";
 import { docMethods } from "./firebase/firebase";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import icelandwaterfall from "./assets/icelandwaterfall.jpg";
 
 function Signup() {
-  useEffect(() => {
-    async function handleLogout() {
-      try {
-        await logout();
-      } catch (e) {
-        console.error(e.error);
-        alert("logout failed");
-      }
-    }
-    handleLogout();
-  }, []);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -71,26 +61,16 @@ function Signup() {
     }
   };
 
-  useEffect(() => {
-    if (currentUser) {
-      let string = currentUser.email.toString();
-      string = currentUser.metadata.createdAt + string.substring(0, 8);
-      docMethods.newDoc(firstName, lastName, string);
-      window.location.replace("http://localhost:3000/");
-    }
-  }, [user]);
-
   return (
     <>
       <div id="body">
         <div id="img-login-div" className="signup-con">
-          <img src="./signup-img.jpg" id="signup-img"></img>
+          <img src={icelandwaterfall} id="signup-img"></img>
         </div>
         <div id="login-div-left" className="signup-div-left">
           <div id="login-title">
             <FontAwesomeIcon
               icon={faPaperPlane}
-              style={{ color: "#2e64fe" }}
               className="plane-login"
             />
             <h1>Explore. Discover. Plan.</h1>
@@ -107,7 +87,7 @@ function Signup() {
                   xmlns="http://www.w3.org/2000/svg"
                   height="1em"
                   viewBox="0 0 512 512"
-                  fill="#2E64FE"
+                  fill="black"
                 >
                   <style>
                     svg{"fill:#2E64FE;position=relative; top=0.5rem "}
@@ -118,7 +98,7 @@ function Signup() {
               <div id="NoAcc">
                 <p className="FP">Already Have An Account?</p>
                 <a className="gtsignup-Btn">
-                  <Link to="/">Log In</Link>
+                  <Link to="/login">Log In</Link>
                 </a>
               </div>
             </div>
@@ -183,9 +163,14 @@ function Signup() {
                 })}
                 type="text"
                 placeholder="Password"
-                style={{ WebkitTextSecurity: "circle" }}
                 ref={passwordRef}
-                onChange={(e) => handleInputChange(e)}
+                onChange={(e) => {
+                  handleInputChange(e)
+                  e.target.style.WebkitTextSecurity = "circle"
+                  if (e.target.value === "") {
+                    e.target.style.WebkitTextSecurity = "none"
+                  }
+                }}
               />
               {errors.password?.type === "required" && (
                 <p className="error">Password is required</p>
@@ -203,9 +188,14 @@ function Signup() {
                   validate: { minLength: (v) => v.length >= 8 },
                 })}
                 type="text"
-                placeholder="Re-type password"
-                style={{ WebkitTextSecurity: "circle" }}
-                onChange={(e) => handleInputChange(e)}
+                placeholder="Confirm Password"
+                onChange={(e) => {
+                  handleInputChange(e)
+                  e.target.style.WebkitTextSecurity = "circle"
+                  if (e.target.value === "") {
+                    e.target.style.WebkitTextSecurity = "none"
+                  }
+                }}
               />
               {errors.confirmPassword?.type === "required" && (
                 <p className="error">Confirmation is required</p>

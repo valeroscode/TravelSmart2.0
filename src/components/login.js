@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import denmark from "./assets/denmark.JPEG"
 
 function LoginForm() {
   const { login } = useAuth();
@@ -97,7 +98,7 @@ function LoginForm() {
           </div>
         </div>
         <div id="img-login-div">
-          <img src="./denmark.jpeg" id="login-img"></img>
+          <img src={denmark} id="login-img"></img>
         </div>
       </div>
     </>

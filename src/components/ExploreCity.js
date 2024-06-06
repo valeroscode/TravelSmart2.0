@@ -15,11 +15,6 @@ function ExploreCity ({places}) {
         setFilteredPlaces(places)
     }, [])
 
-    useEffect(() => {
-      console.log(places)
-      setFilteredPlaces(places)
-    }, [places])
-
       const viewAll = {
         //Refs to elements
         allPlacesContainer: useRef(),

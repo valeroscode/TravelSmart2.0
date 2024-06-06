@@ -840,6 +840,12 @@ width: 50vw;
   }
 }
 
+@media screen and (max-width: 1253px) {
+  #trips-comp-container {
+    width: unset;
+  }
+}
+
 @media screen and (max-width: 975px) {
 #trip-details ul li a div {
 max-width: 90%;

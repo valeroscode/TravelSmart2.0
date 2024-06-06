@@ -375,9 +375,6 @@ left: 0rem;
 bottom: 1.5rem;
 font-size: 0.7rem;
 }
-#users-name {
-  display: none;
-}
 }
 
 @media screen and (max-width:1131px) {
@@ -389,6 +386,9 @@ min-width: 40px;
 }
 .user-name button {
 opacity: 0;
+}
+#home-h1 h1 {
+  opacity: 0;
 }
 }
 
@@ -405,6 +405,10 @@ opacity: 0;
     margin: 0;
     transform: scale(1.5);
 }
+#hello-user {
+  left: 19.5rem;
+  top: 7rem;
+}
 }
 
 @media screen and (max-width:909px) {
@@ -415,6 +419,29 @@ opacity: 0;
 .inner_carousel img {
 min-width: 300px;
 }
+#search-bar-wrapper {
+  position: relative;
+  right: 5rem;
+}
+}
+
+@media screen and (max-width: 777px) {
+  #photo-credits {
+    left: 1rem;
+  }
+  #hello-user {
+    left: 16.5rem;
+  }
+}
+
+@media screen and (max-width:723px) {
+  #home-h1 .fa-paper-plane {
+    left: -2rem;
+  }
+  #hello-user {
+    top: 2rem;
+    left: 15rem;
+  }
 }
 
 
@@ -438,9 +465,15 @@ top: 0;
 }
 
 @media screen and (max-width: 480px) {
+#hello-user {
+  left: 11rem;
+}
+#hello-user h4 {
+  width: 70%;
+}
 #search-bar-wrapper {
   position: relative;
-  right: 4rem;
+  right: 3rem;
 }
 #organizer-city-rundown-2 h4 {
   display: none;
@@ -500,21 +533,13 @@ left: 4.5rem;
 height: 2rem;
 }
 #place-search {
-min-width: 120px;
+min-width: 10.5rem;
 }
 #city-place-search {
 min-width: 120px;
 }
 }
 
-@media screen and (max-width: 480px) {
-#place-search {
-min-width: 110px;
-}
-#city-place-search {
-min-width: 110px;
-}
-}
 
 @media screen and (max-width: 433px) {
 .rec-container-item img {
