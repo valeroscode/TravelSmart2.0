@@ -5,6 +5,7 @@ import {
   faPaperPlane,
   faPlaneDeparture,
   faMagnifyingGlassLocation,
+  faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { allPlaces } from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
@@ -163,7 +164,9 @@ function HomeHeader({ name }) {
                 {currentUser ? (
                   <div className="user-name">
                     <p id="users-name">{name}</p>
-                    <img id="account-photo"></img>
+                    <div id="account-photo">
+                    <FontAwesomeIcon icon={faUser} />
+                    </div>
                   </div>
                 ) : (
                   <div></div>

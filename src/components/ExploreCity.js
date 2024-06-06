@@ -15,6 +15,11 @@ function ExploreCity ({places}) {
         setFilteredPlaces(places)
     }, [])
 
+    useEffect(() => {
+      console.log(places)
+      setFilteredPlaces(places)
+    }, [places])
+
       const viewAll = {
         //Refs to elements
         allPlacesContainer: useRef(),
@@ -74,8 +79,6 @@ function ExploreCity ({places}) {
       const [type, setType] = useState("");
 
       useEffect(() => {
-           
-            
             for (let i = 0; i < places.length; i++) {
               if (places[i].category === attr && checked && type === "category") {
                 places[i].score++
@@ -171,7 +174,6 @@ function ExploreCity ({places}) {
                           setAttr(e.target.getAttribute('name'))
                           setChecked(e.target.checked)
                           setType("category")
-              
                         }
                         
                     }}>
@@ -239,7 +241,7 @@ function ExploreCity ({places}) {
                 placeholder="Place name, tacos, gourmet..."
                 name="search"
                 ref={viewAll.searchAll}
-                style={{ width: "60%" }}
+                style={{ width: "76%" }}
                 onKeyUp={(e) => {
                     matchKeyboardInput(e)
                 }}
@@ -267,7 +269,7 @@ function ExploreCity ({places}) {
                     )
                   }
                 >
-                  <a href="/place" target="_blank"></a>
+                  <a href="/place" target="_blank" className='anchor-nav'></a>
                   <div className="name-and-rating">
                   <p className="showall-text">{place.name}</p>
                   <p className="ratingdd">
@@ -293,14 +295,7 @@ function ExploreCity ({places}) {
                       name={place.name}
                       aria-hidden="true"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        height="1em"
-                        viewBox="0 0 512 512"
-                        className="favorite"
-                      >
-                        <path d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"></path>
-                      </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"/></svg>
                     </p>
                   <div className="infoDiv-showall">
                     <p className="area-showall">{place.area}</p>

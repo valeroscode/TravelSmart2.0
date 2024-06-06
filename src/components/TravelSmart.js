@@ -143,7 +143,7 @@ function TravelSmart() {
     const filtered = allPlaces.filter((p) => p.city === city);
     filtered.map((p) => (total = total + p.rating));
     setAvgRating(total / filtered.length);
-
+    setAllPlaces_inCity(allPlaces.filter((m) => m.city === city))
   }, [city]);
 
   setTimeout(() => {
@@ -237,10 +237,6 @@ function TravelSmart() {
   }
 
   const gallery = useRef();
-  function findPlacePicture() {
-    const gallery = document.getElementById("gallery");
-    gallery.src = `${gallery.getAttribute("url")}`;
-  }
 
   const viewAll = {
     //Refs to elements
@@ -320,7 +316,6 @@ function TravelSmart() {
         id="simulateClick-btn"
         onClick={() => renderImages_OnTopPicks()}
       ></button>
-      <button id="find-picture" onClick={() => findPlacePicture()}></button>
 
       <section ref={homePage} id="homePage">
         <div>
@@ -424,6 +419,7 @@ setExpCityOn(false)
             <div id="choosing-city" ref={chooseCityInput}>
               <div id="input-DD-choose-city">
              <input ref={chooseCityInputField}  onKeyUp={(e) => {
+              selectCityUl.current.style.display = "block"
               const citieslist = document.getElementsByClassName('city-to-exp');
               const inputValue = String(e.target.value).toLocaleLowerCase();
                  for (let i = 0; i < citieslist.length; i++) {
@@ -440,6 +436,7 @@ setExpCityOn(false)
              }} type="text" placeholder="Choose City"/>
 
 <button ref={setCityBtn} onClick={() => {
+                    setCity(chooseCityInputField.current.value)
                     sessionStorage.setItem("city", chooseCityInputField.current.value);
                     setCityBtn.current.style.backgroundColor = "black";
                     chooseCityInputField.current.style.border = "3px solid black";
@@ -456,7 +453,6 @@ setExpCityOn(false)
               <ul ref={selectCityUl} onClick={(e) => {
                   if (e.target.classList.contains("city-to-exp")) {
                     chooseCityInputField.current.value = e.target.textContent;
-                    e.target.style.display = 'none';
                     setCityBtn.current.style.backgroundColor = "#8A05FF"
                     chooseCityInputField.current.style.border = "3px solid #8A05FF"
                     selectCityUl.current.style.display = 'none'

@@ -168,8 +168,9 @@ padding: 0 1rem 0 1rem;
 }
 .user-name {
   display: flex;
+  justify-content: space-between;
   border-radius: 100px;
-  padding: 0 1rem;
+  padding: 0 0 0 1rem;
   color: black;
   background-color: white;
 }
@@ -186,16 +187,26 @@ border-radius: 7px;
 font-weight: 800;
 font-family: "Roboto Condensed", sans-serif;
 }
+#account-photo {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    background-color: whitesmoke;
+    border-radius: 100%;
+}
 .user-name button a {
 color: white;
 font-weight: 800;
 }
 .user-name p {
 font-weight: 600;
-width: 7rem;
+width: fit-content;
+margin-right: 0.5rem;
 }
 #users-name {
   opacity: 0;
+  margin-right: 1.5rem;
   -webkit-transition: opacity 0.3s ease;
 -moz-transition: opacity 0.3s ease;
 -o-transition: opacity 0.3s ease;

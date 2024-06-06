@@ -28,7 +28,7 @@ function LoginForm() {
       <div id="body">
         <div id="login-div-left">
           <div id="login-title">
-            <h1>Explore. Discover. Plan.</h1>
+            <h1>Explore. Plan. Discover.</h1>
           </div>
           <div id="login">
             <div className="signupH1">
@@ -97,7 +97,7 @@ function LoginForm() {
           </div>
         </div>
         <div id="img-login-div">
-          <img src="./login-img.jpg" id="login-img"></img>
+          <img src="./denmark.jpeg" id="login-img"></img>
         </div>
       </div>
     </>

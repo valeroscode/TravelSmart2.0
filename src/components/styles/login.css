@@ -48,12 +48,11 @@ padding-top: 2rem;
     width: 15rem;
     cursor: pointer;
     align-content: center;
-    border-radius: 7px;
     background-color: gray;
     border: none;
 font-family: "Roboto Condensed", sans-serif;
     font-weight: 800;
-background-color: #2E64FE;
+background-color: black;
 }
 .signupH1 {
     color: black;
@@ -137,7 +136,6 @@ letter-spacing: 0.3rem;
 #username-login input {
     background-color: whitesmoke;
     border: 1px solid whitesmoke;
-    border-radius: 7px;
     padding: 0.5rem;
     margin-left: 0;
     width: 200%;
@@ -151,7 +149,6 @@ height: 1.5rem;
 margin-left: 0;
 background-color: whitesmoke;
 border: 1px solid whitesmoke;
-border-radius: 7px;
 padding: 0.5rem;
 width: 200%;
 }

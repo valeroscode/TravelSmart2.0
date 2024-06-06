@@ -225,14 +225,15 @@
 
 #hello-user {
     position: relative;
-    width: 100%;
+    width: fit-content;
     height: 80vh;
     margin-top: 0;
     display: flex;
     text-align: left;
     flex-direction: column;
     justify-content: center;
-    left: 20%;
+    left: 24.5rem;
+    top: 5rem;
     padding-bottom: 0rem;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -824,22 +825,21 @@ margin-right: 0.5rem;
     justify-content: start;
     align-items: start;
     z-index: 910;
-    width: 0vw;
-    height: 100%;
-    top: 0;
+    width: 10rem;
+    height: 100vh;
+    right: -14rem;
     display: none;
     pointer-events: all;
-    -webkit-transition: width 0.5s ease;
-    -moz-transition: width 0.5s ease;
-    -o-transition: width 0.5s ease;
-    transition: width 0.5s ease;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 padding-left: 1.5rem;
 padding-top: 7rem;
 background-color: white;
 padding-left: 2rem;
 padding-right: 1rem;
 padding-bottom: 2rem;
-right: 1.5rem;
 }
 .filter-btns {
 position: relative;
@@ -1229,6 +1229,7 @@ button:hover {
     display: flex;
     flex-direction: row;
     width: 100vw;
+    padding-bottom: 5rem;
     font-family: 'Roboto Condensed';
     box-shadow: 0 0 70px 20px gray;
 }
@@ -1360,6 +1361,10 @@ font-family: "Roboto Condensed", sans-serif;
     height: fit-content;
     color: white;
 }
+#avaliable-cities {
+    position: relative;
+    top: 3rem;
+} 
 .button-div-map {
 display: flex;
 justify-content: start;
@@ -1609,13 +1614,6 @@ left: -1rem;
 top: -1rem;
 }
 
-#find-picture {
-    position: absolute;
-    top: -1rem;
-    left: -1rem;
-    opacity: 0;
-}
-
 #suggestions {
     margin-top: 7rem;
 }
@@ -1669,7 +1667,7 @@ background-color: white;
     text-align: center;
     pointer-events: all;
     cursor: pointer;
-    opacity: 0;
+    opacity: 1;
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
     -o-transition: all 0.2s ease;
@@ -1892,6 +1890,8 @@ bottom: 5rem;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
+    box-shadow: 0 0 20px 5px gray;
+    border: 1px solid gray;
 }
 
 #avaliable-cities .city-div:hover {
@@ -1934,6 +1934,19 @@ bottom: 5rem;
     width: fit-content;
     pointer-events: all;
     cursor: pointer;
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    transition:all 0.3s ease;
+}
+
+#avaliable-cities div h6:hover {
+    background-color: black;
+    color: white;
+}
+
+#avaliable-cities div h6:hover svg {
+    fill: white;
 }
 
 #location-name {
@@ -2773,13 +2786,14 @@ flex-wrap: wrap;
 overflow: visible;
 justify-content: start;
 background-color: white;
-height: 70vh;
-padding-left: 11rem;
-padding-right: 11rem;
+height: 75vh;
+margin-left: 11rem;
+margin-right: 11.5rem;
 overflow-y: scroll;
 }
 .see-imgs {
-    position: relative;
+    position: absolute;
+    bottom: 1rem;
     left: 0.5rem;
     color: gray;
     cursor: pointer;
@@ -2802,7 +2816,9 @@ overflow-y: scroll;
 .showAllDiv {
 margin: 2rem 2rem 0 0;
 height: fit-content;
-width: 25rem;
+width: 22rem;
+height: 16rem;
+position: relative;
 cursor: pointer;
 -webkit-transition: all 0.3s ease;
 -moz-transition: all 0.3s ease;
@@ -2841,8 +2857,8 @@ justify-content: center;
 align-items: center;
 }
 .instructions-showall {
-    position: relative;
-    bottom: 0rem;
+    position: absolute;
+    bottom: -3rem;
     left: 0.5rem;
     font-weight: 800;
     color: #8a05ff;
@@ -2960,6 +2976,8 @@ pointer-events: all;
 }
 .interactable-showall {
     display: flex;
+    position: absolute;
+    bottom: 2rem;
 }
 .showall-heart {
     margin-left: 2rem;
@@ -3134,7 +3152,6 @@ color: black;
 }
 @media screen and (max-width: 1619px) {
 #filtersList {
-top: 5rem;
 overflow-x: hidden;
 position: absolute;
 }
@@ -3723,14 +3740,28 @@ height: fit-content;
 position: relative;
 left: 0.5rem;
 margin: 0;
-background-color: #2E64FE;
+background-color: #8A05FF;
 font-family: "Roboto Condensed", sans-serif;
 font-weight: 800;
 margin-right: 0.5rem;
 }
 #add-button {
-background-color: lightgray;
+background-color: whitesmoke;
 color: black;
+}
+.place-imgs-link {
+    background-color: whitesmoke;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0.5rem;
+    margin-left: 0.5rem;
+    font-size: 1rem;
+    font-weight: 800;
+    font-family: "Roboto Condensed", sans-serif;
+    cursor: pointer;
+    position: relative;
+ 
 }
 .card-element {
 margin-bottom: 0.5rem;
@@ -3810,8 +3841,7 @@ transform: rotate(90deg)
     position: fixed;
     flex-direction: column;
     bottom: 10rem;
-    width: 20vw;
-    height: 72vh;
+    width: 28vw;
     right: 0;
     margin: 0;
     opacity: 0;
@@ -3829,14 +3859,13 @@ transform: rotate(90deg)
    position: relative;
    width: 100%;
     padding: 1rem;
+    padding-top: 3rem;
     background-color: white;
     z-index: 922;
     animation: fadeIn 0.5s;
     animation-fill-mode: forwards;
     font-size: 0.9rem;
     overflow-y: visible;
-    border-radius: 0 0 0 7px;
-box-shadow: -5px 5px 20px gray;
   }
   .reviews {
     font-size: 0.86rem;
@@ -4374,7 +4403,6 @@ height: 20%;
 }
 #filtersList {
     padding-right: 4rem;
-    top: 40%;
 }
 #map-overlay #pullup_travelInfo {
     display: none;
