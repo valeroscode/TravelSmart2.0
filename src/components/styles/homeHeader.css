@@ -17,17 +17,121 @@ position: fixed;
 z-index: 910000;
 }
 
+#home-org {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
 #home-h1 {
-position: relative;
+position: absolute;
 left: 4rem;
 margin-right: 4rem;
 width: 30vw;
 font-size: 2rem;
-top: 40%;
+top: 50%;
 font-family: "Roboto Condensed", sans-serif;
 font-weight: 800;
 color: white;
 display: flex;
+align-items: center;
+}
+#home-searchbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+}
+
+#home-searchbar input {
+  padding: 1.2rem;
+  border: 0;
+  height: 100%;
+  width: 20rem;
+  font-size: 1rem;
+  font-family: "Roboto Condensed", sans-serif;
+  position: relative;
+  margin-left: 0;
+}
+
+#home-searchbar input:nth-child(1) {
+  border-right: 2px solid #E1E0E0;
+}
+
+#placeDD-input {
+  position: relative;
+}
+
+#cityDD-input {
+  position: relative;
+}
+
+#placeDD-input ul {
+  background-color: whitesmoke;
+  width: 100%;
+  margin-top: 0;
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  font-family: "Roboto Condensed", sans-serif;
+  padding-top: 1rem;
+}
+
+#placeDD-input ul li {
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#placeDD-input ul li:hover {
+  background-color: black;
+  color: white;
+}
+
+
+#cityDD-input ul {
+  background-color: whitesmoke;
+  width: 100%;
+  margin-top: 0;
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  font-family: "Roboto Condensed", sans-serif;
+  padding-top: 1rem;
+}
+
+#cityDD-input ul li {
+  padding: 0.5rem 0 0.5rem 0.5rem;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#cityDD-input ul li:hover {
+  background-color: black;
+  color: white;
+}
+
+#home-searchbar input:nth-child(2) {
+  margin-left: 0;
+}
+#home-searchbar button {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  position: relative;
+  height: 100%;
+  margin-top: 1rem;
+  padding: 0 1rem;
+  font-size: 1.5rem;
 }
 .placeInCity {
   pointer-events: all;
@@ -161,10 +265,11 @@ padding: 0 1rem 0 1rem;
   align-items: center;
   justify-content: center;
   position: absolute;
-  right: -2rem;
+  right: 5rem;
 }
 .account {
   position: relative;
+  cursor: pointer;
 }
 .user-name {
   display: flex;
@@ -173,6 +278,14 @@ padding: 0 1rem 0 1rem;
   padding: 0 0 0 1rem;
   color: black;
   background-color: white;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.account:hover .user-name {
+  background-color: black;
+  color: white;
 }
 .user-name button {
 height: fit-content;
@@ -187,6 +300,10 @@ border-radius: 7px;
 font-weight: 800;
 font-family: "Roboto Condensed", sans-serif;
 }
+
+.account:hover #account-photo {
+  color: black;
+}
 #account-photo {
   display: flex;
     justify-content: center;
@@ -194,6 +311,49 @@ font-family: "Roboto Condensed", sans-serif;
     width: 3rem;
     background-color: whitesmoke;
     border-radius: 100%;
+    position: relative;
+    right: 0rem;
+}
+#edit-user {
+  background-color: white;
+  position: absolute;
+  width: 20rem;
+  z-index: -1;
+  right: 0rem;
+  top: 4rem;
+  padding-bottom: 1rem;
+  border-radius: 15px;
+  display: none;
+  flex-direction: column;
+  align-items: start;
+  font-family: "Roboto Condensed", sans-serif;
+}
+#edit-user div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  left: 1rem;
+}
+#edit-user div h4 {
+  margin-left: 1rem;
+}
+#edit-user h5 {
+  position: relative;
+  left: 1rem;
+  margin: 0;
+  font-size: 1.1rem;
+}
+#edit-user button {
+  width: fit-content;
+  height: fit-content;
+  padding: 1rem;
+  position: relative;
+  left: 1rem;
+  font-weight: 600;
+  color: black;
+  font-family: "Roboto Condensed", sans-serif;
+  background-color: whitesmoke;
 }
 .user-name button a {
 color: white;
