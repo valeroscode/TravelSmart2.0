@@ -426,9 +426,7 @@ min-width: 300px;
 }
 
 @media screen and (max-width: 777px) {
-  #photo-credits {
-    left: 1rem;
-  }
+
   #hello-user {
     left: 16.5rem;
   }
@@ -441,6 +439,19 @@ min-width: 300px;
   #hello-user {
     top: 2rem;
     left: 15rem;
+  }
+}
+
+@media screen and (max-width: 697px) {
+  #acc-and-trip {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 639px) {
+  #hello-user {
+    left: 12rem;
+    top: 6rem;
   }
 }
 
@@ -465,9 +476,7 @@ top: 0;
 }
 
 @media screen and (max-width: 480px) {
-#hello-user {
-  left: 11rem;
-}
+
 #hello-user h4 {
   width: 70%;
 }
@@ -538,6 +547,17 @@ min-width: 10.5rem;
 #city-place-search {
 min-width: 120px;
 }
+}
+
+
+@media screen and (max-width: 455px) {
+  #hello-user h4 {
+    width: 60%;
+    font-size: 2rem;
+   }
+   #hello-user {
+    left: 11rem;
+   }
 }
 
 

@@ -1701,12 +1701,21 @@ width: 40%;
 }
 
 @media screen and (max-width: 570px) {
+  
     #main-footer-section {
         flex-direction: column;
     }
     #footer-main-child-2 {
-        margin-left: 0;
-        margin-top: 4rem;
+        margin-left: 1rem;
+        margin-top: 0rem;
+    }
+    #footer-slogan {
+        margin-left: 1rem;
+        margin-bottom: 0;
+        margin-top: 0.5rem;
+    }
+    #footer-main-title {
+        margin-left: 1rem;
     }
     #budget-f .results-div #results-content h5 {
         width: 14rem;

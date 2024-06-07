@@ -4172,6 +4172,13 @@ width: 130%;
 left: 7vh;
 }
 
+.trips-title {
+    left: 1rem;
+}
+#your-trips ul {
+    position: relative;
+    left: 1rem;
+}
 }
 
 @media screen and (max-width: 833px) {
@@ -4484,6 +4491,12 @@ display: none;
 }
 
 @media screen and (max-width: 597px) {
+    #photo-credits {
+        left: 11rem;
+    }
+    #hello-user h4 {
+        width: 80%;
+    }
     #filters-and-placecount div h4 {
         font-size: 1.2rem;
     }
@@ -4534,6 +4547,7 @@ width: 100%;
 
 }
 
+
 @media screen and (max-width: 455px) {
     .rec-container-item:hover .instruction-toppick {
         left: 0.2rem;
@@ -4541,19 +4555,11 @@ width: 100%;
     #backBtn {
         top: 5rem;
     }
-    #organizer-cities-img-2 {
-        width: unset;
-        height: unset;
-        margin-right: 2rem;
-    }
+   
 
-    #organizer-city-rundown-2 {
-        margin-left: 1rem;
-    }
-
-    #organizer-city-rundown {
-        margin: 0 1rem;
-    }
+   #hello-user h2 {
+    font-size: 3rem;
+   }
   
 #footer {
 position: relative;
@@ -4572,9 +4578,7 @@ display: none;
 .rec-container-item .item-info {
     width: 15rem;
 }
-#whyTravel {
-    z-index: -1;
-}
+
 #allPlacesContainer {
     display: flex;
     flex-direction: column;
@@ -4614,20 +4618,11 @@ position: relative;
     min-width: fit-content;
 }
 
-#suggestions {
-height: 300vh;
-}
-#intro-text {
-left: -42vw;
-}
 .rec-container-item img {
 width: 8rem;
 }
 .rec-container-item h4 {
 width: 140%;
-}
-#whyTravel {
-    top: 0;
 }
 }
 
