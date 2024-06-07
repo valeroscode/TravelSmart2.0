@@ -27,16 +27,18 @@ function HomeHeader({ name }) {
       document.getElementById("users-name").style.opacity = 1;
     }, 500);
    
+
       window.addEventListener("click", (e) => {
-        setTimeout(() => {
           searchBarFunctions.handleClicksOutside_ofInputs(e);
-        }, 200);
+          searchBarFunctions.hideEditUser(e)
       });
+        
     
   }, []);
 
   function handleLogout() {
-    window.location.replace("http://localhost:8080/login");
+    logout();
+    window.location.replace("http://localhost:3000/login");
   }
 
   const cityInput = useRef();
@@ -61,17 +63,16 @@ function HomeHeader({ name }) {
       setPlacesDropDown(array)
     },
     handleClicksOutside_ofInputs: function (e) {
+   
       if (e.target !== searchInput.current && e.target !== cityInput.current) {
-        if (cityDD && searchDD) {
           cityDD.current.style.display = "none";
           searchDD.current.style.display = "none";
-        }
-      } else if (e.target !== editUser && editUser.current.style.display === "flex") {
-        editUser.current.style.display = "none";
-      } else {
-        return;
       }
-    },
+    
+  },
+  hideEditUser: function (e) {
+      
+  }
   }
 
   const searchBar = {
@@ -228,7 +229,7 @@ function HomeHeader({ name }) {
             <h5>avalero.software@gmail.com</h5>
             <hr/>
 
-            <button><FontAwesomeIcon icon={faArrowRightFromBracket} /> Sign Out</button>
+          <button onClick={alert("button clicked")}><FontAwesomeIcon icon={faArrowRightFromBracket}/> Sign Out</button>
           </div>
                 {currentUser ? (
                   <div className="user-name">

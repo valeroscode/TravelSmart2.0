@@ -8,7 +8,7 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [cookies, setCookie] = useCookies(["access_token"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
   const [currentUser, setCurrentUser] = useState({
     name: "",
     favorites: [],
@@ -64,9 +64,14 @@ export function AuthProvider({ children }) {
       .catch((error) => console.error("Error:", error));
   }
 
+  function logout() {
+    removeCookie("access_token")
+  }
+
   const value = {
     currentUser,
     login,
+    logout
   };
 
   return (

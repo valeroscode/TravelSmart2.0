@@ -148,7 +148,7 @@ function ExploreCity ({places}) {
               
 
               <div id="filters-and-placecount">
-               <div>
+               <div id='filters-placement-org'>
                 <h4 onClick={() => {
                   if (filterDD) {
                     setFilterDD(false)
@@ -188,7 +188,7 @@ function ExploreCity ({places}) {
     
                </div>
 
-               <div>
+               <div id="filters-placement-org">
                 <h4 onClick={() => {
                   if (priceDD) {
                     setPriceDD(false)
@@ -236,7 +236,6 @@ function ExploreCity ({places}) {
                 placeholder="Place name, tacos, gourmet..."
                 name="search"
                 ref={viewAll.searchAll}
-                style={{ width: "76%" }}
                 onKeyUp={(e) => {
                     matchKeyboardInput(e)
                 }}

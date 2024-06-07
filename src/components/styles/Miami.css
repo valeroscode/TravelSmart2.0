@@ -1385,7 +1385,7 @@ transition:all 0.3s ease;
 
 @media screen and (max-width: 1255px) {
     #filters-and-results {
-        width: unset;
+        width: 150vw;
     }
     #title-city-options {
         margin-left: 7rem;
@@ -2148,6 +2148,9 @@ opacity: 1;
     justify-content: center;
     text-align: center;
 }
+#filters-placement-org {
+    position: relative;
+}
 #filters-and-placecount p {
     color: black;
     font-weight: 600;
@@ -2159,7 +2162,7 @@ opacity: 1;
 #filters-and-placecount ul {
     margin-top: 0;
     position: absolute;
-    width: 10rem;
+    width: 100%;
     z-index: 10;
 }
 
@@ -2213,6 +2216,7 @@ top: 0.1rem;
     color: black;
     position: relative;
     left: 11.5rem;
+    width: 70%;
     
 }
 #searchInput:focus {
@@ -3789,9 +3793,6 @@ z-index: 9000000000;
 }
 
 @media screen and (max-width: 1317px) {
-    #title-city-options {
-        padding: 0 5rem;
-    }
     #intro img {
         height: 99vh;
     }
@@ -4142,14 +4143,15 @@ display: inline;
 }
 
 #mobile-pull-up {
-    background-color: lightgray;
+    background-color: whitesmoke;
     color: black;
     height: 0.5rem;
     width: fit-content;
     text-align: center;
-    padding: 0.3rem 2rem;
+    padding: 1rem 1rem;
     border-radius: 15px;
     position: absolute;
+    height: 1rem;
     right: 0rem;
     top: 0.5rem;
 }
@@ -4491,6 +4493,9 @@ display: none;
 }
 
 @media screen and (max-width: 597px) {
+    #filters-and-placecount div li {
+        width: 81%;
+    }
     #photo-credits {
         left: 11rem;
     }
@@ -4526,8 +4531,12 @@ height: 55vh;
 top: 2vh;
 left: 2vw;
 }
+}
 
-
+@media screen and (max-width: 600px) {
+    #searchInput {
+        width: 50%;
+    }
 }
 
 @media screen and (max-width: 503px) {
@@ -4544,11 +4553,26 @@ left: 2vw;
 .rec-container-item h4 {
 width: 100%;
 }
-
+#filters-and-placecount div li {
+    font-size: 1rem;
+}
 }
 
 
 @media screen and (max-width: 455px) {
+    #filters-and-placecount div li {
+        width: 79%;
+    }
+    #searchInput {
+        width: 45%;
+        left: 10.5rem;
+    }
+    #title-city-options {
+        padding: 0 4rem;
+    }
+    #filters-and-placecount div h4 {
+        padding: 0.5rem 0;
+    }
     .rec-container-item:hover .instruction-toppick {
         left: 0.2rem;
         }
@@ -4580,18 +4604,16 @@ display: none;
 }
 
 #allPlacesContainer {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    overflow: visible;
-    justify-content: space-around;
+    display: grid;
+    overflow-y: scroll;
     background-color: white;
     position: relative;
     align-items: center;
+    left: 0rem;
+    height: 60vh;
 }
-#title-city-options {
-    padding: 0;
-    flex-direction: column;
+#filters-and-results {
+    padding-bottom: 0;
 }
 #change-city-showall {
     padding: 2rem 0rem 2rem 0rem;
@@ -4608,7 +4630,6 @@ display: none;
 }
 
 #cities {
-padding-top: 4rem;	
 position: relative;
 }
 #cities-list {
