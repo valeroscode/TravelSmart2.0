@@ -119,15 +119,15 @@ function HomeHeader({ name }) {
     },
   };
 
-  function searchPlaces(e) {
+  function searchPlaces() {
     sessionStorage.setItem("city", cityInput.current.value);
     if (searchInput.current.value !== "" && cityInput.current.value !== "") {
       document.body.append(document.getElementById("google-map"));
-      const str = searchInput.current.value.toString();
+      const str = String(searchInput.current.value);
       sessionStorage.setItem("filters", str.toUpperCase());
       sessionStorage.setItem("total", 1);
       window.location.replace(
-        "https://travelsmart2-0.onrender.com/Search-Results"
+        "http://localhost:3000/Search-Results"
       );
     } else {
       alert("Input fields incomplete");
@@ -212,7 +212,6 @@ function HomeHeader({ name }) {
             }
           </ul>
           </div>
-          
           <button onClick={searchPlaces}><FontAwesomeIcon icon={faMagnifyingGlassLocation} /></button>
         </div>
         <div id="acc-and-trip">
