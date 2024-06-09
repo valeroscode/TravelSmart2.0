@@ -155,42 +155,44 @@ function Results() {
         <h5 id="filters-breakdown">Mexican</h5>
         <div id="best-rated-places">
           <h4>Best Rated</h4>
-          <div>
+          <div id="best-rated-places-row">
             {
               places.map((place) => {
-                if (place.rating > 3.5) {
-                (
-                  <div>
-                  <div>
-                  <h4>{place.rating}</h4>
-                  <h3>{place.name}</h3>
-                  </div>
-
-                  <div>
-
-                  </div>
-                  </div>
-
-
-                )
-                }
+                if (place.rating >= 4) {
+                  return (
+                    <div>
+                      <div>
+                        <h4>{place.rating}</h4>
+                        <h3>{place.name}</h3>
+                      </div>
+                      <div>
+                        {/* You might want to add something here */}
+                      </div>
+                    </div>
+                  );
+                } 
               })
             }
           </div>
         </div>
         <div id="budget-friendly">
           <h4>Budget Friendly</h4>
-          <div>
+          <div id="budget-friendly-places-row">
             {
               places.map((place) => {
                 if (place.price <= 2) {
-                  (
+                  return (
                     <div>
-                      <h4>{place.rating}</h4>
-                      <h3>{place.name}</h3>
+                      <div>
+                        <h4>{place.rating}</h4>
+                        <h3>{place.name}</h3>
+                      </div>
+                      <div>
+                        {/* You might want to add something here */}
+                      </div>
                     </div>
-                  )
-                }
+                  );
+                } 
               })
             }
           </div>

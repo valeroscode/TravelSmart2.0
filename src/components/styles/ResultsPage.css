@@ -1,2 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+
+#results-overall-org {
+    margin: 10rem 10rem 0 10rem;
+}
+
+#best-rated-places h4 {
+    font-size: 1.5rem;
+}
+
+#budget-friendly h4 {
+    font-size: 1.5rem;
+}
+
+#best-rated-places-row {
+    display: flex;
+}
+
+#budget-friendly-places-row {
+    display: flex;
+}
