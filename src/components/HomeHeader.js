@@ -140,7 +140,10 @@ function HomeHeader({ name }) {
         <div id="home-org">
       <div id="home-h1">
           <FontAwesomeIcon icon={faPaperPlane} className="plane" />
-          <h1>TRAVEL SMART</h1>
+          {
+            window.location.pathname === "home" ? <h1>TRAVEL SMART</h1> : <h1>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>
+          }
+          
         </div>
 
         <div id="home-searchbar">

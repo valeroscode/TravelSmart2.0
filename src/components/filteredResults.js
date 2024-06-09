@@ -152,7 +152,7 @@ function Results() {
 
 
       <section id="results-overall-org">
-        <h5 id="filters-breakdown">Mexican</h5>
+        
         <div id="best-rated-places">
           <h4>Best Rated</h4>
           <div id="best-rated-places-row">
@@ -160,13 +160,20 @@ function Results() {
               places.map((place) => {
                 if (place.rating >= 4) {
                   return (
-                    <div>
+                    <div className="best-rated-place">
                       <div>
                         <h4>{place.rating}</h4>
                         <h3>{place.name}</h3>
                       </div>
                       <div>
-                        {/* You might want to add something here */}
+                        <h5>{place.category} in {place.area}</h5>
+                        <h5>Serving {place.serves}</h5>
+                        <div className="buttons-container">
+                          <button>Add To Trip</button>
+                          <button>Learn More</button>
+                        
+                        </div>
+                        <a>See Images</a>
                       </div>
                     </div>
                   );
@@ -199,7 +206,8 @@ function Results() {
         </div>
 
         <div id="all-results">
-          <h4>Tacos In Miami</h4>
+          <h4 id="filter-desc">Tacos In Miami</h4>
+          
           <div id="all-results-filters">
             <button>Category ▼</button>
             <button>Price ▼</button>
@@ -207,6 +215,8 @@ function Results() {
             <button>Serves ▼</button>
             <button>Area ▼</button>
           </div>
+
+          <h5 id="filters-breakdown">Mexican</h5>
 
           <input type="text" placeholder="Search Places"></input>
           <div>
