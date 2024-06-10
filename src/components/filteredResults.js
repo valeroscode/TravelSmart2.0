@@ -238,13 +238,21 @@ function Results() {
               places.map((place) => {
                 if (place.price <= 2) {
                   return (
-                    <div>
+                    <div className="budget-friendly-place">
                       <div>
-                        <h4>{place.rating}</h4>
+                        <h4>{'$'.repeat(place.price)}</h4>
                         <h3>{place.name}</h3>
                       </div>
                       <div>
-                        {/* You might want to add something here */}
+                        <h5>Rated {place.rating}/5</h5>
+                        <h5>{place.category} In {place.area}</h5>
+                        <h5>Serving {place.serves}</h5>
+                        <div className="buttons-container">
+                          <button>Add To Trip</button>
+                          <button>Learn More</button>
+                        
+                        </div>
+                        <a>See Images</a>
                       </div>
                     </div>
                   );
@@ -324,7 +332,7 @@ function Results() {
           <h5 id="filters-breakdown">Mexican</h5>
 
           <input type="text" placeholder="Search Places"></input>
-          <div>
+          <div id="place-div-container">
             {
               places.map((place) => (
                  <div className="place-div">
@@ -332,14 +340,16 @@ function Results() {
                     <h4>{place.rating}</h4>
                     <h3>{place.name}</h3>
                    </div>
-                    <h4 className="place-div-category-area">{place.category} In {place.area}</h4>
+                    <h4 className="place-div-category-area">{place.category} In {place.area} | {'$'.repeat(place.price)}</h4>
                     <h4 className="place-div-style">{place.style}</h4>
                     <h5 className="place-div-serves">Serves {place.serves}</h5>
                     <p className="place-div-tags">Inexpensive</p>
                     <hr/>
+                    <div className="all-places-buttons">
                     <button>Add To Trip</button>
                     <button>Learn More</button>
                     <button>See Images</button>
+                    </div>
                  </div>
               ))
             }
