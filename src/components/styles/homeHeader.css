@@ -270,6 +270,7 @@ padding: 0 1rem 0 1rem;
 .account {
   position: relative;
   cursor: pointer;
+  top: 0.5rem;
 }
 .user-name {
   display: flex;
@@ -282,10 +283,6 @@ padding: 0 1rem 0 1rem;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
-}
-.account:hover .user-name {
-  background-color: black;
-  color: white;
 }
 .user-name button {
 height: fit-content;
@@ -301,9 +298,6 @@ font-weight: 800;
 font-family: "Roboto Condensed", sans-serif;
 }
 
-.account:hover #account-photo {
-  color: black;
-}
 #account-photo {
   display: flex;
     justify-content: center;

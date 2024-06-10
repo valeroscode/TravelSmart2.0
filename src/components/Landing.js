@@ -3,33 +3,22 @@ import "./styles/landing.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
-  faArrowDown,
-  faPlaneUp,
   faChevronLeft,
   faChevronRight,
   faLocationPin,
   faUser,
   faPlay,
-  faPlane,
   faBurst,
-  faCertificate,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import Lottie from "lottie-react";
 import makemems from "./assets/makemems.jpg";
-import coolnew from "./assets/coolnew.jpg";
 import miamiwaves from "./assets/miamiwaves.jpg";
-import createitin from "./assets/createitin.jpg";
 import withopts from "./assets/withoptions.jpg";
 import withease from "./assets/withease.jpg";
 import fromto from "./assets/fromto.jpg";
-import greece1 from "./assets/greece1.jpg";
-import moroco1 from "./assets/moroco1.jpg";
 import easyusephone from "./assets/easyuse (1).png";
 import easyusecomp from "./assets/easyuse (2).png";
 import withothers from "./assets/waterfall.jpg";
-import thekiss from "./assets/thekiss.jpg";
-import desert from "./assets/desert.jpg";
 import planflowers from "./assets/planflowers.jpg";
 import icelandwaterfall from "./assets/icelandwaterfall.jpg";
 import kobe from "./assets/kobe.jpg";

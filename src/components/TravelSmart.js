@@ -460,9 +460,7 @@ setExpCityOn(false)
                     defaultDiv.current.style.opacity = 1;
                   }
               }}>
-                <li className="city-to-exp">Miami</li>
-                <li className="city-to-exp">New York</li>
-                <li className="city-to-exp">Copenhegan</li>
+        
                  {
                   cities.map((city) => (
                     <li className="city-to-exp">{city}</li>
@@ -471,8 +469,54 @@ setExpCityOn(false)
               </ul>
 
               <div id="make-default-div" ref={defaultDiv}>
-              <button id="make-default">Make {sessionStorage.getItem('city')} my default city</button>
-              <p>note: by doing this you wont need to set the city anymore, you can change your default city anytime.</p>
+                {
+                 chooseCityInputField.current && chooseCityInputField.current.value !== currentUser.DefCity ?
+                
+              <button id="make-default" onClick={(e) => {
+                async function updateDefCity() {
+                await fetch("http://localhost:8080/updateDefCity", {
+                  method: 'POST',
+                  headers: {
+                    Authorization: "Bearer " + cookies.access_token,
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    city: sessionStorage.getItem('city')
+                  }),
+                }).then((res) => {
+                  return res.json();
+                }).catch((err) => {
+                  console.error(err)
+                });
+              }
+
+              updateDefCity();
+
+              e.target.textContent = `Your Default City Is Now ${sessionStorage.getItem('city')}!`;
+
+              }}>{`Make ${chooseCityInputField.current.value} my home city`}</button>
+              
+              : 
+              <button id="make-default" onClick={() => {
+                fetch("http://localhost:8080/updateDefCity", {
+                  method: "POST",
+                  headers: {
+                    Authorization: "Bearer " + cookies.access_token,
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    city: ''
+                  }),
+                }).then((res) => {
+                  return res.json();
+                }).catch((err) => {
+                  console.error(err)
+                });
+              }}>
+                Remove {sessionStorage.getItem('city')} as your home city
+              </button>
+            }
+            <p>note: by doing this you wont need to set the city anymore, you can change your default city anytime.</p>
               </div>
              
             </div>

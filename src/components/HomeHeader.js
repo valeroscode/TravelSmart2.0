@@ -14,6 +14,7 @@ import { doc } from "firebase/firestore/lite";
 function HomeHeader({ name }) {
   const account = useRef();
   const editUser = useRef();
+  const userNameDiv = useRef();
   const { currentUser, logout } = useAuth();
   const [placesDropDown, setPlacesDropDown] = useState([]);
   const [cities, setCities] = useState([]);
@@ -71,7 +72,11 @@ function HomeHeader({ name }) {
     
   },
   hideEditUser: function (e) {
-      
+      if (!e.target.closest('#edit-user') && !e.target.closest('.account')) {
+        editUser.current.style.display = 'none'
+        userNameDiv.current.style.backgroundColor = 'white';
+        userNameDiv.current.firstElementChild.style.color = 'black';
+      }
   }
   }
 
@@ -222,6 +227,9 @@ function HomeHeader({ name }) {
         <div ref={account} className="account" 
         onClick={() => {
           editUser.current.style.display = "flex";
+          userNameDiv.current.style.backgroundColor = 'black';
+          userNameDiv.current.firstElementChild.style.color = 'white';
+       
         }}>
           <div ref={editUser} id="edit-user">
             <div>
@@ -231,10 +239,10 @@ function HomeHeader({ name }) {
             <h5>avalero.software@gmail.com</h5>
             <hr/>
 
-          <button onClick={alert("button clicked")}><FontAwesomeIcon icon={faArrowRightFromBracket}/> Sign Out</button>
+          <button onClick={() => handleLogout()}><FontAwesomeIcon icon={faArrowRightFromBracket}/> Sign Out</button>
           </div>
                 {currentUser ? (
-                  <div className="user-name">
+                  <div className="user-name" ref={userNameDiv}>
                     <p id="users-name">{name}</p>
                     <div id="account-photo">
                     <FontAwesomeIcon icon={faUser} />

@@ -27,6 +27,7 @@ function Results() {
   const lottieBg = useRef();
   const ul = useRef();
   const topRated = useRef();
+  const filterDescription = useRef();
 
   const list = [];
   const topRatedArr = [];
@@ -37,11 +38,49 @@ function Results() {
   const [budgetState, setBudgetState] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [name, setName] = useState("")
+  const [categories, setCategories] = useState([])
+  const [prices, setPrices] = useState([])
+  const [areas, setAreas] = useState([])
+  const [styles, setStyles] = useState([])
+  const [serves, setServes] = useState([])
 
   const { currentUser } = useAuth();
 
   useEffect(() => {
     setName(currentUser.name);
+    const categoriesArr = []
+    const pricesArr = []
+    const areasArr = []
+    const stylesArr = []
+    const servesArr = []
+    for (let i = 0; i < places.length; i++) {
+      if (!categoriesArr.includes(places[i].category)) {
+        categoriesArr.push(places[i].category)
+      }
+      if (!pricesArr.includes(places[i].price)) {
+        pricesArr.push(places[i].price)
+      }
+      if (!areasArr.includes(places[i].area)) {
+        areasArr.push(places[i].area)
+      }
+      if (!stylesArr.includes(places[i].style)) {
+        stylesArr.push(places[i].style) 
+      }
+      if (!servesArr.includes(places[i].serves)) {
+        const items = String(places[i].serves).split(' ')
+        items.map((item) => !servesArr.includes(item) ? servesArr.push(item) : null)
+      }
+    }
+    setCategories(categoriesArr)
+
+    setPrices(pricesArr)
+    setAreas(areasArr)
+    
+    setStyles(stylesArr)
+   
+    setServes(servesArr)
+    
+
   }, [currentUser]);
 
   useEffect(() => {
@@ -146,6 +185,16 @@ function Results() {
     }
   }
 
+  function toggleFilterDisplay(e) {
+    const ul = e.target.nextElementSibling;
+
+    if (ul.style.display === 'none') {
+      ul.style.display = 'flex'
+    } else {
+      ul.style.display = 'none'
+    }
+  }
+
   return (
     <>
       <HomeHeader name={name} />
@@ -206,16 +255,72 @@ function Results() {
         </div>
 
         <div id="all-results">
-          <h4 id="filter-desc">Tacos In Miami</h4>
+          <h4 ref={filterDescription} id="filter-desc">Tacos In Miami</h4>
           
           <div id="all-results-filters">
-            <button>Category ▼</button>
-            <button>Price ▼</button>
-            <button>Style ▼</button>
-            <button>Serves ▼</button>
-            <button>Area ▼</button>
-          </div>
+            {
+              categories.length !== 0 ?
+            <div className="res-filter">
+            <button onClick={(e) => toggleFilterDisplay(e)}>Category ▼</button>
+            <ul>
+              {
+                categories.map((item) => (<li><p>{item}</p> <input type="checkbox"></input></li>))
+              }
+            </ul>
+            </div>
+            : null
+            }
 
+            {
+              prices.length !== 0 ?
+            <div className="res-filter">
+            <button onClick={(e) => toggleFilterDisplay(e)}>Price ▼</button>
+            <ul>
+              <li><p>$</p> <input type="checkbox"></input></li>
+              <li><p>$$</p> <input type="checkbox"></input></li>
+              <li><p>$$$</p> <input type="checkbox"></input></li>
+              <li><p>$$$$</p> <input type="checkbox"></input></li>
+            </ul>
+            </div>
+            : null
+            }
+            {
+              styles.length !== 0 ?
+            <div className="res-filter">
+            <button onClick={(e) => toggleFilterDisplay(e)}>Style ▼</button>
+            <ul>
+              {
+                styles.map((item) => (<li><p>{item}</p> <input type="checkbox"></input></li>))
+              }
+            </ul>
+            </div>
+            : null
+            } 
+            {
+              serves.length !== 0 ?
+            <div className="res-filter">
+            <button onClick={(e) => toggleFilterDisplay(e)}>Serves ▼</button>
+            <ul>
+              {
+                serves.map((item) => (<li><p>{item}</p> <input type="checkbox"></input></li>))
+              }
+            </ul>
+            </div>
+            : null
+            }
+            {
+              areas.length !== 0 ?
+            <div className="res-filter">
+            <button onClick={(e) => toggleFilterDisplay(e)}>Area ▼</button>
+            <ul>
+              {
+                areas.map((item) => (<li><p>{item}</p> <input type="checkbox"></input></li>))
+              }
+            </ul>
+            </div>
+            : null
+            }
+          </div>
           <h5 id="filters-breakdown">Mexican</h5>
 
           <input type="text" placeholder="Search Places"></input>

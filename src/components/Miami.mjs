@@ -686,9 +686,6 @@ export function generalScript() {
         }
       }
       recItemEvents();
-      setTimeout(() => {
-        document.getElementById("simulateClick-btn").click();
-      }, 500);
     }
 
     let currentCity = sessionStorage.getItem("city");

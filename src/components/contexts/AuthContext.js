@@ -31,6 +31,7 @@ export function AuthProvider({ children }) {
         })
         .then((data) => {
           setCurrentUser(data.user);
+     
         })
         .catch((err) => {
           console.error(err);

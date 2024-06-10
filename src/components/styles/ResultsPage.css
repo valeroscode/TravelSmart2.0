@@ -104,12 +104,16 @@
     margin-bottom: 1rem;
 }
 
+#all-results-filters {
+    display: flex;
+}
+
 #all-results-filters button {
     width: fit-content;
-    margin-right: 1rem;
-    height: 100%;
+    height: 3rem;
     background-color: whitesmoke;
     color: black;
+    width: 100%;
     border: 3px solid black;
     font-weight: 700;
 }
@@ -117,3 +121,35 @@
 #all-results-filters input {
     margin-left: 0;
 }
+
+.res-filter {
+    width: 8rem;
+    position: relative;
+    margin-right: 1rem;
+}
+
+.res-filter ul {
+    display: none;
+    flex-direction: column;
+    background-color: whitesmoke;
+    position: absolute;
+    width: 100%;
+    top: 3rem;
+}
+
+.res-filter ul li {
+    padding: 0 0 0rem 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.res-filter ul li p {
+    font-weight: 700;
+}
+
+.res-filter ul li input {
+    margin-right: 1rem;
+    width: 1rem;
+}
+
