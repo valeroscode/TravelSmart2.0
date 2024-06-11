@@ -542,7 +542,7 @@ setExpCityOn(false)
                   <div className="city-div">
                   <img src={`${city}.jpg`}></img>
                   <p className="city-name">{city}</p>
-                  <h6
+                  <div className="city-explore-div"
                     city={city}
                     onClick={(e) => setCity(e.target.getAttribute("city"))}
                   >
@@ -563,12 +563,14 @@ setExpCityOn(false)
                       </div>
                       <h4 className="avg-rating-number">{Math.round(avgRating * 10) / 10}/5</h4>
                     </div>
+                    
+                  </div>
+                  <button className="explore-city-button">
                     Explore City{" "}
                     <FontAwesomeIcon
                       icon={faChevronRight}
-                      style={{ color: "black" }}
                     />
-                  </h6>
+                    </button>
                 </div>
                   ))
                 }
@@ -769,7 +771,7 @@ setExpCityOn(false)
         </h4>
       </div>
 
-      <Footer />
+      <Footer name={name} />
     </>
   );
 }

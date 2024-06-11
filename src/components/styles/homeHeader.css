@@ -71,6 +71,8 @@ align-items: center;
   background-color: whitesmoke;
   width: 100%;
   margin-top: 0;
+  max-height: 20rem;
+  overflow-y: scroll;
   position: absolute;
   display: none;
   flex-direction: column;

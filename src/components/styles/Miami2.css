@@ -710,10 +710,10 @@ color: white;
     background-color: black;
     color: white;
     width: 100%;
-    padding: 2.5rem;
+    padding: 5rem 2.5rem;
     padding-top: 10rem;
     margin-top: 6rem;
-    z-index: -1;
+    z-index: 0;
 }
 
 #footer-main-cities h4 {
@@ -750,6 +750,7 @@ color: white;
     padding: 0.7rem 0.4rem;
     margin-right: 0.5rem;
     margin-top: 0.5rem;
+    pointer-events: all;
 }
 
 #subscribe-info button {
@@ -763,6 +764,7 @@ color: white;
     margin: 0;
     height: 100%;
     margin-top: 0.5rem;
+    border: 2px solid white;
 }
 
 #getonlist {
@@ -865,7 +867,7 @@ color: white;
 }
 @media screen and (max-width: 1300px) {
     #footer-main {
-        padding: 2.5rem 5rem 2.5rem 5rem;
+        padding: 7rem 5rem 2.5rem 5rem;
     }
     #contact-footer {
         margin-right: 2rem;
@@ -952,9 +954,7 @@ width: 25rem;
 #suggestionContainer {
 height: 30rem;
 }
-#footer-main {
-    padding: 2.5rem 2rem 2.5rem 2rem;
-}
+
 #contact-footer {
     margin-right: 2rem;
 }
@@ -966,7 +966,6 @@ height: 30rem;
     }
     #footer-main-child-2 {
         flex-direction: column;
-        margin-left: 4rem;
     }
     #contact-footer {
         padding-left: 0;
@@ -1045,11 +1044,6 @@ background-color: white;
 }
 }
 
-@media screen and (max-width: 658px) {
-#footer-main-child-2 {
-    margin-left: 2rem;
-}
-}
 
 @media screen and (max-width: 570px) {
   
@@ -1067,6 +1061,9 @@ background-color: white;
     }
     #footer-main-title {
         margin-left: 1rem;
+    }
+    #subscribe-info h4 {
+        width: 90%;
     }
 }
 

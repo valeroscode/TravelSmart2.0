@@ -1713,6 +1713,8 @@ background-color: white;
     font-size: 4rem;
     margin-bottom: 0;
     color: white;
+    position: relative;
+    top: 2rem;
 }
 
 .middle-org-h2 {
@@ -1886,18 +1888,21 @@ bottom: 5rem;
 
 #avaliable-cities {
     display: flex;
+    overflow-y: hidden;
 }
 
 #avaliable-cities .city-div { 
     margin-top: 0.5rem;
     margin-right: 0.5rem;
     margin-bottom: 3rem;
+    height: 16rem;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
     box-shadow: 0 0 20px 5px gray;
     border: 1px solid gray;
+    z-index: 2;
 }
 
 #avaliable-cities .city-div:hover {
@@ -1929,24 +1934,42 @@ bottom: 5rem;
     left: 1rem;
 }
 
-#avaliable-cities div h6 {
+#avaliable-cities div .city-explore-div {
     position: relative;
-    bottom: 7.45rem;
+    bottom: 4.5rem;
     font-size: 1.01rem;
     color: black;
-    background-color: white;
     padding: 0.5rem;
     border-radius: 0px;
     width: fit-content;
-    pointer-events: all;
-    cursor: pointer;
     -webkit-transition:all 0.3s ease;
     -moz-transition:all 0.3s ease;
     -o-transition:all 0.3s ease;
     transition:all 0.3s ease;
 }
 
-#avaliable-cities div h6:hover {
+#avaliable-cities div .explore-city-button {
+    position: relative;
+    margin: 0;
+    bottom: 7.35rem;
+    font-size: 1.01rem;
+    color: black;
+    background-color: white;
+    padding: 0.5rem;
+    height: fit-content;
+    font-weight: 600;
+    text-align: center;
+    border-radius: 0px;
+    width: fit-content;
+    -webkit-transition:all 0.3s ease;
+    -moz-transition:all 0.3s ease;
+    -o-transition:all 0.3s ease;
+    transition:all 0.3s ease;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+#avaliable-cities div .explore-city-button:hover {
     background-color: black;
     color: white;
 }
@@ -1965,6 +1988,7 @@ bottom: 5rem;
     position: absolute;
     bottom: 11rem;
     left: 1rem;
+    width: 10rem;
     color: white;
     opacity: 0;
     transform: translateY(-10px);
@@ -2016,9 +2040,6 @@ transition:all 0.3s ease;
 
     #organizer-cities-img {
         margin-left: 4rem;
-    }
-    #cities {
-        margin-bottom: 14rem;
     }
 }
 
@@ -4295,8 +4316,9 @@ top: 0;
 
 @media screen and (max-width: 700px) {
     #cities h2 {
-        font-size: 4rem;
+        font-size: 2.5rem;
         text-align: start;
+        margin-bottom: 0;
     }
     #lady {
         display: none;

@@ -1,15 +1,64 @@
 import React, { useEffect, useRef } from "react";
 import { citiesArray } from "./allMarkers.mjs";
 import "./styles/Miami2.css";
+import { useCookies } from "react-cookie";
 
-function Footer() {
+function Footer({name}) {
   const footerMain = useRef();
+  const emailInput = useRef();
+
+
+  const [cookies, setCookie] = useCookies(["email_subbed"]);
 
   useEffect(() => {
     if (window.location.pathname !== "/Search-Results") {
       footerMain.current.style.marginTop = "5rem";
     }
   }, []);
+
+  function notifyDev(issue) {
+    fetch("http://localhost:8080/reportIssue", {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        issue: issue
+      }),
+    }).then((response) => {
+      return response.json();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+  }
+
+
+  function addToSubList(e) {
+    fetch("http://localhost:8080/addToSubList", {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: emailInput.current.value
+      }),
+    }).then((response) => {
+      return response.json();
+    })
+    .then(() => {
+      setCookie("email_subbed", true);
+      emailInput.current.style.display = "none";
+      e.target.textContent = 'Subscribed';
+
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      notifyDev(`Mailing list error: ${error}`)
+      alert('There was an error while adding you to the mailing list. The developer will be notified and the issue will be resolved shortly. A notice will be added to the update section found at the bottom of the landing page once the issue is resolved. Sorry for the inconvenience.')
+    });
+  }
+
   return (
     <>
       <section id="footer-main" ref={footerMain}>
@@ -21,13 +70,22 @@ function Footer() {
 
         <div id="main-footer-section">
           <div id="footer-main-child-2">
+            { name === 'guest' && !cookies.email_subbed ?
             <div id="subscribe-info">
               <h4>GET UPDATES AS CONTENT IS ADDED TO TRAVEL SMART</h4>
               <div id="getonlist">
-                <input type="text" placeholder="Enter your email" />
-                <button>Subscribe</button>
+                <input type="text" placeholder="Enter your email" ref={emailInput} />
+                <button onClick={(e) => addToSubList(e)}>Subscribe</button>
               </div>
             </div>
+            : <div id="subscribe-info">
+              <h4>THANK YOU FOR BEING AN EARLY USER</h4>
+              <div id="getonlist">
+                <p>Connect with the developer on LinkedIn</p>
+                <a href="linkedin.com/in/alex-valero-3416b52a1/" target="_blank"></a>
+              </div>
+              </div>
+              }
             <div id="contact-footer">
               <h4>GET IN TOUCH</h4>
               <p className="direct">Contact the developer directly 👇</p>
@@ -40,7 +98,9 @@ function Footer() {
                 </svg>
 
                 <p>avalero.software@gmail.com</p>
+              
               </div>
+              
             </div>
           </div>
           </div>
