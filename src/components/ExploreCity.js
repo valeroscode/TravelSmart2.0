@@ -145,8 +145,6 @@ function ExploreCity ({places}) {
                 Results In {sessionStorage.getItem('city')}
               </h1>
 
-              
-
               <div id="filters-and-placecount">
                <div id='filters-placement-org'>
                 <h4 onClick={() => {
@@ -227,8 +225,9 @@ function ExploreCity ({places}) {
                </div>
 
                <p>{filteredPlaces.length} Places</p>
+               
               </div>
-          
+              <p id='for-search'>For a more complete search use the searchbar above</p>
             </div>
             <input
                 id="searchInput"
@@ -248,7 +247,8 @@ function ExploreCity ({places}) {
               {filteredPlaces.map((place) => (
                 <div
                   className="showAllDiv"
-                  onClick={(e) =>
+                  onClick={(e) =>{
+                    if (!e.target.closest('.see-imgs') && !e.target.closest('.showall-tripbtn')) {
                     learnMoreAboutPlace(
                       place.name,
                       place.rating,
@@ -261,6 +261,8 @@ function ExploreCity ({places}) {
                       place.placeID,
                       e.target
                     )
+                  }
+                  }
                   }
                 >
                   <a href="/place" target="_blank" className='anchor-nav'></a>
@@ -298,8 +300,9 @@ function ExploreCity ({places}) {
                     </p>
                   </div>
                   </div>
-                  <a className="see-imgs" target="_blank" href={`https://www.google.com/search?q=${place.name}&sca_esv=03047b03c4b9cd9d&sca_upv=1&sxsrf=ADLYWILgzRTFudLq4zqNYw8eEFajutqqOA:1717445774174&source=hp&biw=1536&bih=730&ei=jiReZsKECOLfp84Pt5OM2Q4&iflsig=AL9hbdgAAAAAZl4yntxQz9UCBdnIlSkmNMW5d3qcFKh-&ved=0ahUKEwjCg6eKoMCGAxXi78kDHbcJI-sQ4dUDCA8&uact=5&oq=tatam&gs_lp=EgNpbWciBXRhdGFtMggQABiABBixAzIIEAAYgAQYsQMyCBAAGIAEGLEDMggQABiABBixAzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjED1DuA1jKDXABeACQAQCYAVGgAYIDqgEBNbgBA8gBAPgBAYoCC2d3cy13aXotaW1nmAIGoAKfA6gCCsICBxAjGCcY6gLCAgQQIxgnwgILEAAYgAQYsQMYgwGYAweSBwE2oAeKGw&sclient=img&udm=2`}>See Images</a>
+                  <a className="see-imgs" target="_blank" href={`https://www.google.com/search?q=${place.name + ' ' + place.city}&sca_esv=03047b03c4b9cd9d&sca_upv=1&sxsrf=ADLYWILgzRTFudLq4zqNYw8eEFajutqqOA:1717445774174&source=hp&biw=1536&bih=730&ei=jiReZsKECOLfp84Pt5OM2Q4&iflsig=AL9hbdgAAAAAZl4yntxQz9UCBdnIlSkmNMW5d3qcFKh-&ved=0ahUKEwjCg6eKoMCGAxXi78kDHbcJI-sQ4dUDCA8&uact=5&oq=tatam&gs_lp=EgNpbWciBXRhdGFtMggQABiABBixAzIIEAAYgAQYsQMyCBAAGIAEGLEDMggQABiABBixAzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjED1DuA1jKDXABeACQAQCYAVGgAYIDqgEBNbgBA8gBAPgBAYoCC2d3cy13aXotaW1nmAIGoAKfA6gCCsICBxAjGCcY6gLCAgQQIxgnwgILEAAYgAQYsQMYgwGYAweSBwE2oAeKGw&sclient=img&udm=2`}>See Images</a>
                   <p className="instructions-showall">Click to learn more</p>
+                  <div className='show-all-line'></div>
                 </div>
               ))}
             </div>

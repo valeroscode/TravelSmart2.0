@@ -1951,7 +1951,7 @@ bottom: 5rem;
 #avaliable-cities div .explore-city-button {
     position: relative;
     margin: 0;
-    bottom: 7.35rem;
+    bottom: 7.30rem;
     font-size: 1.01rem;
     color: black;
     background-color: white;
@@ -1959,7 +1959,7 @@ bottom: 5rem;
     height: fit-content;
     font-weight: 600;
     text-align: center;
-    border-radius: 0px;
+    border-radius: 0px 15px 0 0;
     width: fit-content;
     -webkit-transition:all 0.3s ease;
     -moz-transition:all 0.3s ease;
@@ -2165,6 +2165,14 @@ opacity: 1;
     color: black;
 }
 
+#for-search {
+    color: gray;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+
 #filters-and-placecount {
     display: flex;
     justify-content: center;
@@ -2230,7 +2238,7 @@ top: 0.1rem;
 }
 #searchInput {
     background-color: whitesmoke;
-    height: 2rem;
+    height: 2.5rem;
     border: none;
     border-bottom: 2px solid black;
     pointer-events: all;
@@ -2239,6 +2247,7 @@ top: 0.1rem;
     position: relative;
     left: 11.5rem;
     width: 70%;
+    border-radius: 3px;
     
 }
 #searchInput:focus {
@@ -2824,13 +2833,30 @@ overflow-y: scroll;
 }
 .see-imgs {
     position: absolute;
-    bottom: 1rem;
+    bottom: 0.5rem;
     left: 0.5rem;
     color: gray;
     cursor: pointer;
     pointer-events: all;
     z-index: 1000;
+    z-index: 100;
 }
+
+.show-all-line {
+    background-color: #8a05ff;
+    width: 0%;
+    height: 1rem;
+    position: absolute;
+    bottom: -1rem;
+    -webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+ }
+ 
+ .showAllDiv:hover .show-all-line {
+    width: 100%;
+ }
 
 .see-imgs:visited {
     color: gray;
@@ -2889,11 +2915,12 @@ align-items: center;
 }
 .instructions-showall {
     position: absolute;
-    bottom: -3rem;
+    bottom: -2.1rem;
     left: 0.5rem;
     font-weight: 800;
-    color: #8a05ff;
+    color: white;
     opacity: 0;
+    z-index: 1000;
 -webkit-transition:opacity 0.2s ease;
 -moz-transition:opacity 0.2s ease;
 -o-transition:opacity 0.2s ease;

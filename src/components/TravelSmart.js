@@ -37,6 +37,7 @@ import TripsPage from "./Trips";
 import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
 import Footer from "./footer";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import icelandwater from "./assets/icelandwater.jpg"
 import greeksunset from "./assets/greeksunset.jpg"
@@ -55,8 +56,9 @@ import greeekflowers from "./assets/greeekflowers.jpg"
 
 function TravelSmart() {
   const { currentUser } = useAuth();
-
+  const navigate = useNavigate()
   const cityDD = useRef();
+  const makeDefBtn = useRef();
   const helloUser = useRef();
   const chooseCityInput = useRef();
   const chooseCityInputField = useRef();
@@ -99,6 +101,17 @@ function TravelSmart() {
 
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
+
+    alert(currentUser.defCity)
+
+    if (currentUser.defCity !== '' && currentUser.defCity !== undefined) {
+      setConfirmExpCity(true)
+      setCity(currentUser.defCity)
+      sessionStorage.setItem("city", currentUser.defCity);
+    } else {
+      sessionStorage.setItem("city", "Miami");
+    }
+
     let citiesArr = [];
 
   //Populates array with all cities
@@ -112,8 +125,8 @@ function TravelSmart() {
   setAllPlaces_inCity(allPlaces_inCity)
 
   setCities(citiesArr)
-    //Sets the default city
-    sessionStorage.setItem("city", "Miami");
+   
+    
     const citiesInShowAll = document.getElementsByClassName("city-in-show-all");
     for (let i = 0; i < citiesInShowAll.length; i++) {
       if (citiesInShowAll[i].textContent === sessionStorage.getItem("city")) {
@@ -399,7 +412,9 @@ function TravelSmart() {
             <h2>Hello {name.split(" ")[0]},</h2>
             <h4>What would you like to do today?</h4>
             <div id="home-buttons">
-              <button id="plan-a-trip">Plan a new trip</button>
+              <button id="plan-a-trip" onClick={() => {
+                navigate('/plan')
+              }}>Plan a new trip</button>
               <button ref={expCityBtn} id="exp-a-city" onClick={() => {
                 if (!expCityOn) {
 helloUser.current.style.paddingBottom = "3rem"
@@ -458,6 +473,7 @@ setExpCityOn(false)
                     chooseCityInputField.current.style.border = "3px solid #8A05FF"
                     selectCityUl.current.style.display = 'none'
                     defaultDiv.current.style.opacity = 1;
+                    makeDefBtn.current.textContent = `Make ${e.target.textContent} my home city`
                   }
               }}>
         
@@ -472,7 +488,7 @@ setExpCityOn(false)
                 {
                  chooseCityInputField.current && chooseCityInputField.current.value !== currentUser.DefCity ?
                 
-              <button id="make-default" onClick={(e) => {
+              <button id="make-default" ref={makeDefBtn} onClick={(e) => {
                 async function updateDefCity() {
                 await fetch("http://localhost:8080/updateDefCity", {
                   method: 'POST',
@@ -494,7 +510,7 @@ setExpCityOn(false)
 
               e.target.textContent = `Your Default City Is Now ${sessionStorage.getItem('city')}!`;
 
-              }}>{`Make ${chooseCityInputField.current.value} my home city`}</button>
+              }}></button>
               
               : 
               <button id="make-default" onClick={() => {

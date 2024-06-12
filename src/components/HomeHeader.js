@@ -154,6 +154,7 @@ function HomeHeader({ name }) {
         <div id="home-searchbar">
         <div id="cityDD-input">
           <input ref={cityInput} placeholder="Choose A City" onClick={() => {
+            
             cityDD.current.style.display = "flex"
           }} onKeyUp={(e) => {
              const city = document.getElementsByClassName("city-dd-item")
@@ -177,7 +178,9 @@ function HomeHeader({ name }) {
                 <li className="city-dd-item" onClick={(e) => {
                   cityInput.current.value = e.target.textContent;
                   cityDD.current.style.display = "none"
+                  searchInput.current.value = '';
                   searchBarFunctions.setDropdownContent()
+
                 }}>{city}</li>
               ))
             }
