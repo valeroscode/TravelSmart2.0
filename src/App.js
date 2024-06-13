@@ -7,6 +7,7 @@ import Signup from "./components/registrationForm";
 import PlaceContent from "./components/PlaceContent";
 import TripPlanner from "./components/Planner";
 import Results from "./components/filteredResults";
+import Plan from "./components/Plan"
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Landing from "./components/Landing";
 
@@ -20,6 +21,7 @@ function App() {
               <Route path="place" element={<PlaceContent />} />
               <Route path="trips" element={<TripsPage />}></Route>
               <Route path="Home" element={<TravelSmart />} />
+              <Route path="plan" element={<Plan />}></Route>
               <Route path="login" element={<LoginForm />}></Route>
               <Route path="signup" element={<Signup />}></Route>
               <Route path="Search-Results" element={<Results />}></Route>

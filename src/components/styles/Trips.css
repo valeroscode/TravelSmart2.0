@@ -4,6 +4,76 @@
  width: 100vw;
 }
 
+#planning-a-new-trip-section {
+  width: 80vw;
+  margin-top: 2rem;
+}
+
+#create-trip-header {
+  position: relative;
+  font-family: 'Roboto Condensed', sans-serif;
+  background-color: whitesmoke;
+  width: 100%;
+  display: flex;
+  height: 5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#c-header-left {
+  padding-left: 10rem;
+}
+
+#c-header-left div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+}
+
+#c-header-left div svg {
+  color: black;
+  margin-right: 0.5rem;
+}
+
+#c-header-left div button {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2rem;
+  color: black;
+  margin-top: 0;
+  background-color: rgba(0,0,0,0);
+}
+
+#account-photo-c {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 3rem;
+    background-color: gray;
+    border-radius: 100%;
+    position: relative;
+    right: 0rem;
+}
+
+#account-photo-c svg {
+  color: white;
+}
+
+#c-header-left div button:hover {
+  box-shadow: none;
+}
+
+#acc-and-trip-c {
+padding-right: 10rem;
+}
+
+#users-name-c {
+  color: black;
+}
+
 #your-trips {
 position: relative;
 z-index: 10;
@@ -122,9 +192,14 @@ margin-right: 1rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    -webkit-transition: all 0.15s ease;
+-moz-transition: all 0.15s ease;
+-o-transition: all 0.15s ease;
+transition: all 0.15s ease;
   }
   .day:hover {
-    background-color: whitesmoke
+    background-color: whitesmoke;
   }
   
   .day + #currentDay {
@@ -184,56 +259,31 @@ top: 13vh;
 left: 1rem;
 }
 }
-.X-btn {
-  width: fit-content;
-  height: fit-content;
-  padding: 0.3rem 0.8rem;
-  border-radius: 100%;
-  font-size: 1.2rem;
-  background-color: whitesmoke;
-  color: gray;
-  position: relative;
-  right: 15rem;
-  top: 1rem;
-}
 .new-trip-h3 {
-font-size: 1.8rem;
+font-size: 2.5rem;
 font-family: "Roboto Condensed", sans-serif;
-margin: 0;
-}
-#new-trip {
-position: fixed;
-right: 18rem;
-top: 9vh;
-padding: 0 2rem 2rem 2rem;
-border-radius: 20px;
-background-color: white;
-display: none;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-color: black;
-height: fit-content;
-width: fit-content;
-box-shadow: 0px 0px 15px gray;
-overflow: scroll;
-z-index: 90000000000000000;
-opacity: 0;
--webkit-transition: opacity 0.3s ease;
--moz-transition: opacity 0.3s ease;
--o-transition: opacity 0.3s ease;
-transition: opacity 0.3s ease;
+width: 100%;
+margin-bottom: 0;
+text-align: center;
 }
 #create-trip-btn {
 position: relative;
-background-color: #2E64FE;
+background-color: black;
 color: white;
+border: 3px solid black;
 height: fit-content;
 margin-bottom: 1rem;
-margin-left: 25%;
-border-radius: 3px;
+border-radius: 0px;
+font-weight: 800;
+width: 100%;
 font-family: 'Roboto Condensed', sans-serif;
 }
+
+#create-trip-btn:hover {
+background-color: whitesmoke;
+color: black;
+}
+
 #create-trip-btn a {
 color: white;
 font-weight: 800;
@@ -296,11 +346,12 @@ transform: translateX(-355%);
 display: flex;
 flex-direction: column;
 position: relative;
+width: 100%;
 }
 .input-title {
 margin: 0;
 position: absolute;
-top: 2rem;
+top: 1.8rem;
 left: 1.5rem;
 font-weight: 800;
 font-family: 'Roboto Condensed', sans-serif;
@@ -344,7 +395,7 @@ transform: rotate(90deg);
 }
 .tripPlace {
 height: 3rem;
-border-radius: 10px;
+border-radius: 2px;
 border: 1px solid lightgray;
 padding-left: 1rem;
 padding-top: 0.5rem;
@@ -376,27 +427,31 @@ width: fit-content;
 position: relative;
 bottom: 0.2rem;
 }
+.tripPlace:focus + .input-title {
+  top: 1rem;
+  font-size: 0.7rem;
+}
 .tripPlace:focus + .placeholder {
 left: 1.8rem;
 }
-.tripPlace:focus:active + .input-title {
-top: 1.5rem;
-font-size: 0.7rem;
-}
+
 @media(prefers-reduced-motion) {
 .unjoined {
 transition: none;
 }
 }
+#wrapper-container {
+  display: flex;
+  justify-content: center;
+}
 #wrapper {
 width: 30vw;
 background-color: white;
-display: flex;
-border: 1px solid black;
-box-shadow: 3px 3px #222;
-border-radius: 10px;
+display: none;
+border-radius: 2px;
 position: relative;
 top: 0vh;
+border: 2px solid black;
 flex-direction: column;
 font-family: 'Roboto Condensed', sans-serif;
 justify-content: center;
@@ -405,16 +460,17 @@ align-items: center;
 #wrapper header {
 display: flex;
 justify-content: center;
-background-color: whitesmoke;
-color: black;
+background-color: black;
+color: white;
 font-weight: 800;
-border-radius: 7px 7px 0 0;
+border-radius: 2px 2px 0 0;
+border: 2px solid black;
 width: 100%;
 }
 .current-date {
 margin-left: 2rem;
 margin-right: 2rem;
-color: black;
+color: white;
 }
 .hr-calendar {
 position: relative;
@@ -463,6 +519,10 @@ opacity: 1;
 padding: 1.5rem;
 position: relative;
 right: 0.7rem;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
 }
 #trip-description button {
 position: relative;
@@ -485,13 +545,90 @@ position: relative;
 left: 0.5rem;
 font-weight: 500;
 }
+
+#friends-section {
+  width: 100%;
+  display: flex;
+  margin-left: 1rem;
+  justify-content: space-between;
+}
+
+#friends-list {
+  width: 80%;
+}
+
+#friends-list ul {
+   display: flex;
+   max-width: 100%;
+   flex-wrap: wrap;
+   margin-top: 0;
+}
+
+#friends-list ul li {
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 1rem;
+  font-family: 'Roboto Condensed', sans-serif;
+
+}
+
+#friends-list ul li:hover .remove-friend {
+  opacity: 1;
+  
+}
+
+#friends-list ul li .friend-photo {
+  width: 2rem;
+  height: 2rem;
+  background-color: gray;
+  margin-right: 0.5rem;
+  border-radius: 100px;
+}
+
+#friends-list ul li .remove-friend {
+  background-color: red;
+  margin-left: 1rem;
+  margin-top: 0;
+  width: 1.5rem;
+  height: 0.3rem;
+  border-radius: 15px;
+  opacity: 0;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+#friends-list ul li .remove-friend:hover {
+  background-color: darkred;
+}
+
+#add-friends-btn {
+  font-family: 'Roboto Condensed', sans-serif;
+  pointer-events: all;
+  cursor: pointer;
+  text-align: end;
+  -webkit-transition: all 0.3s ease;
+-moz-transition: all 0.3s ease;
+-o-transition: all 0.3s ease;
+transition: all 0.3s ease;
+}
+
+#add-friends-btn:hover {
+  color: #8A05FF;
+}
 #date-selection {
-display: none;
+display: flex;
 flex-direction: row;
 position: relative;
 margin-top: 1rem;
 pointer-events: all;
 cursor: pointer;
+margin-left: 1rem;
+width: 100%;
 }
 
 .input-dates {
@@ -501,7 +638,7 @@ top: 0.3rem;
 left: 1.5rem;
 font-weight: 800;
 font-family: 'Roboto Condensed', sans-serif;
-font-size: 0.8rem;
+font-size: 1rem;
 -webkit-transition: all 0.3s ease;
 -moz-transition: all 0.3s ease;
 -o-transition: all 0.3s ease;
@@ -510,14 +647,16 @@ transition: all 0.3s ease;
 #tripStartDate {
 position: absolute;
 left: 1.5rem;
-font-weight: 500;
-top: 1.3rem;
+font-family: 'Roboto Condensed', sans-serif;
+font-weight: 400;
+top: 1.8rem;
 }
 #tripEndDate {
 position: absolute;
 left: 12.5rem;
 font-weight: 500;
-top: 1.3rem;
+top: 1.8rem;
+font-family: 'Roboto Condensed', sans-serif;
 }
 .sm-line {
 height: 1rem;
@@ -544,14 +683,13 @@ top: 1rem;
 display: flex;
 }
 .rounded-arrow {
-position: relative;
-top: 1.5rem;
-background-color: white;
-color: black;
+position: absolute;
+top: 1rem;
+background-color: #151515;
+color: white;
 border-radius: 100%;
 height: fit-content;
-padding-right: 0.5rem;
-padding-left: 0.5rem;
+padding: 0.5rem 1rem;
 }
 
 header .icons span {
@@ -670,7 +808,6 @@ height: fit-content;
 width: fit-content;
 }
 #are-you-sure #delete-btn {
-background-color: red;
 margin-right: 0.5rem;
 }
 #are-you-sure #cancel-btn {
@@ -806,9 +943,11 @@ width: fit-content;
 }
 #next {
 cursor: pointer;
+right: 2rem;
 }
 #prev {
 cursor: pointer;
+left: 2rem;
 }
 #next svg {
 pointer-events: none;
@@ -828,16 +967,6 @@ width: 50vw;
   font-size: 1rem;
 }
 
-  #new-trip {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding-top: 19rem;
-    height: 36vh;
-    border-radius: 20px 0 0 20px;
-  }
-  .X-btn {
-    right: 17rem;
-  }
 }
 
 @media screen and (max-width: 1253px) {
@@ -892,9 +1021,7 @@ left: 7.5rem;
 .tripPlace {
 width: 70vw;
 }
-#new-trip {
-left: 0;
-}
+
 #new-trip-text {
 left: -1rem;
 top: 11rem;
