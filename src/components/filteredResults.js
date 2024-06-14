@@ -66,7 +66,8 @@ function Results() {
 
   useEffect(() => {
     const city = sessionStorage.getItem("city");
-    const placesInCity = allPlaces.filter((place) => place.city === city)
+    let placesInCity = allPlaces.filter((place) => place.city === city)
+    placesInCity.map((place) => place.score = 0)
     setPlaces(placesInCity.filter(
       (m) => m.city === city  && String(m.serves).toLocaleUpperCase() === String(applied_filters) || 
       String(m.style).toLocaleUpperCase() === String(applied_filters) || String(m.category).toLocaleUpperCase() === String(applied_filters)
@@ -100,8 +101,7 @@ function Results() {
         stylesArr.push(places[i].style) 
       }
       if (!servesArr.includes(places[i].serves)) {
-        const items = String(places[i].serves).split(' ')
-        items.map((item) => !servesArr.includes(item) ? servesArr.push(item) : null)
+        servesArr.push(places[i].serves)
       }
     }
     setCategories(categoriesArr)
@@ -232,8 +232,7 @@ function Results() {
  }
 
  useEffect(() => {
-  alert(type)
-  alert(attr)
+  
   for (let i = 0; i < places.length; i++) {
     if (type !== 'price') {
       if (places[i][type] === attr && checked) {
@@ -246,6 +245,7 @@ function Results() {
       const int = parseInt(attr)
     if (places[i].price === int && checked) {
       places[i].score++
+      console.log(places[i])
     } 
     if (places[i].price === int && !checked) {
       places[i].score--
@@ -346,7 +346,7 @@ function Results() {
             {
               categories.length > 1 ?
             <div className="res-filter">
-            <button onClick={(e) => toggleFilterDisplay(e)}>Category ▼</button>
+            <button onClick={(e) => toggleFilterDisplay(e)}>Category ▼ {catScore > 0 ? `(${catScore})` : null}</button>
             <ul style={{display: 'none'}}>
               {
                 categories.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
@@ -369,7 +369,7 @@ function Results() {
             {
               prices.length > 1 ?
             <div className="res-filter">
-            <button onClick={(e) => toggleFilterDisplay(e)}>Price ▼</button>
+            <button onClick={(e) => toggleFilterDisplay(e)}>Price ▼ {priceScore > 0 ? `(${priceScore})` : null}</button>
             <ul style={{display: 'none'}}>
               <li><p>$</p> <input type="checkbox" item={1} onClick={(e) => {
                   if (e.target.checked === true) {
@@ -421,7 +421,7 @@ function Results() {
             {
               styles.length > 1 ?
             <div className="res-filter">
-            <button onClick={(e) => toggleFilterDisplay(e)}>Style ▼</button>
+            <button onClick={(e) => toggleFilterDisplay(e)}>Style ▼ {styleScore > 0 ? `(${styleScore})` : null}</button>
             <ul style={{display: 'none'}}>
               {
                 styles.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
@@ -444,7 +444,7 @@ function Results() {
             {
               serves.length > 1 ?
             <div className="res-filter">
-            <button onClick={(e) => toggleFilterDisplay(e)}>Serves ▼</button>
+            <button onClick={(e) => toggleFilterDisplay(e)}>Serves ▼ {servesScore > 0 ? `(${servesScore})` : null}</button>
             <ul style={{display: 'none'}}>
               {
                 serves.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
@@ -467,7 +467,7 @@ function Results() {
             {
               areas.length > 1 ?
             <div className="res-filter">
-            <button onClick={(e) => toggleFilterDisplay(e)}>Area ▼</button>
+            <button onClick={(e) => toggleFilterDisplay(e)}>Area ▼ {areaScore > 0 ? `(${areaScore})` : null}</button>
             <ul style={{display: 'none'}}>
               {
                 areas.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
