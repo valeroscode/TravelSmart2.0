@@ -43,16 +43,49 @@ function Results() {
   const [areas, setAreas] = useState([])
   const [styles, setStyles] = useState([])
   const [serves, setServes] = useState([])
+  
+  const [catScore, setCatScore] = useState(0)
+  const [styleScore, setStyleScore] = useState(0)
+  const [priceScore, setPriceScore] = useState(0)
+  const [servesScore, setServesScore] = useState(0)
+  const [areaScore, setAreaScore] = useState(0)
+  const [attr, setAttr] = useState("");
+  const [type, setType] = useState("")
+  const [checked, setChecked] = useState(false)
+  const [filteredPlaces, setFilteredPlaces] = useState([])
 
   const { currentUser } = useAuth();
 
   useEffect(() => {
     setName(currentUser.name);
+  }, [currentUser]);
+
+  let counter = 0;
+  let applied_filters = sessionStorage.getItem("filters").split("/ ,");
+  const chevron = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><style>svg{fill:#2261ce}</style><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>`;
+
+  useEffect(() => {
+    const city = sessionStorage.getItem("city");
+    const placesInCity = allPlaces.filter((place) => place.city === city)
+    setPlaces(placesInCity.filter(
+      (m) => m.city === city  && String(m.serves).toLocaleUpperCase() === String(applied_filters) || 
+      String(m.style).toLocaleUpperCase() === String(applied_filters) || String(m.category).toLocaleUpperCase() === String(applied_filters)
+      || String(m.area).toLocaleUpperCase() === String(applied_filters)
+    ));
+  }, [])
+
+  useEffect(() => {
+      setFilteredPlaces(places)
+  }, [places])
+
+  useEffect(() => {
+
     const categoriesArr = []
     const pricesArr = []
     const areasArr = []
     const stylesArr = []
     const servesArr = []
+   
     for (let i = 0; i < places.length; i++) {
       if (!categoriesArr.includes(places[i].category)) {
         categoriesArr.push(places[i].category)
@@ -72,31 +105,12 @@ function Results() {
       }
     }
     setCategories(categoriesArr)
-
     setPrices(pricesArr)
     setAreas(areasArr)
-    
     setStyles(stylesArr)
-   
     setServes(servesArr)
-    
 
-  }, [currentUser]);
-
-  useEffect(() => {
-    setPlaces(allPlaces.filter(
-      (m) => m.city === sessionStorage.getItem("city")
-    ));
-  }, [])
-
-  let counter = 0;
-
-  let applied_filters = sessionStorage.getItem("filters").split("/ ,");
-
-  const chevron = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><style>svg{fill:#2261ce}</style><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>`;
-  
-
-
+  }, [places])
 
   useEffect(() => {
     //Array containing all places in the current city
@@ -195,6 +209,67 @@ function Results() {
     }
   }
 
+  function matchKeyboardInput(e) {
+    const value = e.target.value;
+
+    const title = document.getElementsByClassName('place-div-name')
+    const style = document.getElementsByClassName('place-div-style')
+    const serves = document.getElementsByClassName('place-div-serves')
+    const area = document.getElementsByClassName('place-div-category-area')
+    const parentDiv = document.getElementsByClassName('place-div')
+
+    for (let i = 0; i < title.length; i++) {
+
+       if (String(title[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase()) 
+           || String(style[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())
+           || String(serves[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())
+       || String(area[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())) {
+           parentDiv[i].style.display = "flex"
+       } else {
+           parentDiv[i].style.display = "none"
+       }
+    }
+ }
+
+ useEffect(() => {
+  alert(type)
+  alert(attr)
+  for (let i = 0; i < places.length; i++) {
+    if (type !== 'price') {
+      if (places[i][type] === attr && checked) {
+        places[i].score++
+      }
+      if (places[i][type] === attr && !checked) {
+        places[i].score--
+      }
+    } else {
+      const int = parseInt(attr)
+    if (places[i].price === int && checked) {
+      places[i].score++
+    } 
+    if (places[i].price === int && !checked) {
+      places[i].score--
+    }
+    }
+  }
+
+  if (catScore === 0 && servesScore === 0 && priceScore === 0 && styleScore === 0 && areaScore === 0) {
+      setFilteredPlaces(places)
+      return
+  }
+  
+  let filtersOn = 0
+  catScore > 0 ? filtersOn++ : null;
+  servesScore > 0 ? filtersOn++ : null;
+  priceScore > 0 ? filtersOn++ : null;
+  styleScore > 0 ? filtersOn++ : null;
+  areaScore > 0 ? filtersOn++ : null;
+  const newResults = places.filter((place) => place.score === filtersOn)
+
+  setFilteredPlaces(newResults)
+
+}, [catScore, servesScore, priceScore, styleScore, areaScore]);
+
   return (
     <>
       <HomeHeader name={name} />
@@ -203,7 +278,7 @@ function Results() {
       <section id="results-overall-org">
         
         <div id="best-rated-places">
-          <h4>Best Rated</h4>
+          <h4 id="best-rated-h4">Best Rated</h4>
           <div id="best-rated-places-row">
             {
               places.map((place) => {
@@ -224,6 +299,7 @@ function Results() {
                         </div>
                         <a>See Images</a>
                       </div>
+                      <div className="res-line"></div>
                     </div>
                   );
                 } 
@@ -232,7 +308,7 @@ function Results() {
           </div>
         </div>
         <div id="budget-friendly">
-          <h4>Budget Friendly</h4>
+          <h4 id="budget-h4">Budget Friendly</h4>
           <div id="budget-friendly-places-row">
             {
               places.map((place) => {
@@ -254,6 +330,7 @@ function Results() {
                         </div>
                         <a>See Images</a>
                       </div>
+                      <div className="res-line"></div>
                     </div>
                   );
                 } 
@@ -263,16 +340,26 @@ function Results() {
         </div>
 
         <div id="all-results">
-          <h4 ref={filterDescription} id="filter-desc">Tacos In Miami</h4>
+          <h4 ref={filterDescription} id="filter-desc">{applied_filters} IN {String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h4>
           
           <div id="all-results-filters">
             {
-              categories.length !== 0 ?
+              categories.length > 1 ?
             <div className="res-filter">
             <button onClick={(e) => toggleFilterDisplay(e)}>Category ▼</button>
-            <ul>
+            <ul style={{display: 'none'}}>
               {
-                categories.map((item) => (<li><p>{item}</p> <input type="checkbox"></input></li>))
+                categories.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
+                  onClick={(e) => {
+                    if (e.target.checked === true) {
+                      setCatScore(catScore + 1)
+                    } else if (e.target.checked === false) {
+                      setCatScore(catScore - 1)
+                    }
+                    setAttr(e.target.getAttribute('item'))
+                    setType('category')
+                    setChecked(e.target.checked)
+                  }}></input></li>))
               }
             </ul>
             </div>
@@ -280,70 +367,149 @@ function Results() {
             }
 
             {
-              prices.length !== 0 ?
+              prices.length > 1 ?
             <div className="res-filter">
             <button onClick={(e) => toggleFilterDisplay(e)}>Price ▼</button>
-            <ul>
-              <li><p>$</p> <input type="checkbox"></input></li>
-              <li><p>$$</p> <input type="checkbox"></input></li>
-              <li><p>$$$</p> <input type="checkbox"></input></li>
-              <li><p>$$$$</p> <input type="checkbox"></input></li>
+            <ul style={{display: 'none'}}>
+              <li><p>$</p> <input type="checkbox" item={1} onClick={(e) => {
+                  if (e.target.checked === true) {
+                    setPriceScore(priceScore + 1)
+                  } else if (e.target.checked === false) {
+                    setPriceScore(priceScore - 1)
+                  }
+                  setAttr(e.target.getAttribute('item'))
+                  setType('price')
+                  setChecked(e.target.checked)
+                }}></input></li>
+              <li><p>$$</p> <input type="checkbox" item={2} onClick={(e) => {
+                  if (e.target.checked === true) {
+                    setPriceScore(priceScore + 1)
+        
+                  } else if (e.target.checked === false) {
+                    setPriceScore(priceScore - 1)
+                  }
+                  setAttr(e.target.getAttribute('item'))
+                    setType('price')
+                    setChecked(e.target.checked)
+                }}></input></li>
+              <li><p>$$$</p> <input type="checkbox" item={3} onClick={(e) => {
+                  if (e.target.checked === true) {
+                    setPriceScore(priceScore + 1)
+             
+                  } else if (e.target.checked === false) {
+                    setPriceScore(priceScore - 1)
+                  }
+                  setAttr(e.target.getAttribute('item'))
+                    setType('price')
+                    setChecked(e.target.checked)
+                }}></input></li>
+              <li><p>$$$$</p> <input type="checkbox" item={4} onClick={(e) => {
+                  if (e.target.checked === true) {
+                    setPriceScore(priceScore + 1)
+         
+                  } else if (e.target.checked === false) {
+                    setPriceScore(priceScore - 1)
+                  }
+                  setAttr(e.target.getAttribute('item'))
+                    setType('price')
+                    setChecked(e.target.checked)
+                }}></input></li>
             </ul>
             </div>
             : null
             }
             {
-              styles.length !== 0 ?
+              styles.length > 1 ?
             <div className="res-filter">
             <button onClick={(e) => toggleFilterDisplay(e)}>Style ▼</button>
-            <ul>
+            <ul style={{display: 'none'}}>
               {
-                styles.map((item) => (<li><p>{item}</p> <input type="checkbox"></input></li>))
+                styles.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
+                  onClick={(e) => {
+                    if (e.target.checked === true) {
+                      setStyleScore(styleScore + 1)
+                  
+                    } else if (e.target.checked === false) {
+                      setStyleScore(styleScore - 1)
+                    }
+                    setAttr(e.target.getAttribute('item'))
+                    setType('style')
+                    setChecked(e.target.checked)
+                  }}></input></li>))
               }
             </ul>
             </div>
             : null
             } 
             {
-              serves.length !== 0 ?
+              serves.length > 1 ?
             <div className="res-filter">
             <button onClick={(e) => toggleFilterDisplay(e)}>Serves ▼</button>
-            <ul>
+            <ul style={{display: 'none'}}>
               {
-                serves.map((item) => (<li><p>{item}</p> <input type="checkbox"></input></li>))
+                serves.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
+                  onClick={(e) => {
+                    if (e.target.checked === true) {
+                      setServesScore(servesScore + 1)
+                     
+                    } else if (e.target.checked === false) {
+                      setServesScore(servesScore - 1)
+                    }
+                    setAttr(e.target.getAttribute('item'))
+                    setType('serves')
+                    setChecked(e.target.checked)
+                  }}></input></li>))
               }
             </ul>
             </div>
             : null
             }
             {
-              areas.length !== 0 ?
+              areas.length > 1 ?
             <div className="res-filter">
             <button onClick={(e) => toggleFilterDisplay(e)}>Area ▼</button>
-            <ul>
+            <ul style={{display: 'none'}}>
               {
-                areas.map((item) => (<li><p>{item}</p> <input type="checkbox"></input></li>))
+                areas.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
+                  onClick={(e) => {
+                    if (e.target.checked === true) {
+                      setAreaScore(areaScore + 1)
+           
+                    } else if (e.target.checked === false) {
+                      setAreaScore(areaScore - 1)
+                    }
+                    setAttr(e.target.getAttribute('item'))
+                    setType('area')
+                    setChecked(e.target.checked)
+                  }}></input></li>))
               }
             </ul>
             </div>
             : null
             }
           </div>
-          <h5 id="filters-breakdown">Mexican</h5>
 
-          <input type="text" placeholder="Search Places"></input>
+          <input type="text" placeholder="Search Places" id="res-searchbar" onKeyUp={(e) => matchKeyboardInput(e)}></input>
           <div id="place-div-container">
             {
-              places.map((place) => (
+              filteredPlaces.map((place) => (
                  <div className="place-div">
                    <div className="place-div-name-rating">
                     <h4>{place.rating}</h4>
-                    <h3>{place.name}</h3>
+                    <h3 className="place-div-name">{place.name}</h3>
                    </div>
                     <h4 className="place-div-category-area">{place.category} In {place.area} | {'$'.repeat(place.price)}</h4>
                     <h4 className="place-div-style">{place.style}</h4>
                     <h5 className="place-div-serves">Serves {place.serves}</h5>
-                    <p className="place-div-tags">Inexpensive</p>
+                    <div className="place-div-tags">
+                      {
+                        place.price <= 2 ? <p className="inexpensive-place">Inexpensive</p> : null
+                      }
+                      {
+                        place.rating >= 4 ? <p className="highly-rated-place">Highly Rated</p> : null
+                      }
+                      
+                    </div>
                     <hr/>
                     <div className="all-places-buttons">
                     <button>Add To Trip</button>

@@ -64,7 +64,6 @@ function HomeHeader({ name }) {
       setPlacesDropDown(array)
     },
     handleClicksOutside_ofInputs: function (e) {
-   
       if (e.target !== searchInput.current && e.target !== cityInput.current) {
           cityDD.current.style.display = "none";
           searchDD.current.style.display = "none";
@@ -104,9 +103,11 @@ function HomeHeader({ name }) {
     },
     handleClicksOutside_ofInputs: function (e) {
       if (e.target !== searchInput.current && e.target !== cityInput.current) {
-        if (cityDD && searchDD) {
+        if (cityDD && searchDD && cityDD.current.style.display !== 'none') {
           cityDD.current.style.display = "none";
           searchDD.current.style.display = "none";
+        } else {
+          return
         }
       } else {
         return;
@@ -141,12 +142,12 @@ function HomeHeader({ name }) {
 
   return (
     <>
-      <div id="home-title">
+      <div id="home-title" style={window.location.pathname === '/Search-Results' ? {backgroundColor: 'black'} : null}>
         <div id="home-org">
       <div id="home-h1">
-          <FontAwesomeIcon icon={faPaperPlane} className="plane" />
+          <FontAwesomeIcon icon={faPaperPlane} className="plane" style={window.location.pathname === '/Search-Results' ? {color: 'white'} : null} />
           {
-            window.location.pathname === "home" ? <h1>TRAVEL SMART</h1> : <h1>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>
+            window.location.pathname === "home" ? <h1>TRAVEL SMART</h1> : <h1 style={{color: 'white'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>
           }
           
         </div>
@@ -180,7 +181,6 @@ function HomeHeader({ name }) {
                   cityDD.current.style.display = "none"
                   searchInput.current.value = '';
                   searchBarFunctions.setDropdownContent()
-
                 }}>{city}</li>
               ))
             }
@@ -223,7 +223,7 @@ function HomeHeader({ name }) {
             }
           </ul>
           </div>
-          <button onClick={searchPlaces}><FontAwesomeIcon icon={faMagnifyingGlassLocation} /></button>
+          <button style={window.location.pathname === '/Search-Results' ? {backgroundColor: '#8a05ff'} : null} onClick={searchPlaces}><FontAwesomeIcon icon={faMagnifyingGlassLocation} /></button>
         </div>
         <div id="acc-and-trip">
           

@@ -12,7 +12,7 @@ function Footer({name}) {
 
   useEffect(() => {
     if (window.location.pathname !== "/Search-Results") {
-      footerMain.current.style.marginTop = "5rem";
+      footerMain.current.style.marginTop = "3rem";
     }
   }, []);
 
@@ -62,11 +62,11 @@ function Footer({name}) {
   return (
     <>
       <section id="footer-main" ref={footerMain}>
-        <div>
+        <div id="footer-main-container">
         <div id="footer-main-title">
           <h1>TRAVEL SMART</h1>
         </div>
-        <p id="footer-slogan">Explore. Discover. Plan.</p>
+        <p id="footer-slogan">Explore. Plan. Discover.</p>
 
         <div id="main-footer-section">
           <div id="footer-main-child-2">
@@ -81,8 +81,10 @@ function Footer({name}) {
             : <div id="subscribe-info">
               <h4>THANK YOU FOR BEING AN EARLY USER</h4>
               <div id="getonlist">
-                <p>Connect with the developer on LinkedIn</p>
-                <a href="linkedin.com/in/alex-valero-3416b52a1/" target="_blank"></a>
+              
+                <a href="https://www.linkedin.com/in/alex-valero-3416b52a1/" target="_blank">
+                Connect with the developer on LinkedIn
+                </a>
               </div>
               </div>
               }

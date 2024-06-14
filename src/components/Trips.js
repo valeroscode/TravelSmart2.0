@@ -4,10 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheck,
   faX,
-  faChevronRight,
   faRightLong,
   faCalendar,
-  faChevronLeft,
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { allPlaces } from "./allMarkers.mjs";
@@ -48,37 +46,6 @@ function TripsPage() {
     dayTag = useRef(),
     start = useRef(),
     end = useRef();
-
-  const renderCalendar = (year, month) => {
-    let firstDateofMonth = new Date(year, month, 1).getDay(),
-      lastDateofMonth = new Date(year, month + 1, 0).getDate(),
-      lastDayofMonth = new Date(year, month, lastDateofMonth).getDay(),
-      lastDateofLastMonth = new Date(year, month, 0).getDate();
-    let liTag = "";
-
-    for (let i = firstDateofMonth; i > 0; i--) {
-      liTag += `<li class="inactive">${lastDateofLastMonth - i + 1}</li>`;
-    }
-
-    for (let i = 1; i <= lastDateofMonth; i++) {
-      liTag += `<li class='day'>${i}</li>`;
-    }
-
-    for (let i = lastDayofMonth; i < 6; i++) {
-      liTag += `<li class="inactive">${i - lastDayofMonth + 1}</li>`;
-    }
-
-    currentDate.current.innerText = `${months[month]} ${year}`;
-    dayTag.current.innerHTML = liTag;
-    const days = document.querySelectorAll("li");
-    if (tripObj.From !== "" && tripObj.To !== "") {
-      selectDates_OnRender(month, days);
-    }
-  };
-
-  useEffect(() => {
-    renderCalendar(dateObj.currYear, dateObj.currMonth);
-  }, []);
 
   useEffect(() => {
     setInfo(currentUser.trips);
@@ -371,33 +338,7 @@ function TripsPage() {
       }
     }
   }
-
-  function changeMonth(e) {
-    if (e.target.id === "prev") {
-      dateObj.currMonth = dateObj.currMonth - 1;
-    } else if (e.target.id === "next") {
-      dateObj.currMonth = dateObj.currMonth + 1;
-    }
-    if (dateObj.currMonth == 12) {
-      dateObj.currYear = dateObj.currYear + 1;
-      dateObj.currMonth = 0;
-      dateObj.date = new Date(dateObj.currYear, dateObj.currMonth);
-      renderCalendar(dateObj.currYear, 0);
-      handleCalendarClicks();
-    } else if (dateObj.currMonth < 0) {
-      dateObj.currYear = dateObj.currYear - 1;
-      dateObj.currMonth = 11;
-      dateObj.date = new Date(dateObj.currYear, dateObj.currMonth);
-      renderCalendar(dateObj.currYear, 11);
-      handleCalendarClicks();
-    } else {
-      dateObj.date = new Date();
-      renderCalendar(dateObj.currYear, dateObj.currMonth);
-      handleCalendarClicks();
-    }
-  }
-
-  // const selectDate = document.querySelectorAll(".selectDate")
+ // const selectDate = document.querySelectorAll(".selectDate")
   // selectDate.forEach(section => {
 
   //     if (section.id == "tripStartDate") {
@@ -500,81 +441,6 @@ function TripsPage() {
     },
   };
 
-  let defineTrip = {
-    where: function (e) {
-      let cities = [];
-      allPlaces.map((place) => cities.push(place.city));
-      const citydd = document.getElementById("city-dropdown");
-      cities = duplicates(cities);
-      citydd.style.display = "flex";
-      if (citydd.childNodes.length < cities.length) {
-        for (let i = 0; i < cities.length; i++) {
-          const city = document.createElement("a");
-          city.innerHTML = cities[i];
-          document.getElementById("city-dropdown").appendChild(city);
-        }
-      }
-      if (e.target.value !== "") {
-        e.target.nextElementSibling.style.opacity = 0;
-      } else {
-        e.target.nextElementSibling.style.opacity = 1;
-      }
-    },
-    whereSelect: function (e) {
-      tripObj.Where = e.target.textContent;
-
-      document.getElementById("whereto").value = e.target.textContent;
-      e.target.parentNode.style.display = "none";
-    },
-    submit: function (e) {
-      tripObj.Where = inputCityField.current.value;
-      tripObj.Name = inputNameField.current.value;
-      if (currentUser) {
-        sessionStorage.setItem("trip", tripObj.Name);
-        const newTrip = {
-          City: tripObj.Where,
-          Dates: tripDates,
-          Plans: [],
-          Year: tripObj.Year,
-          Expenses: {
-            Budget: 0,
-            Hotel: 0,
-            Transportation: 0,
-          },
-        };
-
-        for (let i = 0; i < tripDates.length; i++) {
-          newTrip.Plans.push({ [`Day ${i + 1}`]: [] });
-        }
-
-        if (tripObj.Name !== "") {
-          if (info === undefined) {
-            let info = { [tripObj.Name]: newTrip };
-            docMethods.updateTrips(string, info);
-            setTimeout(() => {
-              window.location.reload();
-            }, 300);
-          } else {
-            info[String(tripObj.Name)] = newTrip;
-            docMethods.updateTrips(string, info);
-            setTimeout(() => {
-              window.location.reload();
-            }, 300);
-          }
-        }
-      } else {
-        sessionStorage.setItem("tripname", tripObj.Name);
-        sessionStorage.setItem("days", tripDates.length);
-        for (let i = 0; i < tripDates.length; i++) {
-          sessionStorage.setItem(`Day ${i}`, tripDates[i]);
-        }
-        setTimeout(() => {
-          window.location.reload();
-        }, 300);
-      }
-    },
-  };
-
   const inputCity = useRef();
   const inputName = useRef();
   const inputNameField = useRef();
@@ -662,12 +528,6 @@ function TripsPage() {
     }
   }
 
-  function hideTripCreator(e) {
-    e.target.parentNode.style.opacity = 0;
-    setTimeout(() => {
-      e.target.parentNode.style.display = "none";
-    }, 350);
-  }
 
   return (
     <>
@@ -721,112 +581,6 @@ function TripsPage() {
               </li>
             )}
           </ul>
-        </div>
-
-        <div id="new-trip">
-          <button className="X-btn" onClick={(e) => hideTripCreator(e)}>
-            X
-          </button>
-          <h3 className="new-trip-h3">New Trip</h3>
-          <div className="trip-wrapper">
-            <div id="trip-description">
-              <div id="where-to-div">
-                <span className="input-title" ref={inputCity}>
-                  Where to?
-                </span>
-                <input
-                  tabIndex="1"
-                  onKeyUp={(e) => defineTrip.where(e)}
-                  ref={inputCityField}
-                  id="whereto"
-                  className="tripPlace"
-                  type="text"
-                  required
-                  autocomplete="off"
-                />
-                <span className="placeholder">e.g. Miami, North Pole...</span>
-                <div
-                  id="city-dropdown"
-                  onClick={(e) => defineTrip.whereSelect(e)}
-                ></div>
-              </div>
-              <div id="where-to-div">
-                <p className="input-title" ref={inputName}>
-                  Trip name
-                </p>
-                <input
-                  tabIndex="1"
-                  ref={inputNameField}
-                  onKeyUp={(e) => formFunctions.placeholderGone(e)}
-                  className="tripPlace"
-                  type="text"
-                  required
-                />
-                <span className="placeholder">
-                  e.g. Birthday, Family Summer
-                </span>
-              </div>
-              <div id="date-selection">
-                <p className="input-dates">Dates</p>
-                <div type="text" id="dates-input" className="tripPlace"></div>
-                <span className="selectDate" ref={start} id="tripStartDate">
-                  <FontAwesomeIcon icon={faCalendar} /> Select Dates
-                </span>
-                <span className="selectDate" ref={end} id="tripEndDate"></span>
-              </div>
-            </div>
-          </div>
-
-          <div id="wrapper">
-            <header>
-              <div id="month-arrows">
-                <span
-                  id="prev"
-                  onClick={(e) => changeMonth(e)}
-                  className="rounded-arrow"
-                >
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                </span>
-                <p ref={currentDate} className="current-date"></p>
-                <span
-                  id="next"
-                  onClick={(e) => changeMonth(e)}
-                  className="rounded-arrow"
-                >
-                  <FontAwesomeIcon icon={faChevronRight} />
-                </span>
-              </div>
-            </header>
-            <div className="calendar">
-              <ul className="weeks">
-                <li>Sun</li>
-                <li>Mon</li>
-                <li>Tue</li>
-                <li>Wed</li>
-                <li>Thu</li>
-                <li>Fri</li>
-                <li>Sat</li>
-              </ul>
-              <hr className="hr-calendar" />
-              <ul
-                ref={dayTag}
-                className="days"
-                onClick={(e) => handleCalendarClicks(e)}
-              >
-                <li className="inactive">1</li>
-              </ul>
-              <button
-                id="create-trip-btn"
-                onClick={(e) => defineTrip.submit(e)}
-              >
-                Create Trip
-              </button>
-            </div>
-          </div>
-
-          <div id="trip-created">
-            <p>New trip created!</p>
-          </div>
         </div>
         <div id="are-you-sure">
           <h5>Are you sure?</h5>

@@ -3,6 +3,7 @@
 
 #results-overall-org {
     margin: 10rem 10rem 0 10rem;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 #best-rated-places h4 {
@@ -15,18 +16,48 @@
 
 #best-rated-places-row {
     display: flex;
-    max-width: 80vw;
+    max-width: 90vw;
     overflow-x: scroll;
-    overflow-y: none;
+    overflow-y: hidden;
+    padding-bottom: 0.5rem;
+}
+
+#best-rated-places-row::-webkit-scrollbar {
+    height: 5px;
+}
+
+#best-rated-h4 {
+    font-size: 2rem;
+}
+
+#budget-h4 {
+    font-size: 2rem;
 }
 
 #budget-friendly-places-row {
     display: flex;
+    padding-bottom: 0.5rem;
+}
+
+#budget-friendly-places-row::-webkit-scrollbar {
+    height: 5px;
 }
 
 .best-rated-place {
+    position: relative;
     display: flex;
     flex-direction: column;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    border-radius: 15px;
+    -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.best-rated-place:hover {
+    background-color: whitesmoke;
 }
 
 .best-rated-place div:first-child {
@@ -42,14 +73,15 @@
     width: 15rem;
     margin-top: 0;
     margin-bottom: 0;
+    font-size: 1.3rem;
 }
 
 .best-rated-place div:first-child h4 {
     margin-top: 0;
     margin-right: 1rem;
     margin-bottom: 0;
-    background-color: black;
-    color: white;
+    background-color: #FFE34C;
+    color: black;
     padding: 0.5rem;
     border-radius: 100%;
 }
@@ -63,6 +95,8 @@
 
 .best-rated-place div:nth-child(2) h5 {
     margin: 0;
+    font-weight: 400;
+    font-size: 0.9rem;
 }
 
 .buttons-container {
@@ -85,15 +119,17 @@
 }
 
 .buttons-container button:first-child {
+    font-family: "Roboto Condensed", sans-serif;
     margin-right: 0.5rem;
-    background-color: black;
+    background-color: #8a05ff;
     font-weight: 800;
 }
 
 .buttons-container button:nth-child(2) {
-    background-color: whitesmoke;
+    font-family: "Roboto Condensed", sans-serif;
+    background-color: black;
     font-weight: 800;
-    color: black;
+    color: white;
     border: 1px solid gray;
 }
 
@@ -109,7 +145,20 @@
     display: flex;
 }
 
+#res-searchbar {
+    margin-left: 0;
+    width: 85%;
+    padding: 1rem;
+    padding-left: 0;
+    border: none;
+    border-bottom: 3px solid gray;
+    margin-bottom: 3rem;
+    font-size: 1.2rem;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
 #all-results-filters button {
+    font-family: "Roboto Condensed", sans-serif;
     width: fit-content;
     height: 3rem;
     background-color: whitesmoke;
@@ -123,6 +172,28 @@
     margin-left: 0;
 }
 
+.res-line {
+    background-color: #8a05ff;
+    width: 0%;
+    height: 0.5rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    border-radius: 0 0 15px 15px;
+    -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.best-rated-place:hover .res-line {
+    width: 100%;
+}
+
+.budget-friendly-place:hover .res-line {
+    width: 100%;
+}
+
 .res-filter {
     width: 8rem;
     position: relative;
@@ -130,12 +201,14 @@
 }
 
 .res-filter ul {
-    display: none;
     flex-direction: column;
-    background-color: whitesmoke;
+    background-color: #2A2A2A;
+    color: white;
     position: absolute;
     width: 100%;
     top: 3rem;
+    max-height: 20rem;
+    overflow-y: scroll;
 }
 
 .res-filter ul li {
@@ -154,14 +227,34 @@
     width: 1rem;
 }
 
+#budget-friendly {
+    margin-top: 4rem;
+}
+
 #budget-friendly-places-row {
     width: 90vw;
     overflow-x: scroll;
-
+    overflow-y: hidden;
 }
 
 .budget-friendly-place {
+    position: relative;
     margin-right: 2rem;
+    padding: 0.5rem;
+    border-radius: 15px;
+    -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.budget-friendly-place:hover {
+    background-color: whitesmoke;
+}
+
+.budget-friendly-place a {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .budget-friendly-place div {
@@ -173,6 +266,7 @@
 .budget-friendly-place div:first-child h3 {
     width: 11rem;
     margin-left: 1rem;
+    font-size: 1.3rem;
     margin-top: 0;
 }
 
@@ -189,17 +283,22 @@
 }
 
 .budget-friendly-place div:nth-child(2) h5 {
+    font-size: 0.9rem;
+    font-weight: 400;
     margin: 0.1rem 0;
 }
 
 #place-div-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .place-div {
     display: flex;
     flex-direction: column;
+    margin-right: 5rem;
+    margin-bottom: 5rem;
 }
 
 .place-div .place-div-name-rating {
@@ -211,10 +310,59 @@
 
 .place-div .place-div-name-rating h3 {
     width: fit-content;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .place-div .place-div-name-rating h4 {
     width: fit-content;
+    margin-left: 1rem;
+    background-color: #FFE34C;
+    padding: 0.8rem;
+    border-radius: 100%;
+    margin-top: 0.8rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+}
+
+.place-div-tags {
+    display: flex;
+    width: 95%;
+}
+
+.inexpensive-place {
+    background-color: green;
+    width: fit-content;
+    padding: 0 0.5rem;
+    border-radius: 15px;
+    color: white;
+    margin-right: 1rem;
+}
+
+.highly-rated-place {
+    background-color: purple;
+    width: fit-content;
+    padding: 0 0.5rem;
+    border-radius: 15px;
+    color: white;
+    margin-right: 1rem;
+}
+
+.place-div-category-area {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.2rem;
+}
+
+.place-div-style {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.place-div-serves {
+    text-align: left;
+    font-size: 1rem;
+    margin: 0;
 }
 
 .all-places-buttons {
@@ -226,4 +374,20 @@
     width: fit-content;
     margin-right: 1rem;
     height: 100%;
+    padding: 0.5rem;
+    font-weight: 700;
+    font-family: "Roboto Condensed", sans-serif;
 }
+
+.all-places-buttons button:first-child {
+   background-color: #8a05ff;
+}
+
+.all-places-buttons button:nth-child(2) {
+    color: black;
+ }
+
+ .all-places-buttons button:nth-child(3) {
+    color: black;
+    background-color: rgba(0, 0, 0, 0);
+ }
