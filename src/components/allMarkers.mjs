@@ -41,8 +41,9 @@ const Blackbird_Ordinary = {
   popular: "Popular",
   city: "Miami",
   sponsored: true,
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Fun",
+  awards: ""
 };
 
 const The_Wharf = {
@@ -62,11 +63,12 @@ const The_Wharf = {
   Best: "Best",
   favorite: false,
   popular: "Popular",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Fun",
   website: "https://wharfmiami.com/",
   city: "Miami",
   sponsored: true,
+  awards: ""
 };
 const Racket = {
   category: "Club",
@@ -85,8 +87,9 @@ const Racket = {
   favorite: false,
   popular: false,
   city: "Miami",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Fun",
+  awards: ""
 };
 const Pilos = {
   category: "Club",
@@ -105,8 +108,9 @@ const Pilos = {
   favorite: false,
   popular: false,
   city: "Miami",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Fun",
+  awards: ""
 };
 const Booze_Garden = {
   category: "Club",
@@ -125,8 +129,9 @@ const Booze_Garden = {
   favorite: false,
   popular: false,
   city: "Miami",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Fun",
+  awards: ""
 };
 const Bodega = {
   category: "Club",
@@ -147,7 +152,8 @@ const Bodega = {
   city: "Miami",
   sponsored: true,
   style: "Mexican",
-  serves: "Tacos Beer cocktails",
+  serves: "Tacos,Beer & Cocktails",
+  awards: ""
 };
 const Do_Not_Sit = {
   category: "Club",
@@ -167,8 +173,9 @@ const Do_Not_Sit = {
   popular: false,
   city: "Miami",
   sponsored: true,
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Fun",
+  awards: ""
 };
 const TreeHouse = {
   category: "Club",
@@ -188,7 +195,8 @@ const TreeHouse = {
   popular: false,
   city: "Miami",
   style: "Electronic music",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
+  awards: ""
 };
 
 const SantasHouse = {
@@ -211,6 +219,7 @@ const SantasHouse = {
   serves: "Cookies",
   style: "Christmas",
   sponsored: true,
+  awards: ""
 };
 
 const elfsDen = {
@@ -233,6 +242,7 @@ const elfsDen = {
   serves: "Cookies",
   style: "Christmas",
   sponsored: true,
+  awards: ""
 };
 const santasWorkshop = {
   category: "Resturant",
@@ -251,9 +261,10 @@ const santasWorkshop = {
   favorite: false,
   popular: true,
   city: "North Pole",
-  serves: "Workshop",
+  serves: "Toys",
   style: "Christmas",
   sponsored: true,
+  awards: ""
 };
 
 const ZitsSum = {
@@ -274,7 +285,8 @@ const ZitsSum = {
   popular: false,
   city: "Miami",
   style: "Asian",
-  serves: "Michelin Star",
+  serves: "Sushi",
+  awards: "Michelin Star"
 };
 const BoiaDe = {
   category: "Resturant",
@@ -294,7 +306,8 @@ const BoiaDe = {
   popular: false,
   city: "Miami",
   style: "Italian",
-  serves: "Michelin Star",
+  serves: "Pasta,Wine",
+  awards: "Michelin Star"
 };
 const Ariete = {
   category: "Resturant",
@@ -314,7 +327,8 @@ const Ariete = {
   popular: false,
   city: "Miami",
   style: "American",
-  serves: "Michelin Star",
+  serves: "Burgers",
+  awards: "Michelin Star"
 };
 const Macchialina = {
   category: "Resturant",
@@ -335,6 +349,7 @@ const Macchialina = {
   city: "Miami",
   style: "Italian",
   serves: "Pasta",
+  awards: ""
 };
 const KrusKitchen = {
   category: "Resturant",
@@ -354,7 +369,8 @@ const KrusKitchen = {
   popular: false,
   city: "Miami",
   style: "Italian",
-  serves: "Wine Pasta",
+  serves: "Wine,Pasta",
+  awards: ""
 };
 const Matys = {
   category: "Resturant",
@@ -375,6 +391,7 @@ const Matys = {
   city: "Miami",
   style: "Peruvian",
   serves: "Ceviche",
+  awards: ""
 };
 const GheeIndian = {
   category: "Resturant",
@@ -395,6 +412,7 @@ const GheeIndian = {
   city: "Miami",
   style: "Indian",
   serves: "Fusion",
+  awards: ""
 };
 const ZakBaker = {
   category: "Resturant",
@@ -414,7 +432,8 @@ const ZakBaker = {
   popular: false,
   city: "Miami",
   style: "Gourmet",
-  serves: "Breakfast Lunch Gourmet",
+  serves: "Breakfast,Lunch,Gourmet",
+  awards: ""
 };
 const MrOmaKase = {
   category: "Resturant",
@@ -435,6 +454,7 @@ const MrOmaKase = {
   city: "Miami",
   style: "Japanese",
   serves: "Sushi",
+  awards: ""
 };
 
 const CMXBrickell = {
@@ -456,6 +476,7 @@ const CMXBrickell = {
   city: "Miami",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const regalSB = {
@@ -477,6 +498,7 @@ const regalSB = {
   city: "Miami",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const regalKendall = {
@@ -498,6 +520,7 @@ const regalKendall = {
   city: "Miami",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const AMCSunset = {
@@ -519,6 +542,7 @@ const AMCSunset = {
   city: "Miami",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const AMCTam = {
@@ -540,6 +564,7 @@ const AMCTam = {
   city: "Miami",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const regalUAFalls = {
@@ -561,6 +586,7 @@ const regalUAFalls = {
   city: "Miami",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const viceCityBean = {
@@ -582,6 +608,7 @@ const viceCityBean = {
   city: "Miami",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const ALLDAY = {
@@ -603,6 +630,7 @@ const ALLDAY = {
   city: "Miami",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const PasionBrickell = {
@@ -624,6 +652,7 @@ const PasionBrickell = {
   city: "Miami",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const whiteRoseCoffee = {
@@ -645,6 +674,7 @@ const whiteRoseCoffee = {
   city: "Miami",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const pantherCOCO = {
@@ -666,6 +696,7 @@ const pantherCOCO = {
   city: "Miami",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const pinecrestBakery = {
@@ -688,6 +719,7 @@ const pinecrestBakery = {
   city: "Miami",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const WFMCoffeeBar = {
@@ -709,6 +741,7 @@ const WFMCoffeeBar = {
   city: "Miami",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const MarqueeNY = {
@@ -729,7 +762,8 @@ const MarqueeNY = {
   popular: true,
   city: "New York",
   style: "Electronic music",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
+  awards: ""
 };
 
 const FREQ = {
@@ -750,7 +784,8 @@ const FREQ = {
   popular: true,
   city: "New York",
   style: "Electronic music",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
+  awards: ""
 };
 
 const PHDRoof = {
@@ -771,8 +806,9 @@ const PHDRoof = {
   popular: true,
   city: "New York",
   style: "Lounge",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   sponsored: true,
+  awards: ""
 };
 
 const LAVO = {
@@ -793,8 +829,9 @@ const LAVO = {
   popular: true,
   city: "New York",
   style: "Upscale",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   sponsored: true,
+  awards: ""
 };
 
 const Retroclubnyc = {
@@ -815,8 +852,9 @@ const Retroclubnyc = {
   popular: true,
   city: "New York",
   style: "Disco",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   sponsored: true,
+  awards: ""
 };
 
 const CrownShy = {
@@ -839,6 +877,7 @@ const CrownShy = {
   style: "American",
   serves: "Global",
   sponsored: true,
+  awards: ""
 };
 
 const Robertos = {
@@ -861,6 +900,7 @@ const Robertos = {
   style: "Italian",
   serves: "Wine",
   sponsored: true,
+  awards: ""
 };
 
 const Sylvias = {
@@ -883,6 +923,7 @@ const Sylvias = {
   style: "Southern",
   serves: "American",
   sponsored: false,
+  awards: ""
 };
 
 const leBernardin = {
@@ -905,6 +946,7 @@ const leBernardin = {
   style: "French",
   serves: "Wine",
   sponsored: false,
+  awards: ""
 };
 
 const szechuan = {
@@ -927,6 +969,7 @@ const szechuan = {
   style: "Sichuan",
   serves: "Sichuan",
   sponsored: false,
+  awards: ""
 };
 
 const symphonySpace = {
@@ -948,6 +991,7 @@ const symphonySpace = {
   city: "New York",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const cinemaVillage = {
@@ -969,6 +1013,7 @@ const cinemaVillage = {
   city: "New York",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const filmSociety = {
@@ -990,6 +1035,7 @@ const filmSociety = {
   city: "New York",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const villageEast = {
@@ -1011,6 +1057,7 @@ const villageEast = {
   city: "New York",
   style: "Theater",
   serves: "Food",
+  awards: ""
 };
 
 const AiHir = {
@@ -1032,6 +1079,7 @@ const AiHir = {
   city: "New York",
   style: "Theater",
   serves: "Broadway",
+  awards: ""
 };
 
 const frissonEspresso = {
@@ -1054,6 +1102,7 @@ const frissonEspresso = {
   city: "New York",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const bibbleSip = {
@@ -1076,6 +1125,7 @@ const bibbleSip = {
   city: "New York",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const breadsBakery = {
@@ -1098,6 +1148,7 @@ const breadsBakery = {
   city: "New York",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const gregorysCoffee = {
@@ -1120,6 +1171,7 @@ const gregorysCoffee = {
   city: "New York",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const zibettoEspressoBar = {
@@ -1142,6 +1194,7 @@ const zibettoEspressoBar = {
   city: "New York",
   style: "Coffee",
   serves: "Coffee",
+  awards: ""
 };
 
 const pacha = {
@@ -1162,8 +1215,9 @@ const pacha = {
   popular: "Popular",
   city: "Barcelona",
   sponsored: true,
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Disco",
+  awards: ""
 };
 
 const moog = {
@@ -1183,8 +1237,9 @@ const moog = {
   favorite: false,
   popular: "Popular",
   city: "Barcelona",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Techno",
+  awards: ""
 };
 
 const discoCity = {
@@ -1205,8 +1260,9 @@ const discoCity = {
   popular: "Popular",
   city: "Barcelona",
   sponsored: true,
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Disco",
+  awards: ""
 };
 
 const input = {
@@ -1226,8 +1282,9 @@ const input = {
   favorite: false,
   popular: "Popular",
   city: "Barcelona",
-  serves: "Beer Cocktails",
+  serves: "Beer & Cocktails",
   style: "Electronic music",
+  awards: ""
 };
 
 const disfrutar = {
@@ -1250,6 +1307,7 @@ const disfrutar = {
   style: "Mediterranean",
   serves: "Upscale",
   sponsored: true,
+  awards: ""
 };
 
 const conGracia = {
@@ -1272,6 +1330,7 @@ const conGracia = {
   style: "Catalonian",
   serves: "Mediterranean",
   sponsored: true,
+  awards: ""
 };
 
 const elNacional = {
@@ -1294,6 +1353,7 @@ const elNacional = {
   style: "Spanish",
   serves: "Tapas",
   sponsored: true,
+  awards: ""
 };
 
 const uma = {
@@ -1316,6 +1376,7 @@ const uma = {
   style: "Spanish",
   serves: "Wine",
   sponsored: true,
+  awards: ""
 };
 
 const cera23 = {
@@ -1338,6 +1399,7 @@ const cera23 = {
   style: "Spanish",
   serves: "Wine",
   sponsored: true,
+  awards: ""
 };
 
 allPlaces1.push(

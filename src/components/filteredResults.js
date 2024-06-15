@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faPaperPlane,faStarOfLife } from "@fortawesome/free-solid-svg-icons";
 import "./styles/ResultsPage.css";
 import {allPlaces} from "./allMarkers.mjs";
 import Lottie from "lottie-react";
@@ -43,12 +43,14 @@ function Results() {
   const [areas, setAreas] = useState([])
   const [styles, setStyles] = useState([])
   const [serves, setServes] = useState([])
+  const [awards, setAwards] = useState([])
   
   const [catScore, setCatScore] = useState(0)
   const [styleScore, setStyleScore] = useState(0)
   const [priceScore, setPriceScore] = useState(0)
   const [servesScore, setServesScore] = useState(0)
   const [areaScore, setAreaScore] = useState(0)
+  const [awardsScore, setAwardsScore] = useState(0)
   const [attr, setAttr] = useState("");
   const [type, setType] = useState("")
   const [checked, setChecked] = useState(false)
@@ -86,6 +88,7 @@ function Results() {
     const areasArr = []
     const stylesArr = []
     const servesArr = []
+    const awardsArr = []
    
     for (let i = 0; i < places.length; i++) {
       if (!categoriesArr.includes(places[i].category)) {
@@ -102,6 +105,15 @@ function Results() {
       }
       if (!servesArr.includes(places[i].serves)) {
         servesArr.push(places[i].serves)
+        // const items = String(places[i].serves).split(',');
+        // for (let i = 0; i < items.length; i++) {
+        //   if (!servesArr.includes(items[i]) && items[i] !== 'MichelinStar') {
+        //       servesArr.push(items[i])
+        //   }
+        // }
+      }
+      if (!stylesArr.includes(places[i].awards) && places[i].awards !== "") {
+        stylesArr.push(places[i].awards) 
       }
     }
     setCategories(categoriesArr)
@@ -109,6 +121,7 @@ function Results() {
     setAreas(areasArr)
     setStyles(stylesArr)
     setServes(servesArr)
+    setAwards(awardsArr)
 
   }, [places])
 
@@ -291,7 +304,7 @@ function Results() {
                       </div>
                       <div>
                         <h5>{place.category} in {place.area}</h5>
-                        <h5>Serving {place.serves}</h5>
+                        <h5>Serving {String(place.serves).replaceAll(',',' ')}</h5>
                         <div className="buttons-container">
                           <button>Add To Trip</button>
                           <button>Learn More</button>
@@ -322,7 +335,7 @@ function Results() {
                       <div>
                         <h5>Rated {place.rating}/5</h5>
                         <h5>{place.category} In {place.area}</h5>
-                        <h5>Serving {place.serves}</h5>
+                        <h5>Serving {String(place.serves).replaceAll(',',' ')}</h5>
                         <div className="buttons-container">
                           <button>Add To Trip</button>
                           <button>Learn More</button>
@@ -487,6 +500,29 @@ function Results() {
             </div>
             : null
             }
+            {
+              awards.length > 1 ?
+            <div className="res-filter">
+            <button onClick={(e) => toggleFilterDisplay(e)}>Awards ▼ {awardsScore > 0 ? `(${awardsScore})` : null}</button>
+            <ul style={{display: 'none'}}>
+              {
+                areas.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
+                  onClick={(e) => {
+                    if (e.target.checked === true) {
+                      setAwardsScore(awardsScore + 1)
+           
+                    } else if (e.target.checked === false) {
+                      setAwardsScore(awardsScore - 1)
+                    }
+                    setAttr(e.target.getAttribute('item'))
+                    setType('awards')
+                    setChecked(e.target.checked)
+                  }}></input></li>))
+              }
+            </ul>
+            </div>
+            : null
+            }
           </div>
 
           <input type="text" placeholder="Search Places" id="res-searchbar" onKeyUp={(e) => matchKeyboardInput(e)}></input>
@@ -500,7 +536,9 @@ function Results() {
                    </div>
                     <h4 className="place-div-category-area">{place.category} In {place.area} | {'$'.repeat(place.price)}</h4>
                     <h4 className="place-div-style">{place.style}</h4>
-                    <h5 className="place-div-serves">Serves {place.serves}</h5>
+                    
+                      <h5 className="place-div-serves">Serves {String(place.serves).replaceAll(',',' ')}</h5>
+                      
                     <div className="place-div-tags">
                       {
                         place.price <= 2 ? <p className="inexpensive-place">Inexpensive</p> : null
@@ -508,9 +546,15 @@ function Results() {
                       {
                         place.rating >= 4 ? <p className="highly-rated-place">Highly Rated</p> : null
                       }
-                      
                     </div>
-                    <hr/>
+                    { 
+                    place.awards !== "" ?
+                    <div className="place-div-awards">
+                    <FontAwesomeIcon icon={faStarOfLife} />
+                    </div>
+                    : null
+                    }
+               
                     <div className="all-places-buttons">
                     <button>Add To Trip</button>
                     <button>Learn More</button>
