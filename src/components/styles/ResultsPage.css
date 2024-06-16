@@ -49,6 +49,7 @@
     flex-direction: column;
     margin-right: 1rem;
     padding: 0.5rem;
+    z-index: 0;
     border-radius: 15px;
     -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -78,12 +79,21 @@
 
 .best-rated-place div:first-child h4 {
     margin-top: 0;
-    margin-right: 1rem;
+    margin-right: 1.2rem;
     margin-bottom: 0;
-    background-color: #FFE34C;
-    color: black;
     padding: 0.5rem;
     border-radius: 100%;
+    color: black;
+    position: relative;
+}
+
+.best-rated-place div:first-child h4 svg {
+    height: 3.75rem;
+    position: absolute;
+    left: -0.3rem;
+    top: -0.3rem;
+    color: #FFE34C;
+    z-index: -1;
 }
 
 
@@ -297,10 +307,11 @@
 .place-div {
     position: relative;
     display: flex;
+    z-index: 0;
     flex-direction: column;
     padding: 0.5rem 1rem 2rem 1rem;
     margin-right: 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 3rem;
     border-radius: 3px;
     -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -337,14 +348,23 @@
 }
 
 .place-div .place-div-name-rating h4 {
-    width: fit-content;
-    margin-left: 1rem;
-    background-color: #FFE34C;
-    padding: 0.8rem;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 1.5rem;
+    font-size: 1.6rem;
+    padding: 0.5rem;
     border-radius: 100%;
-    margin-top: 0.8rem;
-    margin-bottom: 0.5rem;
-    font-size: 1.3rem;
+    color: black;
+    position: relative;
+}
+
+.place-div .place-div-name-rating h4 svg {
+    height: 3.75rem;
+    position: absolute;
+    color: #FFE34C;
+    z-index: -1;
+    left: -0.3rem;
+    bottom: -0.5rem;
 }
 
 .place-div-tags {
@@ -426,4 +446,20 @@
  .all-places-buttons button:nth-child(3) {
     color: black;
     background-color: rgba(0, 0, 0, 0);
+ }
+
+ .filteredplaces-line {
+    width: 0%;
+    height: 0.5rem;
+    background-color: #8a05ff;
+    position: relative;
+    top: 1.5rem;
+    -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+ }
+
+ .place-div:hover .filteredplaces-line {
+    width: 100%;
  }

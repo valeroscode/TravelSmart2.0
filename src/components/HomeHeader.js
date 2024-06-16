@@ -54,10 +54,15 @@ function HomeHeader({ name }) {
         if (allPlaces[i].city === cityInput.current.value) {
         if (!array.includes(allPlaces[i].style)) {
           array.push(allPlaces[i].style)
-        } else if (!array.includes(allPlaces[i].category)) {
+        }
+        if (!array.includes(allPlaces[i].category)) {
           array.push(allPlaces[i].category)
-        } else if (!array.includes(allPlaces[i].area)) {
+        }
+        if (!array.includes(allPlaces[i].area)) {
           array.push(allPlaces[i].area)
+        }
+        if (!array.includes(allPlaces[i].serves)) {
+          array.push(allPlaces[i].serves)
         }
       }
       }
@@ -90,12 +95,20 @@ function HomeHeader({ name }) {
 
         if (e.target === searchInput.current) {
           const arr = [];
-          allPlaces.map((place) =>
-            !arr.includes(place.style) ? arr.push(place.style) : null
-          );
-          allPlaces.map((place) =>
-            !arr.includes(place.category) ? arr.push(place.category) : null
-          );
+          for (let i = 0; allPlaces.length; i++) {
+            if (!arr.includes(allPlaces[i].style)) {
+              arr.push(allPlaces[i].style)
+            } 
+            if (!arr.includes(allPlaces[i].category)) {
+              arr.push(allPlaces[i].category)
+            } 
+            if (!arr.includes(allPlaces[i].serves)) {
+              arr.push(allPlaces[i].serves)
+            } 
+            if (!arr.includes(allPlaces[i].area)) {
+              arr.push(allPlaces[i].area)
+            }  
+          }
           setPlaces_InCity(arr);
         }
         dropdown.style.display = "flex";

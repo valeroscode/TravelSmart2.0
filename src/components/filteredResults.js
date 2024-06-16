@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faPaperPlane,faStarOfLife } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faPaperPlane,faStarOfLife, faDiamond } from "@fortawesome/free-solid-svg-icons";
 import "./styles/ResultsPage.css";
 import {allPlaces} from "./allMarkers.mjs";
 import Lottie from "lottie-react";
@@ -299,7 +299,8 @@ function Results() {
                   return (
                     <div className="best-rated-place">
                       <div>
-                        <h4>{place.rating}</h4>
+                      
+                        <h4><FontAwesomeIcon icon={faDiamond} />{place.rating}</h4>
                         <h3>{place.name}</h3>
                       </div>
                       <div>
@@ -531,7 +532,7 @@ function Results() {
               filteredPlaces.map((place) => (
                  <div className="place-div">
                    <div className="place-div-name-rating">
-                    <h4>{place.rating}</h4>
+                   <h4><FontAwesomeIcon icon={faDiamond} />{place.rating}</h4>
                     <h3 className="place-div-name">{place.name}</h3>
                    </div>
                     <h4 className="place-div-category-area">{place.category} In {place.area} | {'$'.repeat(place.price)}</h4>
@@ -560,6 +561,7 @@ function Results() {
                     <button>Learn More</button>
                     <button>See Images</button>
                     </div>
+                    <div className="filteredplaces-line"></div>
                  </div>
               ))
             }
