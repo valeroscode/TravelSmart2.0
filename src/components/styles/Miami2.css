@@ -900,9 +900,6 @@ position: relative;
 top: 6.5rem;
 left: 0.6rem;
 }
-#place-container {
-margin-left: 5rem;
-}
 .suggestedPlace img {
 height: 4rem;
 width: 6rem;
@@ -996,9 +993,6 @@ height: 30rem;
     }
 
 @media screen and (max-width: 730px) {
-    #place-container {
-        margin-left: 1rem;
-    }
 #bottom-page-container {
     position: relative;
     top: 7rem;

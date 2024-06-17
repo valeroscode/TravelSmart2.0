@@ -155,12 +155,12 @@ function HomeHeader({ name }) {
 
   return (
     <>
-      <div id="home-title" style={window.location.pathname === '/Search-Results' ? {backgroundColor: 'black'} : null}>
+      <div id="home-title" style={window.location.pathname === '/Search-Results' ? {backgroundColor: 'black'} : (window.location.pathname === '/place' ? {background: 'unset', backgroundColor: 'whitesmoke'} : null)}>
         <div id="home-org">
       <div id="home-h1">
-          <FontAwesomeIcon icon={faPaperPlane} className="plane" style={window.location.pathname === '/Search-Results' ? {color: 'white'} : null} />
+          <FontAwesomeIcon icon={faPaperPlane} className="plane" style={window.location.pathname === '/Search-Results' ? {color: 'white'} : (window.location.pathname === '/place' ? {color: 'black'} : null)} />
           {
-            window.location.pathname === "home" ? <h1>TRAVEL SMART</h1> : <h1 style={{color: 'white'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>
+            window.location.pathname === "home" ? <h1>TRAVEL SMART</h1> : (window.location.pathname === '/place' ? <h1 style={{color: 'black'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1> : <h1 style={{color: 'white'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>)
           }
           
         </div>

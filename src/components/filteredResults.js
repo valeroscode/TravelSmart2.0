@@ -307,7 +307,7 @@ function Results() {
                         <h5>Serving {String(place.serves).replaceAll(',',' ')}</h5>
                         <div className="buttons-container">
                           <button>Add To Trip</button>
-                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeid, e.target)}>Learn More</button>
+                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target)}>Learn More</button>
                         
                         </div>
                         <a>See Images</a>
@@ -338,7 +338,7 @@ function Results() {
                         <h5>Serving {String(place.serves).replaceAll(',',' ')}</h5>
                         <div className="buttons-container">
                           <button>Add To Trip</button>
-                          <button>Learn More</button>
+                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target)}>Learn More</button>
                         
                         </div>
                         <a>See Images</a>
@@ -557,7 +557,7 @@ function Results() {
                
                     <div className="all-places-buttons">
                     <button>Add To Trip</button>
-                    <button>Learn More</button>
+                    <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target)}>Learn More</button>
                     <button>See Images</button>
                     </div>
                     <div className="filteredplaces-line"></div>

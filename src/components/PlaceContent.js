@@ -237,79 +237,9 @@ function PlaceContent() {
       <section id="overall-page" style={{ backgroundColor: "white" }}>
         <div id="top-page-organizer">
           <section id="upper-page-sec">
+            
             <div id="place-container">
-              <p className="citytxt">
-                {sessionStorage.getItem("city").toLocaleUpperCase()}
-              </p>
-              <div id="placeImage">
-                <img
-                  src={require(`../../public/${localStorage.getItem(
-                    "current"
-                  )}.jpg`)}
-                  alt=""
-                />
-                <div id="rating">
-                  <h1 className="rating-yellow">
-                    {localStorage.getItem("rating") % 1 === 0
-                      ? `${localStorage.getItem("rating")}.0`
-                      : localStorage.getItem("rating")}
-                  </h1>
-                </div>
-              </div>
-
-              <div id="placeName">
-                <h1 id="h1">{localStorage.getItem("current")}</h1>
-                <div id="typeANDarea">
-                  <p className="type">
-                    {localStorage.getItem("category")}&nbsp; |&nbsp;&nbsp;
-                    {localStorage.getItem("area")}
-                  </p>
-                  <h6 className="perfectFor">
-                    Perfect for: &nbsp;{localStorage.getItem("type")} &nbsp;{" "}
-                    {serves} &nbsp; {style}
-                  </h6>
-                  <div className="money-place-div">
-                    <p className="money">
-                      <strong>
-                        <a style={priceStyles[1]}>$</a>
-                        <a style={priceStyles[2]}>$</a>
-                        <a style={priceStyles[3]}>$</a>
-                        <a style={priceStyles[4]}>$</a>
-                      </strong>
-                    </p>
-                    <p ref={addressText} className="address">
-                      {localStorage.getItem("address")}
-                    </p>
-                  </div>
-                </div>
-                <div id="webANDfave">
-                  <hr className="tophr" />
-                  <div className="inner">
-                    <p
-                      id="fave"
-                      ref={heart}
-                      name={localStorage.getItem("title")}
-                      className="click-favorite"
-                      onClick={(e) => handleFavoritesBtn(e)}
-                    >
-                      <FontAwesomeIcon icon={faHeart} />
-                      ADD TO FAVORITES
-                    </p>
-                    <p
-                      className="addtotrip trip-adder"
-                      name={localStorage.getItem("current")}
-                      onClick={(e) => handleTripAdderPopup(e)}
-                    >
-                      ADD TO TRIP &nbsp;
-                      <FontAwesomeIcon
-                        icon={faChevronRight}
-                        style={{ color: "#2E64FE" }}
-                      />
-                    </p>
-                  </div>
-                  <hr className="btmhr" />
-                </div>
-              </div>
+              
             </div>
 
             <div id="suggestionsSec">

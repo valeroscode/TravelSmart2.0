@@ -217,6 +217,7 @@
     position: absolute;
     width: 100%;
     top: 3rem;
+    z-index: 10;
     max-height: 20rem;
     overflow-y: scroll;
     z-index: 100;
@@ -447,6 +448,22 @@
  .all-places-buttons button:nth-child(3) {
     color: black;
     background-color: rgba(0, 0, 0, 0);
+ }
+
+ @media screen and (max-width: 616px) {
+    #all-results-filters {
+        flex-wrap: wrap;
+    }
+ }
+
+ @media screen and (max-width: 400px) {
+    .all-places-buttons button {
+        font-size: 0.8rem;
+    }
+
+    #filter-desc {
+        font-size: 2rem;
+    }
  }
 
  .filteredplaces-line {
