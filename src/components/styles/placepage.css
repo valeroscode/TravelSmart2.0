@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
+
+#place-backdrop {
+    margin-top: 5rem;
+    padding-top: 7rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+#place-backdrop #place-basic-info {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 80%;
+}
+
+#place-backdrop #place-basic-info h2 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+#place-backdrop #place-basic-info #cost-serving {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#place-backdrop #place-basic-info #cost-serving p:nth-child(2) {
+    margin: 0;
+    font-size: 1.2rem;
+}
+#place-backdrop #place-basic-info .money {
+    margin: 0 0.25rem 0 0;
+    font-size: 1.2rem;
+}
+
+#place-backdrop #place-basic-info h5 {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+}
+
+#place-backdrop #place-basic-info h4 {
+    font-size: 1.75rem;
+    margin: 0.5rem 0 0.5rem 0;
+}
+
+#place-basic-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#place-basic-rating svg {
+    margin-right: 0.2rem;
+}
+
+#place-basic-rating p {
+    margin: 0;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    background-color: #8a05ff;
+    color: white;
+    padding: 0.25rem;
+    border-radius: 100%;
+    font-weight: 800;
+}
+
+#place-backdrop #place-basic-info button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: fit-content;
+    padding: 1.5rem;
+    color: white;
+    background-color: #151515;
+    font-weight: 800;
+    margin-top: 0;
+    font-family: "Roboto Condensed", sans-serif;
+}
+
+#place-backdrop #place-basic-info button svg {
+    margin-right: 0.5rem;
+}
+
+#place-backdrop-sec-info {
+    font-family: "Roboto Condensed", sans-serif;
+    background-color: whitesmoke;
+    width: 100%;
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: start;
+    padding-bottom: 3rem;
+}
+
+#place-backdrop-sec-info-left {
+    width: 40%;
+}
+
+#place-backdrop-sec-info-right {
+  padding-top: 3rem;
+  width: 40%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  height: 10rem;
+}
+
+#place-backdrop-sec-info-right h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    border-bottom: 4px solid #8a05ff;
+}
+
+.place-sec-info-recs-line {
+    background-color: #8a05ff;
+    width: 0%;
+    height: 0.25rem;
+    -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.place-sec-info-recs h4 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.place-sec-info-recs p {
+    margin-top: 0;
+    font-weight: 800;
+}
+
+.place-sec-info-recs {
+    margin-top: 1rem;
+    pointer-events: all;
+    cursor: pointer;
+}
+
+.place-sec-info-recs:hover .place-sec-info-recs-line {
+    width: 100%;
+}
+
+#place-backdrop-sec-info #place-secondary-info {
+    width: 80%;
+    padding-top: 3rem;
+}
+
+#place-backdrop-sec-info #place-secondary-info p {
+    font-weight: 800;
+    font-size: 1.2rem;
+}
+#place-backdrop-sec-info #place-secondary-info p svg {
+    color: black;
+}
+
+#place-backdrop-sec-info #place-secondary-info p:nth-child(1) {
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+#place-backdrop-sec-info #msg-from-business {
+    width: 80%;
+}
+
+#place-backdrop-sec-info #msg-from-business h2 {
+    font-size: 2rem;
+}
+
+.msg {
+    color: black;
+    background-color: white;
+    width: fit-content;
+    padding: 0.5rem 1.5rem;
+    max-width: 25rem;
+}
+
+.msg h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0;
+}
+
+.msg p {
+    margin-top: 0.5rem;
+    font-size: 1.2rem;
+    word-wrap: break-word
+}
+
+.place-sec-info-rating {
+    margin-bottom: 0.5rem;
+}
+
+#opening-hours-list {
+    width: 80%;
+}
+
+#opening-hours-list h4 {
+    font-size: 1.5rem;
+}
+
+#place-backdrop-reviews {
+    width: 80%;
+    padding-top: 3rem;
+}
+
+#place-backdrop-reviews h2 {
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 2.5rem;
+
+}
+
+#review-ratings-summary {
+    display: flex;
+}
+
+#overall-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#overall-rating p {
+    font-weight: 800;
+    margin-top: 0;
+    font-size: 1.1rem;
+}
+
+#overall-rating h1 {
+    background-color: #8a05ff;
+    height: fit-content;
+    width: fit-content;
+    padding: 1rem;
+    border-radius: 100%;
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+}
+
+#review-ratings-bars {
+    margin-left: 3rem;
+    margin-top: 0;
+}
+
+.review-rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-rating p {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
+.rating-bar {
+    background-color: whitesmoke;
+    width: 30rem;
+    height: 0.5rem;
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+}
+
+.rating-bar-fill {
+    background-color: black;
+    height: 0.5rem;
+    width: 20%;
+}
+
+#review-filters {
+    display: flex;
+}
+
+#review-filters button {
+    margin-right: 1rem;
+    width: fit-content;
+    padding: 0.5rem;
+    color: black;
+    font-weight: 800;
+    background-color: white;
+    display: flex;
+    height: fit-content;
+    justify-content: center;
+    align-items: center;
+    border: 3px solid black;
+    font-family: "Roboto Condensed", sans-serif;
+}
