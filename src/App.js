@@ -8,6 +8,7 @@ import PlaceContent from "./components/PlaceContent";
 import TripPlanner from "./components/Planner";
 import Results from "./components/filteredResults";
 import Plan from "./components/Plan"
+import PlacePage from "./components/PlacePage";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Landing from "./components/Landing";
 
@@ -18,7 +19,7 @@ function App() {
         <BrowserRouter>
           <div className="App">
             <Routes>
-              <Route path="place" element={<PlaceContent />} />
+              <Route path="place" element={<PlacePage />} />
               <Route path="trips" element={<TripsPage />}></Route>
               <Route path="Home" element={<TravelSmart />} />
               <Route path="plan" element={<Plan />}></Route>

@@ -64,7 +64,6 @@ function Results() {
 
   let counter = 0;
   let applied_filters = sessionStorage.getItem("filters").split("/ ,");
-  const chevron = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512"><style>svg{fill:#2261ce}</style><path d="M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z"/></svg>`;
 
   useEffect(() => {
     const city = sessionStorage.getItem("city");
@@ -308,7 +307,7 @@ function Results() {
                         <h5>Serving {String(place.serves).replaceAll(',',' ')}</h5>
                         <div className="buttons-container">
                           <button>Add To Trip</button>
-                          <button>Learn More</button>
+                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeid, e.target)}>Learn More</button>
                         
                         </div>
                         <a>See Images</a>

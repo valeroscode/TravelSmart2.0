@@ -219,6 +219,7 @@
     top: 3rem;
     max-height: 20rem;
     overflow-y: scroll;
+    z-index: 100;
 }
 
 .res-filter ul li {

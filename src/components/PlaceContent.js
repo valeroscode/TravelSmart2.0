@@ -19,8 +19,6 @@ import {
 import Notification from "./Notification";
 import { useAuth } from "./contexts/AuthContext";
 import { docMethods } from "./firebase/firebase";
-import Lottie from "lottie-react";
-import animationData from "./assets/loading-page.json";
 import Footer from "./footer";
 import HomeHeader from "./HomeHeader";
 
@@ -139,8 +137,6 @@ function PlaceContent() {
   }
 
   const reviewsCon = useRef();
-  const lottie = useRef();
-  const lottieBg = useRef();
   function renderReviews(item) {
     if (reviewsCon.current) {
       if (reviewsCon.current.childNodes.length < 12) {
@@ -176,8 +172,6 @@ function PlaceContent() {
         }
       }
     }
-    lottie.current.style.display = "none";
-    lottieBg.current.style.display = "none";
   }
 
   function handleFavoritesBtn(e) {
@@ -240,10 +234,6 @@ function PlaceContent() {
   return (
     <>
       <HomeHeader name={name} />
-      <div ref={lottie} id="lottie">
-        <Lottie animationData={animationData} />
-      </div>
-      <div id="lottie-bg" ref={lottieBg}></div>
       <section id="overall-page" style={{ backgroundColor: "white" }}>
         <div id="top-page-organizer">
           <section id="upper-page-sec">
