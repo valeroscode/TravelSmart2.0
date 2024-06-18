@@ -1,10 +1,40 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import HomeHeader from "./HomeHeader"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiamondTurnRight, faPhone,faBookmark, faDiamond } from "@fortawesome/free-solid-svg-icons";
 import './styles/placepage.css'
 
 function PlacePage() {
+
+  useEffect(() => {
+
+    var geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode(
+      { placeId: localStorage.getItem("ID") },
+      function (results, status) {
+        if (status === window.google.maps.GeocoderStatus.OK) {
+          const request = {
+            placeId: localStorage.getItem("ID"),
+            fields: ["reviews", "formatted_address", "opening_hours"],
+          };
+
+          var service = new window.google.maps.places.PlacesService(window.map);
+          service.getDetails(request, function (place, status) {
+            if (status == "OK") {
+              console.log("place")
+              // addressText.current.textContent = place.formatted_address;
+              // for (let i = 0; i < place.reviews.length; i++) {
+              //   renderReviews(place.reviews[i]);
+              // }
+            } else {
+              console.log(status)
+            }
+          });
+        }
+      }
+    );
+
+  }, [])
 
     const priceLS = localStorage.getItem("price");
     const priceStyles = {

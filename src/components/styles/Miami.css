@@ -78,6 +78,13 @@
   color: black;
 }
 
+#hello-user-section img {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
 
 #hello-user-section img:nth-child(1) {
   height: 15rem;

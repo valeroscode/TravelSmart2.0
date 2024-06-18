@@ -52,6 +52,12 @@ import spanisharch from "./assets/spanisharch.jpg"
 import greekruins from "./assets/greekruins.jpg"
 import greekcoast from "./assets/greekcoast.jpg"
 import greeekflowers from "./assets/greeekflowers.jpg"
+import greekboats from "./assets/greekboats.jpg"
+import maracanhouse from "./assets/maracanhouse.jpg"
+import miamipalms from "./assets/miamipalms.jpg"
+import lebanesecoast from "./assets/lebanesecoast.jpg"
+import spanishwheel from "./assets/spanishwheel.jpg"
+import maracanpaintings from "./assets/maracanpaintings.jpg"
 
 
 function TravelSmart() {
@@ -68,6 +74,7 @@ function TravelSmart() {
   const rotate = useRef();
   const selectCityUl = useRef();
   const defaultDiv = useRef();
+
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
   const [cities, setCities] = useState([])
@@ -95,14 +102,39 @@ function TravelSmart() {
     markFavorites();
   }
 
+  const backgroundImgList = {
+    1: {
+      false: icelandwater,
+      true: greekboats,
+    },
+    2: {
+      false: greeksunset,
+      true: maracanhouse,
+    },
+    3: {
+      false: miaminight,
+      true: miamipalms,
+    },
+    4: {
+      false: hawailighthouse,
+      true: lebanesecoast,
+    },
+    5: {
+      false: littolkiss,
+      true: spanishwheel,
+    },
+    6: {
+      false: spanishpillers,
+      true: maracanpaintings,
+    },
+  }
+
   //This array is a copy of the favorites state hook and used
   //to make proper updates to the database without relying on a state change for the variable above.
   //Thus preventing the component from re-rendering. Also results in array changes to be global.
 
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
-
-    alert(currentUser.defCity)
 
     if (currentUser.defCity !== '' && currentUser.defCity !== undefined) {
       setConfirmExpCity(true)
@@ -135,6 +167,50 @@ function TravelSmart() {
         citiesInShowAll[i].click();
       }
     }
+
+    //change images
+    let selectedImg = 1;
+
+    const bgImg = document.getElementsByClassName('hello-user-img')
+
+    function changeImg() {
+      if (selectedImg % 2 === 0) {
+        if (bgImg[selectedImg].src === backgroundImgList[selectedImg].false) {
+          bgImg[selectedImg].style.opacity = 0;
+          bgImg[selectedImg].src = backgroundImgList[selectedImg].true;
+          bgImg[selectedImg].style.opacity = 0.2;
+        } else {
+          bgImg[selectedImg].style.opacity = 0;
+          bgImg[selectedImg].src = backgroundImgList[selectedImg].false
+          bgImg[selectedImg].style.opacity = 0.2;
+        }
+          
+      } else {
+        if (bgImg[selectedImg].src === backgroundImgList[selectedImg].false) {
+          bgImg[selectedImg].style.opacity = 0;
+          bgImg[selectedImg].src = backgroundImgList[selectedImg].true;
+          bgImg[selectedImg].style.opacity = 0.2;
+        } else {
+          bgImg[selectedImg].style.opacity = 0;
+          bgImg[selectedImg].src = backgroundImgList[selectedImg].false
+          bgImg[selectedImg].style.opacity = 0.2;
+        }
+      }
+      selectedImg = selectedImg + 1
+      
+      setTimeout(() => {
+        if (selectedImg > 6) {
+          selectedImg = 0;
+          changeImg()
+        } else {
+          changeImg()
+        }
+      }, 6000)
+      
+    }
+
+    changeImg()
+
 
     setTimeout(() => {
       generalScript();
@@ -388,19 +464,19 @@ function TravelSmart() {
         </div>
 
         <section id="hello-user-section">
-        <img src={icelandwater}></img>
-        <img src={greeksunset}></img>
-        <img src={miaminight}></img>
-        <img src={hawailighthouse}></img>
-        <img src={littolkiss}></img>
-        <img src={spanishpillers}></img>
-        <img src={spanishart}></img>
-        <img src={spanisharch}></img>
-        <img src={spanishtunnel}></img>
-        <img src={spanishwindow}></img>
-<img src={greekruins}></img>
-<img src={greekcoast}></img>
-<img src={greeekflowers}></img>
+        <img src={backgroundImgList[1].false} className="hello-user-img"></img>
+        <img src={backgroundImgList[2].false}  className="hello-user-img"></img>
+        <img src={backgroundImgList[3].false}   className="hello-user-img"></img>
+        <img src={backgroundImgList[4].false} className="hello-user-img"></img>
+        <img src={backgroundImgList[5].false} className="hello-user-img"></img>
+        <img src={backgroundImgList[6].false} className="hello-user-img"></img>
+        <img src={spanishart} className="hello-user-img"></img>
+        <img src={spanisharch} className="hello-user-img"></img>
+        <img src={spanishtunnel} className="hello-user-img"></img>
+        <img src={spanishwindow} className="hello-user-img"></img>
+<img src={greekruins} className="hello-user-img"></img>
+<img src={greekcoast} className="hello-user-img"></img>
+<img src={greeekflowers} className="hello-user-img"></img>
 
 <FontAwesomeIcon icon={faBurst} />
 
