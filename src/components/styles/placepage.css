@@ -298,3 +298,26 @@
     border: 3px solid black;
     font-family: "Roboto Condensed", sans-serif;
 }
+
+#list-of-reviews {
+    margin-top: 3rem;
+}
+
+#list-of-reviews div h4 {
+    margin-top: 0.5rem;
+}
+
+#list-of-reviews div h5 {
+    font-family: "Roboto Condensed", sans-serif;
+    font-size: 1.2rem;
+   text-align: left;
+   margin-bottom: 0;
+}
+
+#list-of-reviews div p {
+    font-size: 1.1rem;
+}
+
+#list-of-reviews div {
+    margin-bottom: 3rem;
+}

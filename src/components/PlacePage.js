@@ -1,10 +1,22 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import HomeHeader from "./HomeHeader"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiamondTurnRight, faPhone,faBookmark, faDiamond } from "@fortawesome/free-solid-svg-icons";
 import './styles/placepage.css'
+import Footer from './footer';
 
 function PlacePage() {
+
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
+  const [hours, setHours] = useState([]);
+  const [reviews, setReviews] = useState([])
+
+  const fivestar = useRef();
+  const fourstar = useRef();
+  const threestar = useRef();
+  const twostar = useRef();
+  const onestar = useRef();
 
   useEffect(() => {
 
@@ -15,24 +27,38 @@ function PlacePage() {
         if (status === window.google.maps.GeocoderStatus.OK) {
           const request = {
             placeId: localStorage.getItem("ID"),
-            fields: ["reviews", "formatted_address", "opening_hours"],
+            fields: ["reviews", "formatted_address", "opening_hours", "formatted_phone_number"],
           };
 
           var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
             if (status == "OK") {
-              console.log("place")
+              setAddress(place.formatted_address)
+              setPhone(place.formatted_phone_number)
+              setHours(place.opening_hours.weekday_text)
+              let list = []
+              for (let i = 0; i < place.reviews.length; i++) {
+                list.push({
+                  author: place.reviews[i].author_name,
+                  time: place.reviews[i].relative_time_description,
+                  rating: place.reviews[i].rating,
+                  text: place.reviews[i].text
+                })
+              }
+              setReviews(list)
               // addressText.current.textContent = place.formatted_address;
               // for (let i = 0; i < place.reviews.length; i++) {
               //   renderReviews(place.reviews[i]);
               // }
-            } else {
-              console.log(status)
             }
           });
         }
       }
     );
+    
+
+    console.log(reviews)
+    
 
   }, [])
 
@@ -76,8 +102,8 @@ function PlacePage() {
      <section id='place-backdrop-sec-info'>
       <div id='place-backdrop-sec-info-left'>
      <div id='place-secondary-info'>
-        <p><FontAwesomeIcon icon={faPhone} /> (305) 909-8223</p>
-        <p><FontAwesomeIcon icon={faDiamondTurnRight} /> 12161 SW 152nd St Miami, FL 33177</p>
+        <p><FontAwesomeIcon icon={faPhone} /> {phone}</p>
+        <p><FontAwesomeIcon icon={faDiamondTurnRight} /> {address}</p>
       </div>
 
       <div id='msg-from-business'>
@@ -90,11 +116,9 @@ function PlacePage() {
 
       <div id='opening-hours-list'>
         <h4>Opening Hours</h4>
-        <p>Mon  11:00 AM - 10:00 PM</p>
-        <p>Mon  11:00 AM - 10:00 PM</p>
-        <p>Mon  11:00 AM - 10:00 PM</p>
-        <p>Mon  11:00 AM - 10:00 PM</p>
-        <p>Mon  11:00 AM - 10:00 PM</p>
+        {
+          hours.map((item) => <p>{item}</p>)
+        }
       </div>
       </div>
       <div id='place-backdrop-sec-info-right'>
@@ -123,31 +147,31 @@ function PlacePage() {
        <div className='review-rating'>
         <p>5 Stars</p>
         <div className='rating-bar'>
-          <div className='rating-bar-fill'></div>
+          <div className='rating-bar-fill' ref={fivestar}></div>
         </div>
        </div>
        <div className='review-rating'>
        <p>4 Stars</p>
        <div className='rating-bar'>
-       <div className='rating-bar-fill'></div>
+       <div className='rating-bar-fill' ref={fourstar}></div>
        </div>
        </div>
        <div className='review-rating'>
        <p>3 Stars</p>
        <div className='rating-bar'>
-       <div className='rating-bar-fill'></div>
+       <div className='rating-bar-fill' ref={threestar}></div>
        </div>
        </div>
        <div className='review-rating'>
        <p>2 Stars</p>
        <div className='rating-bar'>
-       <div className='rating-bar-fill'></div>
+       <div className='rating-bar-fill' ref={twostar}></div>
        </div>
        </div>
        <div className='review-rating'>
        <p>1 Star</p>
        <div className='rating-bar'>
-       <div className='rating-bar-fill'></div>
+       <div className='rating-bar-fill' ref={onestar}></div>
        </div>
        </div>
        </div>
@@ -159,7 +183,18 @@ function PlacePage() {
 
        <button style={{backgroundColor: '#8a05ff', color: "white", border: "3px solid #8a05ff"}}>Write A Review</button>
       </div>
+
+      <div id='list-of-reviews'>
+        {
+            reviews.map((review) => <div>
+              <h5>{review.author} | {review.time}</h5>
+              <h4 className='review-rating' rating={review.rating}>{`◆`.repeat(Math.round(parseInt(review.rating)))} {review.rating}/5</h4>
+              <p>{review.text}</p>
+            </div>)
+        }
+      </div>
      </section>
+     <Footer/>
     </>
   )
 }
