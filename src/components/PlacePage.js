@@ -14,7 +14,13 @@ function PlacePage() {
   const [phone, setPhone] = useState('');
   const [hours, setHours] = useState([]);
   const [reviews, setReviews] = useState([])
+  const [reviewPosted, setReviewPosted] = useState(false)
+  const [currDayHours, setCurrDayHours] = useState('')
   const [ratingChosen, setRatingChosen] = useState(false)
+
+
+  const ratingFilterDropdown = useRef();
+  const sortFilterDropdown = useRef();
 
   const fivestar = useRef();
   const fourstar = useRef();
@@ -67,6 +73,10 @@ function PlacePage() {
       }
     );
 
+  }, [])
+
+  useEffect(() => {
+
     const daysOfWeek = [
       'Sunday',
       'Monday',
@@ -74,14 +84,20 @@ function PlacePage() {
       'Wednesday',
       'Thursday',
       'Friday',
-      'Saturday'
+      'Saturday',
     ];
 
     const today = new Date();
     const dayOfWeek = today.getDay(); 
 
+    for (let i = 0; i < hours.length; i++) {
+      const day = String(hours[i]).split(':')[0];
+      if (daysOfWeek[dayOfWeek] == day) {
+        setCurrDayHours(String(hours[i]))
+      }
+    }
 
-  }, [])
+  }, [hours])
 
   useEffect(() => {
      let five = 0;
@@ -124,6 +140,35 @@ function PlacePage() {
         3: { color: priceLS >= 3 ? "black" : "lightgray" },
         4: { color: priceLS >= 4 ? "black" : "lightgray" },
       };
+
+      function matchKeyboardInput(e) {
+        const value = e.target.value;
+        const text = document.getElementsByClassName('review-text');
+        const parentDiv = document.getElementsByClassName('user-review');
+
+        for (let i = 0; i < text.length; i++) {
+
+           if (String(text[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())) {
+               parentDiv[i].style.display = "block"
+           } else {
+               parentDiv[i].style.display = "none"
+           }
+
+        const paragraph = text[i].textContent;
+        const wordToHighlight = e.target.value;
+        const words = paragraph.split(' ');
+        let highlightedHTML = '';
+   
+        words.forEach(word => {
+        if (word === wordToHighlight) {
+        highlightedHTML += `<span class="highlight">${word}</span> `;
+        } else {
+        highlightedHTML += `${word} `;
+        }
+        });
+        paragraph.innerHTML = highlightedHTML;
+        }
+     }
   return (
     <>
      <HomeHeader name={currentUser.name}/>
@@ -148,7 +193,7 @@ function PlacePage() {
         <p> | Serving Beer & Cocktails</p>
         </div>
 
-        <h5>Open11:00 AM - 11:00 PM</h5>
+        <h5>{currDayHours}</h5>
 
         <button><FontAwesomeIcon icon={faBookmark} /> Add To Favorites</button>
       </div>
@@ -280,15 +325,61 @@ function PlacePage() {
       </div>
 
       <div id='review-filters'>
-       <button>Sort By ▼</button>
-       <button>Filter By Rating ▼</button>
+       <div id='sort-by-filter'>
+       <button onClick={() => {
+        if (sortFilterDropdown.current.style.display !== 'block') {
+        sortFilterDropdown.current.style.display = 'block'
+        } else {
+        sortFilterDropdown.current.style.display = 'none'
+        }
+       }}>Sort By ▼</button>
+       <div id='sort-by-filter-dropdown' ref={sortFilterDropdown}>
+       <li><p>Most Recent</p> <input type='checkbox'/></li>
+       <li><p>Highest Rated</p> <input type='checkbox'/></li>
+       <li><p>Lowest Rated</p> <input type='checkbox'/></li>
+       </div>
+       </div>
+
+       <div id='rating-filter'>
+       <button onClick={() => {
+        if (ratingFilterDropdown.current.style.display !== 'block') {
+        ratingFilterDropdown.current.style.display = 'block'
+        } else {
+        ratingFilterDropdown.current.style.display = 'none'
+        }
+       }}>Filter By Rating ▼</button>
+       <div id='rating-filter-dropdown' ref={ratingFilterDropdown}>
+       <li><p>5 Star</p> <input type='checkbox'/></li>
+       <li><p>4 Star</p> <input type='checkbox'/></li>
+       <li><p>3 Star</p> <input type='checkbox'/></li>
+       <li><p>2 Star</p> <input type='checkbox'/></li>
+       <li><p>1 Star</p> <input type='checkbox'/></li>
+       </div>
+       </div>
 
        <button style={{backgroundColor: '#8a05ff', color: "white", border: "3px solid #8a05ff"}}
        onClick={(e) => {
-          writeReviewContainer.current.style.display = 'flex';
-            setRatingChosen(false)
+            if (e.target.textContent === 'Cancel Review') {
+              writeReviewContainer.current.style.display = 'none';
+              if (!reviewPosted) {
+              e.target.textContent = 'Write A Review'
+              } else {
+              e.target.textContent = 'Edit Review'
+              }
+            } else {
+              writeReviewContainer.current.style.display = 'flex';
+              e.target.textContent = 'Cancel Review'
+              setRatingChosen(false)
+            }
        }} ref={writeAReviewBtn}>Write A Review</button>
       </div>
+
+      <div id='keyword-filter'>
+        <h5>Filter By Keywords</h5>
+        <input placeholder='Type Keyword(s)... e.g.: service, best, crowded, etc' onKeyUp={(e) => {
+          matchKeyboardInput(e)
+        }}></input>
+       </div>
 
       <div id='list-of-reviews'>
         <div id='write-review-container' ref={writeReviewContainer}>
@@ -365,6 +456,7 @@ function PlacePage() {
             document.getElementById('user-review-section').prepend(fragment)
             writeReviewContainer.current.style.display = 'none';
             writeAReviewBtn.current.textContent = 'Edit Review';
+            setReviewPosted(true)
           } else {
             document.getElementById('my-review').childNodes[5].textContent = reviewTextarea.current.value;
             document.getElementById('my-rating').textContent = `${'◆'.repeat(parseInt(user_rating))} ${user_rating}/5`
@@ -378,7 +470,7 @@ function PlacePage() {
             reviews.map((review) => <div className='user-review'>
               <h5>{review.author} | {review.time}</h5>
               <h4 className='review-rating' rating={review.rating}>{`◆`.repeat(Math.round(parseInt(review.rating)))} {review.rating}/5</h4>
-              <p>{review.text}</p>
+              <p className='review-text'>{review.text}</p>
             </div>)
         }
         </div>
