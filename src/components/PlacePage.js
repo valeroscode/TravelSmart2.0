@@ -62,16 +62,12 @@ function PlacePage() {
           var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
             if (status == "OK") {
-              for (let i = 0; i < 2; i++) {
+              for (let i = 0; i < 3; i++) {
               const photoUrl = place.photos[i].getUrl({ maxWidth: 400 });
-              const imgElement = document.getElementById(`photos-middle-col`).childNodes[i];
+              const imgElement = document.getElementById(`place-photos`).childNodes[i];
               console.log(imgElement)
               imgElement.src = photoUrl;
               }
-              const photoUrl = place.photos[3].getUrl({ maxWidth: 400 });
-              const imgElement = document.getElementById(`photo-img-1`);
-              console.log(imgElement)
-              imgElement.src = photoUrl;
               setAddress(place.formatted_address)
               setPhone(place.formatted_phone_number)
               setHours(place.opening_hours.weekday_text)
@@ -224,11 +220,9 @@ function PlacePage() {
         <div>
           <div id='place-photos'>
           <img id='photo-img-1'></img>
-          <div id='photos-middle-col'>
           <img id='photo-img-2'></img>
           <img id='photo-img-3'></img>
-          </div>
-          <div id='photo-img-map' ref={mapContainer}></div>
+          <span id='photo-img-map' ref={mapContainer}></span>
           </div>
         </div>
       </div>
