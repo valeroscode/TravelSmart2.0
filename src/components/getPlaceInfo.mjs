@@ -10,7 +10,9 @@ export function learnMoreAboutPlace(
   favorite,
   category,
   id,
-  e
+  e,
+  lat,
+  lng
 ) {
   if (
     typeof window !== "undefined" &&
@@ -30,6 +32,8 @@ export function learnMoreAboutPlace(
     localStorage.setItem("favorite", favorite);
     localStorage.setItem("ID", id);
     localStorage.setItem("category", category);
+    localStorage.setItem("lat", lat);
+    localStorage.setItem("lng", lng);
     placePageSuggestions();
   }
 }

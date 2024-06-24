@@ -14,6 +14,7 @@ function PlacePage() {
   const [phone, setPhone] = useState('');
   const [hours, setHours] = useState([]);
   const [reviews, setReviews] = useState([])
+  const [photo, setPhoto] = useState()
   const [reviewPosted, setReviewPosted] = useState(false)
   const [currDayHours, setCurrDayHours] = useState('')
   const [ratingChosen, setRatingChosen] = useState(false)
@@ -28,6 +29,7 @@ function PlacePage() {
   const twostar = useRef();
   const onestar = useRef();
 
+  const mapContainer = useRef();
   const choosingRating = useRef();
   const chooseRatingText = useRef();
   const reviewTextarea = useRef();
@@ -36,6 +38,16 @@ function PlacePage() {
   const writeAReviewBtn = useRef();
 
   useEffect(() => {
+
+    mapContainer.current.appendChild(document.getElementById("google-map"))
+    var map = window.map;
+    map.panTo({lat: parseFloat(localStorage.getItem('lat')), lng: parseFloat(localStorage.getItem('lng'))})
+    var marker = new window.google.maps.Marker({
+      map: map,
+      position: {lat: parseFloat(localStorage.getItem('lat')), lng: parseFloat(localStorage.getItem('lng'))},
+    })
+
+    marker.setMap(map)
     
     var geocoder = new window.google.maps.Geocoder();
     geocoder.geocode(
@@ -44,12 +56,22 @@ function PlacePage() {
         if (status === window.google.maps.GeocoderStatus.OK) {
           const request = {
             placeId: localStorage.getItem("ID"),
-            fields: ["reviews", "formatted_address", "opening_hours", "formatted_phone_number"],
+            fields: ["reviews", "formatted_address", "opening_hours", "formatted_phone_number", "photo"],
           };
 
           var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
             if (status == "OK") {
+              for (let i = 0; i < 2; i++) {
+              const photoUrl = place.photos[i].getUrl({ maxWidth: 400 });
+              const imgElement = document.getElementById(`photos-middle-col`).childNodes[i];
+              console.log(imgElement)
+              imgElement.src = photoUrl;
+              }
+              const photoUrl = place.photos[3].getUrl({ maxWidth: 400 });
+              const imgElement = document.getElementById(`photo-img-1`);
+              console.log(imgElement)
+              imgElement.src = photoUrl;
               setAddress(place.formatted_address)
               setPhone(place.formatted_phone_number)
               setHours(place.opening_hours.weekday_text)
@@ -174,6 +196,7 @@ function PlacePage() {
      <HomeHeader name={currentUser.name}/>
      <section id='place-backdrop'>
       <div id='place-basic-info'>
+        <div id='place-basic-info-left'>
         <h2>{localStorage.getItem('title')}</h2>
         <div id='place-basic-rating'>
              <h4>{`◆`.repeat(localStorage.getItem('rating'))}</h4> <p>{localStorage.getItem('rating')}</p>
@@ -196,6 +219,19 @@ function PlacePage() {
         <h5>{currDayHours}</h5>
 
         <button><FontAwesomeIcon icon={faBookmark} /> Add To Favorites</button>
+      </div>
+      <div id='place-basic-info-right'>
+        <div>
+          <div id='place-photos'>
+          <img id='photo-img-1'></img>
+          <div id='photos-middle-col'>
+          <img id='photo-img-2'></img>
+          <img id='photo-img-3'></img>
+          </div>
+          <div id='photo-img-map' ref={mapContainer}></div>
+          </div>
+        </div>
+      </div>
       </div>
      </section>
 
