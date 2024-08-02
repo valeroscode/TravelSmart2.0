@@ -657,10 +657,23 @@ setExpCityOn(false)
                     </div>
                     
                   </div>
-                  <button className="explore-city-button">
+                  <button className="explore-city-button"
+                  city={city}
+                  onClick={(e) => {
+                      document.body.append(document.getElementById("google-map"));
+                      sessionStorage.setItem("city", e.target.getAttribute('city'))
+                      sessionStorage.setItem("filters", 'none');
+                      sessionStorage.setItem("total", 0);
+                       window.location.replace(
+                      "http://localhost:3000/Search-Results"
+                      );
+                    }} 
+                    >
                     Explore City{" "}
+                    
+                    
                     <FontAwesomeIcon
-                      icon={faChevronRight}
+                      icon={faChevronRight}   
                     />
                     </button>
                 </div>

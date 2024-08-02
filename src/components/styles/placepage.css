@@ -33,15 +33,36 @@
     width: 30rem;
 }
 
+#scroll-down-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+#scroll-down-div svg {
+    border: 2px solid black;
+    padding: 0.5rem;
+    border-radius: 100%;
+    margin-left: 0.5rem;
+}
+
 #place-photos {
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     width: 100%;
+}
+
+#place-photos-middle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #place-photos img {
     width: 14rem;
+    height: 10rem;
     margin: 0.5rem;
     border-radius: 15px;
 }
@@ -51,6 +72,18 @@
     width: 15rem;
     height: 10.5rem;
     border-radius: 15px;
+}
+
+#photo-img-1 {
+    object-fit: cover;
+}
+
+#photo-img-2 {
+    object-fit: cover;
+}
+
+#photo-img-3 {
+    object-fit: cover;
 }
 
 #place-backdrop #place-basic-info h2 {
@@ -77,6 +110,7 @@
     margin-top: 0.5rem;
     font-size: 1.2rem;
     margin-bottom: 1rem;
+    text-align: left;
 }
 
 #place-backdrop #place-basic-info h4 {
@@ -146,7 +180,6 @@
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  height: 10rem;
 }
 
 #place-backdrop-sec-info-right h3 {
@@ -216,7 +249,6 @@
 .msg {
     color: black;
     background-color: white;
-    width: fit-content;
     padding: 0.5rem 1.5rem;
     max-width: 25rem;
 }
@@ -513,4 +545,146 @@
 .highlight {
     background-color: yellow;
     font-weight: 800;
+}
+
+@media screen and (max-width: 1030px) {
+    #photo-img-1 {
+        display: none;
+    } 
+
+    #place-photos-middle {
+        flex-direction: column;
+        position: relative;
+        top: 5rem;
+    }
+    #photo-img-map {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 870px) {
+    .rating-bar {
+        width: 20rem;
+    }
+}
+
+@media screen and (max-width: 711px) {
+    #place-backdrop #place-basic-info {
+        width: 89%;
+    }
+    #place-backdrop-sec-info-right {
+        width: unset;
+    }
+    #place-backdrop-sec-info #msg-from-business h2 {
+        font-size: 1.5rem;
+    }
+    #place-backdrop-sec-info {
+        justify-content: start;
+        flex-direction: column;
+    }
+}
+
+@media screen and (max-width: 672px) {
+    #review-ratings-summary {
+        flex-direction: column;
+    }
+    #overall-rating {
+        align-items: start;
+    }
+    #review-ratings-bars {
+        margin-left: unset;
+        margin-top: 2rem;
+    }
+}
+
+@media screen and (max-width: 636px) {
+
+    #place-backdrop {
+        padding-top: 2rem;
+    }
+
+    #place-photos img {
+        height: 8rem;
+        width: 10rem;
+    }
+
+    #place-backdrop #place-basic-info h2 {
+        font-size: 2rem;
+    }
+
+    #place-backdrop #place-basic-info h4 {
+        font-size: 1.25rem;
+    }
+
+    #place-backdrop #place-basic-info h5 {
+        font-size: 1rem;
+    }
+
+    #place-backdrop #place-basic-info #cost-serving p:nth-child(2) {
+        font-size: 1rem;
+    }
+}
+
+@media screen and (max-width: 490px) {
+    .review-rating {
+        flex-direction: column;
+        align-items: start;
+    }
+    .rating-bar {
+        margin-left: 0;
+    }
+    #overall-rating h1 {
+        padding: 0.5rem;
+    }
+}
+
+@media screen and (max-width: 481px) {
+    #place-basic-info {
+        flex-direction: column;
+    }
+    #place-photos-middle {
+        flex-direction: row;
+    }
+
+    #place-photos {
+        align-items: start;
+    }
+    #place-backdrop-sec-info #place-secondary-info p {
+        font-size: 1rem;
+    }
+    .msg h3 {
+        font-size: 1rem;
+    }
+    .msg p {
+        font-size: 1rem;
+    }
+    #opening-hours-list {
+        width: unset;
+    }
+    #place-backdrop-sec-info-left {
+        width: unset;
+        margin-left: 2rem;
+    }
+    #place-backdrop-sec-info-right {
+        height: unset;
+        margin-left: 2rem;
+    }
+    #place-backdrop-reviews h2 {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #review-filters button {
+        font-size: 0.9rem;
+    }
+}
+
+@media screen and (max-width: 376px) {
+    #list-of-reviews div p {
+        font-size: 0.9rem;
+    }
+    #place-photos-middle {
+        left: -0.5rem;
+    }
 }

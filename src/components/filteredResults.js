@@ -62,18 +62,23 @@ function Results() {
     setName(currentUser.name);
   }, [currentUser]);
 
-  let counter = 0;
   let applied_filters = sessionStorage.getItem("filters").split("/ ,");
 
   useEffect(() => {
     const city = sessionStorage.getItem("city");
-    let placesInCity = allPlaces.filter((place) => place.city === city)
-    placesInCity.map((place) => place.score = 0)
+    let placesInCity = allPlaces.filter((place) => place.city === city);
+    placesInCity.map((place) => place.score = 0);
+    if (sessionStorage.getItem("filters") === 'none') {
+      setPlaces(placesInCity.filter(
+        (m) => m.city === city
+      ));
+    } else {
     setPlaces(placesInCity.filter(
       (m) => m.city === city  && String(m.serves).toLocaleUpperCase() === String(applied_filters) || 
       String(m.style).toLocaleUpperCase() === String(applied_filters) || String(m.category).toLocaleUpperCase() === String(applied_filters)
       || String(m.area).toLocaleUpperCase() === String(applied_filters)
     ));
+  }
   }, [])
 
   useEffect(() => {
@@ -310,7 +315,7 @@ function Results() {
                           <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
                         
                         </div>
-                        <a>See Images</a>
+                      
                       </div>
                       <div className="res-line"></div>
                     </div>
@@ -341,7 +346,7 @@ function Results() {
                           <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target)}>Learn More</button>
                         
                         </div>
-                        <a>See Images</a>
+                        
                       </div>
                       <div className="res-line"></div>
                     </div>
@@ -353,8 +358,9 @@ function Results() {
         </div>
 
         <div id="all-results">
-          <h4 ref={filterDescription} id="filter-desc">{applied_filters} IN {String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h4>
-          
+          {
+            sessionStorage.getItem("filters") === 'none' ? <h4 ref={filterDescription} id="filter-desc">{String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h4> : <h4 ref={filterDescription} id="filter-desc">{applied_filters} IN {String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h4> }
+                   
           <div id="all-results-filters">
             {
               categories.length > 1 ?
@@ -538,15 +544,6 @@ function Results() {
                     <h4 className="place-div-style">{place.style}</h4>
                     
                       <h5 className="place-div-serves">Serves {String(place.serves).replaceAll(',',' ')}</h5>
-                      
-                    <div className="place-div-tags">
-                      {
-                        place.price <= 2 ? <p className="inexpensive-place">Inexpensive</p> : null
-                      }
-                      {
-                        place.rating >= 4 ? <p className="highly-rated-place">Highly Rated</p> : null
-                      }
-                    </div>
                     { 
                     place.awards !== "" ?
                     <div className="place-div-awards">
@@ -558,7 +555,15 @@ function Results() {
                     <div className="all-places-buttons">
                     <button>Add To Trip</button>
                     <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target)}>Learn More</button>
-                    <button>See Images</button>
+                   
+                    </div>
+                    <div className="place-div-tags">
+                      {
+                        place.price <= 2 ? <p className="inexpensive-place">Inexpensive</p> : null
+                      }
+                      {
+                        place.rating >= 4 ? <p className="highly-rated-place">Highly Rated</p> : null
+                      }
                     </div>
                     <div className="filteredplaces-line"></div>
                  </div>

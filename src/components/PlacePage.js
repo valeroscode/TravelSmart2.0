@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import HomeHeader from "./HomeHeader"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiamondTurnRight, faPhone,faBookmark, faDiamond } from "@fortawesome/free-solid-svg-icons";
+import { faDiamondTurnRight, faPhone,faBookmark, faDiamond, faArrowDown } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "./contexts/AuthContext";
 import './styles/placepage.css'
 import Footer from './footer';
@@ -62,10 +62,9 @@ function PlacePage() {
           var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
             if (status == "OK") {
-              for (let i = 0; i < 3; i++) {
+              for (let i = 1; i < 4; i++) {
               const photoUrl = place.photos[i].getUrl({ maxWidth: 400 });
-              const imgElement = document.getElementById(`place-photos`).childNodes[i];
-              console.log(imgElement)
+              const imgElement = document.getElementById(`photo-img-${i}`);
               imgElement.src = photoUrl;
               }
               setAddress(place.formatted_address)
@@ -215,13 +214,19 @@ function PlacePage() {
         <h5>{currDayHours}</h5>
 
         <button><FontAwesomeIcon icon={faBookmark} /> Add To Favorites</button>
+        <div id='scroll-down-div'>
+       <h3>Scroll Down</h3>
+       <FontAwesomeIcon icon={faArrowDown} />
+      </div>
       </div>
       <div id='place-basic-info-right'>
         <div>
           <div id='place-photos'>
           <img id='photo-img-1'></img>
+          <div id='place-photos-middle'>
           <img id='photo-img-2'></img>
           <img id='photo-img-3'></img>
+          </div>
           <span id='photo-img-map' ref={mapContainer}></span>
           </div>
         </div>
@@ -404,7 +409,7 @@ function PlacePage() {
        }} ref={writeAReviewBtn}>Write A Review</button>
       </div>
 
-      <div id='keyword-filter'>
+      <div id='keyword-filter' style={{display: 'none'}}>
         <h5>Filter By Keywords</h5>
         <input placeholder='Type Keyword(s)... e.g.: service, best, crowded, etc' onKeyUp={(e) => {
           matchKeyboardInput(e)
