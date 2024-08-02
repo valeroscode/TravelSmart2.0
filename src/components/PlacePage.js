@@ -212,8 +212,13 @@ function PlacePage() {
         </div>
 
         <h5>{currDayHours}</h5>
-
-        <button><FontAwesomeIcon icon={faBookmark} /> Add To Favorites</button>
+        //ADD FUNCTIONALITY TO THIS BUTTON!
+        <button onClick={() => {
+          fetch("http://localhost:8080/updateFavorites", {
+            
+          })
+        }}><FontAwesomeIcon icon={faBookmark} 
+        /> Add To Favorites</button>
         <div id='scroll-down-div'>
        <h3>Scroll Down</h3>
        <FontAwesomeIcon icon={faArrowDown} />

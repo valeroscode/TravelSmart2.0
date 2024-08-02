@@ -10,6 +10,7 @@ import {
 import { allPlaces } from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
 import { doc } from "firebase/firestore/lite";
+import { Link } from "react-router-dom";
 
 function HomeHeader({ name }) {
   const account = useRef();
@@ -39,7 +40,7 @@ function HomeHeader({ name }) {
 
   function handleLogout() {
     logout();
-    window.location.replace("http://localhost:3000/login");
+    window.location.replace("http://localhost:3000/");
   }
 
   const cityInput = useRef();
@@ -157,12 +158,13 @@ function HomeHeader({ name }) {
     <>
       <div id="home-title" style={window.location.pathname === '/Search-Results' ? {backgroundColor: 'black'} : (window.location.pathname === '/place' ? {background: 'unset', backgroundColor: 'whitesmoke'} : null)}>
         <div id="home-org">
-      <div id="home-h1">
+      <div id="home-h1" onClick={() => window.location.replace('http://localhost:3000/home')}>
+        
           <FontAwesomeIcon icon={faPaperPlane} className="plane" style={window.location.pathname === '/Search-Results' ? {color: 'white'} : (window.location.pathname === '/place' ? {color: 'black'} : null)} />
           {
             window.location.pathname === "home" ? <h1>TRAVEL SMART</h1> : (window.location.pathname === '/place' ? <h1 style={{color: 'black'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1> : <h1 style={{color: 'white'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>)
           }
-          
+         
         </div>
 
         <div id="home-searchbar">

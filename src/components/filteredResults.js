@@ -359,7 +359,7 @@ function Results() {
 
         <div id="all-results">
           {
-            sessionStorage.getItem("filters") === 'none' ? <h4 ref={filterDescription} id="filter-desc">{String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h4> : <h4 ref={filterDescription} id="filter-desc">{applied_filters} IN {String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h4> }
+            sessionStorage.getItem("filters") === 'none' ? <h4 ref={filterDescription} id="filter-desc">ALL OF {String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h4> : <h4 ref={filterDescription} id="filter-desc">{applied_filters} IN {String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h4> }
                    
           <div id="all-results-filters">
             {
