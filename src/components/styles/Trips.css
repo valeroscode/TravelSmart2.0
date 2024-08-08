@@ -443,6 +443,7 @@ transition: none;
 #wrapper-container {
   display: flex;
   justify-content: center;
+  margin-top: 3rem;
 }
 #wrapper {
 width: 30vw;
@@ -456,6 +457,7 @@ flex-direction: column;
 font-family: 'Roboto Condensed', sans-serif;
 justify-content: center;
 align-items: center;
+margin-right: 5rem;
 }
 #wrapper header {
 display: flex;
@@ -547,14 +549,35 @@ font-weight: 500;
 }
 
 #friends-section {
-  width: 100%;
   display: flex;
   margin-left: 1rem;
-  justify-content: space-between;
+  flex-direction: column;
+}
+
+#friends-section h5 {
+  text-align: left;
+  font-size: 1.25rem;
+  font-family: 'Roboto Condensed', sans-serif;
+  margin-bottom: 0;
+}
+
+#friends-section input {
+  margin: 0;
+  padding: 1rem 1rem 1rem 0.5rem;
+  font-size: 1rem;
+  border-radius: 5px 25px 25px 5px;
+  border: 1px solid gray;
+}
+
+.friends-section-desc {
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+  color: gray;
 }
 
 #friends-list {
   width: 80%;
+  margin-top: 1.5rem;
 }
 
 #friends-list ul {
@@ -606,20 +629,6 @@ font-weight: 500;
   background-color: darkred;
 }
 
-#add-friends-btn {
-  font-family: 'Roboto Condensed', sans-serif;
-  pointer-events: all;
-  cursor: pointer;
-  text-align: end;
-  -webkit-transition: all 0.3s ease;
--moz-transition: all 0.3s ease;
--o-transition: all 0.3s ease;
-transition: all 0.3s ease;
-}
-
-#add-friends-btn:hover {
-  color: #8A05FF;
-}
 #date-selection {
 display: flex;
 flex-direction: row;

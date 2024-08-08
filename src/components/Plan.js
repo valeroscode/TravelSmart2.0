@@ -787,28 +787,7 @@ return (
                 </span>
                 <span className="selectDate" ref={end} id="tripEndDate"></span>
               </div>
-              <div id="friends-section">
-                <div id="friends-list">
-                    <ul>
-                        <li>
-                            <div className="friend-photo"></div>
-                            <h3 className="friend-name"></h3>
-                            <div className="remove-friend"></div>
-                        </li>
-                        <li>
-                            <div className="friend-photo"></div>
-                            <h3 className="friend-name"></h3>
-                            <div className="remove-friend"></div>
-                        </li>
-                        <li>
-                            <div className="friend-photo"></div>
-                            <h3 className="friend-name"></h3>
-                            <div className="remove-friend"></div>
-                        </li>
-                    </ul>
-                </div>
-              <h3 id="add-friends-btn">Add Friends ▼</h3>
-              </div>
+              
             </div>
           </div>
           </div>
@@ -859,6 +838,30 @@ return (
               </button>
             </div>
           </div>
+          <div id="friends-section">
+                <h5>Add Friends (optional)</h5>
+                <p className="friends-section-desc">Collaborate on plans, create together</p>
+                <input type="search" placeholder="Search"></input>
+                <div id="friends-list">
+                    <ul>
+                        <li>
+                            <div className="friend-photo"></div>
+                            <h3 className="friend-name"></h3>
+                            <div className="remove-friend"></div>
+                        </li>
+                        <li>
+                            <div className="friend-photo"></div>
+                            <h3 className="friend-name"></h3>
+                            <div className="remove-friend"></div>
+                        </li>
+                        <li>
+                            <div className="friend-photo"></div>
+                            <h3 className="friend-name"></h3>
+                            <div className="remove-friend"></div>
+                        </li>
+                    </ul>
+                </div>
+              </div>
           </div>
 </section>
 <Footer/>

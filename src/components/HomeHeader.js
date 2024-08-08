@@ -21,6 +21,7 @@ function HomeHeader({ name }) {
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
+    
     allPlaces.map((place) =>
       !cities.includes(place.city) ? cities.push(place.city) : null
     );
@@ -162,7 +163,7 @@ function HomeHeader({ name }) {
         
           <FontAwesomeIcon icon={faPaperPlane} className="plane" style={window.location.pathname === '/Search-Results' ? {color: 'white'} : (window.location.pathname === '/place' ? {color: 'black'} : null)} />
           {
-            window.location.pathname === "home" ? <h1>TRAVEL SMART</h1> : (window.location.pathname === '/place' ? <h1 style={{color: 'black'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1> : <h1 style={{color: 'white'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>)
+            window.location.pathname === "/home" ? <h1>TRAVEL SMART</h1> : (window.location.pathname === '/place' ? <h1 style={{color: 'black'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1> : <h1 style={{color: 'white'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>)
           }
          
         </div>

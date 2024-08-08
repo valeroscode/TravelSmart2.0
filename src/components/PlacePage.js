@@ -213,10 +213,26 @@ function PlacePage() {
 
         <h5>{currDayHours}</h5>
         //ADD FUNCTIONALITY TO THIS BUTTON!
-        <button onClick={() => {
+        <button onClick={(e) => {
           fetch("http://localhost:8080/updateFavorites", {
-            
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              Operation: 'append',
+              Item: localStorage.getItem('title')
+            })
+          }).then(res => {
+            if (res.ok) return res.json()
+          }).then(() => {
+            e.target.style.backgroundColor = 'whitesmoke';
+            e.target.style.color = 'black';
+            e.target.textContent = ' Favorited';
+          }).catch(e => {
+            console.error(e.error)
           })
+
         }}><FontAwesomeIcon icon={faBookmark} 
         /> Add To Favorites</button>
         <div id='scroll-down-div'>

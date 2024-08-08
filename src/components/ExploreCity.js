@@ -227,7 +227,7 @@ function ExploreCity ({places}) {
                <p>{filteredPlaces.length} Places</p>
                
               </div>
-              <p id='for-search'>For a more complete search use the searchbar above</p>
+             
             </div>
             <input
                 id="searchInput"
