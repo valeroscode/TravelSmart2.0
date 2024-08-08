@@ -24,6 +24,8 @@ function Plan() {
 
     const navigate = useNavigate();
 
+    const [friends, setFriends] = useState(['friend1', 'friend2', 'friend3']);
+
     useEffect(() => {       
     
           window.addEventListener("click", (e) => {
@@ -690,6 +692,24 @@ function Plan() {
     }
   }
 
+  function matchKeyboardInput(e) {
+    const value = e.target.value;
+
+    const friend = document.getElementsByClassName('friend-name-search');
+
+    for (let i = 0; i < friend.length; i++) {
+       if (value === '') {
+        friend[i].style.display = "none"
+       } else {
+       if (String(friend[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())) {
+        friend[i].style.display = "block"
+       } else {
+        friend[i].style.display = "none"
+       }
+      }
+    }
+ }
+
 
 return (
 <>
@@ -841,22 +861,30 @@ return (
           <div id="friends-section">
                 <h5>Add Friends (optional)</h5>
                 <p className="friends-section-desc">Collaborate on plans, create together</p>
-                <input type="search" placeholder="Search"></input>
+                <div id="friend-search">
+                <input type="search" placeholder="Search"
+                onKeyUp={(e) => matchKeyboardInput(e)}></input>
+                <div id="friend-search-dropdown">
+                  {
+                    friends.map((friend) => <div className="friend-name-search"><p>{friend}</p></div>)
+                  }
+                </div>
+                </div>
                 <div id="friends-list">
                     <ul>
                         <li>
                             <div className="friend-photo"></div>
-                            <h3 className="friend-name"></h3>
+                            <h3 className="friend-name">vnjfkjnv james</h3>
                             <div className="remove-friend"></div>
                         </li>
                         <li>
                             <div className="friend-photo"></div>
-                            <h3 className="friend-name"></h3>
+                            <h3 className="friend-name">cjndk suarez</h3>
                             <div className="remove-friend"></div>
                         </li>
                         <li>
                             <div className="friend-photo"></div>
-                            <h3 className="friend-name"></h3>
+                            <h3 className="friend-name">njcvk west</h3>
                             <div className="remove-friend"></div>
                         </li>
                     </ul>

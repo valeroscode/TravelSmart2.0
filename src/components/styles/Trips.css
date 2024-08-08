@@ -552,11 +552,12 @@ font-weight: 500;
   display: flex;
   margin-left: 1rem;
   flex-direction: column;
+  position: relative;
 }
 
 #friends-section h5 {
   text-align: left;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   font-family: 'Roboto Condensed', sans-serif;
   margin-bottom: 0;
 }
@@ -575,16 +576,47 @@ font-weight: 500;
   color: gray;
 }
 
+#friend-search-dropdown {
+  position: absolute;
+  background-color: whitesmoke;
+  width: 100%;
+  top: 6.5rem;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.friend-name-search {
+  display: none;
+}
+
+#friend-search-dropdown div {
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  margin: 0;
+}
+
+#friend-search-dropdown div p {
+   padding: 0.5rem;
+}
+
+#friend-search-dropdown div:hover {
+  background-color: gray;
+
+}
+
 #friends-list {
-  width: 80%;
+  width: 100%;
   margin-top: 1.5rem;
 }
 
 #friends-list ul {
    display: flex;
    max-width: 100%;
-   flex-wrap: wrap;
+   flex-direction: column;
    margin-top: 0;
+
 }
 
 #friends-list ul li {
