@@ -25,6 +25,7 @@ function Plan() {
     const navigate = useNavigate();
 
     const [friends, setFriends] = useState(['friend1', 'friend2', 'friend3']);
+    const [selectedFriends, setSelectedFriends] = useState([]);
 
     useEffect(() => {       
     
@@ -40,6 +41,8 @@ function Plan() {
   const account = useRef();
   const editUser = useRef();
   const userNameDiv = useRef();
+  const friendList = useRef();
+  const friendSearch = useRef();
 
   function hideEditUser (e) {
     if (!e.target.closest('#edit-user') && !e.target.closest('.account')) {
@@ -77,7 +80,8 @@ function Plan() {
     dayTag = useRef(),
     start = useRef(),
     end = useRef(),
-    calWrapper = useRef();
+    calWrapper = useRef(),
+    wrapperCon = useRef();
 
   const renderCalendar = (year, month) => {
     let firstDateofMonth = new Date(year, month, 1).getDay(),
@@ -774,6 +778,11 @@ return (
                   type="text"
                   required
                   autocomplete="off"
+                  onClick={(e) => {
+                    e.target.nextElementSibling.style.left = '1.8rem';
+                    e.target.previousElementSibling.style.top = '1.25rem';
+                    e.target.previousElementSibling.style.fontSize = '0.7rem';
+                  }}
                 />
                 <span className="placeholder">e.g. Miami, North Pole...</span>
                 <div
@@ -792,13 +801,18 @@ return (
                   className="tripPlace"
                   type="text"
                   required
+                  onClick={(e) => {
+                    e.target.nextElementSibling.style.left = '1.8rem';
+                    e.target.previousElementSibling.style.top = '1.25rem';
+                    e.target.previousElementSibling.style.fontSize = '0.7rem';
+                  }}
                 />
                 <span className="placeholder">
                   e.g. Birthday, Family Summer
                 </span>
               </div>
               <div id="date-selection" onClick={() => {
-                calWrapper.current.style.display = "flex"
+                wrapperCon.current.style.display = "flex"
               }}>
                 <p className="input-dates">Dates</p>
                 <div type="text" id="dates-input" className="tripPlace"></div>
@@ -811,7 +825,7 @@ return (
             </div>
           </div>
           </div>
-<div id="wrapper-container">
+<div id="wrapper-container" ref={wrapperCon}>
 <div id="wrapper" ref={calWrapper}>
             <header>
               <div id="month-arrows">
@@ -862,31 +876,39 @@ return (
                 <h5>Add Friends (optional)</h5>
                 <p className="friends-section-desc">Collaborate on plans, create together</p>
                 <div id="friend-search">
-                <input type="search" placeholder="Search"
+                <input type="search" placeholder="Search" ref={friendSearch} 
                 onKeyUp={(e) => matchKeyboardInput(e)}></input>
                 <div id="friend-search-dropdown">
                   {
-                    friends.map((friend) => <div className="friend-name-search"><p>{friend}</p></div>)
+                    friends.map((friend) => <div className="friend-name-search" onClick={(e) => {
+                      selectedFriends.push(e.target.textContent);
+                      setSelectedFriends(selectedFriends);
+                      const updatedFriends = friends.filter(f => f !== e.target.textContent);
+                      setFriends(updatedFriends)
+                      for (let i = 0; i < updatedFriends.length; i++) {
+                        const f = document.getElementsByClassName('friend-name-search');
+                        f[i].style.display = 'none';
+                      }
+                    }}><p>{friend}</p></div>)
                   }
                 </div>
                 </div>
-                <div id="friends-list">
+                <div id="friends-list" ref={friendList}>
                     <ul>
+                      {
+                        selectedFriends.map((friend) => 
                         <li>
-                            <div className="friend-photo"></div>
-                            <h3 className="friend-name">vnjfkjnv james</h3>
-                            <div className="remove-friend"></div>
-                        </li>
-                        <li>
-                            <div className="friend-photo"></div>
-                            <h3 className="friend-name">cjndk suarez</h3>
-                            <div className="remove-friend"></div>
-                        </li>
-                        <li>
-                            <div className="friend-photo"></div>
-                            <h3 className="friend-name">njcvk west</h3>
-                            <div className="remove-friend"></div>
-                        </li>
+                          <div className="friend-photo"></div>
+                          <h3 className="friend-name">{friend}</h3>
+                          <div className="remove-friend" onClick={(e) => {
+                            const text = e.target.previousElementSibling.textContent;
+                            setFriends(friends.push(text))
+                            console.log(friends)
+                            const updatedSelFriends = friends.filter(f => f !== text);
+                            setSelectedFriends(updatedSelFriends)
+                          }}></div>
+                        </li>)
+                      }
                     </ul>
                 </div>
               </div>
