@@ -27,6 +27,8 @@ function Plan() {
     const [friends, setFriends] = useState(['friend1', 'friend2', 'friend3']);
     const [selectedFriends, setSelectedFriends] = useState([]);
 
+    const [frDDActive, setFrDDActive] = useState(false)
+
     useEffect(() => {       
     
           window.addEventListener("click", (e) => {
@@ -698,9 +700,8 @@ function Plan() {
 
   function matchKeyboardInput(e) {
     const value = e.target.value;
-
     const friend = document.getElementsByClassName('friend-name-search');
-
+    setFrDDActive(true)
     for (let i = 0; i < friend.length; i++) {
        if (value === '') {
         friend[i].style.display = "none"
@@ -721,8 +722,7 @@ return (
 <div id="c-header-left">
     <div>
     <FontAwesomeIcon icon={faPaperPlane} />
-    <h2>Travel Smart</h2>
-    <button onClick={() => navigate('/home')}>Home</button>
+    <h2 onClick={() => navigate('/home')}>TRAVEL SMART</h2>
     </div>
     </div>
  
@@ -781,7 +781,7 @@ return (
                   onClick={(e) => {
                     e.target.nextElementSibling.style.left = '1.8rem';
                     e.target.previousElementSibling.style.top = '1.25rem';
-                    e.target.previousElementSibling.style.fontSize = '0.7rem';
+                    e.target.previousElementSibling.style.fontSize = '1rem';
                   }}
                 />
                 <span className="placeholder">e.g. Miami, North Pole...</span>
@@ -804,7 +804,7 @@ return (
                   onClick={(e) => {
                     e.target.nextElementSibling.style.left = '1.8rem';
                     e.target.previousElementSibling.style.top = '1.25rem';
-                    e.target.previousElementSibling.style.fontSize = '0.7rem';
+                    e.target.previousElementSibling.style.fontSize = '1rem';
                   }}
                 />
                 <span className="placeholder">
@@ -825,7 +825,15 @@ return (
             </div>
           </div>
           </div>
-<div id="wrapper-container" ref={wrapperCon}>
+<div id="wrapper-container" ref={wrapperCon} 
+onClick={(e) => {
+   if (!e.target.closest('#friend-search-dropdown') && frDDActive === true) {
+    const fr = document.getElementsByClassName('friend-name-search');
+    for (let i = 0; i < fr.length; i++) {
+      fr[i].style.display = 'none'
+    }
+   }
+}}>
 <div id="wrapper" ref={calWrapper}>
             <header>
               <div id="month-arrows">
@@ -902,9 +910,9 @@ return (
                           <h3 className="friend-name">{friend}</h3>
                           <div className="remove-friend" onClick={(e) => {
                             const text = e.target.previousElementSibling.textContent;
-                            setFriends(friends.push(text))
-                            console.log(friends)
-                            const updatedSelFriends = friends.filter(f => f !== text);
+                            friends.push(text)
+                            setFriends(friends)
+                            const updatedSelFriends = selectedFriends.filter(f => f !== text);
                             setSelectedFriends(updatedSelFriends)
                           }}></div>
                         </li>)

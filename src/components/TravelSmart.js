@@ -296,6 +296,7 @@ function TravelSmart() {
 
     mapPage.current.classList.toggle("mapUp");
     mapPage.current.style.top = "0vh";
+    document.getElementById('home-title').style.top = '-7rem'
     document.documentElement.style.overflowY = "hidden";
   }
 
@@ -309,6 +310,7 @@ function TravelSmart() {
     mapPage.current.classList.toggle("mapUp");
     mapPage.current.style.top = "105vh";
     document.documentElement.style.overflowY = "visible";
+    document.getElementById('home-title').style.top = '0rem'
   }
 
   function renderImages_OnTopPicks() {
@@ -842,7 +844,7 @@ setExpCityOn(false)
                 <a key={city}>{city}</a>
               ))}
             </div>
-            <h2 id="best-places-text">Let's Explore {city}</h2>
+            <input id="map-input-search" placeholder="Search Travel Smart"></input>
             <div className="button-div-map">
               <button id="show-filtersList">
                 <FontAwesomeIcon icon={faBarsStaggered} />

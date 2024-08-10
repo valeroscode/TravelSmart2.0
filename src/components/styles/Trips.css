@@ -5,14 +5,15 @@
 }
 
 #planning-a-new-trip-section {
-  width: 80vw;
+  width: 55vw;
   margin-top: 2rem;
+  margin-bottom: 5rem;
 }
 
 #create-trip-header {
   position: relative;
   font-family: 'Roboto Condensed', sans-serif;
-  background-color: whitesmoke;
+  background-color: #151515;
   width: 100%;
   display: flex;
   height: 5rem;
@@ -32,19 +33,14 @@
 }
 
 #c-header-left div svg {
-  color: black;
+  color: white;
   margin-right: 0.5rem;
+  height: 1.25rem;
+  cursor: pointer;
 }
-
-#c-header-left div button {
-  width: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: 2rem;
-  color: black;
-  margin-top: 0;
-  background-color: rgba(0,0,0,0);
+#c-header-left div h2 {
+  color: white;
+  cursor: pointer;
 }
 
 #account-photo-c {
@@ -346,7 +342,7 @@ transform: translateX(-355%);
 display: flex;
 flex-direction: column;
 position: relative;
-width: 100%;
+width: 60%;
 }
 .input-title {
 margin: 0;
@@ -394,17 +390,19 @@ bottom: 0.2rem;
 transform: rotate(90deg);
 }
 .tripPlace {
-height: 3rem;
+height: 3.5rem;
 border-radius: 2px;
 border: 1px solid lightgray;
 padding-left: 1rem;
-padding-top: 0.5rem;
+padding-top: 1rem;
+padding-right: 1rem;
 width: 100%;
+font-size: 1rem;
 }
 .placeholder {
 position: absolute;
 left: 7.5rem;
-font-size: 0.9rem;
+font-size: 1rem;
 top: 2.3rem;
 color: lightgray;
 width: fit-content;
@@ -538,6 +536,7 @@ flex-direction: column;
 justify-content: center;
 align-items: center;
 }
+
 #trip-description button {
 position: relative;
 top: 10vh;
@@ -681,7 +680,7 @@ margin-top: 1rem;
 pointer-events: all;
 cursor: pointer;
 margin-left: 1rem;
-width: 100%;
+width: 60%;
 }
 
 .input-dates {
@@ -1028,6 +1027,32 @@ width: 50vw;
   }
 }
 
+@media screen and (max-width: 1000px) {
+  #where-to-div {
+    width: 100%;
+  }
+  #date-selection {
+    width: 100%;
+  }
+  #c-header-left {
+    padding-left: 5rem;
+  }
+  #acc-and-trip-c {
+    padding-right: 5rem;
+  }
+  #wrapper-container {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  #wrapper {
+    margin-right: 0;
+  }
+  #friends-section {
+    margin-bottom: 3rem;
+    margin-left: 0;
+  }
+}
+
 @media screen and (max-width: 975px) {
 #trip-details ul li a div {
 max-width: 90%;
@@ -1043,6 +1068,9 @@ width: 75vw;
 
 
 @media screen and (max-width: 679px) {
+  #planning-a-new-trip-section {
+    width: 80vw;
+  }
 #trip-details ul li a div img {
 display: none;
 }
@@ -1058,6 +1086,12 @@ left: 4vw;
 }
 
 @media screen and (max-width: 597px) {
+  #c-header-left {
+    padding-left: 2.5rem;
+  }
+  #acc-and-trip-c {
+    padding-right: 2.5rem;
+  }
 #wrapper {
 width: 90vw;
 }
@@ -1070,9 +1104,6 @@ font-size: 0.8rem;
 #tripEndDate {
 font-size: 0.8rem;
 left: 7.5rem;
-}
-.tripPlace {
-width: 70vw;
 }
 
 #new-trip-text {
@@ -1127,6 +1158,9 @@ display: none;
 }
 
 @media screen and (max-width: 448px) {
+#planning-a-new-trip-section {
+  width: 90vw;
+}
 #tripStartDate {
 top: 1.7rem;
 font-size: 0.6rem;
@@ -1139,6 +1173,22 @@ left: 6.5rem;
 .trip-item {
   height: fit-content;
   width: 18rem;
+}
+
+.calendar {
+  padding: 0;
+}
+
+#create-trip-btn {
+ margin-bottom: 0;
+}
+
+.calendar ul li {
+  width: calc(90%/7);
+}
+
+.calendar ul {
+  justify-content: space-between;
 }
 
 }
