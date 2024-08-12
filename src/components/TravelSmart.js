@@ -10,7 +10,7 @@ import {
   faPersonWalking,
   faPersonBiking,
   faBarsStaggered,
-  faMagnifyingGlass,
+  faBookmark,
   faNewspaper,
   faChevronRight,
   faLocationDot,
@@ -74,6 +74,7 @@ function TravelSmart() {
   const rotate = useRef();
   const selectCityUl = useRef();
   const defaultDiv = useRef();
+  const mapInput = useRef();
 
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
@@ -81,6 +82,8 @@ function TravelSmart() {
   const [confirmExpCity, setConfirmExpCity] = useState(false)
   const [avgRating, setAvgRating] = useState(0);
   const [expCityOn, setExpCityOn] = useState(false)
+  const [mapDropDown, setMapDropdown] = useState([])
+  const [mapDDActive, setMapDDActive] = useState(false)
   const discMore = useRef();
 
   //Array containing all places in the current city
@@ -298,6 +301,11 @@ function TravelSmart() {
     mapPage.current.style.top = "0vh";
     document.getElementById('home-title').style.top = '-7rem'
     document.documentElement.style.overflowY = "hidden";
+    if (mapDropDown.length === 0) {
+    showMapContentDD()
+    } else {
+      return
+    }
   }
 
   //Hides Map
@@ -311,6 +319,21 @@ function TravelSmart() {
     mapPage.current.style.top = "105vh";
     document.documentElement.style.overflowY = "visible";
     document.getElementById('home-title').style.top = '0rem'
+  }
+
+  function showMapContentDD() {
+    const array = [];
+      for (let i = 0; i < allPlaces.length; i++) {
+        if (allPlaces[i].city === sessionStorage.getItem('city')) {
+        if (!array.includes(allPlaces[i].category)) {
+          array.push(allPlaces[i].category)
+        }
+        if (!array.includes(allPlaces[i].area)) {
+          array.push(allPlaces[i].area)
+        }
+      }
+      }
+      setMapDropdown(array)
   }
 
   function renderImages_OnTopPicks() {
@@ -397,6 +420,23 @@ function TravelSmart() {
       e.target.childNodes[0].innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"/></svg>'
     }
   }
+
+  function matchKeyboardInput(e) {
+    const value = e.target.value;
+    const item = document.getElementsByClassName('map-start-dd-item');
+    setMapDDActive(true)
+    for (let i = 0; i < item.length; i++) {
+       if (value === '') {
+        item[i].style.display = "none"
+       } else {
+       if (String(item[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())) {
+        item[i].style.display = "block"
+       } else {
+        item[i].style.display = "none"
+       }
+      }
+    }
+ }
 
   return (
     <>
@@ -833,6 +873,29 @@ setExpCityOn(false)
           <button id="filters-cancel">Done</button>
         </ul>
         <div id="map-organizer">
+        <div id="map-start-interface">
+        <div id="map-start-input">
+        <input className="map-input-search" placeholder="Search Travel Smart" style={{width: "21rem"}} ref={mapInput}
+        onKeyUp={(e) => matchKeyboardInput(e)}></input>
+        <ul id="map-search-dd">
+          {
+            mapDropDown.map((item) => <li className="map-start-dd-item"
+            onClick={(e) => {
+        
+               const fr = document.getElementsByClassName('map-start-dd-item');
+               for (let i = 0; i < fr.length; i++) {
+                 fr[i].style.display = 'none'
+               }
+               mapInput.current.value = e.target.textContent
+              
+            }
+          }
+            >{item}</li>)
+          }
+        </ul>
+        <FontAwesomeIcon icon={faBookmark} />
+        </div>
+        </div>  
           <div id="map-overlay" ref={mapOverlay}>
             <div id="mobile-pull-up-bd" onClick={(e) => bringUpMobileModal(e)}>
               
@@ -844,7 +907,7 @@ setExpCityOn(false)
                 <a key={city}>{city}</a>
               ))}
             </div>
-            <input id="map-input-search" placeholder="Search Travel Smart"></input>
+            <input className="map-input-search" placeholder="Search Travel Smart"></input>
             <div className="button-div-map">
               <button id="show-filtersList">
                 <FontAwesomeIcon icon={faBarsStaggered} />

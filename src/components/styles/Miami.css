@@ -1292,6 +1292,7 @@ height: fit-content;
   padding-right: 0;
   padding-left: 0rem;
   padding-top: 1rem;
+  display: none;
   border-radius: 7px;
   -webkit-transition:all 0.3s ease;
 -moz-transition:all 0.3s ease;
@@ -1646,7 +1647,55 @@ padding-top: 0;
 background-color: white;
 }
 
-#map-input-search {
+#map-start-interface {
+  position: absolute;
+  left: 0;
+  z-index: 1000;
+}
+
+#map-start-interface svg {
+  position: relative;
+  left: 1rem;
+  top: 1.2rem;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+  border-radius: 25px;
+  border: 1px solid rgb(181, 181, 181);
+  cursor: pointer;
+}
+
+#map-start-input input {
+  z-index: 100;
+}
+
+#map-start-input ul {
+  flex-direction: column;
+  position: absolute;
+  left: 1rem;
+  font-size: 1.25rem;
+  top: 1.5rem;
+  background-color: white;
+  width: 21rem;
+  padding-top: 3rem;
+  max-height: 20rem;
+  overflow-y: scroll;
+}
+
+#map-start-input ul li {
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  font-family: "Roboto Condensed", sans-serif;
+  position: relative;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#map-start-input ul li:hover {
+  background-color: black;
+  color: white;
+}
+
+.map-input-search {
   position: relative;
   height: 3rem;
   width: 90%;
@@ -1667,10 +1716,6 @@ background-color: white;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
   transition: all 0.5s ease;
-}
-
-
-.mapUp {
 }
 
 #homePage {
