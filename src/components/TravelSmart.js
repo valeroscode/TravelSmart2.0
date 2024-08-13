@@ -75,6 +75,7 @@ function TravelSmart() {
   const selectCityUl = useRef();
   const defaultDiv = useRef();
   const mapInput = useRef();
+  const mapInputSecond = useRef();
 
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
@@ -85,6 +86,11 @@ function TravelSmart() {
   const [mapDropDown, setMapDropdown] = useState([])
   const [mapDDActive, setMapDDActive] = useState(false)
   const discMore = useRef();
+
+  const ClubBtn = useRef();
+  const RestBtn = useRef();
+  const TheaterBtn = useRef();
+  const ActbBtn = useRef();
 
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
@@ -296,7 +302,6 @@ function TravelSmart() {
     setTimeout(() => {
       hideMapBtn.current.style.opacity = 1;
     }, 300);
-
     mapPage.current.classList.toggle("mapUp");
     mapPage.current.style.top = "0vh";
     document.getElementById('home-title').style.top = '-7rem'
@@ -325,11 +330,14 @@ function TravelSmart() {
     const array = [];
       for (let i = 0; i < allPlaces.length; i++) {
         if (allPlaces[i].city === sessionStorage.getItem('city')) {
-        if (!array.includes(allPlaces[i].category)) {
-          array.push(allPlaces[i].category)
+        if (!array.includes(`🔎 ${allPlaces[i].category}`)) {
+          array.push(`🔎 ${allPlaces[i].category}`)
         }
-        if (!array.includes(allPlaces[i].area)) {
-          array.push(allPlaces[i].area)
+        if (!array.includes(`🔎 ${allPlaces[i].area}`)) {
+          array.push(`🔎 ${allPlaces[i].area}`)
+        }
+        if (!array.includes(`📍 ${allPlaces[i].name}`)) {
+          array.push(`📍 ${allPlaces[i].name}`)
         }
       }
       }
@@ -425,9 +433,17 @@ function TravelSmart() {
     const value = e.target.value;
     const item = document.getElementsByClassName('map-start-dd-item');
     setMapDDActive(true)
+    if (value === '') {
+      const checkboxes = document.getElementsByClassName('checkbox');
+      for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked === true) {
+          checkboxes[i].checked = false;
+        }
+      }
+    }
     for (let i = 0; i < item.length; i++) {
        if (value === '') {
-        item[i].style.display = "none"
+        item[i].style.display = "none";
        } else {
        if (String(item[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())) {
         item[i].style.display = "block"
@@ -493,11 +509,6 @@ function TravelSmart() {
         </div>
 
         <div id="placeDetails">
-          <div id="back-and-out">
-            <button id="backBtn">
-              <FontAwesomeIcon icon={faX} />
-            </button>
-          </div>
           <img id="gallery" ref={gallery}></img>
           <div id="placeInfo">
             <button id="ReviewsBtn">See Reviews</button>
@@ -807,6 +818,7 @@ setExpCityOn(false)
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
+                  ref={ClubBtn}
                 />
                 <p>A Night Out&nbsp;&nbsp;</p>
               </div>
@@ -826,6 +838,7 @@ setExpCityOn(false)
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
+                  ref={RestBtn}
                 />
 
                 <p>Dining&nbsp;&nbsp;</p>
@@ -846,6 +859,7 @@ setExpCityOn(false)
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
+                  ref={TheaterBtn}
                 />
                 <p>Chill Night&nbsp;&nbsp;</p>
               </div>
@@ -865,6 +879,7 @@ setExpCityOn(false)
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
+                  ref={ActbBtn}
                 />
                 <p>Activities&nbsp;&nbsp;</p>
               </div>
@@ -881,12 +896,34 @@ setExpCityOn(false)
           {
             mapDropDown.map((item) => <li className="map-start-dd-item"
             onClick={(e) => {
-        
+              //FINISH THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                const fr = document.getElementsByClassName('map-start-dd-item');
                for (let i = 0; i < fr.length; i++) {
                  fr[i].style.display = 'none'
                }
-               mapInput.current.value = e.target.textContent
+
+               const text = String(e.target.textContent).slice(3);
+
+               mapInput.current.value = text;
+               mapInputSecond.current.value = text;
+               document.getElementById('map-start-interface').style.display = 'none'
+
+               if (String(e.target.textContent).split(' ')[0] === '🔎') {
+                switch (text) {
+                  case 'Club':
+                  ClubBtn.current.click();
+                  break;
+                  case 'Resturant':
+                  RestBtn.current.click();
+                  break;
+                  case 'Theater':
+                  TheaterBtn.current.click();
+                  break;                  
+                }
+                mapOverlay.current.style.left = '0rem';
+               } else if (String(e.target.textContent).split(' ')[0] === '📍') {
+
+               }
               
             }
           }
@@ -907,7 +944,7 @@ setExpCityOn(false)
                 <a key={city}>{city}</a>
               ))}
             </div>
-            <input className="map-input-search" placeholder="Search Travel Smart"></input>
+            <input className="map-input-search" ref={mapInputSecond} placeholder="Search Travel Smart"></input>
             <div className="button-div-map">
               <button id="show-filtersList">
                 <FontAwesomeIcon icon={faBarsStaggered} />

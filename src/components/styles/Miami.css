@@ -1292,7 +1292,8 @@ height: fit-content;
   padding-right: 0;
   padding-left: 0rem;
   padding-top: 1rem;
-  display: none;
+  display: block;
+  left: -25rem;
   border-radius: 7px;
   -webkit-transition:all 0.3s ease;
 -moz-transition:all 0.3s ease;
@@ -1674,20 +1675,21 @@ background-color: white;
   position: absolute;
   left: 1rem;
   font-size: 1.25rem;
-  top: 1.5rem;
+  top: 3.5rem;
   background-color: white;
   width: 21rem;
-  padding-top: 3rem;
   max-height: 20rem;
   overflow-y: scroll;
+  border-radius: 10px;
 }
 
 #map-start-input ul li {
-  padding: 0.5rem 0.5rem 0.5rem 1rem;
+  padding: 1rem 0.5rem 1rem 1rem;
   font-family: "Roboto Condensed", sans-serif;
   position: relative;
   font-size: 1rem;
   cursor: pointer;
+  display: none;
 }
 
 #map-start-input ul li:hover {
@@ -3787,7 +3789,6 @@ margin-bottom: 1rem;
   animation: fadeIn 0.5s;
   overflow-y: visible;
 border-radius: 7px 0;
-box-shadow: -5px 5px 20px black;
 }
 #review-overlay {
 z-index: 920;
@@ -3827,7 +3828,7 @@ text-align: center;
   font-size: 0.8rem;
 }
 #infoCard h1 {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-weight: 600;
   font-family: "Roboto Condensed", sans-serif;
   pointer-events: all;
@@ -3962,10 +3963,11 @@ transform: rotate(90deg)
 #placeDetails {
   position: fixed;
   flex-direction: column;
-  bottom: 10rem;
+  height: 100vh;
   width: 28vw;
   right: 0;
   margin: 0;
+  top: 0;
   opacity: 0;
   animation: fadeIn 0.5s;
   padding: 0 1rem 1rem 1rem;
@@ -3980,14 +3982,14 @@ transform: rotate(90deg)
 #placeInfo {
  position: relative;
  width: 100%;
-  padding: 1rem;
-  padding-top: 3rem;
+  padding: 2rem 1rem 3rem 1rem;
   background-color: white;
   z-index: 922;
   animation: fadeIn 0.5s;
   animation-fill-mode: forwards;
   font-size: 0.9rem;
   overflow-y: visible;
+  
 }
 .reviews {
   font-size: 0.86rem;
@@ -4578,13 +4580,6 @@ display: none;
 }
 #placeDetails {
 height: fit-content;
-}
-#back-and-out {
-display: flex;
-justify-content: end;
-position: relative;
-right: 1rem;
-bottom: 3rem;
 }
 .thisListisbasedon {
 opacity: 0;
