@@ -48,36 +48,37 @@ export function generalScript() {
 
     let lastMarkerClicked = "";
 
-    function createMarker(props) {
+    function createMarker() {
+      for (let i = 0; i < allPlaces.length; i++) {
       var marker = new window.google.maps.Marker({
         map: map,
-        position: props.coords,
+        position: allPlaces[i].coords,
         coords: {
-          lat: props.coords.lat,
-          lng: props.coords.lng,
+          lat: allPlaces[i].coords.lat,
+          lng: allPlaces[i].coords.lng,
         },
-        name: props.name,
-        content: props.content,
-        category: props.category,
-        type: props.type,
-        price: props.price,
-        rating: props.rating,
-        area: props.area,
-        active: props.active,
-        placeID: props.placeID,
+        name: allPlaces[i].name,
+        content: allPlaces[i].content,
+        category: allPlaces[i].category,
+        type: allPlaces[i].type,
+        price: allPlaces[i].price,
+        rating: allPlaces[i].rating,
+        area: allPlaces[i].area,
+        active: allPlaces[i].active,
+        placeID: allPlaces[i].placeID,
         icon: {
           scaledSize: new window.google.maps.Size(28, 26),
           fillColor: "#702690",
           fillOpacity: 1,
           strokeWeight: 1,
         },
-        Inexpensive: props.Inexpensive,
-        Best: props.Best,
-        favorite: props.favorite,
-        popular: props.popular,
-        sponsored: props.sponsored,
+        Inexpensive: allPlaces[i].Inexpensive,
+        Best: allPlaces[i].Best,
+        favorite: allPlaces[i].favorite,
+        popular: allPlaces[i].popular,
+        sponsored: allPlaces[i].sponsored,
         animation: window.google.maps.Animation.DROP,
-        city: props.city,
+        city: allPlaces[i].city,
       });
 
       allmarkers.push(marker);
@@ -86,11 +87,20 @@ export function generalScript() {
         allmarkers[i].setMap(map);
       }
 
-      if (props.content) {
+      if (allPlaces[i].content) {
         var infoWindow = new window.google.maps.InfoWindow({});
       }
+    }
 
-      marker.addListener("click", (e) => {
+    markerEvent()
+
+    }
+
+    createMarker()
+
+    function markerEvent() {
+    allmarkers.forEach((marker) => {
+      marker.addEventListener("click", () => {
         lastMarkerClicked = marker.name;
         //Place info is requested only for the specific marker the user clicks on
         googleAPICalls(
@@ -119,7 +129,8 @@ export function generalScript() {
         );
         infoWindow.open(map, this);
       });
-    }
+    })
+  }
 
     //Makes calls to the API to get place information
     function googleAPICalls(lat, lng, id, category, area, price, type, name) {
@@ -482,13 +493,6 @@ export function generalScript() {
       placeDetails.style.display = "none";
       userLocation.setMap(null);
     });
-
-    function render_Markers() {
-      for (let i = 0; i < allPlaces.length; i++) {
-        createMarker(allPlaces[i]);
-      }
-    }
-    render_Markers();
 
     const filterName = [];
     const Buttons = document.getElementsByClassName("b");

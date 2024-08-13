@@ -177,50 +177,6 @@ function TravelSmart() {
       }
     }
 
-    //change images
-    let selectedImg = 1;
-
-    const bgImg = document.getElementsByClassName('hello-user-img')
-
-    function changeImg() {
-      if (selectedImg % 2 === 0) {
-        if (bgImg[selectedImg].src === backgroundImgList[selectedImg].false) {
-          bgImg[selectedImg].style.opacity = 0;
-          bgImg[selectedImg].src = backgroundImgList[selectedImg].true;
-          bgImg[selectedImg].style.opacity = 0.2;
-        } else {
-          bgImg[selectedImg].style.opacity = 0;
-          bgImg[selectedImg].src = backgroundImgList[selectedImg].false
-          bgImg[selectedImg].style.opacity = 0.2;
-        }
-          
-      } else {
-        if (bgImg[selectedImg].src === backgroundImgList[selectedImg].false) {
-          bgImg[selectedImg].style.opacity = 0;
-          bgImg[selectedImg].src = backgroundImgList[selectedImg].true;
-          bgImg[selectedImg].style.opacity = 0.2;
-        } else {
-          bgImg[selectedImg].style.opacity = 0;
-          bgImg[selectedImg].src = backgroundImgList[selectedImg].false
-          bgImg[selectedImg].style.opacity = 0.2;
-        }
-      }
-      selectedImg = selectedImg + 1
-      
-      setTimeout(() => {
-        if (selectedImg > 6) {
-          selectedImg = 0;
-          changeImg()
-        } else {
-          changeImg()
-        }
-      }, 6000)
-      
-    }
-
-    changeImg()
-
-
     setTimeout(() => {
       generalScript();
       window.history.pushState(
@@ -922,7 +878,15 @@ setExpCityOn(false)
                 }
                 mapOverlay.current.style.left = '0rem';
                } else if (String(e.target.textContent).split(' ')[0] === '📍') {
-
+                 const place = allPlaces.filter(place => place.name === text);
+                 window.map.panTo(place[0].coords)
+                 window.map.setZoom(15)
+                 console.log(place[0].coords)
+                 const point = new google.maps.LatLng(place[0].coords.lat, place[0].coords.lng);
+                 console.log(point)
+                 google.maps.event.trigger(map, 'click', {
+                  latLng: place[0].coords,
+                });
                }
               
             }
