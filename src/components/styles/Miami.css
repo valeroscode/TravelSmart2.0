@@ -1651,7 +1651,7 @@ background-color: white;
 #map-start-interface {
   position: absolute;
   left: 0;
-  z-index: 1000;
+  z-index: 102;
 }
 
 #map-start-interface svg {
@@ -1664,10 +1664,11 @@ background-color: white;
   border-radius: 25px;
   border: 1px solid rgb(181, 181, 181);
   cursor: pointer;
+  z-index: 1000;
 }
 
 #map-start-input input {
-  z-index: 100;
+  z-index: 1000;
 }
 
 #map-start-input ul {
@@ -1713,7 +1714,7 @@ background-color: white;
   width: 100vw;
   height: 100vh;
   top: 105vh;
-  z-index: 999;
+  z-index: 100;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -3784,7 +3785,7 @@ margin-bottom: 1rem;
 }
 #gallery {
   height: 50%;
-  width: 110%;
+  width: 107.5%;
   z-index: 914;
   animation: fadeIn 0.5s;
   overflow-y: visible;
@@ -3872,23 +3873,6 @@ margin-right: 0.5rem;
 background-color: whitesmoke;
 color: black;
 }
-.place-imgs-link {
-  background-color: whitesmoke;
-  display: flex;
-  color: black;
-  justify-content: center;
-  align-items: center;
-  padding: 0 0.5rem;
-  margin-left: 0.5rem;
-  font-size: 1rem;
-  font-weight: 800;
-  font-family: "Roboto Condensed", sans-serif;
-  cursor: pointer;
-  position: relative;
-}
-.place-imgs-link:visited {
-  color: black;
-}
 .card-element {
 margin-bottom: 0.5rem;
 display: block;
@@ -3965,13 +3949,13 @@ transform: rotate(90deg)
   flex-direction: column;
   height: 100vh;
   width: 28vw;
-  right: 0;
+  left: -1rem;
   margin: 0;
   top: 0;
   opacity: 0;
   animation: fadeIn 0.5s;
   padding: 0 1rem 1rem 1rem;
-  z-index: 9999999999;
+  z-index: 101;
   overflow: visible;
   display: none;
   -webkit-transition:all 0.3s ease;

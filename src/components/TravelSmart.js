@@ -857,14 +857,12 @@ setExpCityOn(false)
                for (let i = 0; i < fr.length; i++) {
                  fr[i].style.display = 'none'
                }
-
                const text = String(e.target.textContent).slice(3);
-
                mapInput.current.value = text;
                mapInputSecond.current.value = text;
-               document.getElementById('map-start-interface').style.display = 'none'
-
+               
                if (String(e.target.textContent).split(' ')[0] === '🔎') {
+                document.getElementById('map-start-interface').style.display = 'none'
                 switch (text) {
                   case 'Club':
                   ClubBtn.current.click();
@@ -881,11 +879,9 @@ setExpCityOn(false)
                  const place = allPlaces.filter(place => place.name === text);
                  window.map.panTo(place[0].coords)
                  window.map.setZoom(15)
-                 console.log(place[0].coords)
                  const point = new google.maps.LatLng(place[0].coords.lat, place[0].coords.lng);
-                 console.log(point)
-                 google.maps.event.trigger(map, 'click', {
-                  latLng: place[0].coords,
+                 google.maps.event.trigger(window.map, 'click', {
+                  latLng: point,
                 });
                }
               
