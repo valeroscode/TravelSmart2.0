@@ -1651,7 +1651,7 @@ background-color: white;
 #map-start-interface {
   position: absolute;
   left: 0;
-  z-index: 102;
+  z-index: 1000;
 }
 
 #map-start-interface svg {
@@ -3784,7 +3784,7 @@ margin-bottom: 1rem;
   width: fit-content;
 }
 #gallery {
-  height: 50%;
+  height: 40%;
   width: 107.5%;
   z-index: 914;
   animation: fadeIn 0.5s;
@@ -3945,7 +3945,7 @@ transform: rotate(90deg)
 }
 
 #placeDetails {
-  position: fixed;
+  position: absolute;
   flex-direction: column;
   height: 100vh;
   width: 28vw;
@@ -3955,7 +3955,7 @@ transform: rotate(90deg)
   opacity: 0;
   animation: fadeIn 0.5s;
   padding: 0 1rem 1rem 1rem;
-  z-index: 101;
+  z-index: 1000;
   overflow: visible;
   display: none;
   -webkit-transition:all 0.3s ease;

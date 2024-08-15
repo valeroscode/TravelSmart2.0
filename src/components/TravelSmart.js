@@ -464,14 +464,6 @@ function TravelSmart() {
           </div>
         </div>
 
-        <div id="placeDetails">
-          <img id="gallery" ref={gallery}></img>
-          <div id="placeInfo">
-            <button id="ReviewsBtn">See Reviews</button>
-            <button id="write_a_review">Write a Review</button>
-          </div>
-        </div>
-
         <section id="hello-user-section">
         <img src={backgroundImgList[1].false} className="hello-user-img"></img>
         <img src={backgroundImgList[2].false}  className="hello-user-img"></img>
@@ -843,6 +835,13 @@ setExpCityOn(false)
           </li>
           <button id="filters-cancel">Done</button>
         </ul>
+        <div id="placeDetails">
+          <img id="gallery" ref={gallery}></img>
+          <div id="placeInfo">
+            <button id="ReviewsBtn">See Reviews</button>
+            <button id="write_a_review">Write a Review</button>
+          </div>
+        </div>
         <div id="map-organizer">
         <div id="map-start-interface">
         <div id="map-start-input">
