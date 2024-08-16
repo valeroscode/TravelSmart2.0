@@ -91,6 +91,8 @@ function TravelSmart() {
   const RestBtn = useRef();
   const TheaterBtn = useRef();
   const ActbBtn = useRef();
+  const lowCostBtn = useRef();
+  const bestRatedBtn = useRef();
 
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
@@ -711,6 +713,7 @@ setExpCityOn(false)
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
+                  ref={lowCostBtn}
                 />
                 Inexpensive&nbsp;&nbsp;
               </div>
@@ -723,6 +726,7 @@ setExpCityOn(false)
                   value="Best"
                   condition1="Best_Condition_live_markers"
                   condition2="Best_Condition_all_markers"
+                  ref={bestRatedBtn}
                 />
                 Best Rated&nbsp;&nbsp;
               </div>
@@ -845,7 +849,7 @@ setExpCityOn(false)
         <div id="map-organizer">
         <div id="map-start-interface">
         <div id="map-start-input">
-        <input className="map-input-search" placeholder="Search Travel Smart" style={{width: "21rem"}} ref={mapInput}
+        <input className="map-input-search" placeholder="Resturant, Miami Beach" style={{width: "21rem"}} ref={mapInput}
         onKeyUp={(e) => matchKeyboardInput(e)}></input>
         <ul id="map-search-dd">
           {
@@ -904,6 +908,24 @@ setExpCityOn(false)
               ))}
             </div>
             <input className="map-input-search" ref={mapInputSecond} placeholder="Search Travel Smart"></input>
+            <div id="filters-for-map">
+              <div id="filters-text-line">
+                <h5>Filters</h5>
+                <hr></hr>
+              </div>
+              <div id="sidepanel-filters">
+              <button id="filters-price" 
+              onClick={() => {
+                lowCostBtn.current.click()
+              }}>Low Cost</button>
+              <button id="filters-rating"
+              onClick={() => {
+                bestRatedBtn.current.click()
+              }}>Best Rated</button>
+              <button id="more-filters">More Filters</button>
+              </div>
+
+            </div>
             <div className="button-div-map">
               <button id="show-filtersList">
                 <FontAwesomeIcon icon={faBarsStaggered} />

@@ -507,13 +507,6 @@ export function generalScript() {
     let candidates = [];
     let parentEls = [];
 
-    const showFiltersList_btn = document.getElementById("show-filtersList");
-
-    showFiltersList_btn.addEventListener("click", () => {
-      filtersList.style.display = "flex";
-      filtersList.style.right = "0rem";
-    });
-
     const cancelFiltersList_btn = document.getElementById("filters-cancel");
     cancelFiltersList_btn.addEventListener("click", () => {
       filtersList.style.right = "-14rem"
@@ -641,7 +634,7 @@ export function generalScript() {
               num
             )}  <strong>${
               marker.rating
-            }</strong></p><div class="area-info-price"><p>${
+            }</strong></p><div class="area-info-price"><p class="area-info-name">${
               marker.area
             }</p><p class="pricinginfo">${dollarSvg.repeat(
               marker.price
