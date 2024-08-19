@@ -1543,7 +1543,7 @@ opacity: 0;
 transition:opacity 0.2s ease;
 }
 .rec-container-item:hover .animatedbar {
-width: 12rem;
+width: 18rem;
 }
 .rec-container-item:hover .instruction-toppick {
 opacity: 1;
@@ -2905,6 +2905,7 @@ margin-bottom: 3rem;
   pointer-events: all;
   cursor: pointer;
   opacity: 0;
+  box-shadow: 0 0 4px 1px gray;
   -webkit-transition:all 0.3s ease;
   -moz-transition:all 0.3s ease;
   -o-transition:all 0.3s ease;
@@ -3862,6 +3863,7 @@ margin-bottom: 1rem;
   height: 40%;
   width: 100%;
   z-index: 914;
+  border-radius: 7px 7px 0 0;
   animation: fadeIn 0.5s;
   overflow-y: visible;
 border-radius: 7px 0;
@@ -4029,13 +4031,14 @@ transform: rotate(90deg)
   flex-direction: column;
   height: 100vh;
   width: 28vw;
-  left: -1rem;
+  left: 19.75rem;
   margin: 0;
-  top: 0;
+  top: 0.25rem;
   opacity: 0;
   animation: fadeIn 0.5s;
   padding: 0 1rem 1rem 1rem;
   z-index: 1000;
+  border-radius: 7px;
   overflow: visible;
   display: none;
   -webkit-transition:all 0.3s ease;
@@ -4051,6 +4054,7 @@ transform: rotate(90deg)
   animation: fadeIn 0.5s;
   animation-fill-mode: forwards;
   font-size: 0.9rem;
+  border-radius: 0 0 7px 7px;
   overflow-y: visible;
   
 }
