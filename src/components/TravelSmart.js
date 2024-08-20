@@ -1,6 +1,7 @@
 import "./styles/Miami.css";
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { allmarkers } from "./Miami.mjs";
 import {
   faHome,
   faX,
@@ -744,7 +745,7 @@ setExpCityOn(false)
               >
                 <input
                   type="checkbox"
-                  className="checkbox"
+                  className="checkbox checkbox-map"
                   id="Start-Your-Day"
                   value="Start Your Day"
                   category="type"
@@ -763,7 +764,7 @@ setExpCityOn(false)
               >
                 <input
                   type="checkbox"
-                  className="checkbox"
+                  className="checkbox checkbox-map"
                   id="A-Night-Out"
                   value="A Night Out"
                   category="type"
@@ -783,7 +784,7 @@ setExpCityOn(false)
               >
                 <input
                   type="checkbox"
-                  className="checkbox"
+                  className="checkbox checkbox-map"
                   id="Dining"
                   value="Dining"
                   category="type"
@@ -804,7 +805,7 @@ setExpCityOn(false)
               >
                 <input
                   type="checkbox"
-                  className="checkbox"
+                  className="checkbox checkbox-map"
                   id="Chill-Night"
                   value="Chill Night"
                   category="type"
@@ -824,7 +825,7 @@ setExpCityOn(false)
               >
                 <input
                   type="checkbox"
-                  className="checkbox"
+                  className="checkbox checkbox-map"
                   id="Activities"
                   value="Activites"
                   category="type"
@@ -855,7 +856,6 @@ setExpCityOn(false)
           {
             mapDropDown.map((item) => <li className="map-start-dd-item"
             onClick={(e) => {
-              //FINISH THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                const fr = document.getElementsByClassName('map-start-dd-item');
                for (let i = 0; i < fr.length; i++) {
                  fr[i].style.display = 'none'
@@ -866,6 +866,16 @@ setExpCityOn(false)
                
                if (String(e.target.textContent).split(' ')[0] === '🔎') {
                 document.getElementById('map-start-interface').style.display = 'none'
+                const placeDetails = document.getElementById('placeDetails');
+                if (placeDetails.style.display === 'flex') {
+                  placeDetails.style.display = "none";
+                  placeDetails.style.opacity = 0;
+                  placeDetails.style.left = '-8rem';
+                }
+                window.map.setZoom(12)
+
+           
+
                 switch (text) {
                   case 'Club':
                   ClubBtn.current.click();
@@ -882,10 +892,13 @@ setExpCityOn(false)
                  const place = allPlaces.filter(place => place.name === text);
                  window.map.panTo(place[0].coords)
                  window.map.setZoom(15)
-                 const point = new google.maps.LatLng(place[0].coords.lat, place[0].coords.lng);
-                 google.maps.event.trigger(window.map, 'click', {
-                  latLng: point,
-                });
+                 const placeName = allmarkers.filter(m => m.name === text);
+                 google.maps.event.trigger(placeName[0], 'click');
+                 if (document.getElementById('map-overlay').style.left !== '0rem') {
+                 document.getElementById('placeDetails').style.left = '-1rem';
+                 document.getElementById('placeDetails').style.top = '0rem';
+                 }
+
                }
               
             }
@@ -907,7 +920,66 @@ setExpCityOn(false)
                 <a key={city}>{city}</a>
               ))}
             </div>
-            <input className="map-input-search" ref={mapInputSecond} placeholder="Search Travel Smart"></input>
+            <input className="map-input-search" ref={mapInputSecond} placeholder="Search Travel Smart"
+            onKeyUp={(e) => matchKeyboardInput(e)}></input>
+            <ul className="map-search-dd">
+          {
+            mapDropDown.map((item) => <li className="map-start-dd-item"
+            onClick={(e) => {
+              //FINISH THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+               const fr = document.getElementsByClassName('map-start-dd-item');
+               for (let i = 0; i < fr.length; i++) {
+                 fr[i].style.display = 'none'
+               }
+               const text = String(e.target.textContent).slice(3);
+               mapInput.current.value = text;
+               mapInputSecond.current.value = text;
+               
+               if (String(e.target.textContent).split(' ')[0] === '🔎') {
+                document.getElementById('map-start-interface').style.display = 'none'
+                const placeDetails = document.getElementById('placeDetails');
+                if (placeDetails.style.display === 'flex') {
+                  placeDetails.style.display = "none";
+                  placeDetails.style.opacity = 0;
+                  placeDetails.style.left = '-8rem';
+                }
+                window.map.setZoom(12)
+                const boxes = document.getElementsByClassName('checkbox-map')
+                for (let i = 0; i < boxes.length; i++) {
+                  if (boxes[i].checked === true)
+                  boxes[i].click()
+                }
+
+                switch (text) {
+                  case 'Club':
+                  ClubBtn.current.click();
+                  break;
+                  case 'Resturant':
+                  RestBtn.current.click();
+                  break;
+                  case 'Theater':
+                  TheaterBtn.current.click();
+                  break;                  
+                }
+                mapOverlay.current.style.left = '0rem';
+               } else if (String(e.target.textContent).split(' ')[0] === '📍') {
+                
+                const place = allPlaces.filter(place => place.name === text);
+                window.map.panTo(place[0].coords)
+                window.map.setZoom(15)
+                const placeName = allmarkers.filter(m => m.name === text);
+                google.maps.event.trigger(placeName[0], 'click');
+                if (document.getElementById('map-overlay').style.left !== '0rem') {
+                document.getElementById('placeDetails').style.left = '-1rem';
+                document.getElementById('placeDetails').style.top = '0rem';
+                }
+               }
+              
+            }
+          }
+            >{item}</li>)
+          }
+        </ul>
             <div id="filters-for-map">
               <div id="filters-text-line">
                 <h5>Filters</h5>
@@ -915,14 +987,44 @@ setExpCityOn(false)
               </div>
               <div id="sidepanel-filters">
               <button id="filters-price" 
-              onClick={() => {
+              onClick={(e) => {
                 lowCostBtn.current.click()
+                if (e.target.style.backgroundColor !== 'black') {
+                  e.target.style.backgroundColor = 'black';
+                  e.target.style.color = 'white';
+                } else {
+                  e.target.style.backgroundColor = 'whitesmoke';
+                  e.target.style.color = 'black';
+                }
               }}>Low Cost</button>
               <button id="filters-rating"
-              onClick={() => {
+              onClick={(e) => {
                 bestRatedBtn.current.click()
+                if (e.target.style.backgroundColor !== 'black') {
+                  e.target.style.backgroundColor = 'black';
+                  e.target.style.color = 'white';
+                } else {
+                  e.target.style.backgroundColor = 'whitesmoke';
+                  e.target.style.color = 'black';
+                }
               }}>Best Rated</button>
-              <button id="more-filters">More Filters</button>
+              <button id="more-filters" onClick={() => {
+
+              }}>More Filters</button>
+              <div id="filters-for-category">
+                  <h3>Filters For Category</h3>
+                  <div>
+                    <h5>Area</h5>
+                  </div>
+
+                  <div>
+                    <h5>Style</h5>
+                  </div>
+
+                  <div>
+                    
+                  </div>
+              </div>
               </div>
 
             </div>
@@ -936,7 +1038,7 @@ setExpCityOn(false)
             <div id="filters-disclosed" className="disclosed-sponsor"></div>
             <div
               id="top-reccomendations-container"
-              onClick={(e) => viewAll.handleTripBtn_handleFavoritesBtn(e)}
+              // onClick={(e) => viewAll.handleTripBtn_handleFavoritesBtn(e)}
             ></div>
           </div>
           <button id="show-menu">

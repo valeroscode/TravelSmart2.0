@@ -2,6 +2,8 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { allPlaces } from "./allMarkers.mjs";
 import { learnMoreAboutPlace, handleTripAdderPopup } from "./getPlaceInfo.mjs";
 
+export let allmarkers = [];
+
 export function generalScript() {
   console.log(allPlaces);
   let live_markers = [];
@@ -41,7 +43,6 @@ export function generalScript() {
     let userLat;
     let userLng;
     let userCoords = [];
-    let allmarkers = [];
     var placeDetails = document.getElementById("placeDetails");
     const placeInfo = document.getElementById("placeInfo");
     const gallery = document.getElementById("gallery");
@@ -104,8 +105,6 @@ export function generalScript() {
           marker.type,
           marker.name
         );
-
-        placeDetails.style.opacity = 1;
 
         //Opens and sets an info window
         infoWindow.open(map, marker);
@@ -339,6 +338,8 @@ export function generalScript() {
                     placeInfoHome();
                   } else {
                     placeDetails.style.display = "none";
+                    placeDetails.style.opacity = 0;
+                    placeDetails.style.left = '-8rem';
                   }
                 }
               });
@@ -347,7 +348,8 @@ export function generalScript() {
         }
       );
       placeDetails.style.display = "flex";
-     
+      placeDetails.style.opacity = 1;
+      placeDetails.style.left = '19.75rem';
     }
 
     let geocoder = new window.google.maps.Geocoder();
@@ -478,7 +480,11 @@ export function generalScript() {
       directionsRenderer.setMap(null);
       inputText.value = "";
       destination.value = "";
-      placeDetails.style.display = "none";
+      placeDetails.style.opacity = 0;
+      placeDetails.style.left = '-8rem';
+      setTimeout(() => {
+        placeDetails.style.display = "none";
+      }, 500)
       userLocation.setMap(null);
     });
 
@@ -577,7 +583,9 @@ export function generalScript() {
               type,
               placeName
             );
+            placeDetails.style.display = "flex";
             placeDetails.style.opacity = 1;
+            placeDetails.style.left = "19.75rem";
           }
         });
 
