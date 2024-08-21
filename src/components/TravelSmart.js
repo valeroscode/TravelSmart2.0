@@ -77,6 +77,7 @@ function TravelSmart() {
   const defaultDiv = useRef();
   const mapInput = useRef();
   const mapInputSecond = useRef();
+  const advFilters = useRef();
 
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
@@ -99,6 +100,26 @@ function TravelSmart() {
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
   );
+  const [areas, setAreas] = useState([])
+  const [styles, setStyles] = useState([])
+
+  useEffect(() => {
+
+      for (let i = 0; i < allPlaces_inCity.length; i++) {
+        if (!areas.includes(allPlaces_inCity[i].area)) {
+          areas.push(allPlaces_inCity[i].area);
+        } 
+
+        if (!styles.includes(allPlaces_inCity[i].style)) {
+          styles.push(allPlaces_inCity[i].style);
+        }
+
+        setAreas(areas)
+        setStyles(styles)
+      }
+
+  }, [allPlaces_inCity])
+
   //Function sets the current city, used at various points
   function switchCity() {
     setAllPlaces_inCity(
@@ -1009,16 +1030,28 @@ setExpCityOn(false)
                 }
               }}>Best Rated</button>
               <button id="more-filters" onClick={() => {
-
+                advFilters.current.style.display = 'flex';
               }}>More Filters</button>
-              <div id="filters-for-category">
-                  <h3>Filters For Category</h3>
+              <div id="filters-for-category" ref={advFilters}>
+                  <FontAwesomeIcon icon={faX} onClick={() => {
+                    advFilters.current.style.left = '5rem';
+                    setTimeout(() => {
+                      advFilters.current.style.display = 'none'
+                    }, 500)
+                  }}/>
+                  <h3>Advanced Filters</h3>
                   <div>
                     <h5>Area</h5>
+                    {
+                      areas.map(area => <li><input type="checkbox"></input> <p>{area}</p></li>)
+                    }
                   </div>
 
                   <div>
                     <h5>Style</h5>
+                    {
+                      styles.map(style => <li><input type="checkbox"></input> <p>{style}</p></li>)
+                    }
                   </div>
 
                   <div>
