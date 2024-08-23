@@ -102,6 +102,10 @@ function TravelSmart() {
   );
   const [areas, setAreas] = useState([])
   const [styles, setStyles] = useState([])
+  const [serving, setServing] = useState([])
+  const [ul1, setUl1] = useState(false)
+  const [ul2, setUl2] = useState(false)
+  const [ul3, setUl3] = useState(false)
 
   useEffect(() => {
 
@@ -114,8 +118,13 @@ function TravelSmart() {
           styles.push(allPlaces_inCity[i].style);
         }
 
+        if (!serving.includes(allPlaces_inCity[i].serves)) {
+          serving.push(allPlaces_inCity[i].serves);
+        }
+
         setAreas(areas)
         setStyles(styles)
+        setServing(serving)
       }
 
   }, [allPlaces_inCity])
@@ -894,9 +903,6 @@ setExpCityOn(false)
                   placeDetails.style.left = '-8rem';
                 }
                 window.map.setZoom(12)
-
-           
-
                 switch (text) {
                   case 'Club':
                   ClubBtn.current.click();
@@ -941,8 +947,14 @@ setExpCityOn(false)
                 <a key={city}>{city}</a>
               ))}
             </div>
+
+            <div className="map-secondary-input-div">
             <input className="map-input-search" ref={mapInputSecond} placeholder="Search Travel Smart"
             onKeyUp={(e) => matchKeyboardInput(e)}></input>
+            <FontAwesomeIcon icon={faBookmark} />
+            </div>
+
+            
             <ul className="map-search-dd">
           {
             mapDropDown.map((item) => <li className="map-start-dd-item"
@@ -966,10 +978,13 @@ setExpCityOn(false)
                 }
                 window.map.setZoom(12)
                 const boxes = document.getElementsByClassName('checkbox-map')
+
+                //The reason this doesnt seem like it works as intended is because of somehting in the miami.mjs file
                 for (let i = 0; i < boxes.length; i++) {
                   if (boxes[i].checked === true)
+                    console.log(boxes[i])
                   boxes[i].click()
-                }
+                  }
 
                 switch (text) {
                   case 'Club':
@@ -1034,24 +1049,42 @@ setExpCityOn(false)
               }}>More Filters</button>
               <div id="filters-for-category" ref={advFilters}>
                   <FontAwesomeIcon icon={faX} onClick={() => {
-                    advFilters.current.style.left = '5rem';
-                    setTimeout(() => {
-                      advFilters.current.style.display = 'none'
-                    }, 500)
-                  }}/>
+                    advFilters.current.style.display = 'none';
+                  }} className="exit-adv-filters"/>
                   <h3>Advanced Filters</h3>
                   <div>
-                    <h5>Area</h5>
+                    <h5 onClick={(e) => {
+                      setUl1(!ul1)
+                    }}>Area <FontAwesomeIcon icon={faChevronDown} style={ul1 === false ? {transform:'rotate(-90deg)'} : {transform:'rotate(0deg)'}} /></h5>
+                    <ul style={ul1 === false ? {display:'none'} : {display:'flex'}}>
                     {
                       areas.map(area => <li><input type="checkbox"></input> <p>{area}</p></li>)
                     }
+                    </ul>
                   </div>
 
                   <div>
-                    <h5>Style</h5>
+                    <h5 onClick={(e) => {
+                      setUl2(!ul2)
+                    }}>Type <FontAwesomeIcon icon={faChevronDown} style={ul2 === false ? {transform:'rotate(-90deg)'} : {transform:'rotate(0deg)'}}
+                    /></h5>
+                    <ul style={ul2 === false ? {display:'none'} : {display:'flex'}}>
                     {
                       styles.map(style => <li><input type="checkbox"></input> <p>{style}</p></li>)
                     }
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h5 onClick={(e) => {
+                      setUl3(!ul3)
+                    }}>Serving <FontAwesomeIcon icon={faChevronDown} style={ul3 === false ? {transform:'rotate(-90deg)'} : {transform:'rotate(0deg)'}}
+                    /></h5>
+                    <ul style={ul3 === false ? {display:'none'} : {display:'flex'}}>
+                    {
+                      serving.map(serve => <li><input type="checkbox"></input> <p>{serve}</p></li>)
+                    }
+                    </ul>
                   </div>
 
                   <div>

@@ -51,9 +51,16 @@ export function generalScript() {
 
     function createMarker(props) {
      
-      var marker = new window.google.maps.Marker({
+      var marker = new google.maps.Marker({
         map: map,
         position: props.coords,
+        icon: {
+          url: '/Miami Landing.jpg',
+          scaledSize: new google.maps.Size(20, 20),
+          fillColor: "#702690",
+          fillOpacity: 1,
+          strokeWeight: 1,
+        },
         coords: {
           lat: props.coords.lat,
           lng: props.coords.lng,
@@ -67,12 +74,6 @@ export function generalScript() {
         area: props.area,
         active: props.active,
         placeID: props.placeID,
-        icon: {
-          scaledSize: new window.google.maps.Size(28, 26),
-          fillColor: "#702690",
-          fillOpacity: 1,
-          strokeWeight: 1,
-        },
         Inexpensive: props.Inexpensive,
         Best: props.Best,
         favorite: props.favorite,
@@ -269,12 +270,6 @@ export function generalScript() {
                       `<br>` +
                       `<br>` +
                       "</div>";
-
-                    document
-                      .getElementById("add-button")
-                      .addEventListener("click", (e) => {
-                        handleTripAdderPopup(e);
-                      });
 
                     //Takes the user to a seperate page where they can learn more about the place
                     document
@@ -662,6 +657,14 @@ export function generalScript() {
           if (i === array.length - 1) {
             newRec.style.paddingBottom = "2.5rem";
           }
+
+          for (let i = 0; i < document.getElementsByClassName('trip-adder').length; i++) {
+            document
+              .getElementsByClassName("trip-adder")[i]
+              .addEventListener("click", (e) => {
+                handleTripAdderPopup(e);
+              });
+            }
 
           //This will be used for the googleAPICalls function
           newRec.setAttribute("data-lat", marker.coords.lat);
