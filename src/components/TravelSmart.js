@@ -95,6 +95,7 @@ function TravelSmart() {
   const ActbBtn = useRef();
   const lowCostBtn = useRef();
   const bestRatedBtn = useRef();
+  const placeDetails = useRef();
 
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
@@ -870,7 +871,12 @@ setExpCityOn(false)
           </li>
           <button id="filters-cancel">Done</button>
         </ul>
-        <div id="placeDetails">
+        <div id="placeDetails" ref={placeDetails}>
+        <FontAwesomeIcon icon={faX} id="exit-details-btn" onClick={() => {
+          placeDetails.current.style.display = "none";
+          placeDetails.current.style.opacity = 0;
+          placeDetails.current.style.left = '-8rem';
+        }}/>
           <img id="gallery" ref={gallery}></img>
           <div id="placeInfo">
             <button id="ReviewsBtn">See Reviews</button>

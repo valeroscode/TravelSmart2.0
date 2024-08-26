@@ -54,13 +54,7 @@ export function generalScript() {
       var marker = new google.maps.Marker({
         map: map,
         position: props.coords,
-        icon: {
-          url: '/Miami Landing.jpg',
-          scaledSize: new google.maps.Size(20, 20),
-          fillColor: "#702690",
-          fillOpacity: 1,
-          strokeWeight: 1,
-        },
+        
         coords: {
           lat: props.coords.lat,
           lng: props.coords.lng,
