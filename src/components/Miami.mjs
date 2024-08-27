@@ -82,14 +82,12 @@ export function generalScript() {
       for (let i = 0; i < allmarkers.length; i++) {
         allmarkers[i].setMap(map);
       }
-
-      if (props.content) {
-        var infoWindow = new window.google.maps.InfoWindow({});
-      }
     
       marker.addListener("click", () => {
         lastMarkerClicked = marker.name;
         //Place info is requested only for the specific marker the user clicks on
+        map.setZoom(16); // Adjust the zoom level as needed
+        map.setCenter(marker.getPosition());
         googleAPICalls(
           marker.getPosition().lat(),
           marker.getPosition().lng(),
@@ -100,19 +98,6 @@ export function generalScript() {
           marker.type,
           marker.name
         );
-
-        //Opens and sets an info window
-        infoWindow.open(map, marker);
-        infoWindow.setContent(
-          "<div class='infowindow-div'><strong>" +
-            "Currently viewing" +
-            "<hr/>" +
-            marker.name +
-            "</strong><br>" +
-            marker.area +
-            "</div>"
-        );
-        infoWindow.open(map, this);
       });
 
     } 
@@ -265,6 +250,10 @@ export function generalScript() {
                       `<br>` +
                       "</div>";
 
+                    document.getElementById("add-button").addEventListener("click", (e) => {
+                      handleTripAdderPopup(e) 
+                    })
+
                     //Takes the user to a seperate page where they can learn more about the place
                     document
                       .getElementById("place-button")
@@ -279,7 +268,9 @@ export function generalScript() {
                           place.favorite,
                           category,
                           id,
-                          e.target
+                          e.target,
+                          lat,
+                          lng
                         );
                       });
 

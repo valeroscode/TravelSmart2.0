@@ -262,7 +262,7 @@ function PlacePage() {
         <p><FontAwesomeIcon icon={faDiamondTurnRight} /> {address}</p>
       </div>
 
-      <div id='msg-from-business'>
+      <div id='msg-from-business' style={{display:'none'}}>
       <h2>Message From The Owners</h2>
       <div className='msg'>
         <h3>Ladies Night Thursday 7PM - 12AM</h3>

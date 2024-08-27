@@ -258,6 +258,16 @@
 #hello-user h4 {
   margin-top: 0;
   font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+#hello-user input {
+  width: 100%;
+  font-size: 1rem;
+  padding: 1.55rem;
+  border-radius: 30px;
+  border: 1px solid rgb(204, 204, 204);
+  box-shadow: 0 0 10px 1px rgb(210, 210, 210);
 }
 
 #choosing-city {
@@ -367,6 +377,10 @@
 
 #home-buttons {
   display: flex;
+  position: relative;
+  left: 1rem;
+  top: 1rem;
+  display: none;
 }
 
 #home-buttons button:first-child {
@@ -1783,6 +1797,11 @@ background-color: white;
 
 #filters-disclosed {
   margin-left: 1.25rem;
+}
+
+
+.disc-filter p {
+  margin: 0;
 }
 
 #filters-for-map {

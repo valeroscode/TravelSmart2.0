@@ -69,7 +69,6 @@ function TravelSmart() {
   const helloUser = useRef();
   const chooseCityInput = useRef();
   const chooseCityInputField = useRef();
-  const expCityBtn = useRef();
   const setCityBtn = useRef();
   const cityBtn = useRef();
   const rotate = useRef();
@@ -320,14 +319,11 @@ function TravelSmart() {
     const array = [];
       for (let i = 0; i < allPlaces.length; i++) {
         if (allPlaces[i].city === sessionStorage.getItem('city')) {
-        if (!array.includes(`🔎 ${allPlaces[i].category}`)) {
-          array.push(`🔎 ${allPlaces[i].category}`)
-        }
-        if (!array.includes(`🔎 ${allPlaces[i].area}`)) {
-          array.push(`🔎 ${allPlaces[i].area}`)
-        }
         if (!array.includes(`📍 ${allPlaces[i].name}`)) {
           array.push(`📍 ${allPlaces[i].name}`)
+        }
+        if (!array.includes(`🔎 ${allPlaces[i].category}`)) {
+          array.push(`🔎 ${allPlaces[i].category}`)
         }
       }
       }
@@ -367,6 +363,10 @@ function TravelSmart() {
       ) {
         return;
       } else {
+        if (e.target.classList.contains("trip-adder")) {
+          handleTripAdderPopup(e);
+          return
+        }
         if (currentUser && e.target.classList.contains("click-favorite")) {
           if (!favorites.includes(e.target.getAttribute("name"))) {
             handleFavoritesNotifications(
@@ -390,10 +390,6 @@ function TravelSmart() {
             setFavorites(favorites);
           }
           docMethods.updateFavorites(string, favorites);
-        }
-
-        if (e.target.classList.contains("trip-adder")) {
-          handleTripAdderPopup(e);
         }
       }
     },
@@ -522,25 +518,11 @@ function TravelSmart() {
         <div id="hello-user" ref={helloUser}>
             <h2>Hello {name.split(" ")[0]},</h2>
             <h4>What would you like to do today?</h4>
+            <input placeholder="Sushi in Miami, Resturants in Orlando..."></input>
             <div id="home-buttons">
               <button id="plan-a-trip" onClick={() => {
                 navigate('/plan')
               }}>Plan a new trip</button>
-              <button ref={expCityBtn} id="exp-a-city" onClick={() => {
-                if (!expCityOn) {
-helloUser.current.style.paddingBottom = "3rem"
-chooseCityInput.current.style.opacity = 1;
-expCityBtn.current.style.backgroundColor = "black";
-expCityBtn.current.style.color = "white";
-setExpCityOn(true)
-                } else {
-                  helloUser.current.style.paddingBottom = "0rem"
-chooseCityInput.current.style.opacity = 0;
-expCityBtn.current.style.backgroundColor = "white";
-expCityBtn.current.style.color = "black";
-setExpCityOn(false)
-                }
-              }}>Explore a city</button>
             </div>
 
             <div id="choosing-city" ref={chooseCityInput}>

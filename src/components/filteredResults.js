@@ -343,7 +343,7 @@ function Results() {
                         <h5>Serving {String(place.serves).replaceAll(',',' ')}</h5>
                         <div className="buttons-container">
                           <button>Add To Trip</button>
-                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target)}>Learn More</button>
+                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
                         
                         </div>
                         
@@ -554,7 +554,7 @@ function Results() {
                
                     <div className="all-places-buttons">
                     <button>Add To Trip</button>
-                    <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target)}>Learn More</button>
+                    <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
                    
                     </div>
                     <div className="place-div-tags">
