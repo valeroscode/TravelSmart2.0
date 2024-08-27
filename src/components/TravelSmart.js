@@ -9,6 +9,7 @@ import {
   faCar,
   faMap,
   faPersonWalking,
+  faMagnifyingGlass,
   faPersonBiking,
   faBarsStaggered,
   faBookmark,
@@ -518,7 +519,10 @@ function TravelSmart() {
         <div id="hello-user" ref={helloUser}>
             <h2>Hello {name.split(" ")[0]},</h2>
             <h4>What would you like to do today?</h4>
+            <div id="hello-user-input-search">
             <input placeholder="Sushi in Miami, Resturants in Orlando..."></input>
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </div>
             <div id="home-buttons">
               <button id="plan-a-trip" onClick={() => {
                 navigate('/plan')
@@ -883,6 +887,27 @@ function TravelSmart() {
                mapInputSecond.current.value = text;
                
                if (String(e.target.textContent).split(' ')[0] === '🔎') {
+                const filteredAllplacesincity = allPlaces_inCity.filter(place => place.category === text)
+                const newAreas = []
+                const newStyles = []
+                const newServing = []
+                for (let i = 0; i < filteredAllplacesincity.length; i++) {
+                  if (!newAreas.includes(filteredAllplacesincity[i].area)) {
+                    newAreas.push(filteredAllplacesincity[i].area);
+                  } 
+          
+                  if (!newStyles.includes(filteredAllplacesincity[i].style)) {
+                    newStyles.push(filteredAllplacesincity[i].style);
+                  }
+          
+                  if (!newServing.includes(filteredAllplacesincity[i].serves)) {
+                    newServing.push(filteredAllplacesincity[i].serves);
+                  }
+          
+                  setAreas(newAreas)
+                  setStyles(newStyles)
+                  setServing(newServing)
+                }
                 document.getElementById('map-start-interface').style.display = 'none'
                 const placeDetails = document.getElementById('placeDetails');
                 if (placeDetails.style.display === 'flex') {
@@ -957,6 +982,24 @@ function TravelSmart() {
                mapInputSecond.current.value = text;
                
                if (String(e.target.textContent).split(' ')[0] === '🔎') {
+                const filteredAllplacesincity = allPlaces_inCity.filter(place => place.category === text)
+                const newAreas = []
+                const newStyles = []
+                const newServing = []
+                for (let i = 0; i < filteredAllplacesincity.length; i++) {
+                  if (!newAreas.includes(filteredAllplacesincity[i].area)) {
+                    newAreas.push(filteredAllplacesincity[i].area);
+                  } 
+                  if (!newStyles.includes(filteredAllplacesincity[i].style)) {
+                    newStyles.push(filteredAllplacesincity[i].style);
+                  }
+                  if (!newServing.includes(filteredAllplacesincity[i].serves)) {
+                    newServing.push(filteredAllplacesincity[i].serves);
+                  }
+                  setAreas(newAreas)
+                  setStyles(newStyles)
+                  setServing(newServing)
+                }
                 document.getElementById('map-start-interface').style.display = 'none'
                 const placeDetails = document.getElementById('placeDetails');
                 if (placeDetails.style.display === 'flex') {

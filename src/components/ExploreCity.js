@@ -146,46 +146,6 @@ function ExploreCity ({places}) {
               </h1>
 
               <div id="filters-and-placecount">
-               <div id='filters-placement-org'>
-                <h4 onClick={() => {
-                  if (filterDD) {
-                    setFilterDD(false)
-                  } else {
-                    setFilterDD(true)
-                  }
-                }}>Filters ({checkboxs}) ▼</h4>
-                
-                  
-                    <ul style={filterDD ? {display: "block"} : {display:"none"}} onClick={(e) => {
-            
-                        if (e.target.tagName === 'INPUT') {
-                          if (e.target.checked) {
-                            setCheckboxes(checkboxs + 1)
-                          } else if (!e.target.checked) {
-                            setCheckboxes(checkboxs - 1)
-                          }
-                          setAttr(e.target.getAttribute('name'))
-                          setChecked(e.target.checked)
-                          setType("category")
-                        }
-                        
-                    }}>
-                <li>Resturants <input type="checkbox" className='category-checkbox' name="Resturant"
-                /></li>
-                <li>Parks <input type="checkbox" className='category-checkbox' name="Park"
-                /></li>
-                <li>Bars <input type="checkbox" className='category-checkbox' name="Bar"
-                /></li>
-                <li>Meuseums <input type="checkbox" className='category-checkbox' name="Museum"
-                /></li>
-                <li>Clubs <input type="checkbox" className='category-checkbox' name="Club"
-                /></li>
-                <li>Coffee Shops <input type="checkbox" className='category-checkbox' name="Cafe"
-                /></li>
-                </ul>
-    
-               </div>
-
                <div id="filters-placement-org">
                 <h4 onClick={() => {
                   if (priceDD) {
