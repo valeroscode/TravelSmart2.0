@@ -4013,6 +4013,7 @@ text-align: center;
   animation: fadeIn 0.5s;
   font-family: "Montserrat", sans-serif;
   font-size: 0.8rem;
+  position: relative;
 }
 #infoCard h1 {
   font-size: 1.5rem;
@@ -4039,10 +4040,12 @@ font-family: "Roboto Condensed", sans-serif;
 font-weight: 500;
 }
 #infoCard svg {
-fill: #ffde0a;
 display: inline;
 height: 19px;
 margin: 0 1px;
+}
+#infoCard .place-info-star {
+  fill: #ffde0a;
 }
 .infocard-btn {
 width: fit-content;
@@ -4072,6 +4075,11 @@ z-index: 9000000000;
 max-height: 7.5rem;
 overflow-y: scroll;
 overflow-x: hidden;
+}
+
+.black-svg {
+  fill: black;
+  margin-left: 1rem;
 }
 
 @media screen and (max-width: 1317px) {
@@ -4127,10 +4135,12 @@ font-family: "Roboto Condensed", sans-serif;
 font-size: 0.9rem;
 position: relative;
 left: 0;
+margin-top: 0;
+}
+.place-info-icon {
+  fill: #8334c8;
 }
 #dropdown3 svg {
-fill: black;
-margin-left: 0.5rem;
 transform: rotate(90deg)
 }
 
@@ -4222,11 +4232,10 @@ transform: rotate(90deg)
 #placeDetails {
   position: absolute;
   flex-direction: column;
-  height: 100vh;
-  width: 28vw;
+  width: 22vw;
   left: -8rem;
+  height: 100%;
   margin: 0;
-  top: 1.25rem;
   opacity: 0;
   animation: fadeIn 0.5s;
   padding: 0 1rem 1rem 1rem;
@@ -4244,12 +4253,39 @@ transform: rotate(90deg)
   padding: 2rem 1rem 3rem 1rem;
   background-color: white;
   z-index: 922;
+  height: 60%;
   animation: fadeIn 0.5s;
   animation-fill-mode: forwards;
   font-size: 0.9rem;
   border-radius: 0 0 7px 7px;
   overflow-y: visible;
-  
+}
+#placeinfo-nav {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+#placeinfo-nav button {
+  padding: 0 0 1rem 0;
+  background-color: white;
+  color: #5e5e5e;
+  width: fit-content;
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+#placeinfo-nav button:hover {
+  color: #8334c8;
+  box-shadow: none;
+}
+#placeinfo-nav button:first-child {
+  margin-left: 1rem;
+  border-bottom: 2.5px solid #8334c8;
+  color: #8334c8;
+}
+#placeinfo-nav button:nth-child(2) {
+  margin-left: 1rem;
 }
 .reviews {
   font-size: 0.86rem;

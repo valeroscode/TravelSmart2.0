@@ -441,6 +441,44 @@ function TravelSmart() {
     }
  }
 
+ //REVIEWS
+ const [reviews, setReviews] = useState([])
+ function getPlaceReviews(lat, lng) {
+ var map = window.map;
+ var geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode(
+      { location: { lat: lat, lng: lng } },
+      function (results, status) {
+        if (status === window.google.maps.GeocoderStatus.OK) {
+          const request = {
+            placeId: localStorage.getItem("ID"),
+            fields: ["reviews"],
+          };
+
+          var service = new window.google.maps.places.PlacesService(window.map);
+          service.getDetails(request, function (place, status) {
+            if (status == "OK") {
+              let list = []
+              for (let i = 0; i < place.reviews.length; i++) {
+                list.push({
+                  author: place.reviews[i].author_name,
+                  time: place.reviews[i].relative_time_description,
+                  rating: place.reviews[i].rating,
+                  text: place.reviews[i].text
+                })
+              }
+              setReviews(list)
+              // addressText.current.textContent = place.formatted_address;
+              // for (let i = 0; i < place.reviews.length; i++) {
+              //   renderReviews(place.reviews[i]);
+              // }
+            }
+          });
+        }
+      }
+    );
+  }
+
   return (
     <>
       <HomeHeader name={name} />
@@ -864,7 +902,14 @@ function TravelSmart() {
           placeDetails.current.style.left = '-8rem';
         }}/>
           <img id="gallery" ref={gallery}></img>
-          <div id="placeInfo">
+          <div id="placeInfo" onClick={(e) => {
+            if (e.target.id === 'show-me-reviews') {
+              alert(true)
+              if (reviews.length > 0) {
+                getPlaceReviews(e.target.getAttribute('lat'), e.target.getAttribute('lng'))
+              }
+            }
+          }}>
             <button id="ReviewsBtn">See Reviews</button>
             <button id="write_a_review">Write a Review</button>
           </div>
