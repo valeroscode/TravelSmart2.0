@@ -4248,6 +4248,73 @@ transform: rotate(90deg)
  -o-transition:all 0.5s ease;
  transition:all 0.5s ease;
 }
+#reviews-overview-container {
+  overflow-x: scroll;
+  padding-bottom: 7rem;
+}
+.place-user-review {
+  padding-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.place-user-review h5 {
+  margin-bottom: 0.5rem;
+}
+.place-review-rating {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+.place-review-text {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 90%;
+}
+#info-review-ratings-summary {
+  display: flex;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgb(193, 193, 193);
+}
+#reviews-overview {
+  margin: 0 1.5rem 0 1.5rem;
+}
+#placeInfo-reviews {
+  flex-direction: column;
+  position: absolute;
+  left: 0rem;
+  height: 100vh;
+  width: 35rem;
+  background-color: white;
+  top: 0rem;
+  padding-top: 1rem;
+  z-index: 1000;
+}
+#place-user-review {
+  margin-bottom: 3rem;
+}
+#placeInfo-reviews-nav {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+#placeInfo-reviews-nav button {
+  width: fit-content;
+  background-color: white;
+}
+#placeInfo-reviews-nav button:first-child {
+  margin-right: 5rem;
+  color: rgb(138, 138, 138);
+}
+#placeInfo-reviews-nav button:nth-child(2) {
+  color: #8334c8;
+  border-bottom: 3px solid #8334c8;
+  padding-bottom: 1.5rem;
+}
+#placeInfo-reviews-nav button:hover {
+  color: #8334c8;
+  box-shadow: none;
+}
 #placeInfo {
  position: relative;
   padding: 2rem 1rem 3rem 1rem;

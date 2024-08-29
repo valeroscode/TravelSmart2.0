@@ -80,6 +80,12 @@ function TravelSmart() {
   const advFilters = useRef();
   const placeInfoReviews = useRef();
 
+  const fivestar = useRef();
+  const fourstar = useRef();
+  const threestar = useRef();
+  const twostar = useRef();
+  const onestar = useRef();
+
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
   const [cities, setCities] = useState([])
@@ -916,6 +922,54 @@ function TravelSmart() {
           }}>
           </div>
           <div id="placeInfo-reviews" style={{display: 'none'}} ref={placeInfoReviews}>
+            <div id="placeInfo-reviews-nav">
+
+              <button>Overview</button>
+              <button>Reviews</button>
+
+            </div>
+            <div id="reviews-overview-container">
+            <div id="reviews-overview">
+              <h2>Reviews for {localStorage.getItem('title')}</h2>
+      <div id='info-review-ratings-summary'>
+       <div id='overall-rating'>
+       <h1>{localStorage.getItem('rating')}</h1>
+       </div>
+       <div id='review-ratings-bars'>
+       <div className='review-rating'>
+        <p>5</p>
+        <div className='rating-bar'>
+          <div className='rating-bar-fill' ref={fivestar}></div>
+        </div>
+       </div>
+       <div className='review-rating'>
+       <p>4</p>
+       <div className='rating-bar'>
+       <div className='rating-bar-fill' ref={fourstar}></div>
+       </div>
+       </div>
+       <div className='review-rating'>
+       <p>3</p>
+       <div className='rating-bar'>
+       <div className='rating-bar-fill' ref={threestar}></div>
+       </div>
+       </div>
+       <div className='review-rating'>
+       <p>2</p>
+       <div className='rating-bar'>
+       <div className='rating-bar-fill' ref={twostar}></div>
+       </div>
+       </div>
+       <div className='review-rating'>
+       <p>1</p>
+       <div className='rating-bar'>
+       <div className='rating-bar-fill' ref={onestar}></div>
+       </div>
+       </div>
+       </div>
+      </div>
+              </div>
+              
               {
                 reviews.map((review) => <div className='place-user-review'>
                 <h5>{review.author} | {review.time}</h5>
@@ -923,6 +977,7 @@ function TravelSmart() {
                 <p className='place-review-text'>{review.text}</p>
                 </div>)
               }
+            </div>
             </div>
         </div>
         <div id="map-organizer">
