@@ -78,6 +78,7 @@ function TravelSmart() {
   const mapInput = useRef();
   const mapInputSecond = useRef();
   const advFilters = useRef();
+  const placeInfoReviews = useRef();
 
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
@@ -443,15 +444,15 @@ function TravelSmart() {
 
  //REVIEWS
  const [reviews, setReviews] = useState([])
- function getPlaceReviews(lat, lng) {
+ function getPlaceReviews(id) {
  var map = window.map;
  var geocoder = new window.google.maps.Geocoder();
     geocoder.geocode(
-      { location: { lat: lat, lng: lng } },
+      { placeId: id },
       function (results, status) {
         if (status === window.google.maps.GeocoderStatus.OK) {
           const request = {
-            placeId: localStorage.getItem("ID"),
+            placeId: id,
             fields: ["reviews"],
           };
 
@@ -468,6 +469,7 @@ function TravelSmart() {
                 })
               }
               setReviews(list)
+              console.log(list)
               // addressText.current.textContent = place.formatted_address;
               // for (let i = 0; i < place.reviews.length; i++) {
               //   renderReviews(place.reviews[i]);
@@ -904,15 +906,24 @@ function TravelSmart() {
           <img id="gallery" ref={gallery}></img>
           <div id="placeInfo" onClick={(e) => {
             if (e.target.id === 'show-me-reviews') {
-              alert(true)
-              if (reviews.length > 0) {
-                getPlaceReviews(e.target.getAttribute('lat'), e.target.getAttribute('lng'))
+              console.log(reviews.length)
+              if (reviews.length === 0) {
+                alert(true)
+                getPlaceReviews(e.target.getAttribute('placeId'))
+                placeInfoReviews.current.style.display = 'flex'
               }
             }
           }}>
-            <button id="ReviewsBtn">See Reviews</button>
-            <button id="write_a_review">Write a Review</button>
           </div>
+          <div id="placeInfo-reviews" style={{display: 'none'}} ref={placeInfoReviews}>
+              {
+                reviews.map((review) => <div className='place-user-review'>
+                <h5>{review.author} | {review.time}</h5>
+                <h4 className='place-review-rating' rating={review.rating}>{`◆`.repeat(Math.round(parseInt(review.rating)))} {review.rating}/5</h4>
+                <p className='place-review-text'>{review.text}</p>
+                </div>)
+              }
+            </div>
         </div>
         <div id="map-organizer">
         <div id="map-start-interface">
