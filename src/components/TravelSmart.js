@@ -104,6 +104,8 @@ function TravelSmart() {
   const bestRatedBtn = useRef();
   const placeDetails = useRef();
 
+  const overallRating = useRef();
+
   //Array containing all places in the current city
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
@@ -450,6 +452,40 @@ function TravelSmart() {
 
  //REVIEWS
  const [reviews, setReviews] = useState([])
+ useEffect(() => {
+  let five = 0;
+  let four = 0;
+  let three = 0;
+  let two = 0;
+  let one = 0;
+  for (let i = 0; i < reviews.length; i++) {
+   switch (reviews[i].rating) {
+     case 5:
+       five++;
+       break;
+     case 4:
+       four++;
+       break;
+     case 3:
+       three++;
+       break;
+     case 2:
+       two++;
+       break;
+     case 1:
+       one++;
+       break;
+   }
+  }
+
+  fivestar.current.style.width = `${(five/reviews.length) * 100}%`
+  fourstar.current.style.width = `${(four/reviews.length) * 100}%`
+  threestar.current.style.width = `${(three/reviews.length) * 100}%`
+  twostar.current.style.width = `${(two/reviews.length) * 100}%`
+  onestar.current.style.width = `${(one/reviews.length) * 100}%`
+
+}, [reviews])
+
  function getPlaceReviews(id) {
  var map = window.map;
  var geocoder = new window.google.maps.Geocoder();
@@ -475,7 +511,6 @@ function TravelSmart() {
                 })
               }
               setReviews(list)
-              console.log(list)
               // addressText.current.textContent = place.formatted_address;
               // for (let i = 0; i < place.reviews.length; i++) {
               //   renderReviews(place.reviews[i]);
@@ -917,6 +952,7 @@ function TravelSmart() {
                 alert(true)
                 getPlaceReviews(e.target.getAttribute('placeId'))
                 placeInfoReviews.current.style.display = 'flex'
+                overallRating.current.textContent = e.target.getAttribute('overallRating')
               }
             }
           }}>
@@ -924,43 +960,49 @@ function TravelSmart() {
           <div id="placeInfo-reviews" style={{display: 'none'}} ref={placeInfoReviews}>
             <div id="placeInfo-reviews-nav">
 
-              <button>Overview</button>
+              <button onClick={() => {
+                    placeInfoReviews.current.display = 'none'
+                  }}>Overview</button>
               <button>Reviews</button>
+
+              <FontAwesomeIcon icon={faX} onClick={() => {
+                    placeInfoReviews.current.display = 'none'
+                  }} className="exit-reviews"/>
 
             </div>
             <div id="reviews-overview-container">
             <div id="reviews-overview">
              
       <div id='info-review-ratings-summary'>
-       <div id='overall-rating'>
-       <h1>{localStorage.getItem('rating')}</h1>
+       <div id='info-overall-rating'>
+       <h1 ref={overallRating}></h1>
        </div>
-       <div id='review-ratings-bars'>
-       <div className='review-rating'>
+       <div id='info-review-ratings-bars'>
+       <div className='info-review-rating'>
         <p>5</p>
         <div className='info-rating-bar'>
           <div className='rating-bar-fill' ref={fivestar}></div>
         </div>
        </div>
-       <div className='review-rating'>
+       <div className='info-review-rating'>
        <p>4</p>
        <div className='info-rating-bar'>
        <div className='rating-bar-fill' ref={fourstar}></div>
        </div>
        </div>
-       <div className='review-rating'>
+       <div className='info-review-rating'>
        <p>3</p>
        <div className='info-rating-bar'>
        <div className='rating-bar-fill' ref={threestar}></div>
        </div>
        </div>
-       <div className='review-rating'>
+       <div className='info-review-rating'>
        <p>2</p>
        <div className='info-rating-bar'>
        <div className='rating-bar-fill' ref={twostar}></div>
        </div>
        </div>
-       <div className='review-rating'>
+       <div className='info-review-rating'>
        <p>1</p>
        <div className='info-rating-bar'>
        <div className='rating-bar-fill' ref={onestar}></div>

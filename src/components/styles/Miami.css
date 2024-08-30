@@ -1507,9 +1507,19 @@ transition:all 0.3s ease;
   }
 }
 
+.exit-reviews {
+  position: absolute;
+  right: 1.5rem;
+  top: 1rem;
+  box-shadow: 0 0 10px 1px rgb(191, 191, 191);
+  padding: 0.5rem 0.6rem;
+  border-radius: 100%;
+}
+
+
 #exit-details-btn {
   position: absolute;
-  z-index: 10000;
+  z-index: 1000;
   right: 2rem;
   top: 1rem;
   height: 1rem;
@@ -4252,12 +4262,36 @@ transform: rotate(90deg)
   overflow-x: scroll;
   padding-bottom: 7rem;
 }
+#info-overall-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Roboto Condensed", sans-serif;
+}
+#info-overall-rating h1 {
+  background-color: #8a05ff;
+  border-radius: 100%;
+  padding: 1rem;
+  font-weight: 800;
+  color: white;
+}
 .info-rating-bar {
   background-color: whitesmoke;
     width: 23rem;
     height: 0.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.25rem;
     margin-left: 1rem;
+    margin-top: 0.75rem;
+}
+.info-review-rating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.info-review-rating p {
+  margin-bottom: 0;
+  margin-top: 0.5rem;
 }
 .place-user-review {
   padding: 2rem 1rem 0 2rem;
@@ -4283,10 +4317,13 @@ transform: rotate(90deg)
 #info-review-ratings-summary {
   display: flex;
   padding-bottom: 1rem;
-  border-bottom: 1px solid rgb(193, 193, 193);
+  border-bottom: 1px solid rgb(217, 217, 217);
+  flex-direction: row-reverse;
+  justify-content: center;
 }
-#reviews-overview {
-  margin: 0 1.5rem 0 1.5rem;
+#info-review-ratings-bars {
+  margin-right: 2rem;
+  margin-top: 0;
 }
 #placeInfo-reviews {
   flex-direction: column;
@@ -4298,6 +4335,7 @@ transform: rotate(90deg)
   top: 0rem;
   padding-top: 1rem;
   z-index: 1000;
+  left: 0.67rem;
 }
 #place-user-review {
   margin-bottom: 3rem;
