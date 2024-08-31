@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react'
 import "./styles/Miami.css";
 
-function ExploreCity ({places}) {
+function ExploreCity ({places, search}) {
 
     const [filtersActive, setFiltersActive] = useState([])
     const [priceActive, setPriceActive] = useState([])
@@ -142,7 +142,7 @@ function ExploreCity ({places}) {
                 ref={viewAll.searchText}
                 id="searchText"
               >
-                Results In {sessionStorage.getItem('city')}
+                Your Search - "{search}"
               </h1>
 
               <div id="filters-and-placecount">

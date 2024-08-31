@@ -1704,7 +1704,7 @@ top: -1rem;
 }
 
 #suggestions {
-  margin-top: 7rem;
+  margin-top: 4.5rem;
 }
 
 #map-organizer {
@@ -2423,7 +2423,7 @@ opacity: 1;
 
 
 #searchText {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 800;
   color: black;
 }
@@ -4050,9 +4050,7 @@ font-family: "Roboto Condensed", sans-serif;
 font-weight: 500;
 }
 #infoCard svg {
-display: inline;
 height: 19px;
-margin: 0 1px;
 }
 #infoCard .place-info-star {
   fill: #ffde0a;
@@ -4089,7 +4087,7 @@ overflow-x: hidden;
 
 .black-svg {
   fill: black;
-  margin-left: 1rem;
+  margin-left: 0.5rem;
 }
 
 @media screen and (max-width: 1317px) {
@@ -4146,6 +4144,12 @@ font-size: 0.9rem;
 position: relative;
 left: 0;
 margin-top: 0;
+display: flex;
+justify-content: start;
+align-items: center;
+}
+.todays-hours svg {
+  margin-right: 0.25rem;
 }
 .place-info-icon {
   fill: #8334c8;

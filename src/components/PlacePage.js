@@ -14,6 +14,7 @@ function PlacePage() {
   const [phone, setPhone] = useState('');
   const [hours, setHours] = useState([]);
   const [reviews, setReviews] = useState([])
+  const [filteredReviews, setFilteredReviews] = useState([])
   const [photo, setPhoto] = useState()
   const [reviewPosted, setReviewPosted] = useState(false)
   const [currDayHours, setCurrDayHours] = useState('')
@@ -80,6 +81,7 @@ function PlacePage() {
                 })
               }
               setReviews(list)
+              setFilteredReviews(list)
               // addressText.current.textContent = place.formatted_address;
               // for (let i = 0; i < place.reviews.length; i++) {
               //   renderReviews(place.reviews[i]);
@@ -186,6 +188,28 @@ function PlacePage() {
         paragraph.innerHTML = highlightedHTML;
         }
      }
+
+
+     function filterRating(e, num) {
+      if (e.target.checked === true) {
+        for (let i = 0; i < document.getElementsByClassName('rating-filter-cb').length; i++) {
+          document.getElementsByClassName('rating-filter-cb')[i].previousElementSibling.style.color = 'gray';
+          document.getElementsByClassName("rating-filter-cb")[i].style.pointerEvents = 'none';
+        }
+        e.target.previousElementSibling.style.color = 'black'
+        e.target.style.pointerEvents = 'all'
+        const newReviews = reviews.filter(review => review.rating === num)
+        setFilteredReviews(newReviews)
+      } else {
+        for (let i = 0; i < document.getElementsByClassName('rating-filter-cb').length; i++) {
+          document.getElementsByClassName('rating-filter-cb')[i].previousElementSibling.style.color = 'black';
+          document.getElementsByClassName("rating-filter-cb")[i].style.pointerEvents = 'all';
+        }
+        setFilteredReviews(reviews)
+      }
+     }
+
+
   return (
     <>
      <HomeHeader name={currentUser.name}/>
@@ -339,7 +363,6 @@ function PlacePage() {
      </section>
 
      <section id='place-backdrop-reviews'>
-
       <h2>Reviews for {localStorage.getItem('title')}</h2>
       <div id='review-ratings-summary'>
        <div id='overall-rating'>
@@ -390,9 +413,98 @@ function PlacePage() {
         }
        }}>Sort By ▼</button>
        <div id='sort-by-filter-dropdown' ref={sortFilterDropdown}>
-       <li><p>Most Recent</p> <input type='checkbox'/></li>
-       <li><p>Highest Rated</p> <input type='checkbox'/></li>
-       <li><p>Lowest Rated</p> <input type='checkbox'/></li>
+       <li><p>Most Recent</p> <input type='checkbox' className='sort-filter-cb' 
+       
+       onClick={(e) => {
+        const times = []
+        const tempReviews = [...reviews]
+        if (e.target.checked === true) {
+        for (let i = 0; i < reviews.length; i++) {
+          let timeNum = String(reviews[i].time).split(' ')[0]
+            if (timeNum === 'a') {
+              timeNum = '1'
+            }
+          if (String(reviews[i].time).split(' ')[1] === 'day' || String(reviews[i].time).split(' ')[1] === 'days') {
+            times.push(Number(timeNum + '0'))
+            tempReviews[i].timeSort = Number(timeNum + '0');
+          } 
+          if (String(reviews[i].time).split(' ')[1] === 'week' || String(reviews[i].time).split(' ')[1] === 'weeks') {
+            times.push(Number(timeNum + '00'))
+            tempReviews[i].timeSort = Number(timeNum + '00');
+          } 
+          if (String(reviews[i].time).split(' ')[1] === 'month' || String(reviews[i].time).split(' ')[1] === 'months') {
+            times.push(Number(timeNum + '000'))
+            tempReviews[i].timeSort = Number(timeNum + '000');
+          } 
+          if (String(reviews[i].time).split(' ')[1] === 'year' || String(reviews[i].time).split(' ')[1] === 'years') {
+            times.push(Number(timeNum + '0000'))
+            tempReviews[i].timeSort = Number(timeNum + '0000');
+          } 
+        }
+
+        const results = tempReviews.sort((a, b) => a.timeSort - b.timeSort);
+        setFilteredReviews(results)
+        for (let i = 0; i < document.getElementsByClassName('sort-filter-cb').length; i++) {
+          document.getElementsByClassName('sort-filter-cb')[i].previousElementSibling.style.color = 'gray';
+          document.getElementsByClassName("sort-filter-cb")[i].style.pointerEvents = 'none';
+        }
+        e.target.previousElementSibling.style.color = 'black'
+        e.target.style.pointerEvents = 'all'
+      } else {
+        setFilteredReviews(reviews)
+        for (let i = 0; i < document.getElementsByClassName('sort-filter-cb').length; i++) {
+          document.getElementsByClassName('sort-filter-cb')[i].previousElementSibling.style.color = 'black';
+          document.getElementsByClassName("sort-filter-cb")[i].style.pointerEvents = 'all';
+        }
+      }
+       }}
+
+       /></li>
+       <li><p>Highest Rated</p> <input type='checkbox' className='sort-filter-cb'
+
+       onClick={(e) => {
+        const tempReviews = [...reviews]
+        if (e.target.checked === true) {
+        const results = tempReviews.sort((a, b) => b.rating - a.rating);
+        setFilteredReviews(results)
+
+        for (let i = 0; i < document.getElementsByClassName('sort-filter-cb').length; i++) {
+          document.getElementsByClassName('sort-filter-cb')[i].previousElementSibling.style.color = 'gray';
+          document.getElementsByClassName("sort-filter-cb")[i].style.pointerEvents = 'none';
+        }
+        e.target.previousElementSibling.style.color = 'black'
+        e.target.style.pointerEvents = 'all'
+      } else {
+        setFilteredReviews(reviews)
+        for (let i = 0; i < document.getElementsByClassName('sort-filter-cb').length; i++) {
+          document.getElementsByClassName('sort-filter-cb')[i].previousElementSibling.style.color = 'black';
+          document.getElementsByClassName("sort-filter-cb")[i].style.pointerEvents = 'all';
+        }
+      }
+       }}
+       
+       /></li>
+       <li><p>Lowest Rated</p> <input type='checkbox' className='sort-filter-cb' onClick={(e) => {
+        const tempReviews = [...reviews]
+        if (e.target.checked === true) {
+        const results = tempReviews.sort((a, b) => a.rating - b.rating);
+        setFilteredReviews(results)
+
+        for (let i = 0; i < document.getElementsByClassName('sort-filter-cb').length; i++) {
+          document.getElementsByClassName('sort-filter-cb')[i].previousElementSibling.style.color = 'gray';
+          document.getElementsByClassName("sort-filter-cb")[i].style.pointerEvents = 'none';
+        }
+        e.target.previousElementSibling.style.color = 'black'
+        e.target.style.pointerEvents = 'all'
+      } else {
+        setFilteredReviews(reviews)
+        for (let i = 0; i < document.getElementsByClassName('sort-filter-cb').length; i++) {
+          document.getElementsByClassName('sort-filter-cb')[i].previousElementSibling.style.color = 'black';
+          document.getElementsByClassName("sort-filter-cb")[i].style.pointerEvents = 'all';
+        }
+      }
+
+       }}/></li>
        </div>
        </div>
 
@@ -405,11 +517,11 @@ function PlacePage() {
         }
        }}>Filter By Rating ▼</button>
        <div id='rating-filter-dropdown' ref={ratingFilterDropdown}>
-       <li><p>5 Star</p> <input type='checkbox'/></li>
-       <li><p>4 Star</p> <input type='checkbox'/></li>
-       <li><p>3 Star</p> <input type='checkbox'/></li>
-       <li><p>2 Star</p> <input type='checkbox'/></li>
-       <li><p>1 Star</p> <input type='checkbox'/></li>
+       <li><p>5 Star</p> <input type='checkbox' className='rating-filter-cb' onClick={(e) => filterRating(e, 5)}/></li>
+       <li><p>4 Star</p> <input type='checkbox' className='rating-filter-cb' onClick={(e) => filterRating(e, 4)}/></li>
+       <li><p>3 Star</p> <input type='checkbox' className='rating-filter-cb' onClick={(e) => filterRating(e, 3)}/></li>
+       <li><p>2 Star</p> <input type='checkbox' className='rating-filter-cb' onClick={(e) => filterRating(e, 2)}/></li>
+       <li><p>1 Star</p> <input type='checkbox' className='rating-filter-cb' onClick={(e) => filterRating(e, 1)}/></li>
        </div>
        </div>
 
@@ -523,7 +635,7 @@ function PlacePage() {
         </div>
         <div id='user-review-section'>
         {
-            reviews.map((review) => <div className='user-review'>
+            filteredReviews.map((review) => <div className='user-review'>
               <h5>{review.author} | {review.time}</h5>
               <h4 className='review-rating' rating={review.rating}>{`◆`.repeat(Math.round(parseInt(review.rating)))} {review.rating}/5</h4>
               <p className='review-text'>{review.text}</p>

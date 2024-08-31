@@ -80,6 +80,8 @@ function TravelSmart() {
   const advFilters = useRef();
   const placeInfoReviews = useRef();
 
+  const smartSearchInput = useRef()
+
   const fivestar = useRef();
   const fourstar = useRef();
   const threestar = useRef();
@@ -110,6 +112,7 @@ function TravelSmart() {
   const [allPlaces_inCity, setAllPlaces_inCity] = useState(
     allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
   );
+  const [smartSearchPlaces, setSmartSearchPlaces] = useState([])
   const [areas, setAreas] = useState([])
   const [styles, setStyles] = useState([])
   const [serving, setServing] = useState([])
@@ -522,6 +525,57 @@ function TravelSmart() {
     );
   }
 
+  const categoryTypes = ['clubs', 'club', 'resturants', 'resturant', 'theatres', 'theatre', 'movies', 'movie']
+  const citiesAvaliable = ['miami', 'new york', 'barcelona']
+
+  function smartSearch() {
+    const searchTerm = String(smartSearchInput.current.value).toLocaleLowerCase();
+
+    const category = String(searchTerm).split(" ")[0]
+    const location = String(searchTerm).split(" ")[2]
+    const locationIndex = searchTerm.indexOf(location);
+    const place = searchTerm.slice(locationIndex)
+    
+    if (place.includes(' and ')) {
+      
+    } else {
+      const filterByLocation = allPlaces.filter(p => String(p.city).toLocaleLowerCase() === place)
+      if (citiesAvaliable.includes(place)) {
+      if (categoryTypes.includes(category)) {
+      const filterByCategory = filterByLocation.filter(p => String(p.category).toLocaleLowerCase() === category)
+      setSmartSearchPlaces(filterByCategory)
+      } else {
+      const filterByStyle = filterByLocation.filter(p => String(p.style).toLocaleLowerCase() === category)
+      setSmartSearchPlaces(filterByStyle)
+      if (filterByStyle.length === 0) {
+        const filterByServes = filterByLocation.filter(p =>  String(p.serves).toLocaleLowerCase().includes(category))
+        setSmartSearchPlaces(filterByServes)
+      }
+      }
+    } else {
+
+      const filterByArea = allPlaces.filter(p => String(p.area).toLocaleLowerCase() === place)
+      if (categoryTypes.includes(category)) {
+        const filterByCategory = filterByArea.filter(p => String(p.category).toLocaleLowerCase() === category)
+        setSmartSearchPlaces(filterByCategory)
+        } else {
+        const filterByStyle = filterByArea.filter(p => String(p.style).toLocaleLowerCase() === category)
+        setSmartSearchPlaces(filterByStyle)
+        if (filterByStyle.length === 0) {
+          const filterByServes = filterByArea.filter(p =>  String(p.serves).toLocaleLowerCase().includes(category))
+          setSmartSearchPlaces(filterByServes)
+        }
+        }
+      
+    }
+
+      //remember to handle misspellings!!!
+    }
+
+    setConfirmExpCity(true)
+
+  }
+
   return (
     <>
       <HomeHeader name={name} />
@@ -601,8 +655,8 @@ function TravelSmart() {
             <h2>Hello {name.split(" ")[0]},</h2>
             <h4>What would you like to do today?</h4>
             <div id="hello-user-input-search">
-            <input placeholder="Sushi in Miami, Resturants in Orlando..."></input>
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput}></input>
+            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => smartSearch()}/>
             </div>
             <div id="home-buttons">
               <button id="plan-a-trip" onClick={() => {
@@ -718,7 +772,7 @@ function TravelSmart() {
         </section>
 
         { confirmExpCity ?
-        <ExploreCity places={allPlaces_inCity}/>
+        <ExploreCity places={smartSearchPlaces} search={smartSearchInput.current.value}/>
         : null}
 
 <TripsPage/>
@@ -949,10 +1003,11 @@ function TravelSmart() {
             if (e.target.id === 'show-me-reviews') {
               console.log(reviews.length)
               if (reviews.length === 0) {
-                alert(true)
                 getPlaceReviews(e.target.getAttribute('placeId'))
                 placeInfoReviews.current.style.display = 'flex'
                 overallRating.current.textContent = e.target.getAttribute('overallRating')
+              } else {
+                placeInfoReviews.current.style.display = 'flex'
               }
             }
           }}>
@@ -961,7 +1016,7 @@ function TravelSmart() {
             <div id="placeInfo-reviews-nav">
 
               <button onClick={() => {
-                    placeInfoReviews.current.display = 'none'
+                    placeInfoReviews.current.style.display = 'none'
                   }}>Overview</button>
               <button>Reviews</button>
 
