@@ -528,49 +528,87 @@ function TravelSmart() {
   const categoryTypes = ['clubs', 'club', 'resturants', 'resturant', 'theatres', 'theatre', 'movies', 'movie']
   const citiesAvaliable = ['miami', 'new york', 'barcelona']
 
+  //okay, different algo. it will go by search terms, score each place according to those terms
   function smartSearch() {
     const searchTerm = String(smartSearchInput.current.value).toLocaleLowerCase();
-
     const category = String(searchTerm).split(" ")[0]
     const location = String(searchTerm).split(" ")[2]
     const locationIndex = searchTerm.indexOf(location);
     const place = searchTerm.slice(locationIndex)
+
+    const regEx = searchTerm.split(/ and | in | /)
+
+    let removeItem;
+
+    //account for places with spaces in the name 
+    let finalTerms = regEx.map((term, index, array) => term === 'beach' ? `${array[index - 1]} ${term}` : term)
+    finalTerms = finalTerms.map((term, index, array) => term === 'york' ? `${array[index - 1]} ${term}` : term)
+    finalTerms = finalTerms.map((term, index, array) => term === 'quarter' ? `${array[index - 1]} ${term}` : term)
+    finalTerms = finalTerms.filter(term => term !== '')
+
+
+    for (let i = 0; i < allPlaces.length; i++) {
+     
+      if (finalTerms.includes(String(allPlaces[i].city).toLocaleLowerCase())) {
+        allPlaces[i].score++
+      }
+      if (finalTerms.includes(String(allPlaces[i].area).toLocaleLowerCase())) {
+        allPlaces[i].score++
+      }
+      if (finalTerms.includes(String(allPlaces[i].style).toLocaleLowerCase())) {
+        allPlaces[i].score++
+      }
+      if (finalTerms.includes(String(allPlaces[i].category).toLocaleLowerCase())) {
+        allPlaces[i].score++
+      }
+      if (finalTerms.includes(String(allPlaces[i].serves).toLocaleLowerCase())) {
+        allPlaces[i].score++
+      }
+    }
+
+    const results = allPlaces.filter(p => p.score === finalTerms.length)
+
+    setSmartSearchPlaces(results)
+
+    console.log(finalTerms)
     
-    if (place.includes(' and ')) {
-      
-    } else {
-      const filterByLocation = allPlaces.filter(p => String(p.city).toLocaleLowerCase() === place)
-      if (citiesAvaliable.includes(place)) {
-      if (categoryTypes.includes(category)) {
-      const filterByCategory = filterByLocation.filter(p => String(p.category).toLocaleLowerCase() === category)
-      setSmartSearchPlaces(filterByCategory)
-      } else {
-      const filterByStyle = filterByLocation.filter(p => String(p.style).toLocaleLowerCase() === category)
-      setSmartSearchPlaces(filterByStyle)
-      if (filterByStyle.length === 0) {
-        const filterByServes = filterByLocation.filter(p =>  String(p.serves).toLocaleLowerCase().includes(category))
-        setSmartSearchPlaces(filterByServes)
-      }
-      }
-    } else {
+    // if (place.includes(' and ')) {
 
-      const filterByArea = allPlaces.filter(p => String(p.area).toLocaleLowerCase() === place)
-      if (categoryTypes.includes(category)) {
-        const filterByCategory = filterByArea.filter(p => String(p.category).toLocaleLowerCase() === category)
-        setSmartSearchPlaces(filterByCategory)
-        } else {
-        const filterByStyle = filterByArea.filter(p => String(p.style).toLocaleLowerCase() === category)
-        setSmartSearchPlaces(filterByStyle)
-        if (filterByStyle.length === 0) {
-          const filterByServes = filterByArea.filter(p =>  String(p.serves).toLocaleLowerCase().includes(category))
-          setSmartSearchPlaces(filterByServes)
-        }
-        }
+    //   const termsArray = place.split(' and ')
       
-    }
+      
 
-      //remember to handle misspellings!!!
-    }
+    // } else {
+    //   const filterByLocation = allPlaces.filter(p => String(p.city).toLocaleLowerCase() === place)
+    //   if (citiesAvaliable.includes(place)) {
+    //   if (categoryTypes.includes(category)) {
+    //   const filterByCategory = filterByLocation.filter(p => String(p.category).toLocaleLowerCase() === category)
+    //   setSmartSearchPlaces(filterByCategory)
+    //   } else {
+    //   const filterByStyle = filterByLocation.filter(p => String(p.style).toLocaleLowerCase() === category)
+    //   setSmartSearchPlaces(filterByStyle)
+    //   if (filterByStyle.length === 0) {
+    //     const filterByServes = filterByLocation.filter(p =>  String(p.serves).toLocaleLowerCase().includes(category))
+    //     setSmartSearchPlaces(filterByServes)
+    //   }
+    //   }
+    // } else {
+    //   const filterByArea = allPlaces.filter(p => String(p.area).toLocaleLowerCase() === place)
+    //   if (categoryTypes.includes(category)) {
+    //     const filterByCategory = filterByArea.filter(p => String(p.category).toLocaleLowerCase() === category)
+    //     setSmartSearchPlaces(filterByCategory)
+    //     } else {
+    //     const filterByStyle = filterByArea.filter(p => String(p.style).toLocaleLowerCase() === category)
+    //     setSmartSearchPlaces(filterByStyle)
+    //     if (filterByStyle.length === 0) {
+    //       const filterByServes = filterByArea.filter(p =>  String(p.serves).toLocaleLowerCase().includes(category))
+    //       setSmartSearchPlaces(filterByServes)
+    //     }
+    //     }
+    // }
+
+    //   //remember to handle misspellings!!!
+    // }
 
     setConfirmExpCity(true)
 
