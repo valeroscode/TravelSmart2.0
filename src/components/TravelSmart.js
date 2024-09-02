@@ -538,17 +538,38 @@ function TravelSmart() {
 
     const regEx = searchTerm.split(/ and | in | /)
 
+    const initialTerms = regEx.map((item) => ({
+      term: item,
+      changed: false
+    }))
+
     let removeItem;
 
     //account for places with spaces in the name 
-    let finalTerms = regEx.map((term, index, array) => term === 'beach' ? `${array[index - 1]} ${term}` : term)
-    finalTerms = finalTerms.map((term, index, array) => term === 'york' ? `${array[index - 1]} ${term}` : term)
-    finalTerms = finalTerms.map((term, index, array) => term === 'quarter' ? `${array[index - 1]} ${term}` : term)
-    finalTerms = finalTerms.filter(term => term !== '')
+    let finalTerms = initialTerms.map((term, index, array) => term.term === 'beach' ? { term: `${array[index - 1].term} ${term.term}`, changed: true} : term)
+    finalTerms = finalTerms.map((term, index, array) => term.term === 'york' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
+    finalTerms = finalTerms.map((term, index, array) => term.term === 'gables' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
+    finalTerms = finalTerms.map((term, index, array) => term.term === 'quarter' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
 
+    let previousIndex = -1
 
+    //STUCK ON THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    finalTerms = finalTerms.map((item, index) => {
+      if (item.changed === true) {
+        previousIndex = index - 1
+      }
+
+      return { ...item, exclude: index === previousIndex };
+
+    })
+
+    // finalTerms = finalTerms.filter(user => !user.exclude);
+
+    console.log(finalTerms)
+
+    finalTerms = finalTerms.filter(term => term.term !== '')
     for (let i = 0; i < allPlaces.length; i++) {
-     
+     allPlaces[i].score = 0
       if (finalTerms.includes(String(allPlaces[i].city).toLocaleLowerCase())) {
         allPlaces[i].score++
       }
@@ -561,7 +582,7 @@ function TravelSmart() {
       if (finalTerms.includes(String(allPlaces[i].category).toLocaleLowerCase())) {
         allPlaces[i].score++
       }
-      if (finalTerms.includes(String(allPlaces[i].serves).toLocaleLowerCase())) {
+      if (String(allPlaces[i].serves).toLocaleLowerCase().includes(category)) {
         allPlaces[i].score++
       }
     }
@@ -571,6 +592,7 @@ function TravelSmart() {
     setSmartSearchPlaces(results)
 
     console.log(finalTerms)
+    console.log(results)
     
     // if (place.includes(' and ')) {
 
