@@ -580,9 +580,19 @@ function TravelSmart() {
       if (finalTerms.some(term => term.term.includes(String(allPlaces[i].category).toLocaleLowerCase()))) {
         allPlaces[i].score++
       }
-      if (finalTerms.some(term => term.term.includes(String(allPlaces[i].serves).toLocaleLowerCase()))) {
+      let processed = allPlaces[i].serves.replace(/[,&]/g, ' ');
+      processed = processed.replace(/\s+/g, ' ').trim();
+      processed = processed.toLocaleLowerCase()
+      const regexPattern = processed.split(' ').join('|');
+      finalTerms.some(term => {
+      const items = regexPattern.split('|').map(item => item.trim());
+      console.log(items)
+      if (items.includes(term.term)) {
         allPlaces[i].score++
       }
+      })
+
+      //When handling misspellings also account for 1 letter added and missing 1 letter
     }
 
     const regexcase = new RegExp(`\\b${' and '}\\b`, 'g'); // 'g' for global match
