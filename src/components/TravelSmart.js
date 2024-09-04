@@ -551,48 +551,59 @@ function TravelSmart() {
     finalTerms = finalTerms.map((term, index, array) => term.term === 'gables' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
     finalTerms = finalTerms.map((term, index, array) => term.term === 'quarter' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
 
-    let previousIndex = -1
-
-    //STUCK ON THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    finalTerms = finalTerms.map((item, index) => {
-      if (item.changed === true) {
-        previousIndex = index - 1
+    for (let i = 0; i < finalTerms.length; i++) {
+      if (finalTerms[i].changed === true) {
+        finalTerms.splice(i - 1, 1)
       }
-
-      return { ...item, exclude: index === previousIndex };
-
-    })
-
-    // finalTerms = finalTerms.filter(user => !user.exclude);
-
-    console.log(finalTerms)
+    }
+    
 
     finalTerms = finalTerms.filter(term => term.term !== '')
+
+    const cityInArray = finalTerms.filter(term => citiesAvaliable.includes(term.term))
+
     for (let i = 0; i < allPlaces.length; i++) {
      allPlaces[i].score = 0
-      if (finalTerms.includes(String(allPlaces[i].city).toLocaleLowerCase())) {
+
+     if (cityInArray.length === 0) {
+      if (finalTerms.some(term => term.term.includes(String(allPlaces[i].area).toLocaleLowerCase()))) {
         allPlaces[i].score++
       }
-      if (finalTerms.includes(String(allPlaces[i].area).toLocaleLowerCase())) {
+      } else {
+        if (finalTerms.some(term => term.term.includes(String(allPlaces[i].city).toLocaleLowerCase()))) {
+          allPlaces[i].score++
+        }
+      }
+      if (finalTerms.some(term => term.term.includes(String(allPlaces[i].style).toLocaleLowerCase()))) {
         allPlaces[i].score++
       }
-      if (finalTerms.includes(String(allPlaces[i].style).toLocaleLowerCase())) {
+      if (finalTerms.some(term => term.term.includes(String(allPlaces[i].category).toLocaleLowerCase()))) {
         allPlaces[i].score++
       }
-      if (finalTerms.includes(String(allPlaces[i].category).toLocaleLowerCase())) {
-        allPlaces[i].score++
-      }
-      if (String(allPlaces[i].serves).toLocaleLowerCase().includes(category)) {
+      if (finalTerms.some(term => term.term.includes(String(allPlaces[i].serves).toLocaleLowerCase()))) {
         allPlaces[i].score++
       }
     }
 
-    const results = allPlaces.filter(p => p.score === finalTerms.length)
+    const regexcase = new RegExp(`\\b${' and '}\\b`, 'g'); // 'g' for global match
+    const matches = searchTerm.match(regexcase);
+
+    let results;
+
+    if (matches !== null) {
+    results = allPlaces.filter(p => p.score === finalTerms.length - matches.length)
+    } else {
+    results = allPlaces.filter(p => p.score === finalTerms.length)
+    }
 
     setSmartSearchPlaces(results)
 
+    //SOLVE FOR THE SEACH TERMS "sushi and beer in coral gables and brickell"
+
     console.log(finalTerms)
+
     console.log(results)
+
     
     // if (place.includes(' and ')) {
 
