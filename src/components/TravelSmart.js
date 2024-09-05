@@ -562,9 +562,53 @@ function TravelSmart() {
 
     const cityInArray = finalTerms.filter(term => citiesAvaliable.includes(term.term))
 
-    for (let i = 0; i < allPlaces.length; i++) {
-     allPlaces[i].score = 0
+    function wordAccuracy(word, value) {
+      value = String(value).toLocaleLowerCase()
+      if (word === value) {
+        return
+      } else {
+      const calc = word.length - value.length
 
+        if (calc === 0 || calc === 1 || calc === -1) {
+          const minLength = Math.min(word.length, value.length)
+            let misspellings = 0 
+            for (let i = 0; i < minLength; i++) {
+              if (word[i] !== value[i]) {
+                misspellings++
+              }
+            }
+            if (misspellings <= 1) {
+              console.log(value)
+              finalTerms.map((term) => {
+                if (term.term === word) {
+                  term.term = value
+                }
+              })
+            } 
+          
+        } else {
+          return
+        }
+      }
+    
+    }
+
+    //Correcting mispellings
+    for (let i = 0; i < allPlaces.length; i++) {
+    for (let j = 0; j < finalTerms.length; j++) {
+      wordAccuracy(finalTerms[j].term, allPlaces[i].area)
+      wordAccuracy(finalTerms[j].term, allPlaces[i].city)
+      wordAccuracy(finalTerms[j].term, allPlaces[i].style)
+      wordAccuracy(finalTerms[j].term, allPlaces[i].category)
+      wordAccuracy(finalTerms[j].term, allPlaces[i].serves)
+      }
+    }
+
+ 
+
+    for (let i = 0; i < allPlaces.length; i++) {
+     
+     allPlaces[i].score = 0
      if (cityInArray.length === 0) {
       if (finalTerms.some(term => term.term.includes(String(allPlaces[i].area).toLocaleLowerCase()))) {
         allPlaces[i].score++
@@ -586,7 +630,6 @@ function TravelSmart() {
       const regexPattern = processed.split(' ').join('|');
       finalTerms.some(term => {
       const items = regexPattern.split('|').map(item => item.trim());
-      console.log(items)
       if (items.includes(term.term)) {
         allPlaces[i].score++
       }
@@ -594,7 +637,7 @@ function TravelSmart() {
 
       //When handling misspellings also account for 1 letter added and missing 1 letter
     }
-
+    console.log(finalTerms)
     const regexcase = new RegExp(`\\b${' and '}\\b`, 'g'); // 'g' for global match
     const matches = searchTerm.match(regexcase);
 
@@ -607,10 +650,6 @@ function TravelSmart() {
     }
 
     setSmartSearchPlaces(results)
-
-    //SOLVE FOR THE SEACH TERMS "sushi and beer in coral gables and brickell"
-
-    console.log(finalTerms)
 
     console.log(results)
 
@@ -655,6 +694,33 @@ function TravelSmart() {
 
     setConfirmExpCity(true)
 
+  }
+
+  function wordAccuracy(index, term, value) {
+    value = String(value).toLocaleLowerCase()
+    if (term === value) {
+      return
+    } else {
+    const calc = term.length - value.length
+      if (calc === 0 || calc === 1 || calc === -1) {
+        const minLength = Math.min(term.length, value.length)
+        if (calc === 0) {
+          let misspellings = 0 
+          for (let i = 0; i < minLength; i++) {
+            if (term[i] !== value[i]) {
+              misspellings++
+              term[i] = value[i]
+              console.log(term)
+            }
+          }
+          if (misspellings <= 1) {
+            //FIX THE WORD AND MODIFY THE ARRAY
+          } 
+        }
+      } else {
+        return
+      }
+    }
   }
 
   return (
