@@ -1442,9 +1442,6 @@ transition:all 0.3s ease;
       margin-left: 7rem;
       margin-right: 7rem;
   }
-  #searchInput {
-      width: 60%;
-  }
 }
 
 @media screen and (max-height: 1010px) {
@@ -2491,23 +2488,6 @@ height: 1rem;
 position: relative;
 top: 0.1rem;
 }
-#searchInput {
-  background-color: whitesmoke;
-  height: 2.5rem;
-  border: none;
-  border-bottom: 2px solid black;
-  pointer-events: all;
-  margin-bottom: 2rem;
-  color: black;
-  position: relative;
-  left: 4.5rem;
-  width: 70%;
-  border-radius: 3px;
-  
-}
-#searchInput:focus {
-outline: none;
-}
 
 #title-city-options {
   display: flex;
@@ -3077,8 +3057,7 @@ top: -0.07rem;
 }
 #allPlacesContainer {
 display: flex;
-flex-direction: row;
-flex-wrap: wrap;
+flex-direction: column;
 overflow: visible;
 justify-content: start;
 background-color: white;
@@ -3086,22 +3065,14 @@ height: 75vh;
 margin-left: 5rem;
 margin-right: 5.5rem;
 overflow-y: scroll;
-}
-.see-imgs {
-  position: absolute;
-  bottom: 0.5rem;
-  left: 0.5rem;
-  color: gray;
-  cursor: pointer;
-  pointer-events: all;
-  z-index: 1000;
-  z-index: 100;
+overflow-x: hidden;
 }
 
 .show-all-line {
   background-color: #8a05ff;
   width: 0%;
   height: 1rem;
+  border-radius: 20px;
   position: absolute;
   bottom: -1rem;
   -webkit-transition: all 0.3s ease;
@@ -3126,11 +3097,33 @@ transition: all 0.3s ease;
   pointer-events: none;
 }
 
+.showAllDiv-Parent {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  height: 13rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  margin-right: 2rem;
+  position: relative;
+}
+
+.showAllDiv-Parent img {
+  padding-bottom: 1rem;
+  position: relative;
+  border-radius: 20px 0 0 20px;
+  height: 100%;
+  width: 13rem;
+  object-fit: cover;
+}
+
 .showAllDiv {
-margin: 2rem 2rem 0 0;
+display: flex;
+flex-direction: column;
 height: fit-content;
-width: 22rem;
-height: 16rem;
+border-radius: 0 20px 20px 0;
+width: 75vw;
+padding-bottom: 1rem;
 position: relative;
 background-color: whitesmoke;
 cursor: pointer;
@@ -3152,6 +3145,7 @@ font-weight: 800;
 height: 2rem;
 padding: 0 1rem;
 width: fit-content;
+border-radius: 7px;
 }
 .showall-tripbtn svg {
 position: relative;
@@ -3258,11 +3252,12 @@ margin-top: 1rem;
 opacity: 1;
 position: relative;
 color: black;
-font-size: 1.3rem;
+font-size: 1.5rem;
 padding-left: 1rem;
 background-color: white;
 width: fit-content;
 padding-right: 0.5rem;
+margin-bottom: 0.5rem;
 max-width: 70%;
 font-weight: 800;
 border-radius: 0 7px 7px 0;
@@ -3289,8 +3284,8 @@ pointer-events: all;
 }
 .interactable-showall {
   display: flex;
-  position: absolute;
-  bottom: 2rem;
+  position: relative;
+  left: 0.5rem;
 }
 .showall-heart {
   margin-left: 2rem;
@@ -5051,12 +5046,6 @@ left: 2vw;
 }
 }
 
-@media screen and (max-width: 600px) {
-  #searchInput {
-      width: 50%;
-  }
-}
-
 @media screen and (max-width: 503px) {
   #intro h1 {
       font-size: 3.5rem;
@@ -5080,10 +5069,6 @@ width: 100%;
 @media screen and (max-width: 455px) {
   #filters-and-placecount div li {
       width: 79%;
-  }
-  #searchInput {
-      width: 45%;
-      left: 10.5rem;
   }
   #title-city-options {
       padding: 0 4rem;

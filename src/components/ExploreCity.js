@@ -10,9 +10,36 @@ function ExploreCity ({places, search}) {
     const [filteredPlaces, setFilteredPlaces] = useState([])
     const [checkboxs, setCheckboxes] = useState(0)
     const [priceCheckboxes, setPriceCheckboxes] = useState(0)
+    const [photoUrls, setPhotoUrls] = useState([])
 
     useEffect(() => {
         setFilteredPlaces(places)
+        if (filteredPlaces.length > 0) {
+          var geocoder = new window.google.maps.Geocoder();
+      for (let i = 0; i < filteredPlaces.length; i++) {
+      geocoder.geocode(
+        { placeId: filteredPlaces[i].placeID },
+        function (results, status) {
+          if (status === window.google.maps.GeocoderStatus.OK) {
+            const request = {
+              placeId: filteredPlaces[i].placeID,
+              fields: ["photo"],
+            };
+  
+            var service = new window.google.maps.places.PlacesService(window.map);
+            service.getDetails(request, function (place, status) {
+              if (status == "OK") {
+                console.log(place.photos[0])
+                const arr = photoUrls;
+                arr.push(photoUrls.push(place.photos[0].getUrl({ maxWidth: 400 })))
+                setPhotoUrls(arr)
+              }
+            });
+          }
+        }
+      );
+      }
+        }
     }, [])
 
       const viewAll = {
@@ -107,28 +134,6 @@ function ExploreCity ({places, search}) {
 
       }, [checkboxs, priceCheckboxes]);
 
-      function matchKeyboardInput(e) {
-         const value = e.target.value;
-    
-         const title = document.getElementsByClassName('showall-text')
-         const style = document.getElementsByClassName('style-showall')
-         const serves = document.getElementsByClassName('serves-showall')
-         const area = document.getElementsByClassName('area-showall')
-         const parentDiv = document.getElementsByClassName('showAllDiv')
-
-         for (let i = 0; i < title.length; i++) {
-
-            if (String(title[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase()) 
-                || String(style[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())
-                || String(serves[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())
-            || String(area[i].textContent).toLocaleLowerCase().includes(String(value).toLocaleLowerCase())) {
-                parentDiv[i].style.display = "block"
-            } else {
-                parentDiv[i].style.display = "none"
-            }
-         }
-      }
-
       
   return (
     <>
@@ -189,26 +194,18 @@ function ExploreCity ({places, search}) {
               </div>
              
             </div>
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Place name, tacos, gourmet..."
-                name="search"
-                ref={viewAll.searchAll}
-                onKeyUp={(e) => {
-                    matchKeyboardInput(e)
-                }}
-              />
             <div
               ref={viewAll.allPlacesContainer}
               id="allPlacesContainer"
               onClick={(e) => viewAll.handleTripBtn_handleFavoritesBtn(e)}
             >
-              {filteredPlaces.map((place) => (
+              {filteredPlaces.map((place, index) => (
+                <div className='showAllDiv-Parent'>
+                <img src={photoUrls[index]}></img>
                 <div
                   className="showAllDiv"
                   onClick={(e) =>{
-                    if (!e.target.closest('.see-imgs') && !e.target.closest('.showall-tripbtn')) {
+                    if (!e.target.closest('.showall-tripbtn')) {
                     learnMoreAboutPlace(
                       place.name,
                       place.rating,
@@ -260,9 +257,9 @@ function ExploreCity ({places, search}) {
                     </p>
                   </div>
                   </div>
-                  <a className="see-imgs" target="_blank" href={`https://www.google.com/search?q=${place.name + ' ' + place.city}&sca_esv=03047b03c4b9cd9d&sca_upv=1&sxsrf=ADLYWILgzRTFudLq4zqNYw8eEFajutqqOA:1717445774174&source=hp&biw=1536&bih=730&ei=jiReZsKECOLfp84Pt5OM2Q4&iflsig=AL9hbdgAAAAAZl4yntxQz9UCBdnIlSkmNMW5d3qcFKh-&ved=0ahUKEwjCg6eKoMCGAxXi78kDHbcJI-sQ4dUDCA8&uact=5&oq=tatam&gs_lp=EgNpbWciBXRhdGFtMggQABiABBixAzIIEAAYgAQYsQMyCBAAGIAEGLEDMggQABiABBixAzIFEAAYgAQyBRAAGIAEMgUQABiABDIFEAAYgAQyBRAAGIAEMgUQABiABEjED1DuA1jKDXABeACQAQCYAVGgAYIDqgEBNbgBA8gBAPgBAYoCC2d3cy13aXotaW1nmAIGoAKfA6gCCsICBxAjGCcY6gLCAgQQIxgnwgILEAAYgAQYsQMYgwGYAweSBwE2oAeKGw&sclient=img&udm=2`}>See Images</a>
                   <p className="instructions-showall">Click to learn more</p>
                   <div className='show-all-line'></div>
+                </div>
                 </div>
               ))}
             </div>
