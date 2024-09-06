@@ -1,7 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react'
 import "./styles/Miami.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faMagnifyingGlass, faDiamond
+} from "@fortawesome/free-solid-svg-icons";
 
-function ExploreCity ({places, search}) {
+function ExploreCity ({places, search, allPlaces}) {
+
+  const smartSearchInput = useRef()
 
     const [filtersActive, setFiltersActive] = useState([])
     const [priceActive, setPriceActive] = useState([])
@@ -13,34 +19,35 @@ function ExploreCity ({places, search}) {
     const [photoUrls, setPhotoUrls] = useState([])
 
     useEffect(() => {
-        setFilteredPlaces(places)
-        if (filteredPlaces.length > 0) {
-          var geocoder = new window.google.maps.Geocoder();
-      for (let i = 0; i < filteredPlaces.length; i++) {
-      geocoder.geocode(
-        { placeId: filteredPlaces[i].placeID },
-        function (results, status) {
-          if (status === window.google.maps.GeocoderStatus.OK) {
-            const request = {
-              placeId: filteredPlaces[i].placeID,
-              fields: ["photo"],
-            };
-  
-            var service = new window.google.maps.places.PlacesService(window.map);
-            service.getDetails(request, function (place, status) {
-              if (status == "OK") {
-                console.log(place.photos[0])
-                const arr = photoUrls;
-                arr.push(photoUrls.push(place.photos[0].getUrl({ maxWidth: 400 })))
-                setPhotoUrls(arr)
-              }
-            });
-          }
-        }
-      );
-      }
-        }
+      setFilteredPlaces(places)      
     }, [])
+
+    useEffect(() => {
+      if (filteredPlaces.length > 0) {
+        var geocoder = new window.google.maps.Geocoder();
+    for (let i = 0; i < filteredPlaces.length; i++) {
+    geocoder.geocode(
+      { placeId: filteredPlaces[i].placeID },
+      function (results, status) {
+        if (status === window.google.maps.GeocoderStatus.OK) {
+          const request = {
+            placeId: filteredPlaces[i].placeID,
+            fields: ["photo"],
+          };
+
+          var service = new window.google.maps.places.PlacesService(window.map);
+          service.getDetails(request, function (place, status) {
+            if (status == "OK") {
+              const imgTag = document.getElementsByClassName('showAllDiv-img')
+              imgTag[i].src = place.photos[0].getUrl({ maxWidth: 400 })
+            }
+          });
+        }
+      }
+    );
+    }
+      }
+    }, [filteredPlaces])
 
       const viewAll = {
         //Refs to elements
@@ -134,6 +141,134 @@ function ExploreCity ({places, search}) {
 
       }, [checkboxs, priceCheckboxes]);
 
+      const citiesAvaliable = ['miami', 'new york', 'barcelona']
+
+      function smartSearch() {
+        const searchTerm = String(smartSearchInput.current.value).toLocaleLowerCase();
+        const category = String(searchTerm).split(" ")[0]
+        const location = String(searchTerm).split(" ")[2]
+        const locationIndex = searchTerm.indexOf(location);
+        const place = searchTerm.slice(locationIndex)
+    
+        const regEx = searchTerm.split(/ and | in | /)
+    
+        const initialTerms = regEx.map((item) => ({
+          term: item,
+          changed: false
+        }))
+    
+        let removeItem;
+    
+        //account for places with spaces in the name 
+        let finalTerms = initialTerms.map((term, index, array) => term.term === 'beach' ? { term: `${array[index - 1].term} ${term.term}`, changed: true} : term)
+        finalTerms = finalTerms.map((term, index, array) => term.term === 'york' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
+        finalTerms = finalTerms.map((term, index, array) => term.term === 'gables' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
+        finalTerms = finalTerms.map((term, index, array) => term.term === 'quarter' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
+    
+        for (let i = 0; i < finalTerms.length; i++) {
+          if (finalTerms[i].changed === true) {
+            finalTerms.splice(i - 1, 1)
+          }
+        }
+        
+    
+        finalTerms = finalTerms.filter(term => term.term !== '')
+    
+        const cityInArray = finalTerms.filter(term => citiesAvaliable.includes(term.term))
+    
+        function wordAccuracy(word, value) {
+          value = String(value).toLocaleLowerCase()
+          if (word === value) {
+            return
+          } else {
+          const calc = word.length - value.length
+    
+            if (calc === 0 || calc === 1 || calc === -1) {
+              const minLength = Math.min(word.length, value.length)
+                let misspellings = 0 
+                for (let i = 0; i < minLength; i++) {
+                  if (word[i] !== value[i]) {
+                    misspellings++
+                  }
+                }
+                if (misspellings <= 1) {
+                  console.log(value)
+                  finalTerms.map((term) => {
+                    if (term.term === word) {
+                      term.term = value
+                    }
+                  })
+                } 
+              
+            } else {
+              return
+            }
+          }
+
+          viewAll.searchText.current.textContent = `Your Search - '${searchTerm}'`
+        
+        }
+    
+        //Correcting mispellings
+        for (let i = 0; i < allPlaces.length; i++) {
+        for (let j = 0; j < finalTerms.length; j++) {
+          wordAccuracy(finalTerms[j].term, allPlaces[i].area)
+          wordAccuracy(finalTerms[j].term, allPlaces[i].city)
+          wordAccuracy(finalTerms[j].term, allPlaces[i].style)
+          wordAccuracy(finalTerms[j].term, allPlaces[i].category)
+          wordAccuracy(finalTerms[j].term, allPlaces[i].serves)
+          }
+        }
+    
+     
+    
+        for (let i = 0; i < allPlaces.length; i++) {
+         
+         allPlaces[i].score = 0
+         if (cityInArray.length === 0) {
+          if (finalTerms.some(term => term.term.includes(String(allPlaces[i].area).toLocaleLowerCase()))) {
+            allPlaces[i].score++
+          }
+          } else {
+            if (finalTerms.some(term => term.term.includes(String(allPlaces[i].city).toLocaleLowerCase()))) {
+              allPlaces[i].score++
+            }
+          }
+          if (finalTerms.some(term => term.term.includes(String(allPlaces[i].style).toLocaleLowerCase()))) {
+            allPlaces[i].score++
+          }
+          if (finalTerms.some(term => term.term.includes(String(allPlaces[i].category).toLocaleLowerCase()))) {
+            allPlaces[i].score++
+          }
+          let processed = allPlaces[i].serves.replace(/[,&]/g, ' ');
+          processed = processed.replace(/\s+/g, ' ').trim();
+          processed = processed.toLocaleLowerCase()
+          const regexPattern = processed.split(' ').join('|');
+          finalTerms.some(term => {
+          const items = regexPattern.split('|').map(item => item.trim());
+          if (items.includes(term.term)) {
+            allPlaces[i].score++
+          }
+          })
+    
+          //When handling misspellings also account for 1 letter added and missing 1 letter
+        }
+        console.log(finalTerms)
+        const regexcase = new RegExp(`\\b${' and '}\\b`, 'g'); // 'g' for global match
+        const matches = searchTerm.match(regexcase);
+    
+        let results;
+    
+        if (matches !== null) {
+        results = allPlaces.filter(p => p.score === finalTerms.length - matches.length)
+        } else {
+        results = allPlaces.filter(p => p.score === finalTerms.length)
+        }
+    
+        setFilteredPlaces(results)
+    
+      }
+
       
   return (
     <>
@@ -149,7 +284,10 @@ function ExploreCity ({places, search}) {
               >
                 Your Search - "{search}"
               </h1>
-
+              <div id="hello-user-input-search-exp-city">
+            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput}></input>
+            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => smartSearch()}/>
+            </div>
               <div id="filters-and-placecount">
                <div id="filters-placement-org">
                 <h4 onClick={() => {
@@ -190,7 +328,7 @@ function ExploreCity ({places, search}) {
                </div>
 
                <p>{filteredPlaces.length} Places</p>
-               
+               <div className='exp-line'></div>
               </div>
              
             </div>
@@ -201,7 +339,7 @@ function ExploreCity ({places, search}) {
             >
               {filteredPlaces.map((place, index) => (
                 <div className='showAllDiv-Parent'>
-                <img src={photoUrls[index]}></img>
+                <img className='showAllDiv-img'></img>
                 <div
                   className="showAllDiv"
                   onClick={(e) =>{
@@ -234,7 +372,7 @@ function ExploreCity ({places, search}) {
                   <div className="lowerDiv">
                     <p className="cat-showall">{place.category}</p>
                     <p className="style-showall">{place.style}</p>
-                    <p className="serves-showall">{place.serves}</p>
+                    <p className="serves-showall">Serving {place.serves}</p>
                   </div>
                   <div className="interactable-showall">
                   <button
