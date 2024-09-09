@@ -9,14 +9,9 @@ function ExploreCity ({places, search, allPlaces}) {
 
   const smartSearchInput = useRef()
 
-    const [filtersActive, setFiltersActive] = useState([])
-    const [priceActive, setPriceActive] = useState([])
-    const [filterDD, setFilterDD] = useState(false)
     const [priceDD, setPriceDD] = useState(false)
     const [filteredPlaces, setFilteredPlaces] = useState([])
-    const [checkboxs, setCheckboxes] = useState(0)
-    const [priceCheckboxes, setPriceCheckboxes] = useState(0)
-    const [photoUrls, setPhotoUrls] = useState([])
+    const [cbCount, setCbCount] = useState(0)
 
     useEffect(() => {
       setFilteredPlaces(places)      
@@ -103,43 +98,30 @@ function ExploreCity ({places, search, allPlaces}) {
         },
       };
 
-      const [attr, setAttr] = useState("");
-      const [checked, setChecked] = useState(null);
-      const [type, setType] = useState("");
+      function handlePriceFilter(priceCheckboxes, checked, attr) {
+        if (priceCheckboxes === 0) {
+          setFilteredPlaces(places)
+          return
+      }
 
-      useEffect(() => {
-            for (let i = 0; i < places.length; i++) {
-              if (places[i].category === attr && checked && type === "category") {
-                places[i].score++
-              }
-              if (places[i].category === attr && !checked && type === "category") {
-                places[i].score--
-              } 
-              if (type === "price") {
-                const int = parseInt(attr)
-              if (places[i].price === int && checked) {
-                places[i].score++
-                
-              } 
-              if (places[i].price === int && !checked) {
-                places[i].score--
-              }
-            }
-            }
+      console.log(checked)
+      console.log(attr)
 
-            if (priceCheckboxes === 0 && checkboxs === 0) {
-                setFilteredPlaces(places)
-                return
-            }
-            
-            let filtersOn = 0
-            priceCheckboxes > 0 ? filtersOn++ : null;
-            checkboxs > 0 ? filtersOn++ : null;
-            const newResults = places.filter((place) => place.score === filtersOn)
-    
-            setFilteredPlaces(newResults)
+        for (let i = 0; i < places.length; i++) {
+          if (places[i].price === attr && checked) {
+            places[i].score++
+          }
+          else if (places[i].price === attr && !checked) {
+            places[i].score--
+          }
+        }
+        
+        const newResults = places.filter((place) => place.score > 0)
 
-      }, [checkboxs, priceCheckboxes]);
+        console.log(newResults)
+
+        setFilteredPlaces(newResults)
+      }
 
       const citiesAvaliable = ['miami', 'new york', 'barcelona']
 
@@ -296,19 +278,19 @@ function ExploreCity ({places, search, allPlaces}) {
                   } else {
                     setPriceDD(true)
                   }
-                }}>Price ({priceCheckboxes}) ▼</h4>
+                }}>Price ({cbCount}) ▼</h4>
                 
                   
                     <ul style={priceDD ? {display: "block"} : {display:"none"}} onClick={(e) => {
                       if (e.target.tagName === 'INPUT') {
-                        if (e.target.checked) {
-                            setPriceCheckboxes(priceCheckboxes + 1)
-                        } else if (!e.target.checked && priceCheckboxes !== 0) {
-                            setPriceCheckboxes(priceCheckboxes - 1)
+                        let boxes = 0; 
+                        for (let i = 0; i < document.getElementsByClassName('price-checkbox').length; i++) {
+                          if (document.getElementsByClassName('price-checkbox')[i].checked === true) {
+                            boxes++
                           }
-                          setAttr(e.target.getAttribute('price'))
-                          setChecked(e.target.checked)
-                          setType("price")
+                        }
+                        setCbCount(boxes)
+                        handlePriceFilter(boxes, e.target.checked, e.target.getAttribute('price'))                    
                       }
                       
                   }}>
