@@ -170,7 +170,7 @@ function HomeHeader({ name }) {
 
         <div id="home-searchbar">
         <div id="cityDD-input">
-          <input ref={cityInput} placeholder="Choose A City" onClick={() => {
+          <input ref={cityInput} style={{borderRadius: '20px 0 0 7px'}} placeholder="Choose A City" onClick={() => {
             
             cityDD.current.style.display = "flex"
           }} onKeyUp={(e) => {

@@ -14,7 +14,10 @@ function ExploreCity ({places, search, allPlaces}) {
     const [cbCount, setCbCount] = useState(0)
 
     useEffect(() => {
-      setFilteredPlaces(places)      
+      setFilteredPlaces(places)    
+      for (let i = 0; i < places.length; i++) {
+        places[i].priceScore = 0
+      }
     }, [])
 
     useEffect(() => {
@@ -99,26 +102,24 @@ function ExploreCity ({places, search, allPlaces}) {
       };
 
       function handlePriceFilter(priceCheckboxes, checked, attr) {
+        attr = parseInt(attr)
         if (priceCheckboxes === 0) {
           setFilteredPlaces(places)
           return
-      }
-
-      console.log(checked)
-      console.log(attr)
+        }
 
         for (let i = 0; i < places.length; i++) {
           if (places[i].price === attr && checked) {
-            places[i].score++
+            places[i].priceScore = 1
           }
-          else if (places[i].price === attr && !checked) {
-            places[i].score--
+          if (places[i].price === attr && !checked) {
+            places[i].priceScore = 0
           }
         }
-        
-        const newResults = places.filter((place) => place.score > 0)
 
-        console.log(newResults)
+        console.log(places)
+        
+        const newResults = places.filter((place) => place.priceScore === 1)
 
         setFilteredPlaces(newResults)
       }
@@ -319,7 +320,7 @@ function ExploreCity ({places, search, allPlaces}) {
               id="allPlacesContainer"
               onClick={(e) => viewAll.handleTripBtn_handleFavoritesBtn(e)}
             >
-              {filteredPlaces.map((place, index) => (
+              {filteredPlaces.map((place) => (
                 <div className='showAllDiv-Parent'>
                 <img className='showAllDiv-img'></img>
                 <div
@@ -354,7 +355,7 @@ function ExploreCity ({places, search, allPlaces}) {
                   <div className="lowerDiv">
                     <p className="cat-showall">{place.category}</p>
                     <p className="style-showall">{place.style}</p>
-                    <p className="serves-showall">Serving {place.serves}</p>
+                    <p className="serves-showall">Serving {String(place.serves).replaceAll(',',' ∙ ')}</p>
                   </div>
                   <div className="interactable-showall">
                   <button

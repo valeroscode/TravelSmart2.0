@@ -20,7 +20,8 @@ import {
   faChevronDown,
   faHeart,
   faMoneyBillWave,
-  faBurst
+  faBurst,
+  faMessage
 } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "./HomeHeader";
 import { citiesArray, allPlaces } from "./allMarkers.mjs";
@@ -525,7 +526,6 @@ function TravelSmart() {
     );
   }
 
-  const categoryTypes = ['clubs', 'club', 'resturants', 'resturant', 'theatres', 'theatre', 'movies', 'movie']
   const citiesAvaliable = ['miami', 'new york', 'barcelona']
 
   //okay, different algo. it will go by search terms, score each place according to those terms
@@ -1512,6 +1512,8 @@ function TravelSmart() {
           <FontAwesomeIcon icon={faMap} /> Show Map
         </h4>
       </div>
+
+      <FontAwesomeIcon id="notification-center-btn" icon={faMessage} />
 
       <Footer name={name} />
     </>

@@ -531,7 +531,7 @@ function Results() {
             }
           </div>
 
-          <input type="text" placeholder="Search Places" id="res-searchbar" onKeyUp={(e) => matchKeyboardInput(e)}></input>
+          <input type="text" placeholder="Type whatever. Disco? Mediterranean? Anything." id="res-searchbar" onKeyUp={(e) => matchKeyboardInput(e)}></input>
           <div id="place-div-container">
             {
               filteredPlaces.map((place) => (

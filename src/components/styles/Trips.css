@@ -269,7 +269,7 @@ color: white;
 border: 3px solid black;
 height: fit-content;
 margin-bottom: 1rem;
-border-radius: 0px;
+border-radius: 20px;
 font-weight: 800;
 width: 100%;
 font-family: 'Roboto Condensed', sans-serif;
@@ -398,6 +398,7 @@ padding-top: 1rem;
 padding-right: 1rem;
 width: 100%;
 font-size: 1rem;
+border-radius: 30px;
 }
 .placeholder {
 position: absolute;
@@ -459,7 +460,7 @@ transition: none;
 width: 30vw;
 background-color: white;
 display: flex;
-border-radius: 2px;
+border-radius: 20px;
 position: relative;
 top: 0vh;
 border: 2px solid black;
@@ -475,7 +476,7 @@ justify-content: center;
 background-color: black;
 color: white;
 font-weight: 800;
-border-radius: 2px 2px 0 0;
+border-radius: 20px 20px 0 0;
 border: 2px solid black;
 width: 100%;
 }
@@ -583,7 +584,7 @@ font-weight: 500;
 
 .friends-section-desc {
   margin-top: 0.3rem;
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: gray;
 }
 
