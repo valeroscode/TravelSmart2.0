@@ -291,6 +291,12 @@ function Results() {
     <>
       <HomeHeader name={name} />
 
+      <section id="results-art-bg">
+        {sessionStorage.getItem("filters") === 'none' ? <h1 ref={filterDescription}>{String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h1> : <h1 ref={filterDescription} id="filter-desc">{applied_filters} IN {String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h1>}
+        <img></img>
+        <img></img>
+        <img></img>
+      </section>
 
       <section id="results-overall-org">
         
