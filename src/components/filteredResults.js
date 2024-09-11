@@ -28,6 +28,7 @@ function Results() {
   const ul = useRef();
   const topRated = useRef();
   const filterDescription = useRef();
+  const legend = useRef();
 
   const list = [];
   const topRatedArr = [];
@@ -84,6 +85,42 @@ function Results() {
   useEffect(() => {
       setFilteredPlaces(places)
   }, [places])
+
+  useEffect(() => {
+    if (filteredPlaces.length > 0) {
+    var geocoder = new window.google.maps.Geocoder();
+    for (let i = 0; i < filteredPlaces.length; i++) {
+    geocoder.geocode(
+      { placeId: filteredPlaces[i].placeID },
+      function (results, status) {
+        if (status === window.google.maps.GeocoderStatus.OK) {
+          const request = {
+            placeId: filteredPlaces[i].placeID,
+            fields: ["photo"],
+          };
+
+          var service = new window.google.maps.places.PlacesService(window.map);
+          service.getDetails(request, function (place, status) {
+            if (status == "OK") {
+              const imgTag = document.getElementsByClassName('place-div-image-results')
+              imgTag[i].src = place.photos[0].getUrl({ maxWidth: 400 })
+              if (i === 4) {
+              document.getElementsByClassName('banner-img')[0].src = place.photos[0].getUrl({ maxWidth: 400 })
+              }
+              if (i === 2) {
+                document.getElementsByClassName('banner-img')[1].src = place.photos[0].getUrl({ maxWidth: 400 })
+                }
+                if (i === 8) {
+                  document.getElementsByClassName('banner-img')[2].src = place.photos[0].getUrl({ maxWidth: 400 })
+                  }
+            }
+          });
+        }
+      }
+    );
+    }
+  }
+  }, [filteredPlaces])
 
   useEffect(() => {
 
@@ -293,9 +330,9 @@ function Results() {
 
       <section id="results-art-bg">
         {sessionStorage.getItem("filters") === 'none' ? <h1 ref={filterDescription}>{String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h1> : <h1 ref={filterDescription} id="filter-desc">{applied_filters} IN {String(sessionStorage.getItem('city')).toLocaleUpperCase()}</h1>}
-        <img></img>
-        <img></img>
-        <img></img>
+        <img className="banner-img"></img>
+        <img className="banner-img"></img>
+        <img className="banner-img"></img>
       </section>
 
       <section id="results-overall-org">
@@ -538,10 +575,13 @@ function Results() {
           </div>
 
           <input type="text" placeholder="Type whatever. Disco? Mediterranean? Anything." id="res-searchbar" onKeyUp={(e) => matchKeyboardInput(e)}></input>
+          <h4 ref={legend} style={{display: 'none'}}><FontAwesomeIcon icon={faStarOfLife} style={{color: 'red'}}/> means this place has awards</h4>
           <div id="place-div-container">
+            
             {
               filteredPlaces.map((place) => (
                  <div className="place-div">
+                  <img className="place-div-image-results"></img>
                    <div className="place-div-name-rating">
                    <h4><FontAwesomeIcon icon={faDiamond} />{place.rating}</h4>
                     <h3 className="place-div-name">{place.name}</h3>
@@ -552,6 +592,7 @@ function Results() {
                       <h5 className="place-div-serves">Serves {String(place.serves).replaceAll(',',' ')}</h5>
                     { 
                     place.awards !== "" ?
+                    legend.current.style.display = 'block' &&
                     <div className="place-div-awards">
                     <FontAwesomeIcon icon={faStarOfLife} />
                     </div>
