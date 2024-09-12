@@ -514,13 +514,25 @@
     background-color: rgba(0, 0, 0, 0);
  }
 
+ @media screen and (max-width: 889px) {
+    #results-art-bg h1 {
+        left: 2rem;
+    }
+ }
+
  @media screen and (max-width: 616px) {
+    #results-art-bg h1 {
+        font-size: 3.5rem;
+    }
     #all-results-filters {
         flex-wrap: wrap;
     }
  }
 
  @media screen and (max-width: 400px) {
+    #results-art-bg h1 {
+        left: 1rem;
+    }
     .all-places-buttons button {
         font-size: 0.8rem;
     }
@@ -532,10 +544,11 @@
 
  .filteredplaces-line {
     width: 0%;
-    height: 0.5rem;
+    height: 1rem;
     background-color: #8a05ff;
-    position: relative;
-    top: 1.5rem;
+    position: absolute;
+    top: 11.5rem;
+    border-radius: 0 0 30px 30px;
     -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -543,5 +556,5 @@
  }
 
  .place-div:hover .filteredplaces-line {
-    width: 100%;
+    width: 91%;
  }

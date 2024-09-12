@@ -90,7 +90,7 @@ function Footer({name}) {
               }
             <div id="contact-footer">
               <h4>GET IN TOUCH</h4>
-              <p className="direct">Contact the developer directly 👇</p>
+              <p className="direct">Have comments, suggestions, or cries of outrage? <br></br> Contact the developer directly 👇</p>
               <div id="contact-info">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                   <path

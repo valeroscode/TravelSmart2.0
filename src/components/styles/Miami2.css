@@ -757,6 +757,7 @@ color: white;
     margin-right: 0.5rem;
     margin-top: 0.5rem;
     pointer-events: all;
+    border-radius: 20px;
 }
 
 #subscribe-info button {
@@ -771,6 +772,9 @@ color: white;
     height: 100%;
     margin-top: 0.5rem;
     border: 2px solid white;
+    padding: 0.75rem;
+    border-radius: 20px;
+    font-family: "Roboto Condensed", sans-serif;
 }
 
 #getonlist {
