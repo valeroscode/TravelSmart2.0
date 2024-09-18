@@ -1444,7 +1444,7 @@ function TravelSmart() {
                     }}>Area <FontAwesomeIcon icon={faChevronDown} style={ul1 === false ? {transform:'rotate(-90deg)'} : {transform:'rotate(0deg)'}} /></h5>
                     <ul style={ul1 === false ? {display:'none'} : {display:'flex'}}>
                     {
-                      areas.map(area => <li><input type="checkbox"></input> <p>{area}</p></li>)
+                      areas.map(area => <li><input type="checkbox" className="adv-checkbox area-filters-map" area={area}></input> <p>{area}</p></li>)
                     }
                     </ul>
                   </div>
@@ -1456,7 +1456,7 @@ function TravelSmart() {
                     /></h5>
                     <ul style={ul2 === false ? {display:'none'} : {display:'flex'}}>
                     {
-                      styles.map(style => <li><input type="checkbox"></input> <p>{style}</p></li>)
+                      styles.map(style => <li><input type="checkbox" className="adv-checkbox type-filters-map"></input> <p>{style}</p></li>)
                     }
                     </ul>
                   </div>
@@ -1468,7 +1468,7 @@ function TravelSmart() {
                     /></h5>
                     <ul style={ul3 === false ? {display:'none'} : {display:'flex'}}>
                     {
-                      serving.map(serve => <li><input type="checkbox"></input> <p>{serve}</p></li>)
+                      serving.map(serve => <li><input type="checkbox" className="adv-checkbox serve-filters-map"></input> <p>{serve}</p></li>)
                     }
                     </ul>
                   </div>

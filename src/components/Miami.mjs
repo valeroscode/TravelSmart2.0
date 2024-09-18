@@ -488,7 +488,9 @@ export function generalScript() {
     let dropdown_filters = [];
     let sorting_filters = [];
     let category_filters = [];
+    let type_filters = [];
     let area_filters = [];
+    let serve_filters = [];
     let candidates = [];
     let parentEls = [];
 
@@ -1115,11 +1117,83 @@ export function generalScript() {
       renderSponsoredPlaces();
     }
 
+    function handleAdvFilters(markers) {
+
+      let overallScore = 0;
+
+      console.log(markers)
+
+      for (let i = 0; i < markers.length; i++) {
+        markers[i].score = 0;
+        if (area_filters.includes(markers[i].area)) {
+          markers[i].score++
+        }
+        if (type_filters.includes(markers[i].category)) {
+          markers[i].score++
+        }
+        if (serve_filters.includes(markers[i].serves)) {
+          markers[i].score++
+        }
+      }
+
+      area_filters.length > 0 ? overallScore++ : null
+      type_filters.length > 0 ? overallScore++ : null
+      serve_filters.length > 0 ? overallScore++ : null
+
+      let advArray = markers.filter(m => m.score === overallScore)
+
+      let remove;
+
+      for (let i = 0; i < advArray.length; i++) {
+        const marker = advArray[i];
+        remove = allmarkers.filter((marker) => !advArray.includes(marker));
+        marker.setMap(map);
+      }
+
+      for (let i = 0; i < remove.length; i++) {
+        remove[i].setMap(null);
+      }
+
+      console.log(live_markers)
+
+    }
+
+    const advCb = document.getElementsByClassName('adv-checkbox');
+
+    for (let i = 0; i < advCb.length; i++) {
+      advCb[i].addEventListener("click", (e) => {
+        
+        if (e.target.checked === true) {
+           if (e.target.classList.contains('area-filters-map')) {
+             area_filters.push(e.target.nextElementSibling.textContent)
+           }
+           if (e.target.classList.contains('type-filters-map')) {
+            type_filters.push(e.target.nextElementSibling.textContent)
+           }
+           if (e.target.classList.contains('serve-filters-map')) {
+            serve_filters.push(e.target.nextElementSibling.textContent)
+           }
+        } else {
+          if (e.target.classList.contains('area-filters-map')) {
+            area_filters.splice(area_filters.indexOf(e.target.nextElementSibling.textContent), 1) 
+          }
+          if (e.target.classList.contains('type-filters-map')) {
+            type_filters.splice(type_filters.indexOf(e.target.nextElementSibling.textContent), 1)
+          }
+          if (e.target.classList.contains('serve-filters-map')) {
+            serve_filters.splice(serve_filters.indexOf(e.target.nextElementSibling.textContent), 1)
+          }
+        }
+
+        handleAdvFilters(live_markers)
+
+      })
+    }
+
     const checkbox = document.getElementsByClassName("checkbox");
     for (let i = 0; i < checkbox.length; i++) {
       checkbox[i].addEventListener("change", (e) => {
         filter_Markers(e.target, e.target);
-
         const filtersChosen = document.getElementById("filters-disclosed");
         filtersChosen.innerHTML = `<p><em>${dropdown_filters.join(
           " > "
