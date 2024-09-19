@@ -62,6 +62,7 @@ export function generalScript() {
         name: props.name,
         content: props.content,
         category: props.category,
+        serves: props.serves,
         type: props.type,
         price: props.price,
         rating: props.rating,
@@ -1136,14 +1137,20 @@ export function generalScript() {
         }
       }
 
+      
       area_filters.length > 0 ? overallScore++ : null
       type_filters.length > 0 ? overallScore++ : null
       serve_filters.length > 0 ? overallScore++ : null
 
+      console.log(overallScore)
+      console.log(markers)
+
+
       let advArray = markers.filter(m => m.score === overallScore)
 
-      let remove;
+      let remove = [];
 
+      //something is wrong with the logic on the advanced array, markers with an unquivilant score are getting shown
       for (let i = 0; i < advArray.length; i++) {
         const marker = advArray[i];
         remove = allmarkers.filter((marker) => !advArray.includes(marker));
@@ -1153,8 +1160,6 @@ export function generalScript() {
       for (let i = 0; i < remove.length; i++) {
         remove[i].setMap(null);
       }
-
-      console.log(live_markers)
 
     }
 
@@ -1186,6 +1191,8 @@ export function generalScript() {
         }
 
         handleAdvFilters(live_markers)
+        console.log(serve_filters)
+        console.log(type_filters)
 
       })
     }
