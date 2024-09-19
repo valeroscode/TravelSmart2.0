@@ -68,6 +68,7 @@ export function generalScript() {
         rating: props.rating,
         area: props.area,
         active: props.active,
+        style: props.style,
         placeID: props.placeID,
         Inexpensive: props.Inexpensive,
         Best: props.Best,
@@ -1122,43 +1123,34 @@ export function generalScript() {
 
       let overallScore = 0;
 
-      console.log(markers)
-
       for (let i = 0; i < markers.length; i++) {
         markers[i].score = 0;
         if (area_filters.includes(markers[i].area)) {
           markers[i].score++
         }
-        if (type_filters.includes(markers[i].category)) {
+        if (type_filters.includes(markers[i].style)) {
           markers[i].score++
         }
         if (serve_filters.includes(markers[i].serves)) {
           markers[i].score++
         }
       }
-
+      
+      console.log(markers)
       
       area_filters.length > 0 ? overallScore++ : null
       type_filters.length > 0 ? overallScore++ : null
       serve_filters.length > 0 ? overallScore++ : null
 
-      console.log(overallScore)
-      console.log(markers)
-
-
       let advArray = markers.filter(m => m.score === overallScore)
 
-      let remove = [];
-
       //something is wrong with the logic on the advanced array, markers with an unquivilant score are getting shown
-      for (let i = 0; i < advArray.length; i++) {
-        const marker = advArray[i];
-        remove = allmarkers.filter((marker) => !advArray.includes(marker));
-        marker.setMap(map);
-      }
-
-      for (let i = 0; i < remove.length; i++) {
-        remove[i].setMap(null);
+      for (let i = 0; i < markers.length; i++) {
+        if (advArray.includes(markers[i])) {
+          markers[i].setMap(map);
+        } else {
+          markers[i].setMap(null);
+        }
       }
 
     }

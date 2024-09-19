@@ -919,7 +919,7 @@ function TravelSmart() {
         </section>
 
         { confirmExpCity ?
-        <ExploreCity places={smartSearchPlaces} search={smartSearchInput.current.value} allPlaces={allPlaces}/>
+        <ExploreCity places={smartSearchPlaces} searchTerm={smartSearchInput.current.value} allPlaces={allPlaces}/>
         : null}
 
 <TripsPage/>

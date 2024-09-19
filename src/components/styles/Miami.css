@@ -1896,6 +1896,12 @@ background-color: white;
   color: white;
 }
 
+#sidepanel-filters button:nth-child(2) {
+  border-radius: 0;
+  border-right: 1px solid rgb(211, 211, 211);
+  border-left: 1px solid rgb(211, 211, 211);
+}
+
 #sidepanel-filters button:nth-child(3) {
   border-radius: 0 25px 25px 0;
 }
@@ -2254,6 +2260,7 @@ bottom: 5rem;
 }
 
 #avaliable-cities div .explore-city-button {
+  font-family: "Roboto Condensed", sans-serif;
   position: relative;
   margin: 0;
   bottom: 7.30rem;
@@ -3197,7 +3204,7 @@ border-radius: 0 0 20px 20px;
 height: 13rem;
 width: 100%;
 position: relative;
-background-color: rgb(246, 245, 245);
+background-color: rgb(244, 244, 244);
 cursor: pointer;
 -webkit-transition: all 0.3s ease;
 -moz-transition: all 0.3s ease;
@@ -3390,11 +3397,13 @@ font-size: 1.2rem;
 }
 .style-showall {
   margin: 0.5rem 0;
-  font-weight: 600;
+  font-weight: 400;
+  color: gray;
 }
 .serves-showall {
   margin: 0;
-  font-weight: 600;
+  font-weight: 400;
+  color: gray;
 }
 .price-showall {
 position: relative;

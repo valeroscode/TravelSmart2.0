@@ -5,7 +5,7 @@ import {
   faMagnifyingGlass, faDiamond
 } from "@fortawesome/free-solid-svg-icons";
 
-function ExploreCity ({places, search, allPlaces}) {
+function ExploreCity ({places, searchTerm, allPlaces}) {
 
   const smartSearchInput = useRef()
 
@@ -186,10 +186,7 @@ function ExploreCity ({places, search, allPlaces}) {
             } else {
               return
             }
-          }
-
-          viewAll.searchText.current.textContent = `Your Search - '${searchTerm}'`
-        
+          }        
         }
     
         //Correcting mispellings
@@ -236,7 +233,7 @@ function ExploreCity ({places, search, allPlaces}) {
     
           //When handling misspellings also account for 1 letter added and missing 1 letter
         }
-        console.log(finalTerms)
+       
         const regexcase = new RegExp(`\\b${' and '}\\b`, 'g'); // 'g' for global match
         const matches = searchTerm.match(regexcase);
     
@@ -260,15 +257,8 @@ function ExploreCity ({places, search, allPlaces}) {
           
           <div id="suggestions" ref={viewAll.suggestionsDiv}>
             <div id="title-city-options">
-              <h1
-                style={{ display: "flex" }}
-                ref={viewAll.searchText}
-                id="searchText"
-              >
-                Your Search - "{search}"
-              </h1>
               <div id="hello-user-input-search-exp-city">
-            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput}></input>
+            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput} value={searchTerm}></input>
             <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => smartSearch()}/>
             </div>
               <div id="filters-and-placecount">
