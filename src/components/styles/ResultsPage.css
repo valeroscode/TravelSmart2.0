@@ -186,7 +186,6 @@
 #results-art-bg {
     position: relative;
     height: 20rem;
-    background-color: green;
     width: 100%;
     display: flex;
     justify-content: space-between;

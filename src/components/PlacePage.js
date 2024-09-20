@@ -63,14 +63,20 @@ function PlacePage() {
           var service = new window.google.maps.places.PlacesService(window.map);
           service.getDetails(request, function (place, status) {
             if (status == "OK") {
-              for (let i = 1; i < 4; i++) {
+              for (let i = 1; i < 5; i++) {
               const photoUrl = place.photos[i].getUrl({ maxWidth: 400 });
               const imgElement = document.getElementById(`photo-img-${i}`);
               imgElement.src = photoUrl;
               }
               setAddress(place.formatted_address)
               setPhone(place.formatted_phone_number)
-              setHours(place.opening_hours.weekday_text)
+              const newHr = []
+              for (let i = 0; i < place.opening_hours.weekday_text.length; i++) {
+                newHr.push(String(place.opening_hours.weekday_text[i]).replace(':', '%'))
+
+              }
+              setHours(newHr)
+              
               let list = []
               for (let i = 0; i < place.reviews.length; i++) {
                 list.push({
@@ -214,6 +220,7 @@ function PlacePage() {
     <>
      <HomeHeader name={currentUser.name}/>
      <section id='place-backdrop'>
+     
       <div id='place-basic-info'>
         <div id='place-basic-info-left'>
         <h2>{localStorage.getItem('title')}</h2>
@@ -236,7 +243,8 @@ function PlacePage() {
         </div>
 
         <h5>{currDayHours}</h5>
-        //ADD FUNCTIONALITY TO THIS BUTTON!
+        <div id='place-pg-btns'>
+        <button>Add to Trip</button>
         <button onClick={(e) => {
           fetch("http://localhost:8080/updateFavorites", {
             method: 'POST',
@@ -259,6 +267,7 @@ function PlacePage() {
 
         }}><FontAwesomeIcon icon={faBookmark} 
         /> Add To Favorites</button>
+        </div>
         <div id='scroll-down-div'>
        <h3>Scroll Down</h3>
        <FontAwesomeIcon icon={faArrowDown} />
@@ -272,7 +281,7 @@ function PlacePage() {
           <img id='photo-img-2'></img>
           <img id='photo-img-3'></img>
           </div>
-          <span id='photo-img-map' ref={mapContainer}></span>
+          <img id='photo-img-4'></img>
           </div>
         </div>
       </div>
@@ -281,11 +290,6 @@ function PlacePage() {
 
      <section id='place-backdrop-sec-info'>
       <div id='place-backdrop-sec-info-left'>
-     <div id='place-secondary-info'>
-        <p><FontAwesomeIcon icon={faPhone} /> {phone}</p>
-        <p><FontAwesomeIcon icon={faDiamondTurnRight} /> {address}</p>
-      </div>
-
       <div id='msg-from-business' style={{display:'none'}}>
       <h2>Message From The Owners</h2>
       <div className='msg'>
@@ -294,11 +298,26 @@ function PlacePage() {
       </div>
       </div>
 
+      <h4 id='location-hours-text'>Location & Hours</h4>
       <div id='opening-hours-list'>
-        <h4>Opening Hours</h4>
+      
+        <div id='map-and-directions'>
+          <div id='map-dir-img' ref={mapContainer}></div>
+          <p style={{fontWeight: 600}}><FontAwesomeIcon icon={faDiamondTurnRight} /> {address}</p>
+
+        </div>
+        
+        <div id='hours-details'>
         {
-          hours.map((item) => <p>{item}</p>)
+          hours.map((item) => <div id='hrs-div'><p>{String(item).split('%')[0]}</p><p>{String(item).split('%')[1]}</p></div>)
         }
+        </div>
+      </div>
+      <button className='get-dir'>Get Directions</button>
+
+      <div id='place-secondary-info'>
+        <h4 style={{fontSize: '1.5rem', marginBottom: 0}}>Have Questions?</h4>
+        <p><FontAwesomeIcon icon={faPhone} /> {phone}</p>
       </div>
       </div>
       <div id='place-backdrop-sec-info-right'>
@@ -411,7 +430,7 @@ function PlacePage() {
         } else {
         sortFilterDropdown.current.style.display = 'none'
         }
-       }}>Sort By ▼</button>
+       }} style={window.innerWidth > 490 ? {width: '7rem'} : {width: '10rem'}}>Sort By ▼</button>
        <div id='sort-by-filter-dropdown' ref={sortFilterDropdown}>
        <li><p>Most Recent</p> <input type='checkbox' className='sort-filter-cb' 
        

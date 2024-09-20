@@ -102,13 +102,13 @@ function Results() {
                   const imgTag = document.getElementsByClassName('place-div-image-results')
                   places[i].imgsrc = src
                   imgTag[i].src = src
-                  if (i === 4) {
+                  if (i === 0) {
                   document.getElementsByClassName('banner-img')[0].src = place.photos[0].getUrl({ maxWidth: 400 })
                   }
-                  if (i === 2) {
+                  if (i === 1) {
                     document.getElementsByClassName('banner-img')[1].src = place.photos[0].getUrl({ maxWidth: 400 })
                     }
-                    if (i === 8) {
+                    if (i === 2) {
                       document.getElementsByClassName('banner-img')[2].src = place.photos[0].getUrl({ maxWidth: 400 })
                       }
                 }
