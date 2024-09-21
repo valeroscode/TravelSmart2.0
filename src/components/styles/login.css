@@ -54,6 +54,7 @@ padding-top: 2rem;
 font-family: "Roboto Condensed", sans-serif;
     font-weight: 800;
 background-color: black;
+border-radius: 50px;
 }
 .signupH1 {
     color: black;
@@ -118,6 +119,7 @@ letter-spacing: 0.3rem;
     background-color: black;
     font-weight: 700;
     font-family: "Roboto Condensed", sans-serif;
+    border-radius: 50px;
 }
 
 #signup-general input {
@@ -126,6 +128,7 @@ letter-spacing: 0.3rem;
     padding: 1rem;
     margin-left: 0;
     width: 100%;
+    border-radius: 20px;
 }
 
 #img-login-div img {
@@ -135,9 +138,10 @@ letter-spacing: 0.3rem;
 }
 
 #username-login input {
+    border-radius: 20px;
     background-color: whitesmoke;
     border: 1px solid whitesmoke;
-    padding: 0.5rem;
+    padding: 1rem;
     margin-left: 0;
     width: 200%;
 }
@@ -150,8 +154,9 @@ height: 1.5rem;
 margin-left: 0;
 background-color: whitesmoke;
 border: 1px solid whitesmoke;
-padding: 0.5rem;
+padding: 1rem;
 width: 200%;
+border-radius: 20px;
 }
 #emaillogin {
     height: 1.5rem;

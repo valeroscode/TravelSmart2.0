@@ -54,15 +54,15 @@ function Landing() {
     {
       category: "EXPLORE",
       content:
-        "From The USA to Tokyo, Finding Cool Places has Never Been Easier",
+        "So, Ready To Wandr?",
     },
     {
       category: "PLAN",
-      content: "Plan Your Trips & Weekend Getaways With Ease",
+      content: "Trip Planning Made Easier Than Ever",
     },
     {
       category: "EXPLORE",
-      content: "With Options For All, Small and Big Budget, Here and Aborad",
+      content: "The Best Search Engine For Finding Cool Places",
     },
     {
       category: "BEHIND THE SCENES",
@@ -252,8 +252,7 @@ function Landing() {
         <section id="landing-nav" ref={landingNav}>
           <div id="landing-nav-left">
             <FontAwesomeIcon icon={faPaperPlane} style={{ color: "white" }} />
-            <h1 className="travel">TRAVEL</h1>
-            <h1 className="travel">SMART</h1>
+            <h1 className="travel">WANDR</h1>
           </div>
           {cookies.access_token ? (
             <Link to="/home">
@@ -320,29 +319,29 @@ function Landing() {
       </section>
 
       <section id="landing-new-features">
-        <h2>Why Travel Smart?</h2>
+        <h2>Why WANDR?</h2>
         <div id="why-ts">
           <div className="why-item">
             <h4>Explore</h4>
-            <p>We help you find cool new places.</p>
+            <p>Finding the best places in a city is now more simple.</p>
             <img src={icelandwaterfall} className="why-img"></img>
           </div>
 
           <div className="why-item">
             <h4>Plan</h4>
-            <p>We make trip planning a breeze.</p>
+            <p>Plan your trips using our extensive features.</p>
             <img src={planflowers} className="why-img"></img>
           </div>
 
           <div className="why-item">
             <h4>Discover</h4>
-            <p>Find out what your city has to offer.</p>
+            <p>All the info you need, none of the clutter.</p>
             <img src={kobe} className="why-img"></img>
           </div>
 
           <div className="why-item">
             <h4>Plan with others</h4>
-            <p>Going with a group? We got you covered.</p>
+            <p>Not going solo? We make it easy to collaborate.</p>
             <img src={withothers} className="why-img"></img>
           </div>
         </div>
@@ -356,7 +355,7 @@ function Landing() {
           <div id="easy-text">
             <h2>So, Ready To Plan Your Next Adventure?</h2>
             <p>
-              Travel Smart is a hub, where people discover new places and
+              WANDR is a hub, where people discover new places and
               visualize the best moments, faciliating the best memories.
             </p>
             <Link to="/login">
@@ -528,7 +527,7 @@ function Landing() {
           <button
             onClick={() => {
               alert(
-                "The backend code for this feature is under development. Please click one of the 'Get Started' buttons to use Travel Smart!"
+                "The backend code for this feature is under development. Please click one of the 'Get Started' buttons to use WANDR!"
               );
             }}
           >
@@ -544,7 +543,7 @@ function Landing() {
             <Link to="/login">
               <FontAwesomeIcon icon={faPlay} />
             </Link>
-            <p>Join the Travel Smart community</p>
+            <p>Join the WANDR community</p>
           </div>
         </div>
 
@@ -568,13 +567,13 @@ function Landing() {
               <p>Over 600k users worldwide</p>
             </div>
           </div>
-          <h3>Endless features, one planner</h3>
+          <h3>Endless features, one platform</h3>
           <p>
-            Experience the ease of Travel Smart by signing up or logging into
+            Experience the ease of WANDR by signing up or logging into
             your account.
           </p>
           <Link to="/login">
-            <button>GET STARTED</button>
+            <button>Get Started </button>
           </Link>
         </div>
       </section>

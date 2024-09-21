@@ -157,14 +157,12 @@ function HomeHeader({ name }) {
 
   return (
     <>
-      <div id="home-title" style={window.location.pathname === '/Search-Results' ? {backgroundColor: 'black'} : (window.location.pathname === '/place' ? {background: 'unset', backgroundColor: 'whitesmoke'} : null)}>
+      <div id="home-title" style={window.location.pathname === '/Search-Results' ? {backgroundColor: 'black'} : (window.location.pathname === '/place' || window.location.pathname === '/plan' ? {background: 'unset', backgroundColor: 'white', borderBottom: '1px solid rgb(225, 225, 225)', paddingBottom: '0.3rem'} : null)}>
         <div id="home-org">
       <div id="home-h1" onClick={() => window.location.replace('http://localhost:3000/home')}>
         
-          <FontAwesomeIcon icon={faPaperPlane} className="plane" style={window.location.pathname === '/Search-Results' ? {color: 'white'} : (window.location.pathname === '/place' ? {color: 'black'} : null)} />
-          {
-            window.location.pathname === "/home" ? <h1>TRAVEL SMART</h1> : (window.location.pathname === '/place' ? <h1 style={{color: 'black'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1> : <h1 style={{color: 'white'}}>{String(sessionStorage.getItem("city")).toLocaleUpperCase()}</h1>)
-          }
+      <FontAwesomeIcon icon={faPaperPlane} className="plane"  style={window.location.pathname === '/plan' ? {color: '#6d00cc'} : window.location.pathname === '/Search-Results' ? {color: 'white'} : {color: 'black'}}/>
+      <h1 style={window.location.pathname === '/plan' ? {color: '#6d00cc'} : window.location.pathname === '/Search-Results' ? {color: 'white'} : {color: 'black'}}>WANDR</h1>
          
         </div>
 

@@ -5,23 +5,27 @@
    <link rel="stylesheet" href="./components/styles/index.css">
     <link rel="stylesheet" href="./components/styles/App.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <title>Travel Smart</title>
-    <script>
-      function initMap() {
-      //map
-      window.map = new google.maps.Map(document.getElementById("google-map"), {
-      zoom: 12,
-      center: { lat: 25.7617, lng: -80.1918 },
-      mapId: 'cec69d9d25cef56b',
-      mapTypeControl: false,
-      });
-      }
-      window.initMap = initMap;
-      </script>
+    <title>Wandr</title>
   </head>
   <body>
-  <div id="root"></div>
+   <div id="root"></div>
    <div id="google-map"></div>
+   <script>
+    const googleMap = document.getElementById("google-map");
+    if (window.location.pathname !== '/home' || window.location.pathname !== '/place') {
+      googleMap.style.display = 'none'
+    }
+    function initMap() {
+    //map
+    window.map = new google.maps.Map(document.getElementById("google-map"), {
+    zoom: 12,
+    center: { lat: 25.7617, lng: -80.1918 },
+    mapId: 'cec69d9d25cef56b',
+    mapTypeControl: false,
+    });
+    }
+    window.initMap = initMap;
+    </script>
    <script async src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC37B8EgCH2fYCPi0SWKh1FU4wPMsr8tas&callback=initMap&loading=async&v=weekly&libraries=marker,places"></script>
    <script async src="https://maps.googleapis.com/maps/api/place/details/json?fields=formatted_address,name,photo,opening_hours,price_level,user_ratings_total,reviews,editorial_summary,formatted_phone_number,website,reviews_no_translations=true,rating"></script>
    <script async src="https://kit.fontawesome.com/b3a13ef491.js" crossorigin="anonymous"></script>

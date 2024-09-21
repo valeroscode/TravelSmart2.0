@@ -93,6 +93,7 @@
   position: absolute;
   bottom: 0rem;
   opacity: 0.2;
+  border-radius: 20px 0 0 0;
 }
 
 #hello-user-section img:nth-child(2) {
@@ -123,6 +124,7 @@
   bottom: 15rem;
   left: 30rem;
   opacity: 0.2;
+  border-radius: 20px 0 0 0;
 }
 
 #hello-user-section img:nth-child(5) {
@@ -220,6 +222,7 @@
   left: 0rem;
   opacity: 0.2;
   object-position: 50% 100%;
+  border-radius: 0 0 20px 0;
 }
 
 #hello-user-section svg {
@@ -1744,6 +1747,7 @@ position: relative;
 top: 0;
 padding-top: 0;
 background-color: white;
+height: 100%;
 }
 
 #map-start-interface {

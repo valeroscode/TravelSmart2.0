@@ -19,6 +19,7 @@ import { allPlaces } from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 import Footer from "./footer";
+import HomeHeader from "./HomeHeader";
 
 function Plan() {
 
@@ -718,48 +719,7 @@ function Plan() {
 
 return (
 <>
-<section id="create-trip-header">
-<div id="c-header-left">
-    <div>
-    <FontAwesomeIcon icon={faPaperPlane} />
-    <h2 onClick={() => navigate('/home')}>TRAVEL SMART</h2>
-    </div>
-    </div>
- 
-    <div id="acc-and-trip-c">
-          
-          <div ref={account} className="account-c" 
-          onClick={() => {
-            editUser.current.style.display = "flex";
-            userNameDiv.current.style.backgroundColor = 'black';
-            userNameDiv.current.firstElementChild.style.color = 'white';
-         
-          }}>
-            <div ref={editUser} id="edit-user">
-              <div>
-              <FontAwesomeIcon icon={faUser} />
-              <h4>{currentUser.name}</h4>
-              </div>
-              <h5>avalero.software@gmail.com</h5>
-              <hr/>
-  
-            <button onClick={() => handleLogout()}><FontAwesomeIcon icon={faArrowRightFromBracket}/> Sign Out</button>
-            </div>
-                  {currentUser ? (
-                    <div className="user-name" ref={userNameDiv}>
-                      <p id="users-name-c">{currentUser.name}</p>
-                      <div id="account-photo-c">
-                      <FontAwesomeIcon icon={faUser} />
-                      </div>
-                    </div>
-                  ) : (
-                    <div></div>
-                  )}
-                </div>
-              </div>
- 
-
-</section>
+<HomeHeader/>
 <section id="planning-a-new-trip-section">
 <div id="new-trip">
           <h3 className="new-trip-h3">Plan a new trip</h3>
