@@ -64,7 +64,7 @@ function Footer({name}) {
       <section id="footer-main" ref={footerMain}>
         <div id="footer-main-container">
         <div id="footer-main-title">
-          <h1>TRAVEL SMART</h1>
+          <h1>WANDR</h1>
         </div>
         <p id="footer-slogan">Explore. Plan. Discover.</p>
 
@@ -72,7 +72,7 @@ function Footer({name}) {
           <div id="footer-main-child-2">
             { name === 'guest' && !cookies.email_subbed ?
             <div id="subscribe-info">
-              <h4>GET UPDATES AS CONTENT IS ADDED TO TRAVEL SMART</h4>
+              <h4>GET UPDATES AS CONTENT IS ADDED TO WANDR</h4>
               <div id="getonlist">
                 <input type="text" placeholder="Enter your email" ref={emailInput} />
                 <button onClick={(e) => addToSubList(e)}>Subscribe</button>

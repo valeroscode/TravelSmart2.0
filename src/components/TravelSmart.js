@@ -18,7 +18,7 @@ import {
   faLocationDot,
   faChevronUp,
   faChevronDown,
-  faHeart,
+  faMagnifyingGlassLocation,
   faMoneyBillWave,
   faBurst,
   faMessage
@@ -67,10 +67,14 @@ function TravelSmart() {
   const { currentUser } = useAuth();
   const navigate = useNavigate()
   const cityDD = useRef();
+  const cityDDAdv = useRef();
+  const searchInput = useRef();
+  const searchDD = useRef();
   const makeDefBtn = useRef();
   const helloUser = useRef();
   const chooseCityInput = useRef();
   const chooseCityInputField = useRef();
+  const cityInputAdv = useRef();
   const setCityBtn = useRef();
   const cityBtn = useRef();
   const rotate = useRef();
@@ -80,6 +84,7 @@ function TravelSmart() {
   const mapInputSecond = useRef();
   const advFilters = useRef();
   const placeInfoReviews = useRef();
+  const advSearchToggle = useRef();
 
   const smartSearchInput = useRef()
 
@@ -89,6 +94,7 @@ function TravelSmart() {
   const twostar = useRef();
   const onestar = useRef();
 
+  const [placesDropDown, setPlacesDropDown] = useState([]);
   const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
   const [cities, setCities] = useState([])
@@ -97,6 +103,7 @@ function TravelSmart() {
   const [expCityOn, setExpCityOn] = useState(false)
   const [mapDropDown, setMapDropdown] = useState([])
   const [mapDDActive, setMapDDActive] = useState(false)
+  const [advSearch, setAdvSearch] = useState(false)
   const discMore = useRef();
 
   const ClubBtn = useRef();
@@ -120,6 +127,58 @@ function TravelSmart() {
   const [ul1, setUl1] = useState(false)
   const [ul2, setUl2] = useState(false)
   const [ul3, setUl3] = useState(false)
+
+  const searchBarFunctions = {
+    setDropdownContent: function (e) {
+      const array = [];
+      for (let i = 0; i < allPlaces.length; i++) {
+        if (allPlaces[i].city === cityInput.current.value) {
+        if (!array.includes(allPlaces[i].style)) {
+          array.push(allPlaces[i].style)
+        }
+        if (!array.includes(allPlaces[i].category)) {
+          array.push(allPlaces[i].category)
+        }
+        if (!array.includes(allPlaces[i].area)) {
+          array.push(allPlaces[i].area)
+        }
+        if (!array.includes(allPlaces[i].serves)) {
+          array.push(allPlaces[i].serves)
+        }
+      }
+      }
+      setPlacesDropDown(array)
+    },
+    handleClicksOutside_ofInputs: function (e) {
+      if (e.target !== searchInput.current && e.target !== cityInputAdv.current) {
+          cityDD.current.style.display = "none";
+          searchDD.current.style.display = "none";
+      }
+    
+  },
+  hideEditUser: function (e) {
+      if (!e.target.closest('#edit-user') && !e.target.closest('.account')) {
+        editUser.current.style.display = 'none'
+        userNameDiv.current.style.backgroundColor = 'white';
+        userNameDiv.current.firstElementChild.style.color = 'black';
+      }
+  }
+  }
+
+  function searchPlaces() {
+    sessionStorage.setItem("city", cityInput.current.value);
+    if (searchInput.current.value !== "" && cityInput.current.value !== "") {
+      document.body.append(document.getElementById("google-map"));
+      const str = String(searchInput.current.value);
+      sessionStorage.setItem("filters", str.toUpperCase());
+      sessionStorage.setItem("total", 1);
+      window.location.replace(
+        "http://localhost:3000/Search-Results"
+      );
+    } else {
+      alert("Input fields incomplete");
+    }
+  }
 
   useEffect(() => {
 
@@ -792,8 +851,6 @@ function TravelSmart() {
 <img src={greekcoast} className="hello-user-img"></img>
 <img src={greeekflowers} className="hello-user-img"></img>
 
-<FontAwesomeIcon icon={faBurst} />
-
         <div id="photo-credits">
         <a href="https://knt-travel.squarespace.com/" target="_blank">Photography by Karina N Tohmé</a>
         </div>
@@ -801,11 +858,98 @@ function TravelSmart() {
         <div id="hello-user" ref={helloUser}>
             <h2>Hello {name.split(" ")[0]},</h2>
             <h4>What would you like to do today?</h4>
+            {
+            !advSearch ?
             <div id="hello-user-input-search">
-            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput}></input>
+            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput} style={{borderRadius: '30rem'}}></input>
             <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => smartSearch()}/>
             </div>
+            : 
+            <div id="home-searchbar">
+        <div id="cityDD-input">
+          <input ref={cityInputAdv} style={{borderRadius: '20px 0 0 7px'}} placeholder="Choose A City" onClick={() => {
+            
+            cityDDAdv.current.style.display = "flex"
+          }} onKeyUp={(e) => {
+             const city = document.getElementsByClassName("city-dd-item")
+             const inputValue = String(e.target.value).toLocaleLowerCase();
+             for (let i = 0; i < city.length; i++) {
+              
+              if (e.target.value === "") {
+                city[i].style.display = "flex"
+              } else {
+             if (String(city[i].textContent).toLocaleLowerCase().includes(inputValue)) {
+              city[i].style.display ="block"
+             } else {
+              city[i].style.display = "none"
+             }
+            }
+            }
+          }}></input>
+          <ul ref={cityDDAdv}>
+            {
+              cities.map((city) => (
+                <li className="city-dd-item" onClick={(e) => {
+                  cityInputAdv.current.value = e.target.textContent;
+                  cityDDAdv.current.style.display = "none"
+                  searchInput.current.value = '';
+                  searchBarFunctions.setDropdownContent()
+                }}>{city}</li>
+              ))
+            }
+          </ul>
+          </div>
+          <div id="placeDD-input">
+          <input ref={searchInput} placeholder="Sushi, Bars, Area"
+          onClick={() => {
+            searchDD.current.style.display = "flex"
+          }}
+          onKeyUp={(e) => {
+            const place = document.getElementsByClassName("place-dd-item")
+            const inputValue = String(e.target.value).toLocaleLowerCase();
+            for (let i = 0; i < place.length; i++) {
+             if (e.target.value === "") {
+              place[i].style.display = "none"
+              searchDD.current.style.display = "none"
+             } else {
+              
+            if (String(place[i].textContent).toLocaleLowerCase().includes(inputValue)) {
+              searchDD.current.style.display = "flex"
+              place[i].style.display ="block"
+            } else {
+              place[i].style.display = "none"
+            }
+           }
+           }
+         }}></input>
+          <ul ref={searchDD}>
+            {
+              placesDropDown.map((content) => (
+                <li className="place-dd-item" onClick={(e) => {
+                  searchInput.current.value = e.target.textContent;
+                  searchDD.current.style.display = "none"
+                  searchInput.current.value = e.target.textContent
+                }}>
+                  {content}
+                </li>
+              ))
+            }
+          </ul>
+          </div>
+          <button style={window.location.pathname === '/Search-Results' ? {backgroundColor: '#8a05ff'} : null} onClick={searchPlaces}><FontAwesomeIcon icon={faMagnifyingGlassLocation} /></button>
+        </div>
+            }
             <div id="home-buttons">
+            <button id="adv-search" ref={advSearchToggle} onClick={(e) => {
+                if (e.target.textContent === 'Advanced Search') {
+                setAdvSearch(true)
+                e.target.textContent = 'Back to Simple Search'
+                } else {
+                setAdvSearch(false)
+                e.target.textContent = 'Advanced Search'
+                }
+
+              }}>Advanced Search</button>
               <button id="plan-a-trip" onClick={() => {
                 navigate('/plan')
               }}>Plan a new trip</button>

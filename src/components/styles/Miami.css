@@ -225,12 +225,6 @@
   border-radius: 0 0 20px 0;
 }
 
-#hello-user-section svg {
-  position: absolute;
-  height: 22rem;
-  z-index: -1;
-  opacity: 0.3;
-}
 
 
 #hello-user {
@@ -320,7 +314,6 @@
   width: 100%;
   font-size: 1rem;
   padding: 1.55rem;
-  border-radius: 30px;
   border: 1px solid rgb(204, 204, 204);
   box-shadow: 0 0 10px 1px rgb(210, 210, 210);
 }
@@ -435,18 +428,24 @@
   position: relative;
   left: 1rem;
   top: 1rem;
-  display: none;
 }
 
-#home-buttons button:first-child {
+#home-buttons button {
+  border-radius: 50px;
+  font-size: 1rem;
+  padding: 0.5rem 1rem 0.5rem 1rem;
+}
+
+#home-buttons button:nth-child(2) {
   background-color: #8A05FF;
   color: white;
-  margin-right: 2rem;
+  
+ 
 }
-#home-buttons button:nth-child(2) {
-  background-color: white;
+#home-buttons button:nth-child(1) {
+  background-color: rgb(250, 250, 250);
   color: black;
-  border: 2px solid black;
+  margin-right: 1rem;
 }
 
 .fadeRight {
@@ -1969,6 +1968,7 @@ height: 100%;
   z-index: 1000000;
   border-radius: 100%;
   cursor: pointer;
+  border: 1px solid whitesmoke
 }
 
 #map-btn {

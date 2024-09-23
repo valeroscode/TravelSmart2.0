@@ -159,16 +159,16 @@ function HomeHeader({ name }) {
     <>
       <div id="home-title" style={window.location.pathname === '/Search-Results' ? {backgroundColor: 'black'} : (window.location.pathname === '/place' || window.location.pathname === '/plan' ? {background: 'unset', backgroundColor: 'white', borderBottom: '1px solid rgb(225, 225, 225)', paddingBottom: '0.3rem'} : null)}>
         <div id="home-org">
-      <div id="home-h1" onClick={() => window.location.replace('http://localhost:3000/home')}>
+      <div id="home-h1" onClick={() => window.location.replace('http://localhost:3000/home')} style={window.location.pathname === '/home' ? {top: '1rem', fontSize: '2rem'} : null}>
         
       <FontAwesomeIcon icon={faPaperPlane} className="plane"  style={window.location.pathname === '/plan' ? {color: '#6d00cc'} : window.location.pathname === '/Search-Results' ? {color: 'white'} : {color: 'black'}}/>
       <h1 style={window.location.pathname === '/plan' ? {color: '#6d00cc'} : window.location.pathname === '/Search-Results' ? {color: 'white'} : {color: 'black'}}>WANDR</h1>
          
         </div>
 
-        <div id="home-searchbar">
+        <div id="home-searchbar" style={window.location.pathname === '/home' ? {display: 'none'} : null}>
         <div id="cityDD-input">
-          <input ref={cityInput} style={{borderRadius: '20px 0 0 7px'}} placeholder="Choose A City" onClick={() => {
+          <input ref={cityInput} style={{borderRadius: '20px 0px 0px 20px'}} placeholder="Choose A City" onClick={() => {
             
             cityDD.current.style.display = "flex"
           }} onKeyUp={(e) => {
