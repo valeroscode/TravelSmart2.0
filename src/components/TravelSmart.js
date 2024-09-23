@@ -938,7 +938,9 @@ function TravelSmart() {
           </div>
           <button style={window.location.pathname === '/Search-Results' ? {backgroundColor: '#8a05ff'} : null} onClick={searchPlaces}><FontAwesomeIcon icon={faMagnifyingGlassLocation} /></button>
         </div>
+       
             }
+
             <div id="home-buttons">
             <button id="adv-search" ref={advSearchToggle} onClick={(e) => {
                 if (e.target.textContent === 'Advanced Search') {

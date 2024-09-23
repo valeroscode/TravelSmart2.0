@@ -286,14 +286,25 @@
   z-index: 10;
   position: relative;
   color: black;
-  left: -2.5rem;
-  top: 0.35rem;
+  left: -2rem;
   height: 2.5rem;
   width: 1.25rem;
+  height: 100%;
+  padding: 0 1rem;
+  border-top: 1px solid rgb(204, 204, 204);
+  border-right: 1px solid rgb(204, 204, 204);
+  border-bottom: 1px solid rgb(204, 204, 204);
+  border-radius: 0 30px 30px 0;
+  background-color: whitesmoke;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 #hello-user-input-search svg:hover {
-  opacity: 0.6;
+  background-color: #151515;
+  color: white;
   cursor: pointer;
 }
 
@@ -313,6 +324,7 @@
 #hello-user input {
   width: 100%;
   font-size: 1rem;
+  margin-top: 0;
   padding: 1.55rem;
   border: 1px solid rgb(204, 204, 204);
   box-shadow: 0 0 10px 1px rgb(210, 210, 210);
