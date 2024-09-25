@@ -2574,7 +2574,7 @@ top: 0.1rem;
 
 #title-city-options {
   display: flex;
-  align-items: start;
+  align-items: center;
   flex-direction: column;
   justify-content: start;
   position: relative;
@@ -3143,7 +3143,8 @@ display: flex;
 flex-direction: row;
 flex-wrap: wrap;
 overflow: visible;
-justify-content: start;
+justify-content: center;
+align-items: start;
 background-color: white;
 height: 81vh;
 margin-left: 5rem;
@@ -4329,10 +4330,11 @@ transform: rotate(90deg)
 
 #filters-for-category li input {
   width: fit-content;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   margin-top: 0;
   margin-left: 0;
-  height: 1.5rem;
+  height: 15px;
+  width: 15px;
 }
 
 #filters-for-category li p {

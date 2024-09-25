@@ -56,13 +56,18 @@ export function AuthProvider({ children }) {
       }),
     })
       .then((response) => {
+        console.log(response)
         return response.json();
       })
       .then((data) => {
         setCookie("access_token", data.token);
         setCurrentUser(data.user);
+        window.location.replace('http://localhost:8080/home')
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => {
+        console.error("Error:", error)
+        alert('invalid credentials')
+  });
   }
 
   function logout() {

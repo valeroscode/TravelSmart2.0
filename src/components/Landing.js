@@ -72,6 +72,9 @@ function Landing() {
   ];
 
   useEffect(() => {
+    const googleMap = document.getElementById("google-map");
+    googleMap.style.display = 'none'
+    
     setTimeout(() => {
       switchCards();
     }, 4000);

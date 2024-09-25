@@ -2,6 +2,7 @@ import "./styles/Miami.css";
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { allmarkers } from "./Miami.mjs";
+import { useData } from './contexts/StateManagement.js';
 import {
   faHome,
   faX,
@@ -65,6 +66,8 @@ import maracanpaintings from "./assets/maracanpaintings.jpg"
 
 function TravelSmart() {
   const { currentUser } = useAuth();
+
+  console.log(currentUser)
   const navigate = useNavigate()
   const cityDD = useRef();
   const cityDDAdv = useRef();
@@ -132,7 +135,7 @@ function TravelSmart() {
     setDropdownContent: function (e) {
       const array = [];
       for (let i = 0; i < allPlaces.length; i++) {
-        if (allPlaces[i].city === cityInput.current.value) {
+        if (allPlaces[i].city === cityInputAdv.current.value) {
         if (!array.includes(allPlaces[i].style)) {
           array.push(allPlaces[i].style)
         }
@@ -166,8 +169,8 @@ function TravelSmart() {
   }
 
   function searchPlaces() {
-    sessionStorage.setItem("city", cityInput.current.value);
-    if (searchInput.current.value !== "" && cityInput.current.value !== "") {
+    sessionStorage.setItem("city", cityInputAdv.current.value);
+    if (searchInput.current.value !== "" && cityInputAdv.current.value !== "") {
       document.body.append(document.getElementById("google-map"));
       const str = String(searchInput.current.value);
       sessionStorage.setItem("filters", str.toUpperCase());
@@ -202,21 +205,6 @@ function TravelSmart() {
 
   }, [allPlaces_inCity])
 
-  //Function sets the current city, used at various points
-  function switchCity() {
-    setAllPlaces_inCity(
-      allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
-    );
-    const city = cityDD.current.children;
-
-    for (let i = 0; i < city.length; i++) {
-      if (city[i].textContent === sessionStorage.getItem("city")) {
-        city[i].click();
-      }
-    }
-    markFavorites();
-  }
-
   const backgroundImgList = {
     1: {
       false: icelandwater,
@@ -248,13 +236,26 @@ function TravelSmart() {
   //to make proper updates to the database without relying on a state change for the variable above.
   //Thus preventing the component from re-rendering. Also results in array changes to be global.
 
+  const { state, dispatch } = useData();
+
+  //handler to update the city, which then makes an api call to get all places in that city
+  const handleUpdateCity = (newCity) => {
+    const newState = {
+        city: newCity
+    };
+    dispatch({ type: 'SET_CITY', payload: newState });
+  };
+
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
+
+    console.log(currentUser)
 
     if (currentUser.defCity !== '' && currentUser.defCity !== undefined) {
       setConfirmExpCity(true)
       setCity(currentUser.defCity)
       sessionStorage.setItem("city", currentUser.defCity);
+      handleUpdateCity(currentUser.defCity)
     } else {
       sessionStorage.setItem("city", "Miami");
     }
@@ -291,6 +292,7 @@ function TravelSmart() {
         "https://travelsmart2-0.onrender.com/Home"
       );
     }, 2000);
+
   }, []);
 
   useEffect(() => {
@@ -302,7 +304,7 @@ function TravelSmart() {
     const filtered = allPlaces.filter((p) => p.city === city);
     filtered.map((p) => (total = total + p.rating));
     setAvgRating(total / filtered.length);
-    setAllPlaces_inCity(allPlaces.filter((m) => m.city === city))
+    //MAKE AN API CALL AND SET ALLPLACESINCITY TO THOSE PLACES
   }, [city]);
 
   setTimeout(() => {
@@ -945,7 +947,7 @@ function TravelSmart() {
             <button id="adv-search" ref={advSearchToggle} onClick={(e) => {
                 if (e.target.textContent === 'Advanced Search') {
                 setAdvSearch(true)
-                e.target.textContent = 'Back to Simple Search'
+                e.target.textContent = 'Back to Smart Search'
                 } else {
                 setAdvSearch(false)
                 e.target.textContent = 'Advanced Search'

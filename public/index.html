@@ -11,10 +11,6 @@
    <div id="root"></div>
    <div id="google-map"></div>
    <script>
-    const googleMap = document.getElementById("google-map");
-    if (window.location.pathname !== '/home' || window.location.pathname !== '/place') {
-      googleMap.style.display = 'none'
-    }
     function initMap() {
     //map
     window.map = new google.maps.Map(document.getElementById("google-map"), {

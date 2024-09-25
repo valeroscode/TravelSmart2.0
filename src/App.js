@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TravelSmart from "./components/TravelSmart";
 import TripsPage from "./components/Trips";
 import LoginForm from "./components/login";

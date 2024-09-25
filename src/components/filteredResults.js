@@ -66,6 +66,8 @@ function Results() {
   let applied_filters = sessionStorage.getItem("filters").split("/ ,");
 
   useEffect(() => {
+    const googleMap = document.getElementById("google-map");
+    googleMap.style.display = 'none';
     const city = sessionStorage.getItem("city");
     let placesInCity = allPlaces.filter((place) => place.city === city);
     placesInCity.map((place) => place.score = 0);
@@ -350,7 +352,7 @@ function Results() {
                     <div className="best-rated-place">
                       
                       <div>
-                        <h4><FontAwesomeIcon icon={faDiamond} />{place.rating}</h4>
+                        <h4 className="best-rated-h4">{place.rating}</h4>
                         <h3>{place.name}</h3>
                       </div>
                       <div>
@@ -587,7 +589,7 @@ function Results() {
                  <div className="place-div">
                   <img className="place-div-image-results" src={place.imgsrc}></img>
                    <div className="place-div-name-rating">
-                   <h4><FontAwesomeIcon icon={faDiamond} />{place.rating}</h4>
+                   <h4 className="place-rating-h4">{place.rating}</h4>
                     <h3 className="place-div-name">{place.name}</h3>
                    </div>
                     <h4 className="place-div-category-area">{place.category} In {place.area} | {'$'.repeat(place.price)}</h4>

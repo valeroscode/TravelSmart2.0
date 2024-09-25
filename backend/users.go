@@ -24,12 +24,14 @@ type User struct {
 	Password  string    `json:"password"`
 	Favorites *[]string `json:"favorites"`
 	Trips     Trips     `json:"trips"`
+	DefCity   string    `json:"defcity"`
 }
 
 type UserData struct {
-	Name  string `json:"name"`
-	Email string `json:"email"`
-	Trips Trips  `json:"trips"`
+	Name    string `json:"name"`
+	Email   string `json:"email"`
+	Trips   Trips  `json:"trips"`
+	DefCity string `json:"defcity"`
 }
 
 type tripDetails struct {
@@ -78,6 +80,8 @@ func createUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	var requestBody struct {
 		Email    string `json:"email"`
 		Password string `json:"password"`
+		Name     string `json:"name"`
+		DefCity  string `json:"defcity"`
 	}
 
 	jsonErr := json.NewDecoder(r.Body).Decode(&requestBody)
@@ -111,6 +115,8 @@ func createUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	user := User{
 		Email:    requestBody.Email,
 		Password: string(hashedPassword),
+		Name:     requestBody.Name,
+		DefCity:  requestBody.DefCity,
 	}
 
 	var id int
@@ -122,8 +128,8 @@ func createUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 		return
 	}
 	sqlErr := db.QueryRow(`
-	INSERT INTO users (name, email, password, favorites, trips) VALUES ($1, $2, $3, $4, $5) RETURNING id
-    `, user.Name, user.Email, user.Password, favoritesArray, tripsJSON).Scan(&id)
+	INSERT INTO users (name, email, password, defcity, favorites, trips) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id
+    `, user.Name, user.Email, user.Password, user.DefCity, favoritesArray, tripsJSON).Scan(&id)
 	if sqlErr != nil {
 		http.Error(w, sqlErr.Error(), http.StatusInternalServerError)
 		return
@@ -178,9 +184,10 @@ func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	var id int
 	var storedHash string
 	var name string
+	var defcity string
 	var favoritesBytes []byte
 	var trips json.RawMessage
-	quErr := db.QueryRow("SELECT id, password, name, favorites, trips FROM users WHERE email = $1", email).Scan(&id, &storedHash, &name, &favoritesBytes, &trips)
+	quErr := db.QueryRow("SELECT id, password, name, favorites, trips, defcity FROM users WHERE email = $1", email).Scan(&id, &storedHash, &name, &favoritesBytes, &trips, &defcity)
 	if quErr == sql.ErrNoRows {
 		http.Error(w, "Invalid email", http.StatusUnauthorized)
 		return
@@ -203,10 +210,11 @@ func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	combinedUser := User{
-		ID:    id,
-		Email: email,
-		Name:  name,
-		Trips: tripData,
+		ID:      id,
+		Email:   email,
+		Name:    name,
+		Trips:   tripData,
+		DefCity: defcity,
 	}
 
 	// Generate a token
@@ -217,9 +225,10 @@ func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	userData := UserData{
-		Name:  name,
-		Email: email,
-		Trips: tripData,
+		Name:    name,
+		Email:   email,
+		Trips:   tripData,
+		DefCity: defcity,
 	}
 
 	fmt.Println(userData)

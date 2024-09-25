@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
@@ -84,8 +85,8 @@ func main() {
 
 	defer db.Close()
 
-	// http.HandleFunc("/createUser", createUserHandler(db))
-	// http.HandleFunc("/getUser", getUserHandler(db))
+	http.HandleFunc("/createUser", createUserHandler(db))
+	http.HandleFunc("/getUser", getUserHandler(db))
 	// http.HandleFunc("/getUserData", refreshHandler(db))
 	// http.HandleFunc("/deleteUser", deleteUserHandler(db))
 	// http.HandleFunc("/updateFavorites", updateFavoritesHandler(db))
@@ -118,6 +119,16 @@ func getPlacesHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	jsonerr := json.NewDecoder(r.Body).Decode(&requestBody)
 	if jsonerr != nil {
 		log.Fatal(jsonerr)
+	}
+
+	// Extract the JWT token from the Authorization header
+	authHeader := r.Header.Get("Authorization")
+	jwtToken := strings.TrimPrefix(authHeader, "Bearer ")
+	// Verify the JWT token
+	valid, errJWT := verifyJWT(jwtToken)
+	if valid == -1 {
+		http.Error(w, errJWT.Error(), http.StatusUnauthorized)
+		return
 	}
 
 	var rows *sql.Rows

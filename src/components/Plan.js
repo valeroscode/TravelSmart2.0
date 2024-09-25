@@ -30,7 +30,10 @@ function Plan() {
 
     const [frDDActive, setFrDDActive] = useState(false)
 
-    useEffect(() => {       
+    useEffect(() => {      
+      
+      const googleMap = document.getElementById("google-map");
+      googleMap.style.display = 'none'
     
           window.addEventListener("click", (e) => {
               hideEditUser(e)

@@ -630,6 +630,7 @@ transition: all 0.3s ease;
 }
 
 .why-item {
+    border-radius: 15px;
     opacity: 0;
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;

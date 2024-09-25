@@ -18,6 +18,7 @@ function ExploreCity ({places, searchTerm, allPlaces}) {
       for (let i = 0; i < places.length; i++) {
         places[i].priceScore = 0
       }
+      smartSearchInput.current.value = searchTerm
     }, [])
 
     useEffect(() => {
@@ -258,7 +259,7 @@ function ExploreCity ({places, searchTerm, allPlaces}) {
           <div id="suggestions" ref={viewAll.suggestionsDiv}>
             <div id="title-city-options">
               <div id="hello-user-input-search-exp-city">
-            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput} value={searchTerm}></input>
+            <input placeholder="Sushi in Miami, Resturants in Orlando..." type='text' ref={smartSearchInput}></input>
             <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => smartSearch()}/>
             </div>
               <div id="filters-and-placecount">
