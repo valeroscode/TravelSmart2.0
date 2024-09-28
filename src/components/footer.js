@@ -12,7 +12,7 @@ function Footer({name}) {
 
   useEffect(() => {
     if (window.location.pathname !== "/Search-Results") {
-      footerMain.current.style.marginTop = "3rem";
+      footerMain.current.style.marginTop = "15rem";
     }
   }, []);
 

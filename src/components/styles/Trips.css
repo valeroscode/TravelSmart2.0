@@ -1,7 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Caveat&display=swap');
 
 #trips-comp-container {
- width: 100vw;
+  width: 100vw;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #planning-a-new-trip-section {

@@ -2,7 +2,6 @@ import "./styles/Miami.css";
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { allmarkers } from "./Miami.mjs";
-import { useData } from './contexts/StateManagement.js';
 import {
   faHome,
   faX,
@@ -62,7 +61,7 @@ import miamipalms from "./assets/miamipalms.jpg"
 import lebanesecoast from "./assets/lebanesecoast.jpg"
 import spanishwheel from "./assets/spanishwheel.jpg"
 import maracanpaintings from "./assets/maracanpaintings.jpg"
-
+import wavesBg from "./assets/waves.jpg"
 
 function TravelSmart() {
   const { currentUser } = useAuth();
@@ -98,7 +97,6 @@ function TravelSmart() {
   const onestar = useRef();
 
   const [placesDropDown, setPlacesDropDown] = useState([]);
-  const [name, setName] = useState("");
   const [city, setCity] = useState("Miami");
   const [cities, setCities] = useState([])
   const [confirmExpCity, setConfirmExpCity] = useState(false)
@@ -230,13 +228,14 @@ function TravelSmart() {
       false: spanishpillers,
       true: maracanpaintings,
     },
+    7: {
+      true: wavesBg,
+    },
   }
 
   //This array is a copy of the favorites state hook and used
   //to make proper updates to the database without relying on a state change for the variable above.
   //Thus preventing the component from re-rendering. Also results in array changes to be global.
-
-  const { state, dispatch } = useData();
 
   //handler to update the city, which then makes an api call to get all places in that city
   const handleUpdateCity = (newCity) => {
@@ -248,8 +247,6 @@ function TravelSmart() {
 
   const [favorites, setFavorites] = useState([]);
   useEffect(() => {
-
-    console.log(currentUser)
 
     if (currentUser.defCity !== '' && currentUser.defCity !== undefined) {
       setConfirmExpCity(true)
@@ -294,10 +291,6 @@ function TravelSmart() {
     }, 2000);
 
   }, []);
-
-  useEffect(() => {
-    setName(currentUser.name);
-  }, [currentUser]);
 
   useEffect(() => {
     let total = 0;
@@ -786,7 +779,7 @@ function TravelSmart() {
 
   return (
     <>
-      <HomeHeader name={name} />
+      <HomeHeader name={currentUser.name} />
 
       {/* this button is programatically clicked by the renderTopPicks() function in the Miami.mjs file in order to load in images 
     of places. */}
@@ -858,7 +851,7 @@ function TravelSmart() {
         </div>
         
         <div id="hello-user" ref={helloUser}>
-            <h2>Hello {name.split(" ")[0]},</h2>
+            <h2>Hello {String(currentUser.name).split(" ")[0]},</h2>
             <h4>What would you like to do today?</h4>
             {
             !advSearch ?
@@ -1074,7 +1067,7 @@ function TravelSmart() {
 
         <section id="cities">
           <div id="middle-organizer">
-            <img id="background-img" src="waves.jpg"></img>
+            <div id="background-img"></div>
             <div id="organizer-city-rundown">
               <h2>Explore here and abroad</h2>
 
@@ -1083,7 +1076,7 @@ function TravelSmart() {
                 {
                   cities.map((city) => (
                   <div className="city-div">
-                  <img src={`${city}.jpg`}></img>
+                  <img></img>
                   <p className="city-name">{city}</p>
                   <div className="city-explore-div"
                     city={city}

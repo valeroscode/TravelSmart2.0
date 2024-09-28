@@ -13,7 +13,6 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/lib/pq"
-	"github.com/patrickmn/go-cache"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -57,10 +56,6 @@ type Days map[string][]string
 type Credentials struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
-}
-
-type allCache struct {
-	data *cache.Cache
 }
 
 func createUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
@@ -139,34 +134,6 @@ func createUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(user)
-}
-
-func newCache() *allCache {
-	const (
-		defaultExpiration = 5 * time.Minute
-		purgeTime         = 10 * time.Minute
-	)
-	Cache := cache.New(defaultExpiration, purgeTime)
-	return &allCache{
-		data: Cache,
-	}
-}
-
-func (c *allCache) read(id string) (item []byte, ok bool) {
-	data, ok := c.data.Get(id)
-	if ok {
-		log.Println("from cache")
-		res, err := json.Marshal(data.(UserData))
-		if err != nil {
-			log.Fatal("Error")
-		}
-		return res, true
-	}
-	return nil, false
-}
-
-func (c *allCache) update(id string, userdata UserData) {
-	c.data.Set(id, userdata, cache.DefaultExpiration)
 }
 
 func getUser(w http.ResponseWriter, r *http.Request, db *sql.DB) {
@@ -259,7 +226,9 @@ func getUserData(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	var name string
 	var favoritesBytes []byte
 	var trips json.RawMessage
-	quErr := db.QueryRow("SELECT name, favorites, trips FROM users WHERE id = $1", intID).Scan(&name, &favoritesBytes, &trips)
+	var email string
+	var defCity string
+	quErr := db.QueryRow("SELECT email, name, favorites, trips, defcity FROM users WHERE id = $1", intID).Scan(&email, &name, &favoritesBytes, &trips, &defCity)
 	if quErr != nil {
 		log.Printf("Error retrieving user data: %v", quErr)
 		http.Error(w, "Error retrieving user data", http.StatusInternalServerError)
@@ -273,8 +242,10 @@ func getUserData(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	userData := UserData{
-		Name:  name,
-		Trips: tripData,
+		Name:    name,
+		Trips:   tripData,
+		Email:   email,
+		DefCity: defCity,
 	}
 
 	w.WriteHeader(http.StatusCreated)

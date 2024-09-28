@@ -21,7 +21,6 @@ function LoginForm() {
 
   async function OnLogin() {
     await login(emailRef.current.value, passwordRef.current.value);
-    window.location.replace('http://localhost:8080/home')
   }
 
   return (

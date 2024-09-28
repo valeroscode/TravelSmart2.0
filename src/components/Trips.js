@@ -539,7 +539,7 @@ function TripsPage() {
             </h2>
           </div>
           <ul id="trips-con" ref={unorderedList}>
-            {info !== undefined ? (
+            {info !== undefined && info.trips !== null ? (
               Object.entries(info).map(([key, value]) => (
                 <div key={key} className="trip-item">
                   <img loading="lazy" src={`${value.city}.jpg`}></img>

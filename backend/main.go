@@ -87,15 +87,14 @@ func main() {
 
 	http.HandleFunc("/createUser", createUserHandler(db))
 	http.HandleFunc("/getUser", getUserHandler(db))
-	// http.HandleFunc("/getUserData", refreshHandler(db))
-	// http.HandleFunc("/deleteUser", deleteUserHandler(db))
-	// http.HandleFunc("/updateFavorites", updateFavoritesHandler(db))
-	// http.HandleFunc("/updateName", updateNameHandler(db))
-	// http.HandleFunc("/createTrip", createTripHandler(db))
-	// http.HandleFunc("/updateTripName", updateTripNameHandler(db))
-	// http.HandleFunc("/updateTrip", updateTripHandler(db))
-	// http.HandleFunc("/deleteTrip", deleteTripHandler(db))
-	// http.HandleFunc("/refresh", refreshHandler(db))
+	http.HandleFunc("/getUserData", refreshHandler(db))
+	http.HandleFunc("/deleteUser", deleteUserHandler(db))
+	http.HandleFunc("/updateFavorites", updateFavoritesHandler(db))
+	http.HandleFunc("/updateName", updateNameHandler(db))
+	http.HandleFunc("/createTrip", createTripHandler(db))
+	http.HandleFunc("/updateTripName", updateTripNameHandler(db))
+	http.HandleFunc("/updateTrip", updateTripHandler(db))
+	http.HandleFunc("/deleteTrip", deleteTripHandler(db))
 
 	reactBuildDir := "../build"
 

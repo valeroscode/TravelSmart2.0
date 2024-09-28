@@ -92,7 +92,6 @@
   object-fit: cover;
   position: absolute;
   bottom: 0rem;
-  opacity: 0.2;
   border-radius: 20px 0 0 0;
 }
 
@@ -103,7 +102,6 @@
   position: absolute;
   bottom: 0rem;
   left: 15rem;
-  opacity: 0.2;
 }
 
 #hello-user-section img:nth-child(3) {
@@ -113,7 +111,6 @@
   position: absolute;
   bottom: 0rem;
   left: 30rem;
-  opacity: 0.2;
 }
 
 #hello-user-section img:nth-child(4) {
@@ -123,7 +120,6 @@
   position: absolute;
   bottom: 15rem;
   left: 30rem;
-  opacity: 0.2;
   border-radius: 20px 0 0 0;
 }
 
@@ -134,7 +130,6 @@
   position: absolute;
   bottom: 15rem;
   left: 45rem;
-  opacity: 0.2;
 }
 
 #hello-user-section img:nth-child(6) {
@@ -144,7 +139,6 @@
   position: absolute;
   bottom: 15rem;
   left: 60rem;
-  opacity: 0.2;
 }
 
 #hello-user-section img:nth-child(7) {
@@ -154,7 +148,6 @@
   position: absolute;
   bottom: 30rem;
   left: 60rem;
-  opacity: 0.2;
   object-position: 50% 100%;
 }
 
@@ -165,7 +158,6 @@
   position: absolute;
   bottom: 30rem;
   left: 75rem;
-  opacity: 0.2;
   object-position: 50% 100%;
 }
 
@@ -176,7 +168,6 @@
   position: absolute;
   bottom: 30rem;
   left: 90rem;
-  opacity: 0.2;
   object-position: 50% 100%;
 }
 
@@ -187,7 +178,6 @@
   position: absolute;
   bottom: 30rem;
   left: 105rem;
-  opacity: 0.2;
   object-position: 50% 100%;
 }
 
@@ -198,7 +188,6 @@
   position: absolute;
   bottom: 0rem;
   right: 0rem;
-  opacity: 0.2;
   object-position: 50% 100%;
 }
 
@@ -209,7 +198,6 @@
   position: absolute;
   bottom: 0rem;
   right: 15rem;
-  opacity: 0.2;
   object-position: 50% 100%;
 }
 
@@ -220,9 +208,13 @@
   position: absolute;
   top: 0rem;
   left: 0rem;
-  opacity: 0.2;
   object-position: 50% 100%;
   border-radius: 0 0 20px 0;
+}
+
+#hello-user-section img {
+  opacity: 0.1;
+  filter: grayscale(0.3);
 }
 
 
@@ -2039,7 +2031,7 @@ height: 100%;
 #organizer-city-rundown h2 {
   font-size: 4rem;
   margin-bottom: 0;
-  color: white;
+  color: black;
   position: relative;
   top: 2rem;
 }
@@ -2188,10 +2180,10 @@ bottom: 5rem;
   z-index: -1;
   width: 100vw;
   opacity: 0.7;
-  height: 33rem;
+  height: 44rem;
   filter: grayscale(60%);
   object-fit: cover;
-  box-shadow: 0px 0px 20px gray;
+  background-color: rgba(64,87,109,.15);
 }
 
 #organizer-city-rundown h5 {
@@ -2226,8 +2218,7 @@ bottom: 5rem;
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px 5px gray;
+  transition: all 0.3s ease; 
   border: 1px solid gray;
   z-index: 2;
 }

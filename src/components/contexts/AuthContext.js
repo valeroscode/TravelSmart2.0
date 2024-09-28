@@ -9,16 +9,13 @@ export function useAuth() {
 
 export function AuthProvider({ children }) {
   const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
-  const [currentUser, setCurrentUser] = useState({
-    name: "",
-    favorites: [],
-    trips: [],
-  });
+  const [currentUser, setCurrentUser] = useState({});
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (cookies.access_token && window.location.pathname !== "trips") {
+    if (cookies.access_token && window.location.pathname !== "/login") {
+      alert(true)
       fetch("http://localhost:8080/getUserData", {
         method: "GET",
         headers: {
@@ -31,17 +28,13 @@ export function AuthProvider({ children }) {
         })
         .then((data) => {
           setCurrentUser(data.user);
-     
+          console.log(data.user)
         })
         .catch((err) => {
           console.error(err);
         });
-    } else {
-      setCurrentUser({
-        name: "guest",
-      });
+        setLoading(false);
     }
-    setLoading(false);
   }, []);
 
   function login(username, password) {
@@ -57,7 +50,11 @@ export function AuthProvider({ children }) {
     })
       .then((response) => {
         console.log(response)
+        if (response.ok) {
         return response.json();
+        } else {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
       })
       .then((data) => {
         setCookie("access_token", data.token);
@@ -65,7 +62,6 @@ export function AuthProvider({ children }) {
         window.location.replace('http://localhost:8080/home')
       })
       .catch((error) => {
-        console.error("Error:", error)
         alert('invalid credentials')
   });
   }
