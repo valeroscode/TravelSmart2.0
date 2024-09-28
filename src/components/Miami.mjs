@@ -1,11 +1,9 @@
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { allPlaces } from "./allMarkers.mjs";
 import { learnMoreAboutPlace, handleTripAdderPopup } from "./getPlaceInfo.mjs";
 
 export let allmarkers = [];
 
-export function generalScript() {
-  console.log(allPlaces);
+export function generalScript(allPlaces) {
   let live_markers = [];
 
   localStorage.clear();
@@ -69,7 +67,7 @@ export function generalScript() {
         area: props.area,
         active: props.active,
         style: props.style,
-        placeID: props.placeID,
+        placeID: props.placeid,
         Inexpensive: props.Inexpensive,
         Best: props.Best,
         favorite: props.favorite,
@@ -523,9 +521,6 @@ export function generalScript() {
       map.panTo(options[e.target.textContent]);
       sessionStorage.setItem("city", e.target.textContent);
       bestPlacesText.innerHTML = `Best Places in ${e.target.textContent}`;
-      allPlaces_inCity = allmarkers.filter(
-        (m) => m.city === sessionStorage.getItem("city")
-      );
       renderSponsoredPlaces();
     });
 
@@ -678,14 +673,9 @@ export function generalScript() {
       recItemEvents();
     }
 
-    let currentCity = sessionStorage.getItem("city");
-    //Array containing all places in the current city
-    let allPlaces_inCity = allmarkers.filter((m) => m.city === currentCity);
-    //Function sets the current city, used at various points
-
     function renderSponsoredPlaces() {
       if (live_markers.length === 0) {
-        const sponsoredPlaces = allPlaces_inCity.filter(
+        const sponsoredPlaces = allPlaces.filter(
           (marker) => marker.sponsored === true
         );
         renderTopPicks(sponsoredPlaces);
@@ -1183,9 +1173,6 @@ export function generalScript() {
         }
 
         handleAdvFilters(live_markers)
-        console.log(serve_filters)
-        console.log(type_filters)
-
       })
     }
 

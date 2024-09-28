@@ -26,11 +26,11 @@ function ExploreCity ({places, searchTerm, allPlaces}) {
         var geocoder = new window.google.maps.Geocoder();
     for (let i = 0; i < filteredPlaces.length; i++) {
     geocoder.geocode(
-      { placeId: filteredPlaces[i].placeID },
+      { placeId: filteredPlaces[i].placeid },
       function (results, status) {
         if (status === window.google.maps.GeocoderStatus.OK) {
           const request = {
-            placeId: filteredPlaces[i].placeID,
+            placeId: filteredPlaces[i].placeid,
             fields: ["photo"],
           };
 
@@ -327,7 +327,7 @@ function ExploreCity ({places, searchTerm, allPlaces}) {
                       place.name,
                       place.favorite,
                       place.category,
-                      place.placeID,
+                      place.placeid,
                       e.target
                     )
                   }

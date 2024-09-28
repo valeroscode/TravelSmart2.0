@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect, createContext } from "react";
 import { useCookies } from "react-cookie";
+import { generalScript } from "../Miami.mjs";
 
 const AuthContext = createContext();
 
@@ -10,12 +11,14 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
   const [currentUser, setCurrentUser] = useState({});
+  const [defCity, setDefCity] = useState('');
+  const [allPlaces, setAllPlaces] = useState([]);
+  const [allPlaces_Global, setAllPlaces_Global] = useState([]);
 
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (cookies.access_token && window.location.pathname !== "/login") {
-      alert(true)
       fetch("http://localhost:8080/getUserData", {
         method: "GET",
         headers: {
@@ -28,14 +31,63 @@ export function AuthProvider({ children }) {
         })
         .then((data) => {
           setCurrentUser(data.user);
-          console.log(data.user)
+          setDefCity(data.user.defcity);
         })
         .catch((err) => {
           console.error(err);
         });
-        setLoading(false);
     }
+    setLoading(false);
   }, []);
+
+  useEffect(() => {
+    const places = []
+    if (defCity !== '') {
+    fetch("http://localhost:8080/places", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + cookies.access_token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        city: '',
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setAllPlaces_Global(data)
+        places.push(data)
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+      const inCity = []
+
+      console.log(places)
+
+      for (let i = 0; i < places.length; i++) {
+        if (String(places[i].city).toLocaleLowerCase === String(defCity).toLocaleLowerCase) {
+          inCity.push(places[i])
+        }
+      }
+
+      console.log(inCity)
+
+      setAllPlaces(inCity)
+ 
+    }
+  }, [defCity])
+
+  useEffect(() => {
+
+    if (allPlaces.length !== 0) {
+      generalScript(allPlaces)
+    }
+
+  }, [allPlaces])
 
   function login(username, password) {
     fetch("http://localhost:8080/getUser", {
@@ -72,6 +124,8 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    allPlaces,
+    allPlaces_Global,
     login,
     logout
   };

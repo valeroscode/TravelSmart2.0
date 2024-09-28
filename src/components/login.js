@@ -28,7 +28,7 @@ function LoginForm() {
       <div id="body">
         <div id="login-div-left">
           <div id="login-title">
-            <h1>Explore. Plan. Discover.</h1>
+            <h1>Let's WANDR.</h1>
           </div>
           <div id="login">
             <div className="signupH1">

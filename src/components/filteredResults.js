@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faPaperPlane,faStarOfLife, faDiamond } from "@fortawesome/free-solid-svg-icons";
 import "./styles/ResultsPage.css";
-import {allPlaces} from "./allMarkers.mjs";
 import Lottie from "lottie-react";
 import animationData from "./assets/loading-page.json";
 import AddTrip_Button from "./AddTrip_Button";
@@ -20,23 +19,11 @@ import { docMethods } from "./firebase/firebase";
 import HomeHeader from "./HomeHeader";
 
 function Results() {
-  const budgetF = useRef();
-  const budgetSec = useRef();
-  const highlyRatedSec = useRef();
-  const lottie = useRef();
-  const lottieBg = useRef();
-  const ul = useRef();
-  const topRated = useRef();
+  const { allPlaces } = useAuth();
   const filterDescription = useRef();
   const legend = useRef();
 
-  const list = [];
-  const topRatedArr = [];
-  const budget = [];
   const [places, setPlaces] = useState([])
-  const [listState, setListState] = useState([]);
-  const [topRatedState, setTopRatedState] = useState([]);
-  const [budgetState, setBudgetState] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [name, setName] = useState("")
   const [categories, setCategories] = useState([])
@@ -90,11 +77,11 @@ function Results() {
         var geocoder = new window.google.maps.Geocoder();
         for (let i = 0; i < places.length; i++) {
         geocoder.geocode(
-          { placeId: places[i].placeID },
+          { placeId: places[i].placeid },
           function (results, status) {
             if (status === window.google.maps.GeocoderStatus.OK) {
               const request = {
-                placeId: places[i].placeID,
+                placeId: places[i].placeid,
                 fields: ["photo"],
               };
               var service = new window.google.maps.places.PlacesService(window.map);
@@ -360,7 +347,7 @@ function Results() {
                         <h5>Serving {String(place.serves).replaceAll(',',' ')}</h5>
                         <div className="buttons-container">
                           <button>Add To Trip</button>
-                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
+                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeid, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
                         
                         </div>
                       
@@ -392,7 +379,7 @@ function Results() {
                         <h5>Serving {String(place.serves).replaceAll(',',' ')}</h5>
                         <div className="buttons-container">
                           <button>Add To Trip</button>
-                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
+                          <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeid, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
                         
                         </div>
                         
@@ -607,7 +594,7 @@ function Results() {
                
                     <div className="all-places-buttons">
                     <button>Add To Trip</button>
-                    <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeID, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
+                    <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeid, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
                    
                     </div>
                     <div className="place-div-tags">

@@ -7,12 +7,12 @@ import {
   faUser,
   faArrowRightFromBracket
 } from "@fortawesome/free-solid-svg-icons";
-import { allPlaces } from "./allMarkers.mjs";
 import { useAuth } from "./contexts/AuthContext";
 import { doc } from "firebase/firestore/lite";
 import { Link } from "react-router-dom";
 
 function HomeHeader({ name }) {
+  const {allPlaces_Global} = useAuth();
   const account = useRef();
   const editUser = useRef();
   const userNameDiv = useRef();
@@ -22,7 +22,7 @@ function HomeHeader({ name }) {
 
   useEffect(() => {
     
-    allPlaces.map((place) =>
+    allPlaces_Global.map((place) =>
       !cities.includes(place.city) ? cities.push(place.city) : null
     );
     setCities(cities);
@@ -52,19 +52,19 @@ function HomeHeader({ name }) {
   const searchBarFunctions = {
     setDropdownContent: function (e) {
       const array = [];
-      for (let i = 0; i < allPlaces.length; i++) {
-        if (allPlaces[i].city === cityInput.current.value) {
-        if (!array.includes(allPlaces[i].style)) {
-          array.push(allPlaces[i].style)
+      for (let i = 0; i < allPlaces_Global.length; i++) {
+        if (allPlaces_Global[i].city === cityInput.current.value) {
+        if (!array.includes(allPlaces_Global[i].style)) {
+          array.push(allPlaces_Global[i].style)
         }
-        if (!array.includes(allPlaces[i].category)) {
-          array.push(allPlaces[i].category)
+        if (!array.includes(allPlaces_Global[i].category)) {
+          array.push(allPlaces_Global[i].category)
         }
-        if (!array.includes(allPlaces[i].area)) {
-          array.push(allPlaces[i].area)
+        if (!array.includes(allPlaces_Global[i].area)) {
+          array.push(allPlaces_Global[i].area)
         }
-        if (!array.includes(allPlaces[i].serves)) {
-          array.push(allPlaces[i].serves)
+        if (!array.includes(allPlaces_Global[i].serves)) {
+          array.push(allPlaces_Global[i].serves)
         }
       }
       }
@@ -97,18 +97,18 @@ function HomeHeader({ name }) {
 
         if (e.target === searchInput.current) {
           const arr = [];
-          for (let i = 0; allPlaces.length; i++) {
-            if (!arr.includes(allPlaces[i].style)) {
-              arr.push(allPlaces[i].style)
+          for (let i = 0; allPlaces_Global.length; i++) {
+            if (!arr.includes(allPlaces_Global[i].style)) {
+              arr.push(allPlaces_Global[i].style)
             } 
-            if (!arr.includes(allPlaces[i].category)) {
-              arr.push(allPlaces[i].category)
+            if (!arr.includes(allPlaces_Global[i].category)) {
+              arr.push(allPlaces_Global[i].category)
             } 
-            if (!arr.includes(allPlaces[i].serves)) {
-              arr.push(allPlaces[i].serves)
+            if (!arr.includes(allPlaces_Global[i].serves)) {
+              arr.push(allPlaces_Global[i].serves)
             } 
-            if (!arr.includes(allPlaces[i].area)) {
-              arr.push(allPlaces[i].area)
+            if (!arr.includes(allPlaces_Global[i].area)) {
+              arr.push(allPlaces_Global[i].area)
             }  
           }
           setPlaces_InCity(arr);
@@ -251,7 +251,7 @@ function HomeHeader({ name }) {
           <div ref={editUser} id="edit-user">
             <div>
             <FontAwesomeIcon icon={faUser} />
-            <h4>{name}</h4>
+            <h4>{name === undefined ? "" : name}</h4>
             </div>
             <h5>avalero.software@gmail.com</h5>
             <hr/>

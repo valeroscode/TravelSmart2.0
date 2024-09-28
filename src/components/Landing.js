@@ -85,12 +85,12 @@ function Landing() {
       window.addEventListener("scroll", () => {
         if (window.scrollY > 0) {
           landingNav.current.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
-          landingNavBtn.current.style.borderRadius = "0px";
+          landingNavBtn.current.style.borderRadius = "30px";
           landingNavBtn.current.style.backgroundColor = "#8A05FF";
           landingNavBtn.current.style.color = "white";
         } else {
           landingNav.current.style.backgroundColor = "rgba(0, 0, 0, 0)";
-          landingNavBtn.current.style.borderRadius = "0px 0px 0px 20px";
+          landingNavBtn.current.style.borderRadius = "30px 30px 30px 0px";
           landingNavBtn.current.style.backgroundColor = "white";
           landingNavBtn.current.style.color = "black";
         }
@@ -258,11 +258,9 @@ function Landing() {
             <h1 className="travel">WANDR</h1>
           </div>
           {cookies.access_token ? (
-            <Link to="/home">
-              <div id="landing-nav-right" ref={landingNavBtn}>
+              <div id="landing-nav-right" ref={landingNavBtn} onClick={() => window.location.replace('http://localhost:8080/home')}>
                 <p>Dashboard</p>
               </div>
-            </Link>
           ) : (
             <Link to="/login">
               <div id="landing-nav-right" ref={landingNavBtn}>

@@ -24,8 +24,7 @@ import {
   faMessage
 } from "@fortawesome/free-solid-svg-icons";
 import HomeHeader from "./HomeHeader";
-import { citiesArray, allPlaces } from "./allMarkers.mjs";
-import { useAuth } from "./contexts/AuthContext";
+import { useAuth } from "./contexts/AuthContext.js";
 import { docMethods } from "./firebase/firebase";
 import {
   learnMoreAboutPlace,
@@ -64,8 +63,7 @@ import maracanpaintings from "./assets/maracanpaintings.jpg"
 import wavesBg from "./assets/waves.jpg"
 
 function TravelSmart() {
-  const { currentUser } = useAuth();
-
+  const { currentUser, allPlaces } = useAuth();
   console.log(currentUser)
   const navigate = useNavigate()
   const cityDD = useRef();
@@ -117,10 +115,6 @@ function TravelSmart() {
 
   const overallRating = useRef();
 
-  //Array containing all places in the current city
-  const [allPlaces_inCity, setAllPlaces_inCity] = useState(
-    allPlaces.filter((m) => m.city === sessionStorage.getItem("city"))
-  );
   const [smartSearchPlaces, setSmartSearchPlaces] = useState([])
   const [areas, setAreas] = useState([])
   const [styles, setStyles] = useState([])
@@ -183,25 +177,9 @@ function TravelSmart() {
 
   useEffect(() => {
 
-      for (let i = 0; i < allPlaces_inCity.length; i++) {
-        if (!areas.includes(allPlaces_inCity[i].area)) {
-          areas.push(allPlaces_inCity[i].area);
-        } 
+      
 
-        if (!styles.includes(allPlaces_inCity[i].style)) {
-          styles.push(allPlaces_inCity[i].style);
-        }
-
-        if (!serving.includes(allPlaces_inCity[i].serves)) {
-          serving.push(allPlaces_inCity[i].serves);
-        }
-
-        setAreas(areas)
-        setStyles(styles)
-        setServing(serving)
-      }
-
-  }, [allPlaces_inCity])
+  }, [allPlaces])
 
   const backgroundImgList = {
     1: {
@@ -256,22 +234,7 @@ function TravelSmart() {
     } else {
       sessionStorage.setItem("city", "Miami");
     }
-
-    let citiesArr = [];
-
-  //Populates array with all cities
-  for (let i = 0; i < allPlaces.length; i++) {
-    if (!citiesArr.includes(allPlaces[i].city)) {
-      citiesArr.push(allPlaces[i].city);
-    }
-  }
-
-  allPlaces_inCity.map((place) => place.score = 0)
-  setAllPlaces_inCity(allPlaces_inCity)
-
-  setCities(citiesArr)
-   
-    
+       
     const citiesInShowAll = document.getElementsByClassName("city-in-show-all");
     for (let i = 0; i < citiesInShowAll.length; i++) {
       if (citiesInShowAll[i].textContent === sessionStorage.getItem("city")) {
@@ -280,24 +243,46 @@ function TravelSmart() {
         citiesInShowAll[i].click();
       }
     }
-
-    setTimeout(() => {
-      generalScript();
-      window.history.pushState(
-        null,
-        null,
-        "https://travelsmart2-0.onrender.com/Home"
-      );
-    }, 2000);
-
   }, []);
 
+  useEffect(() => {
+    let citiesArr = [];
+    const areasTemp = []
+    const stylesTemp = []
+    const servingTemp = []
+
+    //Populates array with all cities
+    console.log(allPlaces)
+
+    for (let i = 0; i < allPlaces.length; i++) {
+      if (!citiesArr.includes(allPlaces[i].city)) {
+        citiesArr.push(allPlaces[i].city);
+      }
+      if (!areasTemp.includes(allPlaces[i].area)) {
+        areasTemp.push(allPlaces[i].area);
+      } 
+
+      if (!stylesTemp.includes(allPlaces[i].style)) {
+        stylesTemp.push(allPlaces[i].style);
+      }
+
+      if (!servingTemp.includes(allPlaces[i].serves)) {
+        servingTemp.push(allPlaces[i].serves);
+      }
+    }
+
+    setAreas(areasTemp)
+    setStyles(stylesTemp)
+    setServing(servingTemp)
+    setCities(citiesArr)
+
+  }, [allPlaces])
+ 
   useEffect(() => {
     let total = 0;
     const filtered = allPlaces.filter((p) => p.city === city);
     filtered.map((p) => (total = total + p.rating));
     setAvgRating(total / filtered.length);
-    //MAKE AN API CALL AND SET ALLPLACESINCITY TO THOSE PLACES
   }, [city]);
 
   setTimeout(() => {
@@ -851,7 +836,7 @@ function TravelSmart() {
         </div>
         
         <div id="hello-user" ref={helloUser}>
-            <h2>Hello {String(currentUser.name).split(" ")[0]},</h2>
+            <h2>Hello {currentUser.name === undefined ? "" : String(currentUser.name).split(" ")[0]},</h2>
             <h4>What would you like to do today?</h4>
             {
             !advSearch ?
@@ -1069,7 +1054,7 @@ function TravelSmart() {
           <div id="middle-organizer">
             <div id="background-img"></div>
             <div id="organizer-city-rundown">
-              <h2>Explore here and abroad</h2>
+              <h2>Get To Know Your City</h2>
 
               <div id="avaliable-cities">
          
@@ -1383,7 +1368,7 @@ function TravelSmart() {
                mapInputSecond.current.value = text;
                
                if (String(e.target.textContent).split(' ')[0] === '🔎') {
-                const filteredAllplacesincity = allPlaces_inCity.filter(place => place.category === text)
+                const filteredAllplacesincity = allPlaces.filter(place => place.category === text)
                 const newAreas = []
                 const newStyles = []
                 const newServing = []
@@ -1478,7 +1463,7 @@ function TravelSmart() {
                mapInputSecond.current.value = text;
                
                if (String(e.target.textContent).split(' ')[0] === '🔎') {
-                const filteredAllplacesincity = allPlaces_inCity.filter(place => place.category === text)
+                const filteredAllplacesincity = allPlaces.filter(place => place.category === text)
                 const newAreas = []
                 const newStyles = []
                 const newServing = []
