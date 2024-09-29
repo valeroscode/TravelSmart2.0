@@ -21,23 +21,23 @@ function HomeHeader({ name }) {
   const [cities, setCities] = useState([]);
 
   useEffect(() => {
-    
-    allPlaces_Global.map((place) =>
-      !cities.includes(place.city) ? cities.push(place.city) : null
+    if (allPlaces_Global.length !== 0) {
+    const citiesTemp = []
+    allPlaces_Global.map(place =>
+      !citiesTemp.includes(place.city) ? citiesTemp.push(place.city) : null
     );
-    setCities(cities);
+    setCities(citiesTemp);
     setTimeout(() => {
       document.getElementById("users-name").style.opacity = 1;
     }, 500);
    
-
       window.addEventListener("click", (e) => {
           searchBarFunctions.handleClicksOutside_ofInputs(e);
           searchBarFunctions.hideEditUser(e)
       });
-        
-    
-  }, []);
+
+    }
+  }, [allPlaces_Global])
 
   function handleLogout() {
     logout();
@@ -189,14 +189,14 @@ function HomeHeader({ name }) {
           }}></input>
           <ul ref={cityDD}>
             {
-              cities.map((city) => (
+              cities.map(city => 
                 <li className="city-dd-item" onClick={(e) => {
                   cityInput.current.value = e.target.textContent;
                   cityDD.current.style.display = "none"
                   searchInput.current.value = '';
                   searchBarFunctions.setDropdownContent()
                 }}>{city}</li>
-              ))
+              )
             }
           </ul>
           </div>

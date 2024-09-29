@@ -63,7 +63,7 @@ import maracanpaintings from "./assets/maracanpaintings.jpg"
 import wavesBg from "./assets/waves.jpg"
 
 function TravelSmart() {
-  const { currentUser, allPlaces } = useAuth();
+  const { currentUser, allPlaces, allPlaces_Global, defCity } = useAuth();
   console.log(currentUser)
   const navigate = useNavigate()
   const cityDD = useRef();
@@ -176,10 +176,23 @@ function TravelSmart() {
   }
 
   useEffect(() => {
+    if (allPlaces_Global.length !== 0) {
+    const citiesTemp = []
+    allPlaces_Global.map(place =>
+      !citiesTemp.includes(place.city) ? citiesTemp.push(place.city) : null
+    );
+    setCities(citiesTemp);
+    setTimeout(() => {
+      document.getElementById("users-name").style.opacity = 1;
+    }, 500);
+   
+      window.addEventListener("click", (e) => {
+          searchBarFunctions.handleClicksOutside_ofInputs(e);
+          searchBarFunctions.hideEditUser(e)
+      });
 
-      
-
-  }, [allPlaces])
+    }
+  }, [allPlaces_Global])
 
   const backgroundImgList = {
     1: {
@@ -215,22 +228,27 @@ function TravelSmart() {
   //to make proper updates to the database without relying on a state change for the variable above.
   //Thus preventing the component from re-rendering. Also results in array changes to be global.
 
-  //handler to update the city, which then makes an api call to get all places in that city
-  const handleUpdateCity = (newCity) => {
-    const newState = {
-        city: newCity
-    };
-    dispatch({ type: 'SET_CITY', payload: newState });
+  const [favorites, setFavorites] = useState([]);
+
+  let options = {
+    "Chicago": { lat: 41.8781, lng: -87.6298 },
+    "Miami": { lat: 25.7617, lng: -80.1918 },
+    "Tampa": { lat: 27.9517, lng: -82.4588 },
+    "North Pole": { lat: 64.7552, lng: -147.3534 },
+    "New York": { lat: 40.712775, lng: -74.005973 },
+    "Barcelona": { lat: 41.387397, lng: 2.168568 },
   };
 
-  const [favorites, setFavorites] = useState([]);
   useEffect(() => {
 
-    if (currentUser.defCity !== '' && currentUser.defCity !== undefined) {
+    if (defCity !== '' && defCity !== undefined) {
       setConfirmExpCity(true)
-      setCity(currentUser.defCity)
-      sessionStorage.setItem("city", currentUser.defCity);
-      handleUpdateCity(currentUser.defCity)
+      setCity(defCity)
+      sessionStorage.setItem("city", defCity);
+      // var map = window.map;
+      // console.log(map)
+      // console.log(defCity)
+      // map.setCenter(options[defCity])
     } else {
       sessionStorage.setItem("city", "Miami");
     }
@@ -243,7 +261,7 @@ function TravelSmart() {
         citiesInShowAll[i].click();
       }
     }
-  }, []);
+  }, [defCity]);
 
   useEffect(() => {
     let citiesArr = [];
@@ -633,104 +651,63 @@ function TravelSmart() {
     }
 
     //Correcting mispellings
-    for (let i = 0; i < allPlaces.length; i++) {
+    for (let i = 0; i < allPlaces_Global.length; i++) {
     for (let j = 0; j < finalTerms.length; j++) {
-      wordAccuracy(finalTerms[j].term, allPlaces[i].area)
-      wordAccuracy(finalTerms[j].term, allPlaces[i].city)
-      wordAccuracy(finalTerms[j].term, allPlaces[i].style)
-      wordAccuracy(finalTerms[j].term, allPlaces[i].category)
-      wordAccuracy(finalTerms[j].term, allPlaces[i].serves)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].area)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].city)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].style)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].category)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].serves)
       }
     }
 
  
 
-    for (let i = 0; i < allPlaces.length; i++) {
+    for (let i = 0; i < allPlaces_Global.length; i++) {
      
-     allPlaces[i].score = 0
+      allPlaces_Global[i].score = 0
      if (cityInArray.length === 0) {
-      if (finalTerms.some(term => term.term.includes(String(allPlaces[i].area).toLocaleLowerCase()))) {
-        allPlaces[i].score++
+      if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].area).toLocaleLowerCase()))) {
+        allPlaces_Global[i].score++
       }
       } else {
-        if (finalTerms.some(term => term.term.includes(String(allPlaces[i].city).toLocaleLowerCase()))) {
-          allPlaces[i].score++
+        if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].city).toLocaleLowerCase()))) {
+          allPlaces_Global[i].score++
         }
       }
-      if (finalTerms.some(term => term.term.includes(String(allPlaces[i].style).toLocaleLowerCase()))) {
-        allPlaces[i].score++
+      if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].style).toLocaleLowerCase()))) {
+        allPlaces_Global[i].score++
       }
-      if (finalTerms.some(term => term.term.includes(String(allPlaces[i].category).toLocaleLowerCase()))) {
-        allPlaces[i].score++
+      if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].category).toLocaleLowerCase()))) {
+        allPlaces_Global[i].score++
       }
-      let processed = allPlaces[i].serves.replace(/[,&]/g, ' ');
+      let processed = allPlaces_Global[i].serves.replace(/[,&]/g, ' ');
       processed = processed.replace(/\s+/g, ' ').trim();
       processed = processed.toLocaleLowerCase()
       const regexPattern = processed.split(' ').join('|');
       finalTerms.some(term => {
       const items = regexPattern.split('|').map(item => item.trim());
       if (items.includes(term.term)) {
-        allPlaces[i].score++
+        allPlaces_Global[i].score++
       }
       })
 
       //When handling misspellings also account for 1 letter added and missing 1 letter
     }
-    console.log(finalTerms)
+  
     const regexcase = new RegExp(`\\b${' and '}\\b`, 'g'); // 'g' for global match
     const matches = searchTerm.match(regexcase);
 
     let results;
 
     if (matches !== null) {
-    results = allPlaces.filter(p => p.score === finalTerms.length - matches.length)
+    results = allPlaces_Global.filter(p => p.score === finalTerms.length - matches.length)
     } else {
-    results = allPlaces.filter(p => p.score === finalTerms.length)
+    results = allPlaces_Global.filter(p => p.score === finalTerms.length)
     }
 
     setSmartSearchPlaces(results)
-
-    console.log(results)
-
     
-    // if (place.includes(' and ')) {
-
-    //   const termsArray = place.split(' and ')
-      
-      
-
-    // } else {
-    //   const filterByLocation = allPlaces.filter(p => String(p.city).toLocaleLowerCase() === place)
-    //   if (citiesAvaliable.includes(place)) {
-    //   if (categoryTypes.includes(category)) {
-    //   const filterByCategory = filterByLocation.filter(p => String(p.category).toLocaleLowerCase() === category)
-    //   setSmartSearchPlaces(filterByCategory)
-    //   } else {
-    //   const filterByStyle = filterByLocation.filter(p => String(p.style).toLocaleLowerCase() === category)
-    //   setSmartSearchPlaces(filterByStyle)
-    //   if (filterByStyle.length === 0) {
-    //     const filterByServes = filterByLocation.filter(p =>  String(p.serves).toLocaleLowerCase().includes(category))
-    //     setSmartSearchPlaces(filterByServes)
-    //   }
-    //   }
-    // } else {
-    //   const filterByArea = allPlaces.filter(p => String(p.area).toLocaleLowerCase() === place)
-    //   if (categoryTypes.includes(category)) {
-    //     const filterByCategory = filterByArea.filter(p => String(p.category).toLocaleLowerCase() === category)
-    //     setSmartSearchPlaces(filterByCategory)
-    //     } else {
-    //     const filterByStyle = filterByArea.filter(p => String(p.style).toLocaleLowerCase() === category)
-    //     setSmartSearchPlaces(filterByStyle)
-    //     if (filterByStyle.length === 0) {
-    //       const filterByServes = filterByArea.filter(p =>  String(p.serves).toLocaleLowerCase().includes(category))
-    //       setSmartSearchPlaces(filterByServes)
-    //     }
-    //     }
-    // }
-
-    //   //remember to handle misspellings!!!
-    // }
-
     setConfirmExpCity(true)
 
   }
@@ -1366,7 +1343,7 @@ function TravelSmart() {
                const text = String(e.target.textContent).slice(3);
                mapInput.current.value = text;
                mapInputSecond.current.value = text;
-               
+               var map = window.map;
                if (String(e.target.textContent).split(' ')[0] === '🔎') {
                 const filteredAllplacesincity = allPlaces.filter(place => place.category === text)
                 const newAreas = []
@@ -1396,7 +1373,7 @@ function TravelSmart() {
                   placeDetails.style.opacity = 0;
                   placeDetails.style.left = '-8rem';
                 }
-                window.map.setZoom(12)
+                map.setZoom(12)
                 switch (text) {
                   case 'Club':
                   ClubBtn.current.click();
@@ -1410,9 +1387,10 @@ function TravelSmart() {
                 }
                 mapOverlay.current.style.left = '0rem';
                } else if (String(e.target.textContent).split(' ')[0] === '📍') {
+
                  const place = allPlaces.filter(place => place.name === text);
-                 window.map.panTo(place[0].coords)
-                 window.map.setZoom(15)
+                 map.panTo(place[0].coords)
+                 map.setZoom(15)
                  const placeName = allmarkers.filter(m => m.name === text);
                  google.maps.event.trigger(placeName[0], 'click');
                  if (document.getElementById('map-overlay').style.left !== '0rem') {
@@ -1461,7 +1439,7 @@ function TravelSmart() {
                const text = String(e.target.textContent).slice(3);
                mapInput.current.value = text;
                mapInputSecond.current.value = text;
-               
+               var map = window.map;
                if (String(e.target.textContent).split(' ')[0] === '🔎') {
                 const filteredAllplacesincity = allPlaces.filter(place => place.category === text)
                 const newAreas = []
@@ -1488,7 +1466,7 @@ function TravelSmart() {
                   placeDetails.style.opacity = 0;
                   placeDetails.style.left = '-8rem';
                 }
-                window.map.setZoom(12)
+                map.setZoom(12)
                 const boxes = document.getElementsByClassName('checkbox-map')
 
                 //The reason this doesnt seem like it works as intended is because of somehting in the miami.mjs file
@@ -1513,8 +1491,8 @@ function TravelSmart() {
                } else if (String(e.target.textContent).split(' ')[0] === '📍') {
                 
                 const place = allPlaces.filter(place => place.name === text);
-                window.map.panTo(place[0].coords)
-                window.map.setZoom(15)
+                map.panTo(place[0].coords)
+                map.setZoom(15)
                 const placeName = allmarkers.filter(m => m.name === text);
                 google.maps.event.trigger(placeName[0], 'click');
                 if (document.getElementById('map-overlay').style.left !== '0rem') {

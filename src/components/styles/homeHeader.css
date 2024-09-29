@@ -114,7 +114,10 @@ cursor: pointer;
   font-family: "Roboto Condensed", sans-serif;
   padding-top: 1rem;
   z-index: 100000;
-  border-radius: 0 0 10px 10px;
+  border-radius: 10px;
+  max-height: 20rem;
+  overflow-x: none;
+  overflow-y: scroll;
 }
 
 #cityDD-input ul li {

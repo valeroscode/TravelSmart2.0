@@ -577,7 +577,10 @@ function TripsPage() {
               ))
             ) : (
               <li>
-                <div style={{ fontSize: "1.5rem" }}><p style={{color: "white", margin: "0"}}>No trips planned right now</p><button style={{width: "fit-content", fontWeight: 800, color: "white", backgroundColor: "#8A05FF", height: "100%", fontFamily: "'Roboto Condensed', sans-serif", padding: "1rem", fontSize: "1.25rem", borderRadius: "30rem"}}>Start Planning</button></div>
+                <div style={{ fontSize: "1.5rem" }}><p style={{color: "white", margin: "0"}}>No trips planned right now</p><button style={{width: "fit-content", fontWeight: 800, color: "white", backgroundColor: "#8A05FF", height: "100%", fontFamily: "'Roboto Condensed', sans-serif", padding: "1rem", fontSize: "1.25rem", borderRadius: "30rem"}} 
+                onClick={() => {
+                  navigate('/plan')
+                }}>Start Planning</button></div>
               </li>
             )}
           </ul>

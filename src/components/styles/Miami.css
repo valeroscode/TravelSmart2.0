@@ -314,6 +314,7 @@
 }
 
 #hello-user input {
+  font-family: "Roboto Condensed", sans-serif;
   width: 100%;
   font-size: 1rem;
   margin-top: 0;
@@ -2520,6 +2521,7 @@ opacity: 1;
   margin-bottom: 0;
   cursor: pointer;
   margin-right: 1rem;
+  display: none;
 }
 
 .exp-line {
@@ -3158,14 +3160,6 @@ transition: all 0.3s ease;
 
 .showAllDiv-Parent:hover .show-all-line {
   width: 100%;
-}
-
-.showAllDiv-Parent:hover {
-  margin-bottom: 3rem;
-} 
-
-.showAllDiv-Parent:hover .ratingdd {
-
 }
 
 .see-imgs:visited {

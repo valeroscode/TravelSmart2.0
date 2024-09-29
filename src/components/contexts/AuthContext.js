@@ -19,74 +19,71 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (cookies.access_token && window.location.pathname !== "/login") {
-      fetch("http://localhost:8080/getUserData", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + cookies.access_token,
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => {
-          return response.json();
+      console.log(cookies.access_token)
+        //If the user is logged in, get ALL places, which triggers the useEffect for defcity
+        fetch("http://localhost:8080/places", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + cookies.access_token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            "city": "",
+          }),
         })
-        .then((data) => {
-          setCurrentUser(data.user);
-          setDefCity(data.user.defcity);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setAllPlaces_Global(data)
+          })
+          .catch((err) => {
+            console.error(err);
+          }); 
+
+          //THEN get their user data
+          fetch("http://localhost:8080/getUserData", {
+            method: "GET",
+            headers: {
+              Authorization: "Bearer " + cookies.access_token,
+              "Content-Type": "application/json",
+            },
+          })
+            .then((response) => {
+              return response.json();
+            })
+            .then((data) => {
+              setCurrentUser(data.user);
+              setDefCity(data.user.defcity);
+          
+            })
+            .catch((err) => {
+              console.error(err);
+            });
     }
     setLoading(false);
+
+
   }, []);
 
+  //Now the places in their default city will be populated
   useEffect(() => {
-    const places = []
     if (defCity !== '') {
-    fetch("http://localhost:8080/places", {
-      method: "POST",
-      headers: {
-        Authorization: "Bearer " + cookies.access_token,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        city: '',
-      }),
-    })
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        setAllPlaces_Global(data)
-        places.push(data)
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-
-      const inCity = []
-
-      console.log(places)
-
-      for (let i = 0; i < places.length; i++) {
-        if (String(places[i].city).toLocaleLowerCase === String(defCity).toLocaleLowerCase) {
-          inCity.push(places[i])
+      const places = []
+      for (let i = 0; i < allPlaces_Global.length; i++) {
+        if (String(allPlaces_Global[i].city).toLocaleLowerCase() === String(defCity).toLocaleLowerCase()) {
+          places.push(allPlaces_Global[i])
         }
       }
-
-      console.log(inCity)
-
-      setAllPlaces(inCity)
- 
+      setAllPlaces(places)
     }
   }, [defCity])
 
   useEffect(() => {
-
-    if (allPlaces.length !== 0) {
+    console.log(window.location.pathname)
+    if (allPlaces.length !== 0 && window.location.pathname === '/home') {
       generalScript(allPlaces)
     }
-
   }, [allPlaces])
 
   function login(username, password) {
@@ -101,7 +98,7 @@ export function AuthProvider({ children }) {
       }),
     })
       .then((response) => {
-        console.log(response)
+        
         if (response.ok) {
         return response.json();
         } else {
@@ -126,6 +123,7 @@ export function AuthProvider({ children }) {
     currentUser,
     allPlaces,
     allPlaces_Global,
+    defCity,
     login,
     logout
   };

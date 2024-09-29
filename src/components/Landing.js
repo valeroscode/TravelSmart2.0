@@ -27,12 +27,10 @@ import mialanding from "./assets/Miami Landing.jpg";
 import romelanding from "./assets/Rome Landing.jpg";
 import tokyoLanding from "./assets/Tokyo Landing.jpg";
 import nashvillelanding from "./assets/Nashville Landing.jpg";
-import { allPlaces } from "./allMarkers.mjs";
 import { useCookies } from "react-cookie";
 
 function Landing() {
   const [cookies] = useCookies(["access_token"]);
-  const [cities, setCities] = useState([]);
   const landingMain = useRef();
   const spotlight = useRef();
   const spotlightCursor = useRef();
@@ -96,16 +94,6 @@ function Landing() {
         }
       });
     }
-
-    const citiesArr = [];
-
-    for (let i = 0; i < allPlaces.length; i++) {
-      if (!citiesArr.includes(allPlaces[i].city)) {
-        citiesArr.push(allPlaces[i].city);
-      }
-    }
-
-    setCities(citiesArr);
 
     const whyItems = document.getElementsByClassName("why-item");
 
@@ -511,11 +499,23 @@ function Landing() {
       </section>
 
       <section id="allcities">
-        <h2>ALL {cities.length} CITIES YOU CAN EXPLORE</h2>
+        <h2>All The Cities You Can Explore</h2>
         <ul>
-          {cities.map((city) => (
-            <li>{city}</li>
-          ))}
+          <li>Miami</li>
+          <li>New York</li>
+          <li>Chicago</li>
+          <li>Nashville</li>
+          <li>San Diego</li>
+          <li>Boston</li>
+          <li>Las Vegas</li>
+          <li>Hong Kong</li>
+          <li>Seoul</li>
+          <li>Rome</li>
+          <li>Athens</li>
+          <li>Florence</li>
+          <li>Tokyo</li>
+          <li>London</li>
+          <li>Barcelona</li>
         </ul>
       </section>
 
@@ -555,17 +555,17 @@ function Landing() {
           <div id="convert-reasons">
             <div>
               <FontAwesomeIcon icon={faLocationPin} />
-              <h4 ref={placesCount} max="120">
-                {allPlaces.length}
+              <h4 ref={placesCount} max="550">
+                550
               </h4>
-              <p>Over {allPlaces.length} different places</p>
+              <p>Over 550 different places</p>
             </div>
             <div>
               <FontAwesomeIcon icon={faUser} />
               <h4 ref={usersCount} max="600">
-                600k
+                15
               </h4>
-              <p>Over 600k users worldwide</p>
+              <p>Across 15 destinations worldwide</p>
             </div>
           </div>
           <h3>Endless features, one platform</h3>
