@@ -60,6 +60,9 @@
 
 #hello-user-section {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 #photo-credits {
@@ -228,7 +231,6 @@
   text-align: left;
   flex-direction: column;
   justify-content: center;
-  left: 24.5rem;
   top: 5rem;
   padding-bottom: 0rem;
   -webkit-transition: all 0.3s ease;
@@ -278,10 +280,10 @@
   z-index: 10;
   position: relative;
   color: black;
-  left: -2rem;
   height: 2.5rem;
   width: 1.25rem;
   height: 100%;
+  left: -0.5rem;
   padding: 0 1rem;
   border-top: 1px solid rgb(204, 204, 204);
   border-right: 1px solid rgb(204, 204, 204);
@@ -319,6 +321,7 @@
   font-size: 1rem;
   margin-top: 0;
   padding: 1.55rem;
+  margin-left: 0;
   border: 1px solid rgb(204, 204, 204);
   box-shadow: 0 0 10px 1px rgb(210, 210, 210);
 }
@@ -431,7 +434,6 @@
 #home-buttons {
   display: flex;
   position: relative;
-  left: 1rem;
   top: 1rem;
 }
 
@@ -1443,10 +1445,22 @@ border-radius: 30px;
   height: fit-content;
   color: white;
 }
-#avaliable-cities {
+#your-city {
   position: relative;
   top: 3rem;
+  height: fit-content;
+  width: fit-content;
+  background-color: rgb(138, 5, 255);
+  padding: 1rem;
+  border-radius:30px;
+
 } 
+.yr-city-name {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  margin-top: 0;
+  color: white;
+}
 .button-div-map {
 display: flex;
 justify-content: start;
@@ -1493,11 +1507,6 @@ transition:all 0.3s ease;
   #top-reccomendations-container {
       height: 63vh;
   }
-  #avaliable-cities div img {
-      height: 15rem;
-      width: 11rem;
-      object-fit: cover;
-  }
   #avaliable-cities div p {
       bottom: 15.5rem;
   }
@@ -1540,6 +1549,12 @@ transition:all 0.3s ease;
 @media screen and (max-height: 812px) {
   #top-reccomendations-container {
       height: 59vh;
+  }
+}
+
+@media screen and (max-width: 703px) {
+  #hello-user {
+    width: 85vw;
   }
 }
 
@@ -2021,7 +2036,7 @@ height: 100%;
 
 #organizer-city-rundown {
   width: 100%;
-  margin: 0 10rem;
+  margin: 0 5rem;
 }
 
 #organizer-city-rundown p {
@@ -2035,6 +2050,7 @@ height: 100%;
   color: black;
   position: relative;
   top: 2rem;
+  margin-top: 0;
 }
 
 .middle-org-h2 {
@@ -2097,7 +2113,7 @@ height: 100%;
 }
 
 .avg-rating-org {
-  opacity: 0;
+  opacity: 1;
   transform: translateY(-10px);
   -webkit-transition:all 0.3s ease;
   -moz-transition:all 0.3s ease;
@@ -2133,15 +2149,42 @@ transition:all 0.7s linear;
   color: white;
   height: fit-content;
   position: relative;
-  right: 13.5rem;
-  bottom: 1.5rem;
-  font-size: 1rem;
-  opacity: 0;
+  bottom: 2.75rem;
+  font-size: 1.25rem;
+  opacity: 1;
+  margin-bottom: 0;
   transform: translateY(-10px);
   -webkit-transition:all 0.3s ease;
   -moz-transition:all 0.3s ease;
   -o-transition:all 0.3s ease;
   transition:all 0.3s ease;
+}
+
+.explore-city-button {
+  color: black;
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 800;
+  background-color: whitesmoke;
+  width: 100%;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30px;
+  position: relative;
+  -webkit-transition:all 0.3s ease;
+  -moz-transition:all 0.3s ease;
+  -o-transition:all 0.3s ease;
+  transition:all 0.3s ease;
+}
+
+.explore-city-button:hover {
+  background-color: #151515;
+  color: white;
+}
+
+.explore-city-button svg {
+  margin-left: 0.5rem;
 }
 
 .rating-bg {
@@ -2171,8 +2214,9 @@ box-shadow: 0px 0px 20px gray;
 
 .avg-rating {
 display: flex;
-position: absolute;
-bottom: 5rem;
+position: relative;
+flex-direction: column;
+align-items: start;
 }
 
 #background-img {
@@ -2215,17 +2259,15 @@ bottom: 5rem;
   margin-top: 0.5rem;
   margin-right: 0.5rem;
   margin-bottom: 3rem;
-  height: 16rem;
+  height: fit-content;
+  width: fit-content;
+  background: rgb(138,5,255);
+background: linear-gradient(180deg, rgba(138,5,255,1) 0%, rgba(167,66,255,1) 34%, rgba(213,166,255,1) 100%);
   -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease; 
-  border: 1px solid gray;
   z-index: 2;
-}
-
-#avaliable-cities .city-div:hover {
-  filter: grayscale(70%);
 }
 
 #avaliable-cities .city-div:hover .number-of-places {
@@ -2249,13 +2291,15 @@ bottom: 5rem;
   position: relative;
   color: white;
   font-weight: 800;
-  bottom: 17.5rem;
   left: 1rem;
+  font-size: 3.5rem;
+  margin-top: 0;
+  color: 'black';
+  margin-bottom: 1rem;
 }
 
 #avaliable-cities div .city-explore-div {
   position: relative;
-  bottom: 4.5rem;
   font-size: 1.01rem;
   color: black;
   padding: 0.5rem;
@@ -2271,7 +2315,6 @@ bottom: 5rem;
   font-family: "Roboto Condensed", sans-serif;
   position: relative;
   margin: 0;
-  bottom: 7.30rem;
   font-size: 1.01rem;
   color: black;
   background-color: white;
@@ -2279,7 +2322,9 @@ bottom: 5rem;
   height: fit-content;
   font-weight: 600;
   text-align: center;
-  border-radius: 0px 15px 0 0;
+  border-radius: 20px;
+  padding: 0.75rem 1.5rem;
+  margin-left: 0.5rem;
   width: fit-content;
   -webkit-transition:all 0.3s ease;
   -moz-transition:all 0.3s ease;
@@ -2305,12 +2350,14 @@ bottom: 5rem;
 
 .number-of-places {
   margin-top: 0;
-  position: absolute;
-  bottom: 11rem;
+  position: realtive;
   left: 1rem;
   width: 10rem;
+  font-size: 1.5rem;
   color: white;
-  opacity: 0;
+  opacity: 1;
+  color: white;
+  margin-bottom: 3rem;
   transform: translateY(-10px);
   -webkit-transition:all 0.3s ease;
 -moz-transition:all 0.3s ease;
@@ -2321,14 +2368,6 @@ transition:all 0.3s ease;
 #avaliable-cities div {
   border-radius: 20px;
 }
-
-#avaliable-cities div img {
-  height: 18rem;
-  width: 14rem;
-  object-fit: cover;
-  border-radius: 20px;
-}
-
 
 #organizer-city-rundown-2 h2 {
   font-size: 3rem;
@@ -4364,12 +4403,13 @@ transform: rotate(90deg)
   color: white;
 }
 .info-rating-bar {
-  background-color: whitesmoke;
+  background-color: black;
     width: 23rem;
-    height: 0.5rem;
+    height: 1em;
     margin-bottom: 0.25rem;
-    margin-left: 1rem;
-    margin-top: 0.75rem;
+    position: relative;
+    bottom: 3rem;
+    border-radius: 7px; 
 }
 .info-review-rating {
   display: flex;
@@ -4773,6 +4813,12 @@ display: inline;
   bottom: 1rem;
 }
 
+@media screen and (max-width: 975px) {
+  #organizer-city-rundown {
+    margin-left: 5rem;
+  }
+}
+
 @media screen and (max-width:909px) {
 .rec-container-item h4 {
 width: 130%;
@@ -5100,9 +5146,6 @@ display: none;
   #photo-credits {
       left: 11rem;
   }
-  #hello-user h4 {
-      width: 80%;
-  }
   #filters-and-placecount div h4 {
       font-size: 1.2rem;
   }
@@ -5174,6 +5217,9 @@ width: 100%;
 
  #hello-user h2 {
   font-size: 3rem;
+ }
+ #hello-user h4 {
+  font-size: 2rem;
  }
 
 #footer {
@@ -5263,7 +5309,6 @@ width: 100%;
   position: relative;
   left: -0.5rem;
   }
- 
 }
 
 @media screen and (max-width: 361px) {

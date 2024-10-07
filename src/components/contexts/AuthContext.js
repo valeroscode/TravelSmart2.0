@@ -11,7 +11,7 @@ export function useAuth() {
 export function AuthProvider({ children }) {
   const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
   const [currentUser, setCurrentUser] = useState({});
-  const [defCity, setDefCity] = useState('');
+  const [defCity, setDefCity] = useState('Miami');
   const [allPlaces, setAllPlaces] = useState([]);
   const [allPlaces_Global, setAllPlaces_Global] = useState([]);
 
@@ -19,7 +19,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (cookies.access_token && window.location.pathname !== "/login") {
-      console.log(cookies.access_token)
+      console.log('RENDER 1')
         //If the user is logged in, get ALL places, which triggers the useEffect for defcity
         fetch("http://localhost:8080/places", {
           method: "POST",
@@ -36,6 +36,7 @@ export function AuthProvider({ children }) {
           })
           .then((data) => {
             setAllPlaces_Global(data)
+            console.log(allPlaces_Global)
           })
           .catch((err) => {
             console.error(err);
@@ -55,35 +56,47 @@ export function AuthProvider({ children }) {
             .then((data) => {
               setCurrentUser(data.user);
               setDefCity(data.user.defcity);
-          
+              console.log(currentUser)
             })
             .catch((err) => {
               console.error(err);
             });
+    } else if (!cookies.access_token) {
+      setCurrentUser({
+        defcity: 'Miami',
+        email: null,
+        name: 'Guest',
+        trips: {
+          trips: null
+        }
+      });
+      setDefCity('Miami');
     }
-    setLoading(false);
-
-
   }, []);
 
   //Now the places in their default city will be populated
   useEffect(() => {
-    if (defCity !== '') {
+    console.log('RENDER 2')
+    if (defCity !== '' && allPlaces_Global.length !== 0) {
       const places = []
       for (let i = 0; i < allPlaces_Global.length; i++) {
         if (String(allPlaces_Global[i].city).toLocaleLowerCase() === String(defCity).toLocaleLowerCase()) {
           places.push(allPlaces_Global[i])
         }
       }
+      console.log(allPlaces_Global)
       setAllPlaces(places)
     }
-  }, [defCity])
+  }, [defCity, allPlaces_Global])
 
   useEffect(() => {
+    console.log('RENDER 3')
     console.log(window.location.pathname)
+    console.log(allPlaces)
     if (allPlaces.length !== 0 && window.location.pathname === '/home') {
       generalScript(allPlaces)
     }
+    setLoading(false);
   }, [allPlaces])
 
   function login(username, password) {

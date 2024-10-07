@@ -98,7 +98,6 @@ flex-direction: column;
     position: relative;
     z-index: 1;
     margin-bottom: 1rem;
-    margin-left: 4rem;
 }
 #return-home {
 height: fit-content;
@@ -113,7 +112,6 @@ font-family: 'Roboto Condensed', sans-serif;
 font-weight: 800;
 }
 #your-trips ul {
-margin-left: 9rem;
 width: fit-content;
 height: fit-content;
 padding: 1.5rem;
@@ -1027,12 +1025,6 @@ width: 50vw;
 
 }
 
-@media screen and (max-width: 1253px) {
-  #trips-comp-container {
-    width: unset;
-  }
-}
-
 @media screen and (max-width: 1000px) {
   #where-to-div {
     width: 100%;
@@ -1069,6 +1061,9 @@ top: 2.6rem;
 }
 #wrapper {
 width: 75vw;
+}
+#your-trips .your-trips-h2 {
+  margin-left: 0;
 }
 }
 
@@ -1126,9 +1121,6 @@ padding: 0.5rem;
 .delete-plan {
 padding: 0.5rem;
 }
-.trips-title {
-  left: 1.8rem;
-}
 .trip-item img {
   display: none;
 }
@@ -1147,9 +1139,6 @@ padding: 0.5rem;
 }
 .trip-item .trip-section-btns {
   bottom: 2.5rem;
-}
-#your-trips ul {
-  margin-left: 10rem;
 }
 }
 

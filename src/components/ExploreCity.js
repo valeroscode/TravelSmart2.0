@@ -7,8 +7,7 @@ import {
 
 function ExploreCity ({places, searchTerm, allPlaces}) {
 
-  const smartSearchInput = useRef()
-
+    const smartSearchInput = useRef()
     const [priceDD, setPriceDD] = useState(false)
     const [filteredPlaces, setFilteredPlaces] = useState([])
     const [cbCount, setCbCount] = useState(0)
@@ -117,11 +116,8 @@ function ExploreCity ({places, searchTerm, allPlaces}) {
             places[i].priceScore = 0
           }
         }
-
-        console.log(places)
         
         const newResults = places.filter((place) => place.priceScore === 1)
-
         setFilteredPlaces(newResults)
       }
 

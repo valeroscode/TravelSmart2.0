@@ -31,6 +31,7 @@ import {
   handleFavoritesNotifications,
   handleTripAdderPopup,
 } from "./getPlaceInfo.mjs";
+import AdvancedSearch from "./AdvancedSearch"
 import AddTrip_Button from "./AddTrip_Button";
 import Notification from "./Notification";
 import ExploreCity from "./ExploreCity";
@@ -65,6 +66,7 @@ import wavesBg from "./assets/waves.jpg"
 function TravelSmart() {
   const { currentUser, allPlaces, allPlaces_Global, defCity } = useAuth();
   console.log(currentUser)
+  console.log(allPlaces)
   const navigate = useNavigate()
   const cityDD = useRef();
   const cityDDAdv = useRef();
@@ -145,19 +147,9 @@ function TravelSmart() {
       setPlacesDropDown(array)
     },
     handleClicksOutside_ofInputs: function (e) {
-      if (e.target !== searchInput.current && e.target !== cityInputAdv.current) {
-          cityDD.current.style.display = "none";
-          searchDD.current.style.display = "none";
-      }
+      
     
   },
-  hideEditUser: function (e) {
-      if (!e.target.closest('#edit-user') && !e.target.closest('.account')) {
-        editUser.current.style.display = 'none'
-        userNameDiv.current.style.backgroundColor = 'white';
-        userNameDiv.current.firstElementChild.style.color = 'black';
-      }
-  }
   }
 
   function searchPlaces() {
@@ -176,23 +168,34 @@ function TravelSmart() {
   }
 
   useEffect(() => {
+
+    window.addEventListener("click", (e) => {
+      searchBarFunctions.handleClicksOutside_ofInputs(e);
+  });
+
+  }, [])
+
+  useEffect(() => {
     if (allPlaces_Global.length !== 0) {
+   
     const citiesTemp = []
-    allPlaces_Global.map(place =>
-      !citiesTemp.includes(place.city) ? citiesTemp.push(place.city) : null
-    );
+    for (let i = 0; i < allPlaces_Global.length; i++) {
+      if (!citiesTemp.includes(allPlaces_Global[i].city)) {
+        citiesTemp.push(allPlaces_Global[i].city)
+      }
+    }
+
     setCities(citiesTemp);
     setTimeout(() => {
       document.getElementById("users-name").style.opacity = 1;
     }, 500);
-   
-      window.addEventListener("click", (e) => {
-          searchBarFunctions.handleClicksOutside_ofInputs(e);
-          searchBarFunctions.hideEditUser(e)
-      });
-
+  
     }
   }, [allPlaces_Global])
+
+  useEffect(() => {
+console.log(cities)
+  }, [cities])
 
   const backgroundImgList = {
     1: {
@@ -242,13 +245,12 @@ function TravelSmart() {
   useEffect(() => {
 
     if (defCity !== '' && defCity !== undefined) {
-      setConfirmExpCity(true)
       setCity(defCity)
       sessionStorage.setItem("city", defCity);
-      // var map = window.map;
-      // console.log(map)
-      // console.log(defCity)
-      // map.setCenter(options[defCity])
+      var map = window.map;
+     
+      console.log(defCity)
+      map.setCenter(options[defCity])
     } else {
       sessionStorage.setItem("city", "Miami");
     }
@@ -294,14 +296,11 @@ function TravelSmart() {
     setServing(servingTemp)
     setCities(citiesArr)
 
-  }, [allPlaces])
- 
-  useEffect(() => {
     let total = 0;
-    const filtered = allPlaces.filter((p) => p.city === city);
-    filtered.map((p) => (total = total + p.rating));
-    setAvgRating(total / filtered.length);
-  }, [city]);
+    allPlaces.map((p) => (total = total + p.rating));
+    setAvgRating(total / allPlaces.length);
+
+  }, [allPlaces])
 
   setTimeout(() => {
     markFavorites();
@@ -818,83 +817,11 @@ function TravelSmart() {
             {
             !advSearch ?
             <div id="hello-user-input-search">
-            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput} style={{borderRadius: '30rem'}}></input>
+            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput} style={{borderRadius: '30rem 0 0 30rem'}}></input>
             <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => smartSearch()}/>
             </div>
             : 
-            <div id="home-searchbar">
-        <div id="cityDD-input">
-          <input ref={cityInputAdv} style={{borderRadius: '20px 0 0 7px'}} placeholder="Choose A City" onClick={() => {
-            
-            cityDDAdv.current.style.display = "flex"
-          }} onKeyUp={(e) => {
-             const city = document.getElementsByClassName("city-dd-item")
-             const inputValue = String(e.target.value).toLocaleLowerCase();
-             for (let i = 0; i < city.length; i++) {
-              
-              if (e.target.value === "") {
-                city[i].style.display = "flex"
-              } else {
-             if (String(city[i].textContent).toLocaleLowerCase().includes(inputValue)) {
-              city[i].style.display ="block"
-             } else {
-              city[i].style.display = "none"
-             }
-            }
-            }
-          }}></input>
-          <ul ref={cityDDAdv}>
-            {
-              cities.map((city) => (
-                <li className="city-dd-item" onClick={(e) => {
-                  cityInputAdv.current.value = e.target.textContent;
-                  cityDDAdv.current.style.display = "none"
-                  searchInput.current.value = '';
-                  searchBarFunctions.setDropdownContent()
-                }}>{city}</li>
-              ))
-            }
-          </ul>
-          </div>
-          <div id="placeDD-input">
-          <input ref={searchInput} placeholder="Sushi, Bars, Area"
-          onClick={() => {
-            searchDD.current.style.display = "flex"
-          }}
-          onKeyUp={(e) => {
-            const place = document.getElementsByClassName("place-dd-item")
-            const inputValue = String(e.target.value).toLocaleLowerCase();
-            for (let i = 0; i < place.length; i++) {
-             if (e.target.value === "") {
-              place[i].style.display = "none"
-              searchDD.current.style.display = "none"
-             } else {
-              
-            if (String(place[i].textContent).toLocaleLowerCase().includes(inputValue)) {
-              searchDD.current.style.display = "flex"
-              place[i].style.display ="block"
-            } else {
-              place[i].style.display = "none"
-            }
-           }
-           }
-         }}></input>
-          <ul ref={searchDD}>
-            {
-              placesDropDown.map((content) => (
-                <li className="place-dd-item" onClick={(e) => {
-                  searchInput.current.value = e.target.textContent;
-                  searchDD.current.style.display = "none"
-                  searchInput.current.value = e.target.textContent
-                }}>
-                  {content}
-                </li>
-              ))
-            }
-          </ul>
-          </div>
-          <button style={window.location.pathname === '/Search-Results' ? {backgroundColor: '#8a05ff'} : null} onClick={searchPlaces}><FontAwesomeIcon icon={faMagnifyingGlassLocation} /></button>
-        </div>
+            <AdvancedSearch/>
        
             }
 
@@ -1033,37 +960,28 @@ function TravelSmart() {
             <div id="organizer-city-rundown">
               <h2>Get To Know Your City</h2>
 
-              <div id="avaliable-cities">
-         
-                {
-                  cities.map((city) => (
-                  <div className="city-div">
-                  <img></img>
-                  <p className="city-name">{city}</p>
-                  <div className="city-explore-div"
-                    city={city}
-                    onClick={(e) => setCity(e.target.getAttribute("city"))}
-                  >
-                    <h4 className="number-of-places">
+              //Change city feature here
+
+              <div id="your-city">
+                <h3 className="yr-city-name">{defCity}</h3>
+
+                <h4 className="number-of-places">
                       <FontAwesomeIcon
                         icon={faLocationDot}
                         style={{ color: "#e00000" }}
                       />{" "}
-                      {allPlaces.filter((p) => p.city === city).length} places
-                    </h4>
-                    <div className="avg-rating">
-                      <div className="avg-rating-org">
-                        <div className="rating-bg"></div>
-                        <div
-                          className="info-rating-bar"
-                          style={{ width: `${(avgRating / 5) * 100}%` }}
-                        ></div>
-                      </div>
-                      <h4 className="avg-rating-number">{Math.round(avgRating * 10) / 10}/5</h4>
-                    </div>
-                    
-                  </div>
-                  <button className="explore-city-button"
+                      {allPlaces.length} places
+              </h4>
+
+                <div className="avg-rating">
+                    <div className="avg-rating-org">
+                      <div className="rating-bg"></div>
+                      <div
+                        className="info-rating-bar"
+                          style={{ width: `${(parseFloat(avgRating) / 5) * 100}%` }}
+                      ></div>
+                       <h4 className="avg-rating-number">{Math.round(parseFloat(avgRating) * 10) / 10}/5</h4>
+                       <button className="explore-city-button"
                   city={city}
                   onClick={(e) => {
                       document.body.append(document.getElementById("google-map"));
@@ -1075,17 +993,16 @@ function TravelSmart() {
                       );
                     }} 
                     >
-                    Explore City{" "}
+                    Explore Entire City{" "}
                     
                     
                     <FontAwesomeIcon
                       icon={faChevronRight}   
                     />
-                    </button>
-                </div>
-                  ))
-                }
-              
+                    </button>  
+                    </div>
+                   
+                </div>              
               </div>
             </div>
           </div>
@@ -1431,7 +1348,7 @@ function TravelSmart() {
           {
             mapDropDown.map((item) => <li className="map-start-dd-item"
             onClick={(e) => {
-              //FINISH THIS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+              
                const fr = document.getElementsByClassName('map-start-dd-item');
                for (let i = 0; i < fr.length; i++) {
                  fr[i].style.display = 'none'

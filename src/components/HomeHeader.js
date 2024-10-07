@@ -10,12 +10,14 @@ import {
 import { useAuth } from "./contexts/AuthContext";
 import { doc } from "firebase/firestore/lite";
 import { Link } from "react-router-dom";
+import AdvancedSearch from "./AdvancedSearch.js"
 
 function HomeHeader({ name }) {
   const {allPlaces_Global} = useAuth();
   const account = useRef();
   const editUser = useRef();
   const userNameDiv = useRef();
+  const advSearchBar = useRef();
   const { currentUser, logout } = useAuth();
   const [placesDropDown, setPlacesDropDown] = useState([]);
   const [cities, setCities] = useState([]);
@@ -38,6 +40,7 @@ function HomeHeader({ name }) {
 
     }
   }, [allPlaces_Global])
+
 
   function handleLogout() {
     logout();
@@ -166,79 +169,8 @@ function HomeHeader({ name }) {
          
         </div>
 
-        <div id="home-searchbar" style={window.location.pathname === '/home' ? {display: 'none'} : null}>
-        <div id="cityDD-input">
-          <input ref={cityInput} style={{borderRadius: '20px 0px 0px 20px'}} placeholder="Choose A City" onClick={() => {
-            
-            cityDD.current.style.display = "flex"
-          }} onKeyUp={(e) => {
-             const city = document.getElementsByClassName("city-dd-item")
-             const inputValue = String(e.target.value).toLocaleLowerCase();
-             for (let i = 0; i < city.length; i++) {
-              
-              if (e.target.value === "") {
-                city[i].style.display = "flex"
-              } else {
-             if (String(city[i].textContent).toLocaleLowerCase().includes(inputValue)) {
-              city[i].style.display ="block"
-             } else {
-              city[i].style.display = "none"
-             }
-            }
-            }
-          }}></input>
-          <ul ref={cityDD}>
-            {
-              cities.map(city => 
-                <li className="city-dd-item" onClick={(e) => {
-                  cityInput.current.value = e.target.textContent;
-                  cityDD.current.style.display = "none"
-                  searchInput.current.value = '';
-                  searchBarFunctions.setDropdownContent()
-                }}>{city}</li>
-              )
-            }
-          </ul>
-          </div>
-          <div id="placeDD-input">
-          <input ref={searchInput} placeholder="Sushi, Bars, Area"
-          onClick={() => {
-            searchDD.current.style.display = "flex"
-          }}
-          onKeyUp={(e) => {
-            const place = document.getElementsByClassName("place-dd-item")
-            const inputValue = String(e.target.value).toLocaleLowerCase();
-            for (let i = 0; i < place.length; i++) {
-             if (e.target.value === "") {
-              place[i].style.display = "none"
-              searchDD.current.style.display = "none"
-             } else {
-              
-            if (String(place[i].textContent).toLocaleLowerCase().includes(inputValue)) {
-              searchDD.current.style.display = "flex"
-              place[i].style.display ="block"
-            } else {
-              place[i].style.display = "none"
-            }
-           }
-           }
-         }}></input>
-          <ul ref={searchDD}>
-            {
-              placesDropDown.map((content) => (
-                <li className="place-dd-item" onClick={(e) => {
-                  searchInput.current.value = e.target.textContent;
-                  searchDD.current.style.display = "none"
-                  searchInput.current.value = e.target.textContent
-                }}>
-                  {content}
-                </li>
-              ))
-            }
-          </ul>
-          </div>
-          <button style={window.location.pathname === '/Search-Results' ? {backgroundColor: '#8a05ff'} : null} onClick={searchPlaces}><FontAwesomeIcon icon={faMagnifyingGlassLocation} /></button>
-        </div>
+        <AdvancedSearch/>
+
         <div id="acc-and-trip">
           
         <div ref={account} className="account" 

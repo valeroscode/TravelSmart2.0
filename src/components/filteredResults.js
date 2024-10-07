@@ -19,7 +19,7 @@ import { docMethods } from "./firebase/firebase";
 import HomeHeader from "./HomeHeader";
 
 function Results() {
-  const { allPlaces } = useAuth();
+
   const filterDescription = useRef();
   const legend = useRef();
 
@@ -44,36 +44,43 @@ function Results() {
   const [checked, setChecked] = useState(false)
   const [filteredPlaces, setFilteredPlaces] = useState([])
 
-  const { currentUser } = useAuth();
+  const { currentUser, allPlaces } = useAuth();
+
+  console.log(allPlaces)
 
   useEffect(() => {
     setName(currentUser.name);
   }, [currentUser]);
 
-  let applied_filters = sessionStorage.getItem("filters").split("/ ,");
+  let applied_filters = sessionStorage.getItem("filters");
 
   useEffect(() => {
     const googleMap = document.getElementById("google-map");
     googleMap.style.display = 'none';
     const city = sessionStorage.getItem("city");
-    let placesInCity = allPlaces.filter((place) => place.city === city);
-    placesInCity.map((place) => place.score = 0);
+  
+    allPlaces.map((place) => place.score = 0);
     if (sessionStorage.getItem("filters") === 'none') {
-      setPlaces(placesInCity.filter(
-        (m) => m.city === city
-      ));
+      console.log('YAAAS QUEEEEN')
+      setPlaces(allPlaces)
+      setFilteredPlaces(allPlaces)
     } else {
-    setPlaces(placesInCity.filter(
+    const newArr = allPlaces.filter(
       (m) => m.city === city  && String(m.serves).toLocaleUpperCase() === String(applied_filters) || 
       String(m.style).toLocaleUpperCase() === String(applied_filters) || String(m.category).toLocaleUpperCase() === String(applied_filters)
       || String(m.area).toLocaleUpperCase() === String(applied_filters)
-    ));
+    ) 
+    setPlaces(newArr);
+    setFilteredPlaces(newArr)
   }
+
   }, [])
 
   useEffect(() => {
-    setFilteredPlaces(places)
+    console.log(places)
+    
       if (places.length > 0) {
+        
         var geocoder = new window.google.maps.Geocoder();
         for (let i = 0; i < places.length; i++) {
         geocoder.geocode(
@@ -111,7 +118,7 @@ function Results() {
   }, [places])
 
   useEffect(() => {
-    
+    console.log(filteredPlaces)
   }, [filteredPlaces])
 
   useEffect(() => {
@@ -335,7 +342,7 @@ function Results() {
             {
               places.map((place) => {
                 if (place.rating >= 4) {
-                  return (
+                
                     <div className="best-rated-place">
                       
                       <div>
@@ -354,7 +361,7 @@ function Results() {
                       </div>
                       <div className="res-line"></div>
                     </div>
-                  );
+                  
                 } 
               })
             }
@@ -572,7 +579,7 @@ function Results() {
           <div id="place-div-container">
             
             {
-              filteredPlaces.map((place) => (
+              filteredPlaces.map((place) => 
                  <div className="place-div">
                   <img className="place-div-image-results" src={place.imgsrc}></img>
                    <div className="place-div-name-rating">
@@ -607,7 +614,7 @@ function Results() {
                     </div>
                     <div className="filteredplaces-line"></div>
                  </div>
-              ))
+              )
             }
           </div>
         </div>
