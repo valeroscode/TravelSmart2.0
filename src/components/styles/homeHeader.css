@@ -87,6 +87,7 @@ cursor: pointer;
   font-family: "Roboto Condensed", sans-serif;
   padding-top: 1rem;
   z-index: 10000000000000;
+  border-radius: 10px;
 }
 
 #placeDD-input ul li {

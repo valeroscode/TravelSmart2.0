@@ -64,9 +64,7 @@ import maracanpaintings from "./assets/maracanpaintings.jpg"
 import wavesBg from "./assets/waves.jpg"
 
 function TravelSmart() {
-  const { currentUser, allPlaces, allPlaces_Global, defCity } = useAuth();
-  console.log(currentUser)
-  console.log(allPlaces)
+  const { currentUser, allPlaces, allPlaces_Global, defCity, loading } = useAuth();
   const navigate = useNavigate()
   const cityDD = useRef();
   const cityDDAdv = useRef();
@@ -169,15 +167,17 @@ function TravelSmart() {
 
   useEffect(() => {
 
-    window.addEventListener("click", (e) => {
-      searchBarFunctions.handleClicksOutside_ofInputs(e);
-  });
+    setTimeout(() => {
+      generalScript(allPlaces)
+      showMapBtn.current.style.opacity = 1;
+      showMapBtn.current.style.pointerEvents = 'all';
+    }, 4000)
+    
 
   }, [])
 
   useEffect(() => {
     if (allPlaces_Global.length !== 0) {
-   
     const citiesTemp = []
     for (let i = 0; i < allPlaces_Global.length; i++) {
       if (!citiesTemp.includes(allPlaces_Global[i].city)) {
@@ -193,9 +193,6 @@ function TravelSmart() {
     }
   }, [allPlaces_Global])
 
-  useEffect(() => {
-console.log(cities)
-  }, [cities])
 
   const backgroundImgList = {
     1: {
@@ -249,7 +246,6 @@ console.log(cities)
       sessionStorage.setItem("city", defCity);
       var map = window.map;
      
-      console.log(defCity)
       map.setCenter(options[defCity])
     } else {
       sessionStorage.setItem("city", "Miami");
@@ -266,18 +262,13 @@ console.log(cities)
   }, [defCity]);
 
   useEffect(() => {
-    let citiesArr = [];
+  
     const areasTemp = []
     const stylesTemp = []
     const servingTemp = []
 
-    //Populates array with all cities
-    console.log(allPlaces)
-
     for (let i = 0; i < allPlaces.length; i++) {
-      if (!citiesArr.includes(allPlaces[i].city)) {
-        citiesArr.push(allPlaces[i].city);
-      }
+
       if (!areasTemp.includes(allPlaces[i].area)) {
         areasTemp.push(allPlaces[i].area);
       } 
@@ -294,7 +285,6 @@ console.log(cities)
     setAreas(areasTemp)
     setStyles(stylesTemp)
     setServing(servingTemp)
-    setCities(citiesArr)
 
     let total = 0;
     allPlaces.map((p) => (total = total + p.rating));
@@ -634,7 +624,7 @@ console.log(cities)
               }
             }
             if (misspellings <= 1) {
-              console.log(value)
+            
               finalTerms.map((term) => {
                 if (term.term === word) {
                   term.term = value
@@ -725,7 +715,7 @@ console.log(cities)
             if (term[i] !== value[i]) {
               misspellings++
               term[i] = value[i]
-              console.log(term)
+           
             }
           }
           if (misspellings <= 1) {
@@ -960,8 +950,6 @@ console.log(cities)
             <div id="organizer-city-rundown">
               <h2>Get To Know Your City</h2>
 
-              //Change city feature here
-
               <div id="your-city">
                 <h3 className="yr-city-name">{defCity}</h3>
 
@@ -980,7 +968,7 @@ console.log(cities)
                         className="info-rating-bar"
                           style={{ width: `${(parseFloat(avgRating) / 5) * 100}%` }}
                       ></div>
-                       <h4 className="avg-rating-number">{Math.round(parseFloat(avgRating) * 10) / 10}/5</h4>
+                       <h4 className="avg-rating-number">Avg Rating: {Math.round(parseFloat(avgRating) * 10) / 10}/5</h4>
                        <button className="explore-city-button"
                   city={city}
                   onClick={(e) => {
@@ -1027,7 +1015,7 @@ console.log(cities)
               <div>
                 <input
                   type="checkbox"
-                  className="checkbox"
+                  className="adv-checkbox"
                   id="Inexpensive"
                   value="Inexpensive"
                   condition1="Inexpensive_Condition_live_markers"
@@ -1040,7 +1028,7 @@ console.log(cities)
               <div>
                 <input
                   type="checkbox"
-                  className="checkbox"
+                  className="adv-checkbox"
                   id="Best"
                   name="checkbox"
                   value="Best"
@@ -1064,10 +1052,10 @@ console.log(cities)
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-map"
+                  className="adv-checkbox checkbox-map"
                   id="Start-Your-Day"
                   value="Start Your Day"
-                  category="type"
+                  category="Coffee"
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
@@ -1083,10 +1071,10 @@ console.log(cities)
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-map"
+                  className="adv-checkbox checkbox-map"
                   id="A-Night-Out"
                   value="A Night Out"
-                  category="type"
+                  category="Club"
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
@@ -1103,10 +1091,10 @@ console.log(cities)
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-map"
+                  className="adv-checkbox checkbox-map"
                   id="Dining"
                   value="Dining"
-                  category="type"
+                  category="Resturant"
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
@@ -1124,10 +1112,10 @@ console.log(cities)
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-map"
+                  className="adv-checkbox checkbox-map"
                   id="Chill-Night"
                   value="Chill Night"
-                  category="type"
+                  category="Theatre"
                   condition1="Inexpensive_Condition_live_markers"
                   condition2="Inexpensive_Condition_all_markers"
                   name="checkbox"
@@ -1144,7 +1132,7 @@ console.log(cities)
               >
                 <input
                   type="checkbox"
-                  className="checkbox checkbox-map"
+                  className="adv-checkbox checkbox-map"
                   id="Activities"
                   value="Activites"
                   category="type"
@@ -1168,7 +1156,7 @@ console.log(cities)
           <img id="gallery" ref={gallery}></img>
           <div id="placeInfo" onClick={(e) => {
             if (e.target.id === 'show-me-reviews') {
-              console.log(reviews.length)
+         
               if (reviews.length === 0) {
                 getPlaceReviews(e.target.getAttribute('placeId'))
                 placeInfoReviews.current.style.display = 'flex'
@@ -1389,7 +1377,7 @@ console.log(cities)
                 //The reason this doesnt seem like it works as intended is because of somehting in the miami.mjs file
                 for (let i = 0; i < boxes.length; i++) {
                   if (boxes[i].checked === true)
-                    console.log(boxes[i])
+                 
                   boxes[i].click()
                   }
 
@@ -1528,7 +1516,7 @@ console.log(cities)
           </div>
         </footer>
       </section>
-      <div id="map-btn" ref={showMapBtn} onClick={(e) => showMap(e)}>
+      <div id="map-btn" ref={showMapBtn} onClick={(e) => showMap(e)} style={{opacity: "0.5", pointerEvents: 'none'}}>
         <h4>
           <FontAwesomeIcon icon={faMap} /> Show Map
         </h4>

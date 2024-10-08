@@ -35,6 +35,7 @@ type Place struct {
 	Serves      string  `json:"serves"`
 	Sponsored   bool    `json:"sponsored"`
 	Name        string  `json:"name"`
+	Awards      string  `json:"awards"`
 }
 
 type Coords struct {
@@ -183,6 +184,7 @@ func getPlacesHandler(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 			&p.Serves,
 			&p.Sponsored,
 			&p.Name,
+			&p.Awards,
 		)
 		if err != nil {
 			http.Error(w, "Error scanning database row: "+err.Error(), 500)

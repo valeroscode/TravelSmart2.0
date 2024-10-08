@@ -6,6 +6,8 @@ export let allmarkers = [];
 export function generalScript(allPlaces) {
   let live_markers = [];
 
+  let topPlacesOn = false;
+
   localStorage.clear();
   window.scrollTo({
     top: 0,
@@ -57,6 +59,10 @@ export function generalScript(allPlaces) {
           lat: props.coords.lat,
           lng: props.coords.lng,
         },
+        icon: {
+          url: props.category === 'Resturant' ? "/assets/DineSvg.svg" : props.category === 'Club' ? "/assets/NightSvg.svg" : "/assets/RecSvg.svg",
+          scaledSize: new google.maps.Size(15, 15),
+        },
         name: props.name,
         content: props.content,
         category: props.category,
@@ -67,7 +73,7 @@ export function generalScript(allPlaces) {
         area: props.area,
         active: props.active,
         style: props.style,
-        placeID: props.placeid,
+        placeid: props.placeid,
         Inexpensive: props.Inexpensive,
         Best: props.Best,
         favorite: props.favorite,
@@ -91,7 +97,7 @@ export function generalScript(allPlaces) {
         googleAPICalls(
           marker.getPosition().lat(),
           marker.getPosition().lng(),
-          marker.placeID,
+          marker.placeid,
           marker.category,
           marker.area,
           marker.price,
@@ -328,7 +334,11 @@ export function generalScript(allPlaces) {
       );
       placeDetails.style.display = "flex";
       placeDetails.style.opacity = 1;
+      if (topPlacesOn === true) {
       placeDetails.style.left = '19.45rem';
+      } else {
+      placeDetails.style.left = '-1rem';
+      }
     }
 
     let geocoder = new window.google.maps.Geocoder();
@@ -471,6 +481,7 @@ export function generalScript(allPlaces) {
       for (let i = 0; i < allPlaces.length; i++) {
         createMarker(allPlaces[i]);
       }
+      
     }
     render_Markers();
 
@@ -487,6 +498,8 @@ export function generalScript(allPlaces) {
     let remove = [];
     let dropdown_filters = [];
     let sorting_filters = [];
+    let lowCost = false;
+    let bestRated = false;
     let category_filters = [];
     let type_filters = [];
     let area_filters = [];
@@ -595,6 +608,7 @@ export function generalScript(allPlaces) {
     let heart = `<svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 384 512"><path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z"/></svg>`;
     //Renders top picks dynamically
     function renderTopPicks(array) {
+      topPlacesOn = true;
       array = array.filter(
         (marker) => marker.city === sessionStorage.getItem("city")
       );
@@ -652,12 +666,12 @@ export function generalScript(allPlaces) {
           //This will be used for the googleAPICalls function
           newRec.setAttribute("data-lat", marker.coords.lat);
           newRec.setAttribute("data-lng", marker.coords.lng);
-          newRec.setAttribute("data-place", marker.placeID);
+          newRec.setAttribute("data-place", marker.placeid);
           newRec.setAttribute("category", marker.category);
           newRec.setAttribute("area", marker.area);
           newRec.setAttribute("price", marker.price);
           newRec.setAttribute("type", marker.type);
-          newRec.setAttribute("id", marker.placeID);
+          newRec.setAttribute("id", marker.placeid);
 
           recsContainer.appendChild(newRec);
           const openClosed = document.getElementsByClassName("open-closed");
@@ -665,7 +679,7 @@ export function generalScript(allPlaces) {
           handleOpenOrClosed(
             marker.coords.lat,
             marker.coords.lng,
-            marker.placeID,
+            marker.placeid,
             openClosed[i]
           );
         }
@@ -873,6 +887,8 @@ export function generalScript(allPlaces) {
     }, 2500);
 
     function filter_Markers(e, target) {
+      console.log(live_markers)
+      console.log('YUH BABBYYYYY')
       e.classList.toggle("mapFilterOn");
       const classOn = e.classList.contains("mapFilterOn");
 
@@ -1110,7 +1126,7 @@ export function generalScript(allPlaces) {
     }
 
     function handleAdvFilters(markers) {
-
+      console.log('yuhabbbyyy')
       let overallScore = 0;
 
       for (let i = 0; i < markers.length; i++) {
@@ -1124,13 +1140,26 @@ export function generalScript(allPlaces) {
         if (serve_filters.includes(markers[i].serves)) {
           markers[i].score++
         }
+        if (category_filters.includes(markers[i].category)) {
+          markers[i].score++
+        }
+        if (lowCost && markers[i].price <= 2) {
+          markers[i].score++
+        }
+        if (bestRated && markers[i].rating >= 4) {
+          markers[i].score++
+        }
       }
       
-      console.log(markers)
+      console.log(area_filters)
+      console.log(type_filters)
+      console.log(serve_filters)
       
       area_filters.length > 0 ? overallScore++ : null
       type_filters.length > 0 ? overallScore++ : null
       serve_filters.length > 0 ? overallScore++ : null
+      lowCost ? overallScore++ : null
+      bestRated ? overallScore++ : null
 
       let advArray = markers.filter(m => m.score === overallScore)
 
@@ -1142,7 +1171,7 @@ export function generalScript(allPlaces) {
           markers[i].setMap(null);
         }
       }
-
+      live_markers = advArray
     }
 
     const advCb = document.getElementsByClassName('adv-checkbox');
@@ -1151,6 +1180,15 @@ export function generalScript(allPlaces) {
       advCb[i].addEventListener("click", (e) => {
         
         if (e.target.checked === true) {
+           if (e.target.value === 'Best') {
+            bestRated = true;
+           }
+           if (e.target.value === 'Inexpensive') {
+            lowCost = true;
+           }
+           if (e.target.classList.contains('checkbox-map')) {
+            category_filters.push(e.target.getAttribute('category'))
+           }
            if (e.target.classList.contains('area-filters-map')) {
              area_filters.push(e.target.nextElementSibling.textContent)
            }
@@ -1161,6 +1199,15 @@ export function generalScript(allPlaces) {
             serve_filters.push(e.target.nextElementSibling.textContent)
            }
         } else {
+          if (e.target.value === 'Best') {
+            bestRated = false;
+           }
+           if (e.target.value === 'Inexpensive') {
+            lowCost = false;
+           }
+          if (e.target.classList.contains('checkbox-map')) {
+            category_filters.splice(category_filters.indexOf(e.target.getAttribute('category')), 1)
+           }
           if (e.target.classList.contains('area-filters-map')) {
             area_filters.splice(area_filters.indexOf(e.target.nextElementSibling.textContent), 1) 
           }
@@ -1172,7 +1219,7 @@ export function generalScript(allPlaces) {
           }
         }
 
-        handleAdvFilters(live_markers)
+        handleAdvFilters(allmarkers)
       })
     }
 

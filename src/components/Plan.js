@@ -20,10 +20,13 @@ import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 import Footer from "./footer";
 import HomeHeader from "./HomeHeader";
+import { useCookies } from "react-cookie";
 
 function Plan() {
 
     const navigate = useNavigate();
+
+    const [cookies, setCookie, removeCookie] = useCookies(["access_token"]);
 
     const [friends, setFriends] = useState(['friend1', 'friend2', 'friend3']);
     const [selectedFriends, setSelectedFriends] = useState([]);
@@ -42,7 +45,7 @@ function Plan() {
         
       }, []);
 
-    const { currentUser } = useAuth();
+  const { currentUser, allPlaces_Global } = useAuth();
   const [info, setInfo] = useState({});
   const account = useRef();
   const editUser = useRef();
@@ -543,9 +546,8 @@ function Plan() {
   let defineTrip = {
     where: function (e) {
       let cities = [];
-      allPlaces.map((place) => cities.push(place.city));
+      allPlaces_Global.map((place) => !cities.includes(place.city) ? cities.push(place.city) : null);
       const citydd = document.getElementById("city-dropdown");
-      cities = duplicates(cities);
       citydd.style.display = "flex";
       if (citydd.childNodes.length < cities.length) {
         for (let i = 0; i < cities.length; i++) {
@@ -569,47 +571,48 @@ function Plan() {
     submit: function (e) {
       tripObj.Where = inputCityField.current.value;
       tripObj.Name = inputNameField.current.value;
-      if (currentUser) {
-        sessionStorage.setItem("trip", tripObj.Name);
-        const newTrip = {
-          City: tripObj.Where,
-          Dates: tripDates,
-          Plans: [],
-          Year: tripObj.Year,
-          Expenses: {
-            Budget: 0,
-            Hotel: 0,
-            Transportation: 0,
+      if (currentUser.name !== Guest) {
+        fetch("http://localhost:8080/createTrip", {
+          method: "POST",
+          headers: {
+            "Authorization": "Bearer " + cookies.access_token,
+            "Content-Type": "application/json",
           },
-        };
+          body: JSON.stringify({
+            name: tripObj.Name,
+            city: tripObj.Where,
+            dates: tripDates,
+            plans: {},
+            year: tripObj.Year,
+            expenses: {
+              Budget: 0,
+              Hotel: 0,
+              Transportation: 0,
+            }
+          }),
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            console.log(data)
+          })
+          .catch((err) => {
+            console.error(err);
+          }); 
 
-        for (let i = 0; i < tripDates.length; i++) {
-          newTrip.Plans.push({ [`Day ${i + 1}`]: [] });
-        }
-
-        if (tripObj.Name !== "") {
-          if (info === undefined) {
-            let info = { [tripObj.Name]: newTrip };
-            docMethods.updateTrips(string, info);
-            setTimeout(() => {
-              window.location.reload();
-            }, 300);
-          } else {
-            info[String(tripObj.Name)] = newTrip;
-            docMethods.updateTrips(string, info);
-            setTimeout(() => {
-              window.location.reload();
-            }, 300);
-          }
-        }
+          setTimeout(() => {
+            window.location.replace('http://localhost:8080/trips');
+          }, 300);
       } else {
         sessionStorage.setItem("tripname", tripObj.Name);
         sessionStorage.setItem("days", tripDates.length);
+        sessionStorage.setItem('tripyear', tripObj.Year)
         for (let i = 0; i < tripDates.length; i++) {
           sessionStorage.setItem(`Day ${i}`, tripDates[i]);
         }
         setTimeout(() => {
-          window.location.reload();
+          window.location.replace('http://localhost:8080/trips');
         }, 300);
       }
     },
@@ -722,7 +725,7 @@ function Plan() {
 
 return (
 <>
-<HomeHeader/>
+<HomeHeader name={currentUser.name}/>
 <section id="planning-a-new-trip-section">
 <div id="new-trip">
           <h3 className="new-trip-h3">Plan a new trip</h3>
@@ -844,7 +847,7 @@ onClick={(e) => {
             </div>
           </div>
           <div id="friends-section">
-                <h5>Add Friends (optional)</h5>
+                <h5>Add Friends (Coming Soon)</h5>
                 <p className="friends-section-desc">Collaborate on plans, create together</p>
                 <div id="friend-search">
                 <input type="search" placeholder="Search" ref={friendSearch} 

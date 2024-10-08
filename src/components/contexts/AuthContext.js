@@ -76,7 +76,7 @@ export function AuthProvider({ children }) {
 
   //Now the places in their default city will be populated
   useEffect(() => {
-    console.log('RENDER 2')
+
     if (defCity !== '' && allPlaces_Global.length !== 0) {
       const places = []
       for (let i = 0; i < allPlaces_Global.length; i++) {
@@ -90,13 +90,9 @@ export function AuthProvider({ children }) {
   }, [defCity, allPlaces_Global])
 
   useEffect(() => {
-    console.log('RENDER 3')
-    console.log(window.location.pathname)
-    console.log(allPlaces)
-    if (allPlaces.length !== 0 && window.location.pathname === '/home') {
-      generalScript(allPlaces)
-    }
+    if (allPlaces.length !== 0) {
     setLoading(false);
+    }
   }, [allPlaces])
 
   function login(username, password) {
@@ -137,6 +133,7 @@ export function AuthProvider({ children }) {
     allPlaces,
     allPlaces_Global,
     defCity,
+    loading,
     login,
     logout
   };

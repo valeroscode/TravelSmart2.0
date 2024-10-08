@@ -43,10 +43,9 @@ function Results() {
   const [type, setType] = useState("")
   const [checked, setChecked] = useState(false)
   const [filteredPlaces, setFilteredPlaces] = useState([])
+  const [rendered, setRendered] = useState(false)
 
   const { currentUser, allPlaces } = useAuth();
-
-  console.log(allPlaces)
 
   useEffect(() => {
     setName(currentUser.name);
@@ -57,69 +56,81 @@ function Results() {
   useEffect(() => {
     const googleMap = document.getElementById("google-map");
     googleMap.style.display = 'none';
-    const city = sessionStorage.getItem("city");
+
+    let placesAPICall = []
+
+    let newArr;
   
     allPlaces.map((place) => place.score = 0);
     if (sessionStorage.getItem("filters") === 'none') {
-      console.log('YAAAS QUEEEEN')
-      setPlaces(allPlaces)
-      setFilteredPlaces(allPlaces)
+      placesAPICall = allPlaces
     } else {
-    const newArr = allPlaces.filter(
-      (m) => m.city === city  && String(m.serves).toLocaleUpperCase() === String(applied_filters) || 
+    newArr = allPlaces.filter(
+      (m) => String(m.serves).toLocaleUpperCase() === String(applied_filters) || 
       String(m.style).toLocaleUpperCase() === String(applied_filters) || String(m.category).toLocaleUpperCase() === String(applied_filters)
       || String(m.area).toLocaleUpperCase() === String(applied_filters)
     ) 
-    setPlaces(newArr);
-    setFilteredPlaces(newArr)
+    placesAPICall = newArr
   }
+
+  function fetchImages() {
+    return new Promise((resolve) => {
+  if (placesAPICall.length > 0) {
+    var geocoder = new window.google.maps.Geocoder();
+    for (let i = 0; i < placesAPICall.length; i++) {
+    geocoder.geocode(
+      { placeId: placesAPICall[i].placeid },
+      function (results, status) {
+        if (status === window.google.maps.GeocoderStatus.OK) {
+          const request = {
+            placeId: placesAPICall[i].placeid,
+            fields: ["photo"],
+          };
+          var service = new window.google.maps.places.PlacesService(window.map);
+          service.getDetails(request, function (place, status) {
+            if (status == "OK") {
+              const src = place.photos[0].getUrl({ maxWidth: 400 })
+              placesAPICall[i]['imgSrc'] = src;
+              if (i === 0) {
+              document.getElementsByClassName('banner-img')[0].src = place.photos[0].getUrl({ maxWidth: 400 })
+              }
+              if (i === 1) {
+                document.getElementsByClassName('banner-img')[1].src = place.photos[0].getUrl({ maxWidth: 400 })
+                }
+                if (i === 2) {
+                  document.getElementsByClassName('banner-img')[2].src = place.photos[0].getUrl({ maxWidth: 400 })
+                  }
+            }
+          });
+        }
+      }
+    );
+    }
+    resolve('Images Recieved')
+  }
+  })
+  }
+
+  async function getImages() {
+    await fetchImages();
+  }
+
+  getImages()
+
+  setFilteredPlaces(placesAPICall);
+  setPlaces(placesAPICall);
 
   }, [])
 
   useEffect(() => {
-    console.log(places)
-    
-      if (places.length > 0) {
-        
-        var geocoder = new window.google.maps.Geocoder();
-        for (let i = 0; i < places.length; i++) {
-        geocoder.geocode(
-          { placeId: places[i].placeid },
-          function (results, status) {
-            if (status === window.google.maps.GeocoderStatus.OK) {
-              const request = {
-                placeId: places[i].placeid,
-                fields: ["photo"],
-              };
-              var service = new window.google.maps.places.PlacesService(window.map);
-              service.getDetails(request, function (place, status) {
-                if (status == "OK") {
-                  const src = place.photos[0].getUrl({ maxWidth: 400 })
-                  const imgTag = document.getElementsByClassName('place-div-image-results')
-                  places[i].imgsrc = src
-                  imgTag[i].src = src
-                  if (i === 0) {
-                  document.getElementsByClassName('banner-img')[0].src = place.photos[0].getUrl({ maxWidth: 400 })
-                  }
-                  if (i === 1) {
-                    document.getElementsByClassName('banner-img')[1].src = place.photos[0].getUrl({ maxWidth: 400 })
-                    }
-                    if (i === 2) {
-                      document.getElementsByClassName('banner-img')[2].src = place.photos[0].getUrl({ maxWidth: 400 })
-                      }
-                }
-              });
-            }
-          }
-        );
-        }
-      }
-      
-  }, [places])
 
-  useEffect(() => {
-    console.log(filteredPlaces)
-  }, [filteredPlaces])
+    if (places.length > 0) {
+
+    setRendered(true)
+
+    }
+  
+  }, [places])
 
   useEffect(() => {
 
@@ -342,7 +353,7 @@ function Results() {
             {
               places.map((place) => {
                 if (place.rating >= 4) {
-                
+                 return (
                     <div className="best-rated-place">
                       
                       <div>
@@ -361,7 +372,7 @@ function Results() {
                       </div>
                       <div className="res-line"></div>
                     </div>
-                  
+                 )
                 } 
               })
             }
@@ -372,7 +383,7 @@ function Results() {
           <div id="budget-friendly-places-row">
             {
               places.map((place) => {
-                if (place.price <= 2) {
+                if (place.price <= 2 && place.price > 0) {
                   return (
                     <div className="budget-friendly-place">
                      
@@ -577,11 +588,13 @@ function Results() {
           <input type="text" placeholder="Type whatever. Disco? Mediterranean? Anything." id="res-searchbar" onKeyUp={(e) => matchKeyboardInput(e)}></input>
           <h4 ref={legend} style={{display: 'none'}}><FontAwesomeIcon icon={faStarOfLife} style={{color: 'red'}}/> means this place has awards</h4>
           <div id="place-div-container">
-            
+
             {
-              filteredPlaces.map((place) => 
+              rendered ?
+              places.map((place) => 
+                  (
                  <div className="place-div">
-                  <img className="place-div-image-results" src={place.imgsrc}></img>
+                  <img className="place-div-image-results" src={place['imgSrc']}></img>
                    <div className="place-div-name-rating">
                    <h4 className="place-rating-h4">{place.rating}</h4>
                     <h3 className="place-div-name">{place.name}</h3>
@@ -591,7 +604,7 @@ function Results() {
                     
                       <h5 className="place-div-serves">Serves {String(place.serves).replaceAll(',',' ')}</h5>
                     { 
-                    place.awards !== "" ?
+                    place.awards !== '' ?
                     legend.current.style.display = 'block' &&
                     <div className="place-div-awards">
                     <FontAwesomeIcon icon={faStarOfLife} />
@@ -606,7 +619,7 @@ function Results() {
                     </div>
                     <div className="place-div-tags">
                       {
-                        place.price <= 2 ? <p className="inexpensive-place">Inexpensive</p> : null
+                        place.price <= 2 && place.price > 0 ? <p className="inexpensive-place">Inexpensive</p> : null
                       }
                       {
                         place.rating >= 4 ? <p className="highly-rated-place">Highly Rated</p> : null
@@ -614,6 +627,46 @@ function Results() {
                     </div>
                     <div className="filteredplaces-line"></div>
                  </div>
+                  )
+              )
+              :
+              filteredPlaces.map((place) => 
+                (
+               <div className="place-div">
+                <img className="place-div-image-results" src={place['imgSrc']}></img>
+                 <div className="place-div-name-rating">
+                 <h4 className="place-rating-h4">{place.rating}</h4>
+                  <h3 className="place-div-name">{place.name}</h3>
+                 </div>
+                  <h4 className="place-div-category-area">{place.category} In {place.area} | {'$'.repeat(place.price)}</h4>
+                  <h4 className="place-div-style">{place.style}</h4>
+                  
+                    <h5 className="place-div-serves">Serves {String(place.serves).replaceAll(',',' ')}</h5>
+                  { 
+                  place.awards !== "" ?
+                  legend.current.style.display = 'block' &&
+                  <div className="place-div-awards">
+                  <FontAwesomeIcon icon={faStarOfLife} />
+                  </div>
+                  : null
+                  }
+             
+                  <div className="all-places-buttons">
+                  <button>Add To Trip</button>
+                  <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeid, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
+                 
+                  </div>
+                  <div className="place-div-tags">
+                    {
+                      place.price <= 2 && place.price > 0 ? <p className="inexpensive-place">Inexpensive</p> : null
+                    }
+                    {
+                      place.rating >= 4 ? <p className="highly-rated-place">Highly Rated</p> : null
+                    }
+                  </div>
+                  <div className="filteredplaces-line"></div>
+               </div>
+                )
               )
             }
           </div>

@@ -48,7 +48,11 @@ function TripsPage() {
     end = useRef();
 
   useEffect(() => {
-    setInfo(currentUser.trips);
+    console.log(currentUser)
+    if (currentUser.trips) {
+      setInfo(currentUser.trips);
+    console.log(Object.entries(currentUser.trips[1]))
+    }
   }, [currentUser]);
 
   function selectDates(e, month, year, day) {

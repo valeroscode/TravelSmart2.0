@@ -92,6 +92,7 @@
 #hello-user-section img:nth-child(1) {
   height: 15rem;
   width: 15rem;
+  left: 0;
   object-fit: cover;
   position: absolute;
   bottom: 0rem;
@@ -152,6 +153,7 @@
   bottom: 30rem;
   left: 60rem;
   object-position: 50% 100%;
+  border-radius: 20px 0 0 0;
 }
 
 #hello-user-section img:nth-child(8) {
@@ -162,6 +164,7 @@
   bottom: 30rem;
   left: 75rem;
   object-position: 50% 100%;
+  border-radius: 0;
 }
 
 #hello-user-section img:nth-child(9) {
@@ -201,6 +204,7 @@
   position: absolute;
   bottom: 0rem;
   right: 15rem;
+  border-radius: 20px 0 0 0;
   object-position: 50% 100%;
 }
 
@@ -2565,7 +2569,7 @@ opacity: 1;
 
 .exp-line {
   height: 1px;
-    width: 58rem;
+    width: 70vw;
     background: rgb(220, 220, 220);
     margin: 0;
     position: relative;
@@ -4403,13 +4407,14 @@ transform: rotate(90deg)
   color: white;
 }
 .info-rating-bar {
-  background-color: black;
+  background-color: whitesmoke;
     width: 23rem;
-    height: 1em;
+    height: 0.5em;
     margin-bottom: 0.25rem;
     position: relative;
-    bottom: 3rem;
     border-radius: 7px; 
+    margin-left: 0.5rem;
+    top: 0.3rem;
 }
 .info-review-rating {
   display: flex;

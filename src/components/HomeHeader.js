@@ -75,7 +75,10 @@ function HomeHeader({ name }) {
     },
     handleClicksOutside_ofInputs: function (e) {
       if (e.target !== searchInput.current && e.target !== cityInput.current) {
+        if (cityDD.current) {
           cityDD.current.style.display = "none";
+        }
+        if (searchDD.current)
           searchDD.current.style.display = "none";
       }
     
@@ -169,7 +172,11 @@ function HomeHeader({ name }) {
          
         </div>
 
+        {
+          window.location.pathname !== '/home' ?
         <AdvancedSearch/>
+        : null
+        }
 
         <div id="acc-and-trip">
           
