@@ -283,7 +283,6 @@ padding: 0 1rem 0 1rem;
 .account {
   position: relative;
   cursor: pointer;
-  top: 0.5rem;
 }
 .user-name {
   display: flex;

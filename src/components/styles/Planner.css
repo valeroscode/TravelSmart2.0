@@ -90,16 +90,17 @@ body {
 #main-section {
     display: flex;
     flex-direction: column;
-    background-color: #EFEFEF;
+    background-color: white;
     padding-bottom: 9rem;
 }
 
 #trip-name-photo {
     position: relative;
-    height: 20rem;
+    height: 16rem;
     display: flex;
-    justify-content: center;
-    align-items: end;
+    justify-content: start;
+    align-items: center;
+    margin: 0 10rem;
 }
 
 #trip-name-photo img {
@@ -114,14 +115,13 @@ body {
     text-align: start;
     width: fit-content;
     border: 2px solid white;
-    border-radius: 7px;
-    position: absolute;
-    bottom: -2rem;
+    border-radius: 25px;
+    position: relative;
     height: 40%;
-    padding: 1rem;
+    padding: 1.25rem 0;
     display: flex;
+    margin-left: 4rem;
     justify-content: space-between;
-    box-shadow: 0 0 20px black;
 }
 
 #editNameElems {
@@ -145,6 +145,7 @@ body {
 .contain-title-btn {
     position: relative;
     display: flex;
+    margin-left: 4rem;
 }
 
 #inner-box #editName {
@@ -167,7 +168,7 @@ body {
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: 800;
     color: #232323;
-    margin-right: 1rem;
+    margin-right: 2rem;
 }
 
 .email-btn {
@@ -191,7 +192,9 @@ body {
 {
     position: absolute;
     bottom: 1rem;
-    left: 1rem;
+    padding: 0.5rem;
+    background-color: #232323;
+    border-radius: 25px;
 }
 
 .inner-box svg {
@@ -210,6 +213,12 @@ body {
 #calendar span {
     font-family: 'Roboto Condensed', sans-serif;
     margin-left: 0.5rem;
+    font-weight: 800;
+    color: white;
+}
+
+#calendar svg {
+    color: white;
 }
 
 #budgeting {
@@ -217,7 +226,6 @@ body {
     flex-direction: column;
     margin: 0 14rem;
     position: relative;
-    top: 5rem;
 }
 
 @media screen and (max-width: 1960px) {
@@ -244,14 +252,14 @@ body {
     font-size: 2.2rem;
     font-family: 'Roboto Condensed', sans-serif;
     color: black;
-   
+    margin-bottom: 0;
 }
 
 .budgeting-tool {
     background-color: white;
     display: flex;
     flex-direction: column;
-    border-radius: 7px;
+    border-radius: 25px;
 }
 
 .budget-tool-header {
@@ -279,7 +287,7 @@ font-weight: 800;
     font-weight: 800;
     border: 1px solid #151515;
     padding: 0.5rem;
-    border-radius: 7px;
+    border-radius: 20px;
 }
 
 .visual-breakdown {
@@ -391,7 +399,7 @@ font-weight: 800;
     font-weight: 800;
     background-color: whitesmoke;
     margin: 1rem;
-    border-radius: 7px;
+    border-radius: 25px;
 }
 
 #budget-breakdown li p {
@@ -475,7 +483,7 @@ background-color: white;
     width: 100%;
     background-color: whitesmoke;
     height: 1rem;
-    border-radius: 10px;
+    border-radius: 25px;
     display: flex;
     justify-content: left;
     align-items: center;
@@ -695,11 +703,13 @@ input[type="time"]:before {
 }
 
 .budget-hr {
-    border-top: 1px solid lightgray;
+    background: #0000;
     border-bottom: none;
+    border-top: 1px solid #d3d3d3;
+    margin-top: .5rem;
+    border-left: none;
+    border-right: none;
     width: 90%;
-    margin-top: 0.5rem;
-    background: transparent;
 }
 
 #cost-div-list {
@@ -721,7 +731,7 @@ input[type="time"]:before {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: 7px;
+    border-radius: 25px;
     margin-bottom: 1rem;
 }
 
@@ -748,8 +758,9 @@ input[type="time"]:before {
     margin-right: 1rem;
     font-size: 1.1rem;
     padding: 0.7rem;
-    border-radius: 7px;
+    border-radius: 20px;
     text-align: center;
+    font-family: 'Roboto Condensed', sans-serif;
 }
 
 .cost-div div span input {
@@ -898,8 +909,8 @@ input[type="time"]:before {
     font-family: 'Roboto Condensed', sans-serif;
     font-weight: 800;
     font-size: 1rem;
-    border-radius: 7px;
-    padding: 0.5rem;
+    border-radius: 50px;
+    padding: 1rem;
     height: 2rem;
     display: flex;
     align-items: center;

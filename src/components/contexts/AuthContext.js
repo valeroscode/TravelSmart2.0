@@ -14,6 +14,7 @@ export function AuthProvider({ children }) {
   const [defCity, setDefCity] = useState('Miami');
   const [allPlaces, setAllPlaces] = useState([]);
   const [allPlaces_Global, setAllPlaces_Global] = useState([]);
+  const [trips, setTrips] = useState({})
 
   const [loading, setLoading] = useState(true);
 
@@ -56,7 +57,7 @@ export function AuthProvider({ children }) {
             .then((data) => {
               setCurrentUser(data.user);
               setDefCity(data.user.defcity);
-              console.log(currentUser)
+              setTrips(data.user.trips)
             })
             .catch((err) => {
               console.error(err);
@@ -133,6 +134,7 @@ export function AuthProvider({ children }) {
     allPlaces,
     allPlaces_Global,
     defCity,
+    trips,
     loading,
     login,
     logout

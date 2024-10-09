@@ -163,12 +163,12 @@ function HomeHeader({ name }) {
 
   return (
     <>
-      <div id="home-title" style={window.location.pathname === '/Search-Results' ? {backgroundColor: 'black'} : (window.location.pathname === '/place' || window.location.pathname === '/plan' ? {background: 'unset', backgroundColor: 'white', borderBottom: '1px solid rgb(225, 225, 225)', paddingBottom: '0.3rem'} : null)}>
+      <div id="home-title" style={window.location.pathname === '/Search-Results' || window.location.pathname === '/MyTrip' ? {backgroundColor: 'black'} : (window.location.pathname === '/place' || window.location.pathname === '/plan' ? {background: 'unset', backgroundColor: 'white', borderBottom: '1px solid rgb(225, 225, 225)', paddingBottom: '0.3rem'} : null)}>
         <div id="home-org">
       <div id="home-h1" onClick={() => window.location.replace('http://localhost:3000/home')} style={window.location.pathname === '/home' ? {top: '2rem', fontSize: '2rem'} : null}>
         
       <FontAwesomeIcon icon={faPaperPlane} className="plane"  style={window.location.pathname === '/plan' ? {color: '#6d00cc'} : window.location.pathname === '/Search-Results' ? {color: 'white'} : {color: 'black'}}/>
-      <h1 style={window.location.pathname === '/plan' ? {color: '#6d00cc'} : window.location.pathname === '/Search-Results' ? {color: 'white'} : {color: 'black'}}>WANDR</h1>
+      <h1 style={window.location.pathname === '/plan' ? {color: '#6d00cc'} : window.location.pathname === '/Search-Results' || window.location.pathname === '/MyTrip' ? {color: 'white'} : {color: 'black'}}>WANDR</h1>
          
         </div>
 

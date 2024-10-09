@@ -11,10 +11,10 @@ import {allPlaces} from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 import Footer from "./footer";
-import PlaceHome from "./PlaceHome";
+import HomeHeader from "./HomeHeader";
 
 function TripPlanner() {
-  const { currentUser, info, logout } = useAuth();
+  const { currentUser, info, logout, trips } = useAuth();
   const budgetBreakdown = useRef();
   const datesDiv = useRef();
   const favoritesList = useRef();
@@ -188,28 +188,28 @@ function TripPlanner() {
   const favoritesUL = useRef();
 
   useEffect(() => {
-    if (currentUser) {
+    if (typeof trips.trips === 'object') {
       function loadData() {
-        if (Object.keys(info.trips).length === 0) {
+        if (Object.keys(trips.trips).length === 0) {
           window.setTimeout(loadData, 400);
         } else {
-          setDbTrips(info.trips);
-          setPlan(info.trips[sessionStorage.getItem("trip")]);
+          setDbTrips(trips.trips);
+          setPlan(trips.trips[sessionStorage.getItem("trip")]);
           if (tripDetailsList.current.children.length === 0) {
             getTripDetails();
           }
 
-          for (let i = 0; i < info.favorites.length; i++) {
-            allPlaces.map((place) =>
-              place.name === info.favorites[i] &&
-              place.city === sessionStorage.getItem("city")
-                ? favoritesIn_City.push(place)
-                : null
-            );
-            if (i === info.favorites.length - 1) {
-              setFavoritesIn_City(favoritesIn_City);
-            }
-          }
+          // for (let i = 0; i < currentUser.favorites.length; i++) {
+          //   allPlaces.map((place) =>
+          //     place.name === currentUser.favorites[i] &&
+          //     place.city === sessionStorage.getItem("city")
+          //       ? favoritesIn_City.push(place)
+          //       : null
+          //   );
+          //   if (i === currentUser.favorites.length - 1) {
+          //     setFavoritesIn_City(favoritesIn_City);
+          //   }
+          // }
 
           if (favoritesIn_City.length === 0) {
             favoritesUL.current.innerHTML = `<h4 class='no-faves'>Sorry, no favorites have been added for the current city.</h4>`;
@@ -220,10 +220,10 @@ function TripPlanner() {
       loadData();
 
       let string = currentUser.email.toString();
-      string = currentUser.metadata.createdAt + string.substring(0, 8);
+
       setUserCreds(string);
     }
-  }, []);
+  }, [trips]);
 
   useEffect(() => {
     renderDetailedBreakdown();
@@ -284,19 +284,20 @@ function TripPlanner() {
   }
 
   function getTripDetails() {
-    const date = info.trips[sessionStorage.getItem("trip")].Dates;
-    const plan = info.trips[tripName.current.textContent].Plans;
+    const date = trips.trips[sessionStorage.getItem("trip")].dates;
+    const plan = trips.trips[tripName.current.textContent].plans;
+    console.log(plan)
     tripBudget.total =
-      info.trips[sessionStorage.getItem("trip")].Expenses.Budget;
+    trips.trips[sessionStorage.getItem("trip")].expenses.budget;
     tripBudget.hotel =
-      info.trips[sessionStorage.getItem("trip")].Expenses.Hotel;
+    trips.trips[sessionStorage.getItem("trip")].expenses.hotel;
     tripBudget.transport =
-      info.trips[sessionStorage.getItem("trip")].Expenses.Transportation;
-    expenses.Hotel = info.trips[sessionStorage.getItem("trip")].Expenses.Hotel;
+    trips.trips[sessionStorage.getItem("trip")].expenses.transportation;
+    expenses.Hotel = trips.trips[sessionStorage.getItem("trip")].expenses.hotel;
     expenses.Transportation =
-      info.trips[sessionStorage.getItem("trip")].Expenses.Transportation;
+    trips.trips[sessionStorage.getItem("trip")].expenses.transportation;
 
-    const d = info.trips[sessionStorage.getItem("trip")].Dates;
+    const d = trips.trips[sessionStorage.getItem("trip")].dates;
 
     datesDiv.current.textContent = `${
       months.indexOf(d[0].split(" ")[0]) + 1
@@ -309,29 +310,29 @@ function TripPlanner() {
       li.innerHTML = `<h6 class='hide-show-plans'>${date[i]} ${chevron}</h6>`;
       tripDetailsList.current.appendChild(li);
       li.setAttribute("id", `${i}`);
-      for (let iter = 0; iter < plan[i][`Day ${i + 1}`].length; iter++) {
-        let specificPlan = plan[i][`Day ${i + 1}`][iter];
+      for (let iter = 0; iter < plan[`day ${i + 1}`].length; iter++) {
+        let specificPlan = plan[`day ${i + 1}`][iter];
         let planBudget = String(specificPlan).split("|")[2];
         let planTime = String(specificPlan).split("|")[1];
         if (planBudget === undefined) {
           planBudget = 0;
         }
-        const image = `${plan[i][`Day ${i + 1}`][iter].split("|")[0]}.jpg`;
+        const image = `${plan[`day ${i + 1}`][iter].split("|")[0]}.jpg`;
         const div = document.createElement("div");
         div.innerHTML = `<div number='${iter}' place='${String(
-          plan[i][`Day ${i + 1}`][iter].split("|")[0]
+          plan[`day ${i + 1}`][iter].split("|")[0]
         )}' class='place-planned'>
             <img src="${image}"></img>
             <div place='${String(
-              plan[i][`Day ${i + 1}`][iter].split("|")[0]
+              plan[`day ${i + 1}`][iter].split("|")[0]
             )}' trip='${sessionStorage.getItem("trip")}' class="right-side-div">
             <div class='middle-div'>
-            <a>${plan[i][`Day ${i + 1}`][iter].split("|")[0]}</a>
+            <a>${plan[`day ${i + 1}`][iter].split("|")[0]}</a>
             <p>${getPlaceProps(
-              String(plan[i][`Day ${i + 1}`][iter].split("|")[0]),
+              String(plan[`day ${i + 1}`][iter].split("|")[0]),
               "category"
             )} | ${getPlaceProps(
-          String(plan[i][`Day ${i + 1}`][iter].split("|")[0]),
+          String(plan[`day ${i + 1}`][iter].split("|")[0]),
           "area"
         )}</p>
             <div class='budget-box'>
@@ -342,13 +343,13 @@ function TripPlanner() {
             <input type="time" class="time-itin" dayIndex='${
               i + 1
             }' trip='${sessionStorage.getItem("trip")}' place='${String(
-          plan[i][`Day ${i + 1}`][iter].split("|")[0]
+          plan[`day ${i + 1}`][iter].split("|")[0]
         )}'value=${planTime} name="time" min="00:00" max="23:59" />
             </div>
             </div>
             <div class='trip-div-btns'>
             <button dayIndex='${i + 1}' place='${String(
-          plan[i][`Day ${i + 1}`][iter].split("|")[0]
+          plan[`day ${i + 1}`][iter].split("|")[0]
         )}' trip='${sessionStorage.getItem(
           "trip"
         )}' class='delete-plan'>Delete</button>
@@ -414,7 +415,7 @@ function TripPlanner() {
     for (let i = 0; i < deletePlan.length; i++) {
       deletePlan[i].addEventListener("click", (e) => {
         const dayIndex = e.target.getAttribute("dayIndex");
-        const plan = dbTrips[tripName.current.textContent].Plans;
+        const plan = dbTrips[tripName.current.textContent].plans;
         const index = plan[dayIndex - 1][`Day ${dayIndex}`];
 
         for (let iter = 0; iter < index.length; iter++) {
@@ -425,7 +426,7 @@ function TripPlanner() {
           e.target.closest(".place-planned").parentNode.remove();
         }
 
-        setPlan(dbTrips[tripName.current.textContent].Plans);
+        setPlan(dbTrips[tripName.current.textContent].plans);
       });
     }
   }
@@ -436,7 +437,7 @@ function TripPlanner() {
     const parent = e.target.closest(".place-planned");
     const listItem = e.target.closest(".trip-overview-li");
     const plan =
-      dbTrips[tripName.current.textContent].Plans[listItem.getAttribute("id")][
+      dbTrips[tripName.current.textContent].plans[listItem.getAttribute("id")][
         `Day ${parseInt(listItem.getAttribute("id")) + 1}`
       ];
     if (e.target.classList.contains("set-budget")) {
@@ -533,7 +534,7 @@ function TripPlanner() {
       span.innerHTML = `<span>${span.firstElementChild.value}</span>`;
       button.textContent = "Edit";
       expenses[e.target.closest(".cost-div").title] = parseInt(span.innerText);
-      dbTrips[sessionStorage.getItem("trip")].Expenses[
+      dbTrips[sessionStorage.getItem("trip")].expenses[
         e.target.closest(".cost-div").title
       ] = parseInt(span.innerText);
       docMethods.updateTrips(userCreds, dbTrips);
@@ -558,7 +559,7 @@ function TripPlanner() {
       const span = document.createElement("span");
       const value = document.getElementById("newInputBudget").value;
       span.textContent = `$${value}`;
-      dbTrips[sessionStorage.getItem("trip")].Expenses.Budget = value;
+      dbTrips[sessionStorage.getItem("trip")].expenses.budget = value;
       parent.replaceChild(span, document.getElementById("newInputBudget"));
       docMethods.updateTrips(userCreds, dbTrips);
       setDbTrips(dbTrips);
@@ -646,7 +647,7 @@ function TripPlanner() {
       const index = parseInt(newNode.parentNode.getAttribute("id"));
 
       newNode.parentNode.insertBefore(div, newNode);
-      dbTrips[tripName.current.textContent].Plans[index][
+      dbTrips[tripName.current.textContent].plans[index][
         `Day ${index + 1}`
       ].push(`${name}|${time}|${budget}`);
 
@@ -672,8 +673,8 @@ function TripPlanner() {
 
   function planToString() {
     let plansStr = [];
-    for (let i = 0; i < plan.Plans.length; i++) {
-      const dayPlans = plan.Plans[i][`Day ${i + 1}`];
+    for (let i = 0; i < plan.plans.length; i++) {
+      const dayPlans = plan.plans[i][`day ${i + 1}`];
       const pArr = [];
       for (let j = 0; j < dayPlans.length; j++) {
         let p;
@@ -684,7 +685,7 @@ function TripPlanner() {
         <p>Budget: ${split[2] !== undefined ? split[2] : ""}</p>`;
         pArr.push(p);
       }
-      plansStr.push(`<h3>Day ${i + 1}</h3><br/><div>${pArr.join()}</div>`);
+      plansStr.push(`<h3>day ${i + 1}</h3><br/><div>${pArr.join()}</div>`);
     }
 
     const stringified = plansStr.join();
@@ -727,11 +728,10 @@ function TripPlanner() {
   return (
     <>
       <section id="overall-page">
-        <PlaceHome />
+        <HomeHeader name={currentUser.name} />
         <section id="main" onClick={(e) => hideFavoritesList(e)}>
           <div id="main-section">
             <div id="trip-name-photo">
-              <img src={`/${sessionStorage.getItem("city")}.jpg`} alt="" />
               <div id="inner-box">
                 <h1 id="trip-name" ref={tripName}>
                   {sessionStorage.getItem("trip")}

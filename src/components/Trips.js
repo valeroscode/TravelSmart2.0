@@ -15,7 +15,7 @@ import { useAuth } from "./contexts/AuthContext";
 import { tripObj, tripDates, dateObj } from "./getPlaceInfo.mjs";
 
 function TripsPage() {
-  const { currentUser } = useAuth();
+  const { currentUser, trips } = useAuth();
   const [info, setInfo] = useState({});
 
   let string = "";
@@ -48,12 +48,8 @@ function TripsPage() {
     end = useRef();
 
   useEffect(() => {
-    console.log(currentUser)
-    if (currentUser.trips) {
-      setInfo(currentUser.trips);
-    console.log(Object.entries(currentUser.trips[1]))
-    }
-  }, [currentUser]);
+    console.log(trips)
+  }, [trips]);
 
   function selectDates(e, month, year, day) {
     if (
@@ -543,11 +539,12 @@ function TripsPage() {
             </h2>
           </div>
           <ul id="trips-con" ref={unorderedList}>
-            {info !== undefined && info.trips !== null ? (
-              Object.entries(info).map(([key, value]) => (
+            {Object.keys(trips.trips).length > 0 ? (
+              Object.entries(trips.trips).map(([key, value]) => (
                 <div key={key} className="trip-item">
-                  <img loading="lazy" src={`${value.city}.jpg`}></img>
+                  
                   <div className="trip-flex">
+                  <img loading="lazy" src={`${value.city}.jpg`}></img>
                     <div>
                       <h2>{key}</h2>
                       <p>
@@ -558,7 +555,9 @@ function TripsPage() {
                         {timeFromTrip(value)}
                       </h6>
                     </div>
-                    <div className="trip-section-btns">
+                    
+                  </div>
+                  <div className="trip-section-btns">
                       <button
                         name={key}
                         city={value.city}
@@ -576,7 +575,6 @@ function TripsPage() {
                         Delete
                       </button>
                     </div>
-                  </div>
                 </div>
               ))
             ) : (

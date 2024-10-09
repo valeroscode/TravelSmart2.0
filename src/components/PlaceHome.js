@@ -37,7 +37,7 @@ function PlaceHome() {
   useEffect(() => {
     if (currentUser) {
       setTimeout(() => {
-        setFirstname(info.name);
+        setFirstname(currentUser.name);
       }, 500);
     }
 

@@ -129,19 +129,20 @@ margin-top: 0;
   flex-direction: row;
   left: 1rem;
   justify-content: center;
-  align-items: start;
+  align-items: center;
 }
 .trip-item {
 display: flex;
 width: fit-content;
 padding: 1rem;
-border-radius: 0px;
 background-color: whitesmoke;
 height: 5.3rem;
 margin-bottom: 1.5rem;
 margin-right: 1.5rem;
 min-width: 35rem;
 cursor: pointer;
+border-radius: 20px;
+justify-content: space-between;
 box-shadow: 0 0 61px 8px rgba(0,0,0,0.2);
 }
 .trip-item:hover h2 {
@@ -165,16 +166,17 @@ margin-left: 0;
   align-items: baseline;
   height: fit-content;
   width: 10rem;
+  flex-direction: column;
 }
 .trip-section-btns .delete-trip {
-background-color: whitesmoke;
+background-color: rgb(231, 231, 231);
 margin-top: 0.5rem;
 margin-left: 0.5rem;
 color: black;
 position: relative;
 }
 .trip-section-btns button {
-  border-radius: 0px;
+  border-radius: 20px;
 }
 .trip-item div {
 position: relative;
@@ -208,12 +210,12 @@ transition: all 0.15s ease;
 height: 5rem;
 border-radius: 0px;
 position: relative;
+margin-right: 1.5rem;
 }
 .trip-item h2 {
 font-family: "Roboto Condensed", sans-serif;
 margin-bottom: 0;
 color: black;
-margin-top: 0.5rem;
 font-size: 1.5rem;
 -webkit-transition: all 0.3s ease;
 -moz-transition: all 0.3s ease;
@@ -225,11 +227,11 @@ font-family: "Roboto Condensed", sans-serif;
 color: gray;
 margin-top: 0;
 font-size: 0.9rem;
+margin-bottom: 0;
 }
 .trip-item h6 {
 margin-top: 0;
 position: relative;
-bottom: 0.7rem;
 font-size: 0.9rem;
 }
 #lottie-section {
