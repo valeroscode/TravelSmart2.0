@@ -6,7 +6,8 @@ import {
   faEnvelope,
   faPencil,
   faCalendar,
-  faMagnifyingGlass 
+  faMagnifyingGlass,
+  faX
 } from "@fortawesome/free-solid-svg-icons";
 import {allPlaces} from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
@@ -314,6 +315,8 @@ function TripPlanner() {
     
     setConfirmExpCity(true)
 
+    console.log(results)
+
   }
 
   const favoritesUL = useRef();
@@ -341,10 +344,6 @@ function TripPlanner() {
           //     setFavoritesIn_City(favoritesIn_City);
           //   }
           // }
-
-          if (favoritesIn_City.length === 0) {
-            favoritesUL.current.innerHTML = `<h4 class='no-faves'>Sorry, no favorites have been added for the current city.</h4>`;
-          }
         }
       }
 
@@ -608,9 +607,9 @@ function TripPlanner() {
       setCurrDay(e.target.closest(".add-li").getAttribute("dayIndex"));
       favoritesList.current.style.right = 0;
       if (window.innerWidth > 704) {
-        favoritesList.current.style.width = "26rem";
+        favoritesList.current.style.width = "80vw";
       } else {
-        favoritesList.current.style.width = "15rem";
+        favoritesList.current.style.width = "100vw";
       }
       e.target.setAttribute("id", "newNode");
     } else if (e.target.classList.contains("time-itin")) {
@@ -1006,6 +1005,7 @@ function TripPlanner() {
         </section>
       </section>
       <div ref={favoritesList} id="favorites-list">
+      <FontAwesomeIcon icon={faX} id="x-out-btn-planner" />
         <h3>Add a place</h3>
         <hr />
         <div id="hello-user-input-search-planner">

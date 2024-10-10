@@ -124,6 +124,7 @@ body {
     height: 100%;
     padding-left: 1rem;
     border: none;
+    margin-top: 0;
 }
 
 #svg-search-planner {
@@ -131,6 +132,7 @@ body {
     border-radius: 0 30px 30px 0;
     position: relative;
     left: 0rem;
+    background-color: #232323;
 }
 
 #trip-name-photo #inner-box {
@@ -802,7 +804,7 @@ input[type="time"]:before {
     height: 100vh;
     width: 26rem;
     z-index: 900;
-    background-color: white;
+    background-color: whitesmoke;
     box-shadow: -2px 0px 25px gray;
     display: flex;
     flex-direction: column;
@@ -812,6 +814,28 @@ input[type="time"]:before {
     -ms-transition: right 0.3s linear; /* IE 10 */
     -moz-transition: right 0.3s linear; /* Firefox */
     -webkit-transition: right 0.3s linear; /*safari and chrome */
+}
+
+#x-out-btn-planner {
+    position: absolute;
+    left: 2rem;
+    top: 1rem;
+    padding: 0.55rem;
+    border-radius: 100%;
+    background-color: white;
+    color: black;
+    pointer-events: all;
+    cursor: pointer;
+    transition: all 0.3s linear;
+    -o-transition: all 0.3s linear; /* opera */
+    -ms-transition: all 0.3s linear; /* IE 10 */
+    -moz-transition: all 0.3s linear; /* Firefox */
+    -webkit-transition: all 0.3s linear; /*safari and chrome */
+}
+
+#x-out-btn-planner:hover {
+    background-color: #232323;
+    color: white;
 }
 
 #favorites-list h3 {
