@@ -812,7 +812,6 @@ function TravelSmart() {
             </div>
             : 
             <AdvancedSearch/>
-       
             }
 
             <div id="home-buttons">

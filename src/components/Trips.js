@@ -544,7 +544,6 @@ function TripsPage() {
                 <div key={key} className="trip-item">
                   
                   <div className="trip-flex">
-                  <img loading="lazy" src={`${value.city}.jpg`}></img>
                     <div>
                       <h2>{key}</h2>
                       <p>

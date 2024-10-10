@@ -19,8 +19,17 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (cookies.access_token && window.location.pathname !== "/login") {
-      console.log('RENDER 1')
+    if (cookies.access_token && window.location.pathname !== "/login" && window.location.pathname !== '/') {
+        //Checks if access token is expired
+        console.log('RENDERRRR')
+        const payload = JSON.parse(atob(cookies.access_token.split('.')[1]));
+        const exp = payload.exp * 1000; // Convert to milliseconds
+        const now = Date.now();
+        if (exp < now) {
+          //if it is, redirect to login page
+          window.location.replace('http://localhost:8080/login')
+          return
+        }
         //If the user is logged in, get ALL places, which triggers the useEffect for defcity
         fetch("http://localhost:8080/places", {
           method: "POST",
@@ -62,22 +71,13 @@ export function AuthProvider({ children }) {
             .catch((err) => {
               console.error(err);
             });
-    } else if (!cookies.access_token) {
-      setCurrentUser({
-        defcity: 'Miami',
-        email: null,
-        name: 'Guest',
-        trips: {
-          trips: null
-        }
-      });
-      setDefCity('Miami');
+    } else {
+      setLoading(false);
     }
   }, []);
 
   //Now the places in their default city will be populated
   useEffect(() => {
-
     if (defCity !== '' && allPlaces_Global.length !== 0) {
       const places = []
       for (let i = 0; i < allPlaces_Global.length; i++) {
@@ -92,7 +92,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     if (allPlaces.length !== 0) {
-    setLoading(false);
+      setLoading(false);
     }
   }, [allPlaces])
 

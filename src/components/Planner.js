@@ -6,6 +6,7 @@ import {
   faEnvelope,
   faPencil,
   faCalendar,
+  faMagnifyingGlass 
 } from "@fortawesome/free-solid-svg-icons";
 import {allPlaces} from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
@@ -14,7 +15,9 @@ import Footer from "./footer";
 import HomeHeader from "./HomeHeader";
 
 function TripPlanner() {
-  const { currentUser, info, logout, trips } = useAuth();
+  const { currentUser, logout, trips, allPlaces_Global } = useAuth();
+  const [smartSearchPlaces, setSmartSearchPlaces] = useState([])
+  const [confirmExpCity, setConfirmExpCity] = useState(false)
   const budgetBreakdown = useRef();
   const datesDiv = useRef();
   const favoritesList = useRef();
@@ -183,6 +186,134 @@ function TripPlanner() {
         return binarySearch(target, array.slice(middle), number);
       }
     }
+  }
+
+  const citiesAvaliable = ['miami', 'new york', 'barcelona']
+
+  const smartSearchInput = useRef();
+
+  function smartSearch() {
+    const searchTerm = String(smartSearchInput.current.value).toLocaleLowerCase();
+    const location = String(searchTerm).split(" ")[2]
+    const locationIndex = searchTerm.indexOf(location);
+
+    const regEx = searchTerm.split(/ and | in | /)
+
+    const initialTerms = regEx.map((item) => ({
+      term: item,
+      changed: false
+    }))
+
+    let removeItem;
+
+    //account for places with spaces in the name 
+    let finalTerms = initialTerms.map((term, index, array) => term.term === 'beach' ? { term: `${array[index - 1].term} ${term.term}`, changed: true} : term)
+    finalTerms = finalTerms.map((term, index, array) => term.term === 'york' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
+    finalTerms = finalTerms.map((term, index, array) => term.term === 'gables' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
+    finalTerms = finalTerms.map((term, index, array) => term.term === 'quarter' ? { term:  `${array[index - 1].term} ${term.term}`, changed: true} : term)
+
+    for (let i = 0; i < finalTerms.length; i++) {
+      if (finalTerms[i].changed === true) {
+        finalTerms.splice(i - 1, 1)
+      }
+    }
+    
+
+    finalTerms = finalTerms.filter(term => term.term !== '')
+
+    const cityInArray = finalTerms.filter(term => citiesAvaliable.includes(term.term))
+
+    function wordAccuracy(word, value) {
+      value = String(value).toLocaleLowerCase()
+      if (word === value) {
+        return
+      } else {
+      const calc = word.length - value.length
+
+        if (calc === 0 || calc === 1 || calc === -1) {
+          const minLength = Math.min(word.length, value.length)
+            let misspellings = 0 
+            for (let i = 0; i < minLength; i++) {
+              if (word[i] !== value[i]) {
+                misspellings++
+              }
+            }
+            if (misspellings <= 1) {
+            
+              finalTerms.map((term) => {
+                if (term.term === word) {
+                  term.term = value
+                }
+              })
+            } 
+          
+        } else {
+          return
+        }
+      }
+    
+    }
+
+    //Correcting mispellings
+    for (let i = 0; i < allPlaces_Global.length; i++) {
+    for (let j = 0; j < finalTerms.length; j++) {
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].area)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].city)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].style)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].category)
+      wordAccuracy(finalTerms[j].term, allPlaces_Global[i].serves)
+      }
+    }
+
+ 
+
+    for (let i = 0; i < allPlaces_Global.length; i++) {
+     
+      allPlaces_Global[i].score = 0
+     if (cityInArray.length === 0) {
+      if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].area).toLocaleLowerCase()))) {
+        allPlaces_Global[i].score++
+      }
+      } else {
+        if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].city).toLocaleLowerCase()))) {
+          allPlaces_Global[i].score++
+        }
+      }
+      if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].style).toLocaleLowerCase()))) {
+        allPlaces_Global[i].score++
+      }
+      if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].category).toLocaleLowerCase()))) {
+        allPlaces_Global[i].score++
+      }
+      let processed = allPlaces_Global[i].serves.replace(/[,&]/g, ' ');
+      processed = processed.replace(/\s+/g, ' ').trim();
+      processed = processed.toLocaleLowerCase()
+      const regexPattern = processed.split(' ').join('|');
+      finalTerms.some(term => {
+      const items = regexPattern.split('|').map(item => item.trim());
+      if (items.includes(term.term)) {
+        allPlaces_Global[i].score++
+      }
+      })
+
+      //When handling misspellings also account for 1 letter added and missing 1 letter
+    }
+  
+    const regexcase = new RegExp(`\\b${' and '}\\b`, 'g'); // 'g' for global match
+    const matches = searchTerm.match(regexcase);
+
+    let results;
+
+    if (matches !== null) {
+    results = allPlaces_Global.filter(p => p.score === finalTerms.length - matches.length)
+    } else {
+    results = allPlaces_Global.filter(p => p.score === finalTerms.length)
+    }
+
+    setSmartSearchPlaces(results)
+    
+    setConfirmExpCity(true)
+
   }
 
   const favoritesUL = useRef();
@@ -377,7 +508,15 @@ function TripPlanner() {
     }, 310);
 
     setExpenses(expenses);
+
+    const addPlaceBtns = document.getElementsByClassName('add-li');
+    for (let i = 0; i < addPlaceBtns.length; i++) {
+      addPlaceBtns[i].addEventListener('click', () => {
+        favoritesList.current.style.right = "-30rem";
+        document.getElementById("newNode").removeAttribute("id");
+    })
   }
+}
 
   if (document.getElementsByClassName("time-title")) {
     const t = document.getElementsByClassName("time");
@@ -436,9 +575,10 @@ function TripPlanner() {
     let txt = e.target.innerText;
     const parent = e.target.closest(".place-planned");
     const listItem = e.target.closest(".trip-overview-li");
+    const addLi = e.target.closest("add-li")
     const plan =
-      dbTrips[tripName.current.textContent].plans[listItem.getAttribute("id")][
-        `Day ${parseInt(listItem.getAttribute("id")) + 1}`
+      dbTrips[tripName.current.textContent].plans[
+        `day ${parseInt(listItem.getAttribute("id")) + 1}`
       ];
     if (e.target.classList.contains("set-budget")) {
       e.target.nextElementSibling.style.opacity = 1;
@@ -729,7 +869,7 @@ function TripPlanner() {
     <>
       <section id="overall-page">
         <HomeHeader name={currentUser.name} />
-        <section id="main" onClick={(e) => hideFavoritesList(e)}>
+        <section id="main">
           <div id="main-section">
             <div id="trip-name-photo">
               <div id="inner-box">
@@ -866,8 +1006,12 @@ function TripPlanner() {
         </section>
       </section>
       <div ref={favoritesList} id="favorites-list">
-        <h3>Choose from your favorites</h3>
+        <h3>Add a place</h3>
         <hr />
+        <div id="hello-user-input-search-planner">
+            <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput} style={{borderRadius: '30rem 0 0 30rem'}} id="input-planner"></input>
+            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => smartSearch()} id="svg-search-planner"/>
+        </div>
         <ul ref={favoritesUL}>
           {favoritesIn_City.length !== 0
             ? favoritesIn_City.map((place, index) => (

@@ -110,6 +110,29 @@ body {
     filter: blur(7px);
 }
 
+#hello-user-input-search-planner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 3rem;
+    margin-top: 2rem;
+    width: 80%;
+}
+
+#input-planner {
+    width: 97%;
+    height: 100%;
+    padding-left: 1rem;
+    border: none;
+}
+
+#svg-search-planner {
+    padding: 1rem;
+    border-radius: 0 30px 30px 0;
+    position: relative;
+    left: 0rem;
+}
+
 #trip-name-photo #inner-box {
     background-color: white;
     text-align: start;
@@ -798,6 +821,8 @@ input[type="time"]:before {
 #favorites-list hr {
     width: 80%;
     margin: 0;
+    border-left: none;
+    border-right: none;
 }
 
 #btn-box {
