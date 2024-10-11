@@ -116,7 +116,6 @@ function ExploreCity ({places, searchTerm, allPlaces}) {
             places[i].priceScore = 0
           }
         }
-        
         const newResults = places.filter((place) => place.priceScore === 1)
         setFilteredPlaces(newResults)
       }

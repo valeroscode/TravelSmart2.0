@@ -14,9 +14,10 @@ import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 import Footer from "./footer";
 import HomeHeader from "./HomeHeader";
+import ExploreCity from "./ExploreCity";
 
 function TripPlanner() {
-  const { currentUser, logout, trips, allPlaces_Global } = useAuth();
+  const { currentUser, logout, trips, allPlaces_Global, allPlaces } = useAuth();
   const [smartSearchPlaces, setSmartSearchPlaces] = useState([])
   const [confirmExpCity, setConfirmExpCity] = useState(false)
   const budgetBreakdown = useRef();
@@ -315,8 +316,6 @@ function TripPlanner() {
     
     setConfirmExpCity(true)
 
-    console.log(results)
-
   }
 
   const favoritesUL = useRef();
@@ -508,13 +507,6 @@ function TripPlanner() {
 
     setExpenses(expenses);
 
-    const addPlaceBtns = document.getElementsByClassName('add-li');
-    for (let i = 0; i < addPlaceBtns.length; i++) {
-      addPlaceBtns[i].addEventListener('click', () => {
-        favoritesList.current.style.right = "-30rem";
-        document.getElementById("newNode").removeAttribute("id");
-    })
-  }
 }
 
   if (document.getElementsByClassName("time-title")) {
@@ -717,17 +709,6 @@ function TripPlanner() {
     }
   }
 
-  function hideFavoritesList(e) {
-    if (
-      !e.target.classList.contains("add-li") &&
-      (favoritesList.current.style.right == 0 ||
-        favoritesList.current.style.right == "0px") &&
-      document.getElementById("newNode")
-    ) {
-      favoritesList.current.style.right = "-30rem";
-      document.getElementById("newNode").removeAttribute("id");
-    }
-  }
 
   const dollar = "$";
 
@@ -740,7 +721,7 @@ function TripPlanner() {
       e.target.textContent = "Add";
       e.target.style.backgroundColor = "#2E64FE";
       e.target.nextElementSibling.childNodes[2].style.display = "none";
-      e.target.closest("#favorites-list").style.right = "-30rem";
+      e.target.closest("#favorites-list").style.right = "-80vw";
       const name = e.target.nextElementSibling.childNodes[0].textContent;
       let budget =
         e.target.nextElementSibling.childNodes[2].childNodes[0].childNodes[1]
@@ -1005,14 +986,43 @@ function TripPlanner() {
         </section>
       </section>
       <div ref={favoritesList} id="favorites-list">
-      <FontAwesomeIcon icon={faX} id="x-out-btn-planner" />
+      <FontAwesomeIcon icon={faX} id="x-out-btn-planner" onClick={() => {
+        if (window.innerWidth > 704) {
+        favoritesList.current.style.right = '-80vw';
+        } else {
+        favoritesList.current.style.right = '-100vw';
+        }
+      }} />
         <h3>Add a place</h3>
         <hr />
         <div id="hello-user-input-search-planner">
             <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput} style={{borderRadius: '30rem 0 0 30rem'}} id="input-planner"></input>
             <FontAwesomeIcon icon={faMagnifyingGlass} onClick={() => smartSearch()} id="svg-search-planner"/>
         </div>
-        <ul ref={favoritesUL}>
+        <div id="smart-search-results-planner">
+        {
+          confirmExpCity ?
+          
+          smartSearchPlaces.map((place) => (
+            <div>
+              <img></img>
+              <div className="place-text-info-1">
+                <h3>{place.name}</h3>
+                <h4>{place.style} {place.category}</h4>
+                <p>Serving {place.serves}</p>
+                <p>{place.area} | {place.price}</p>
+              </div>
+              <div className="place-action-btns">
+                <button>Add</button>
+                <button>Learn More</button>
+              </div>
+            </div>
+          ))
+          
+          : null
+        }
+        </div>
+        {/* <ul ref={favoritesUL}>
           {favoritesIn_City.length !== 0
             ? favoritesIn_City.map((place, index) => (
                 <li>
@@ -1041,7 +1051,7 @@ function TripPlanner() {
                 </li>
               ))
             : null}
-        </ul>
+        </ul> */}
       </div>
       <div id="remaining-budget-widget">
         <h4>Remaining Budget: ${remainingBudget}</h4>

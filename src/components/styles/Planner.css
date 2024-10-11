@@ -737,6 +737,11 @@ input[type="time"]:before {
     width: 90%;
 }
 
+#smart-search-results-planner {
+    display: flex;
+    
+}
+
 #cost-div-list {
     display: flex;
     flex-direction: column;
@@ -800,20 +805,20 @@ input[type="time"]:before {
 #favorites-list {
     position: fixed;
     top: 0rem;
-    right: -30rem;
+    right: -80vw;
     height: 100vh;
-    width: 26rem;
+    width: 80vw;
     z-index: 900;
     background-color: whitesmoke;
     box-shadow: -2px 0px 25px gray;
     display: flex;
     flex-direction: column;
     align-items: center;
-    transition: right 0.3s linear;
-    -o-transition: right 0.3s linear; /* opera */
-    -ms-transition: right 0.3s linear; /* IE 10 */
-    -moz-transition: right 0.3s linear; /* Firefox */
-    -webkit-transition: right 0.3s linear; /*safari and chrome */
+    transition: right 0.5s ease-in-out;
+    -o-transition: right 0.5s ease-in-out; /* opera */
+    -ms-transition: right 0.5s ease-in-out; /* IE 10 */
+    -moz-transition: right 0.5s ease-in-out; /* Firefox */
+    -webkit-transition: right 0.5s ease-in-out; /*safari and chrome */
 }
 
 #x-out-btn-planner {
