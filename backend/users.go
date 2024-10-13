@@ -654,7 +654,6 @@ func updateTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 func deleteTrip(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 
 	var requestBody struct {
-		Email string `json:"email"`
 		Trip  string `json:"tripname"`
 	}
 

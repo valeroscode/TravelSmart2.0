@@ -5,6 +5,7 @@ import { faDiamondTurnRight, faPhone,faBookmark, faDiamond, faArrowDown } from "
 import { useAuth } from "./contexts/AuthContext";
 import './styles/placepage.css'
 import Footer from './footer';
+import { learnMoreAboutPlace, handleTripAdderPopup } from "./getPlaceInfo.mjs";
 
 function PlacePage() {
 
@@ -244,7 +245,7 @@ function PlacePage() {
 
         <h5>{currDayHours}</h5>
         <div id='place-pg-btns'>
-        <button>Add to Trip</button>
+        <button onClick={(e) => handleTripAdderPopup(e)}>Add to Trip</button>
         <button onClick={(e) => {
           fetch("http://localhost:8080/updateFavorites", {
             method: 'POST',
@@ -266,7 +267,7 @@ function PlacePage() {
           })
 
         }}><FontAwesomeIcon icon={faBookmark} 
-        /> Add To Favorites</button>
+        /> Save</button>
         </div>
         <div id='scroll-down-div'>
        <h3>Scroll Down</h3>
@@ -313,7 +314,7 @@ function PlacePage() {
         }
         </div>
       </div>
-      <button className='get-dir'>Get Directions</button>
+      <button className='get-dir' onClick={() => alert('This Feature is coming soon.')}>Get Directions</button>
 
       <div id='place-secondary-info'>
         <h4 style={{fontSize: '1.5rem', marginBottom: 0}}>Have Questions?</h4>

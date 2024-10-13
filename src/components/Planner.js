@@ -14,9 +14,13 @@ import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
 import Footer from "./footer";
 import HomeHeader from "./HomeHeader";
-import ExploreCity from "./ExploreCity";
+import {
+  learnMoreAboutPlace,
+} from "./getPlaceInfo.mjs";
+import { useCookies } from "react-cookie";
 
 function TripPlanner() {
+  const [cookies] = useCookies(["access_token"]);
   const { currentUser, logout, trips, allPlaces_Global, allPlaces } = useAuth();
   const [smartSearchPlaces, setSmartSearchPlaces] = useState([])
   const [confirmExpCity, setConfirmExpCity] = useState(false)
@@ -36,6 +40,7 @@ function TripPlanner() {
   const [remainingBudget, setRemainingBudget] = useState();
   const [userCreds, setUserCreds] = useState();
   const [plan, setPlan] = useState("");
+  const [dbPlans, setDbPlans] = useState({});
   const months = [
     "January",
     "February",
@@ -69,6 +74,10 @@ function TripPlanner() {
     return 0;
   });
 
+  const [totalBudget, setTotalBudget] = useState(0)
+  const [hotel, setHotel] = useState(0)
+  const [transport, setTransport] = useState(0)
+
   const [tripBudget, setTripBudget] = useState({
     total: 0,
     hotel: 0,
@@ -83,7 +92,7 @@ function TripPlanner() {
     diningDOM: useRef(),
     nightDOM: useRef(),
     Hotel: tripBudget.hotel,
-    Transportation: tripBudget.transport,
+    Transportation: 0,
     Theater: 0,
     Coffee: 0,
     Resturant: 0,
@@ -321,13 +330,25 @@ function TripPlanner() {
   const favoritesUL = useRef();
 
   useEffect(() => {
+
+    console.log('tbiurvf')
+    console.log(transport)
+
+  }, [transport])
+
+  useEffect(() => {
     if (typeof trips.trips === 'object') {
       function loadData() {
         if (Object.keys(trips.trips).length === 0) {
           window.setTimeout(loadData, 400);
         } else {
           setDbTrips(trips.trips);
+          setDbPlans(trips.trips[sessionStorage.getItem("trip")].plans)
           setPlan(trips.trips[sessionStorage.getItem("trip")]);
+          setTotalBudget(trips.trips[sessionStorage.getItem("trip")].expenses.budget)
+          setHotel(trips.trips[sessionStorage.getItem("trip")].expenses.hotel)
+          setTransport(trips.trips[sessionStorage.getItem("trip")].expenses.transport)
+    
           if (tripDetailsList.current.children.length === 0) {
             getTripDetails();
           }
@@ -358,6 +379,8 @@ function TripPlanner() {
     renderDetailedBreakdown();
   }, [budgetChange, dbTrips]);
 
+
+
   function renderDetailedBreakdown() {
     const plan = document.getElementsByClassName("place-planned");
     const budgetBreakdown = document.getElementById("budget-breakdown");
@@ -371,15 +394,15 @@ function TripPlanner() {
 
     const HotelLi = document.createElement("LI");
     HotelLi.classList.add("budget-li");
-    HotelLi.innerHTML = `<p>Hotel</p><p>$${expenses.Hotel}</p>`;
+    HotelLi.innerHTML = `<p>Hotel</p><p>$${hotel}</p>`;
     budgetBreakdown.appendChild(HotelLi);
-    sum = sum + parseInt(expenses.Hotel);
+    sum = sum + parseInt(hotel);
 
     const transportLi = document.createElement("LI");
     transportLi.classList.add("budget-li");
-    transportLi.innerHTML = `<p>Transportation</p><p>$${expenses.Transportation}</p>`;
+    transportLi.innerHTML = `<p>Transportation</p><p>$${transport}</p>`;
     budgetBreakdown.appendChild(transportLi);
-    sum = sum + parseInt(expenses.Transportation);
+    sum = sum + parseInt(transport);
 
     //Time complexity: O(N) - since binarySearch is Logerithmic && the for loop is 0(N)
     for (let i = 0; i < plan.length; i++) {
@@ -407,24 +430,15 @@ function TripPlanner() {
       bool ? (tripBudget.total - sum) * -1 : tripBudget.total - sum
     }</p>`;
     budgetBreakdown.appendChild(remainingBudget);
-    setRemainingBudget(tripBudget.total - sum);
+    setRemainingBudget(totalBudget - sum);
 
-    expenses.percentages();
+    // expenses.percentages();
   }
 
   function getTripDetails() {
     const date = trips.trips[sessionStorage.getItem("trip")].dates;
     const plan = trips.trips[tripName.current.textContent].plans;
-    console.log(plan)
-    tripBudget.total =
-    trips.trips[sessionStorage.getItem("trip")].expenses.budget;
-    tripBudget.hotel =
-    trips.trips[sessionStorage.getItem("trip")].expenses.hotel;
-    tripBudget.transport =
-    trips.trips[sessionStorage.getItem("trip")].expenses.transportation;
-    expenses.Hotel = trips.trips[sessionStorage.getItem("trip")].expenses.hotel;
-    expenses.Transportation =
-    trips.trips[sessionStorage.getItem("trip")].expenses.transportation;
+
 
     const d = trips.trips[sessionStorage.getItem("trip")].dates;
 
@@ -446,12 +460,12 @@ function TripPlanner() {
         if (planBudget === undefined) {
           planBudget = 0;
         }
-        const image = `${plan[`day ${i + 1}`][iter].split("|")[0]}.jpg`;
+
         const div = document.createElement("div");
         div.innerHTML = `<div number='${iter}' place='${String(
           plan[`day ${i + 1}`][iter].split("|")[0]
         )}' class='place-planned'>
-            <img src="${image}"></img>
+            <img style="display:none"></img>
             <div place='${String(
               plan[`day ${i + 1}`][iter].split("|")[0]
             )}' trip='${sessionStorage.getItem("trip")}' class="right-side-div">
@@ -460,7 +474,7 @@ function TripPlanner() {
             <p>${getPlaceProps(
               String(plan[`day ${i + 1}`][iter].split("|")[0]),
               "category"
-            )} | ${getPlaceProps(
+            )} in ${getPlaceProps(
           String(plan[`day ${i + 1}`][iter].split("|")[0]),
           "area"
         )}</p>
@@ -505,7 +519,7 @@ function TripPlanner() {
       loadAnimation.current.style.display = "none";
     }, 310);
 
-    setExpenses(expenses);
+    // setExpenses(expenses);
 
 }
 
@@ -541,22 +555,46 @@ function TripPlanner() {
   }
 
   if (document.getElementsByClassName("delete-plan")) {
-    const deletePlan = document.getElementsByClassName("delete-plan");
-    for (let i = 0; i < deletePlan.length; i++) {
-      deletePlan[i].addEventListener("click", (e) => {
-        const dayIndex = e.target.getAttribute("dayIndex");
-        const plan = dbTrips[tripName.current.textContent].plans;
-        const index = plan[dayIndex - 1][`Day ${dayIndex}`];
 
-        for (let iter = 0; iter < index.length; iter++) {
-          if (e.target.getAttribute("place") === index[iter].split("|")[0])
-            index.splice(index.indexOf(index[iter]), 1);
-          docMethods.updateTrips(userCreds, dbTrips);
-          setDbTrips(dbTrips);
-          e.target.closest(".place-planned").parentNode.remove();
+    for (let i = 0; i < document.getElementsByClassName("delete-plan").length; i++) {
+        document.getElementsByClassName("delete-plan")[i].addEventListener("click", (e) => {
+        const dayIndex = e.target.getAttribute("dayIndex");
+        const plan = dbPlans[`day ${dayIndex}`]
+        const nameofPlace = e.target.getAttribute('place')
+        const arrIndex = plan.findIndex(place => place.includes(nameofPlace))
+        plan.splice(plan.indexOf(arrIndex), 1)
+
+        fetch("http://localhost:8080/updateTrip", {
+        method: "POST",
+        headers: {
+        Authorization: "Bearer " + cookies.access_token,
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+        "tripname": tripName.current.textContent,
+        "city": sessionStorage.getItem('city'),
+        "year": trips.trips[tripName.current.textContent].year,
+        "dates": trips.trips[tripName.current.textContent].dates,
+        "plans": plan,
+        "expenses": {
+        "hotel": hotel,
+        "budget": totalBudget,
+        "transport": transport
         }
+      }),
+      })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        
+      })
+      .catch((err) => {
+        console.error(err);
+      });
 
         setPlan(dbTrips[tripName.current.textContent].plans);
+        setDbPlans(plan)
       });
     }
   }
@@ -599,7 +637,7 @@ function TripPlanner() {
       setCurrDay(e.target.closest(".add-li").getAttribute("dayIndex"));
       favoritesList.current.style.right = 0;
       if (window.innerWidth > 704) {
-        favoritesList.current.style.width = "80vw";
+        favoritesList.current.style.width = "42vw";
       } else {
         favoritesList.current.style.width = "100vw";
       }
@@ -634,6 +672,40 @@ function TripPlanner() {
     h1.style.display = "none";
 
     if (e.target.textContent === "Set") {
+      alert('Working out a bug in this feature.')
+      // fetch("http://localhost:8080/updateTripName", {
+      //   method: "POST",
+      //   headers: {
+      //     Authorization: "Bearer " + cookies.access_token,
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     "newname": box.firstElementChild.textContent,
+      //     "tripname": tripName.current.textContent,
+      //     "city": sessionStorage.getItem('city'),
+      //     "year": trips.trips[tripName.current.textContent].year,
+      //     "dates": trips.trips[tripName.current.textContent].dates,
+      //     "plans": trips.trips[tripName.current.textContent].plans,
+      //     "expenses": {
+      //     "hotel": hotel,
+      //     "budget": totalBudget,
+      //     "transport": transport
+      //     }
+      //   }),
+      // })
+      //   .then((response) => {
+      //     return response.json();
+      //   })
+      //   .then((data) => {
+          
+      //   })
+      //   .catch((err) => {
+      //     console.error(err);
+      //   });
+
+        // sessionStorage.setItem('trip', box.firstElementChild.textContent)
+        // window.location.href = window.location.href;
+        
     }
   }
 
@@ -658,6 +730,72 @@ function TripPlanner() {
     }
   }
 
+  function handleCostEdit(type, int) {
+    console.log(type)
+    console.log(int)
+    if (type === 'hotel') {
+    fetch("http://localhost:8080/updateTrip", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + cookies.access_token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "tripname": tripName.current.textContent,
+        "city": sessionStorage.getItem('city'),
+        "year": trips.trips[tripName.current.textContent].year,
+        "dates": trips.trips[tripName.current.textContent].dates,
+        "plans": trips.trips[tripName.current.textContent].plans,
+        "expenses": {
+        "hotel": int,
+        "budget": totalBudget,
+        "transport": transport
+        }
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+      setHotel(int)
+    } else if (type === 'transport') {
+      fetch("http://localhost:8080/updateTrip", {
+        method: "POST",
+        headers: {
+          Authorization: "Bearer " + cookies.access_token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          "tripname": tripName.current.textContent,
+          "city": sessionStorage.getItem('city'),
+          "year": trips.trips[tripName.current.textContent].year,
+          "dates": trips.trips[tripName.current.textContent].dates,
+          "plans": trips.trips[tripName.current.textContent].plans,
+          "expenses": {
+          "hotel": hotel,
+          "budget": totalBudget,
+          "transport": int
+          }
+        }),
+      })
+        .then((response) => {
+          return response.json();
+        })
+        .then((data) => {
+          
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+        setTransport(int)
+    }
+  }
+
   function handleHotelTransport(e) {
     const button = e.target;
     const span = e.target.previousElementSibling;
@@ -672,15 +810,48 @@ function TripPlanner() {
       setDbTrips(dbTrips);
       tripBudget[e.target.closest(".cost-div").title] = span.innerText;
       setTripBudget(tripBudget);
-      expenses.percentages();
-      setExpenses(expenses);
+      // expenses.percentages();
+      // setExpenses(expenses);
       setPlan(dbTrips[sessionStorage.getItem("trip")]);
+      handleCostEdit(e.target.closest(".cost-div").title, parseInt(span.innerText))
     } else if (e.target.innerHTML === "Edit") {
       span.innerHTML = `<input id='newInput' value='${span.innerText}' />`;
       const input = document.getElementById("newInput");
       input.focus();
       button.textContent = "Set";
     }
+  }
+
+  function handleBudgetEdit(value) {
+    fetch("http://localhost:8080/updateTrip", {
+      method: "POST",
+      headers: {
+        Authorization: "Bearer " + cookies.access_token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        "tripname": tripName.current.textContent,
+        "city": sessionStorage.getItem('city'),
+        "year": trips.trips[tripName.current.textContent].year,
+        "dates": trips.trips[tripName.current.textContent].dates,
+        "plans": trips.trips[tripName.current.textContent].plans,
+        "expenses": {
+        "hotel": hotel,
+        "budget": parseInt(value),
+        "transport": transport
+        }
+      }),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+      setTotalBudget(value)
   }
 
   function editBudget(e) {
@@ -697,7 +868,7 @@ function TripPlanner() {
       tripBudget.total = value;
       setTripBudget(tripBudget);
       e.target.textContent = "Edit Budget";
-      renderDetailedBreakdown();
+      handleBudgetEdit(value)
     } else {
       const span1 = e.target.previousElementSibling;
       const input = document.createElement("input");
@@ -712,40 +883,16 @@ function TripPlanner() {
 
   const dollar = "$";
 
-  function addPlace(e) {
-    if (e.target.textContent === "Add") {
-      e.target.nextElementSibling.childNodes[2].style.display = "flex";
-      e.target.textContent = "Confirm";
-      e.target.style.backgroundColor = "#98FB98";
-    } else if (e.target.textContent === "Confirm") {
-      e.target.textContent = "Add";
-      e.target.style.backgroundColor = "#2E64FE";
-      e.target.nextElementSibling.childNodes[2].style.display = "none";
-      e.target.closest("#favorites-list").style.right = "-80vw";
-      const name = e.target.nextElementSibling.childNodes[0].textContent;
-      let budget =
-        e.target.nextElementSibling.childNodes[2].childNodes[0].childNodes[1]
-          .firstElementChild.value;
-      let time = e.target.nextElementSibling.childNodes[2].childNodes[1].value;
-      if (budget === "") {
-        budget = 0;
-      }
-      if (time === "") {
-        time = "00:00";
-      }
+  function addPlace(e, category, area, name, budget, time, dayIndex) {
       const newNode = document.getElementById("newNode");
       const div = document.createElement("div");
-      const image = require(`../../public/${name}.jpg`);
       div.innerHTML = `<div place='${name}' number='${
         parseInt(newNode.previousElementSibling.getAttribute("number")) + 1
       }' class='place-planned'>
-    <img src="${image}"></img>
-    <div place='${name}' trip='${sessionStorage.getItem(
-        "trip"
-      )}' class="right-side-div">
+    <div place='${name}' trip='${tripName.current.textContent}' class="right-side-div">
     <div class='middle-div'>
     <a>${name}</a>
-    <p>${getPlaceProps(name, "category")} | ${getPlaceProps(name, "area")}</p>
+    <p>${category} | ${area}</p>
     <div class='budget-box'>
     <h5>Budget</h5>
     <div class='budgeting'><a>$</a><div class='set-budget'><span>${budget}</span>
@@ -758,27 +905,23 @@ function TripPlanner() {
     </div>
     </div>
     <div class='trip-div-btns'>
-    <button dayIndex='${currDay}' place='${name}' trip='${sessionStorage.getItem(
-        "trip"
-      )}' class='delete-plan'>Delete</button>
+    <button dayIndex='${dayIndex}' place='${name}' trip='${tripName.current.textContent}' class='delete-plan'>Delete</button>
     </div>
     </div>`;
 
-      const index = parseInt(newNode.parentNode.getAttribute("id"));
+      const element = document.getElementsByClassName('add-li')[currDay - 1]
 
-      newNode.parentNode.insertBefore(div, newNode);
-      dbTrips[tripName.current.textContent].plans[index][
-        `Day ${index + 1}`
+      console.log(element)
+
+      element.parentNode.insertBefore(div, element);
+      dbTrips[tripName.current.textContent].plans[
+        `day ${String(dayIndex)}`
       ].push(`${name}|${time}|${budget}`);
-
-      docMethods.updateTrips(userCreds, dbTrips);
+      setPlan(dbTrips[tripName.current.textContent]);
       setDbTrips(dbTrips);
       setBudgetChange((budgetChange) => !budgetChange);
-      expenses.percentages();
-      setExpenses(expenses);
-      newNode.removeAttribute("id");
-      setPlan(dbTrips[tripName.current.textContent]);
-    }
+      // expenses.percentages();
+      // setExpenses(expenses);
   }
 
   async function handleLogout() {
@@ -891,34 +1034,34 @@ function TripPlanner() {
               </div>
               <div className="budgeting-tool">
                 <div className="budget-tool-header">
-                  <span>${tripBudget.total}</span>
+                  <span>${totalBudget}</span>
                   <button onClick={(e) => editBudget(e)}>Edit Budget</button>
                 </div>
                 <div id="cost-div-list">
                   <div
                     onClick={(e) => handleHotelTransport(e)}
-                    title="Hotel"
+                    title="hotel"
                     className="cost-div"
                   >
                     <h5>Total Hotel Cost</h5>
                     <div>
                       <a>$</a>
                       <span>
-                        <span>{tripBudget.hotel}</span>
+                        <span>{hotel}</span>
                       </span>
                       <button>Edit</button>
                     </div>
                   </div>
                   <div
                     onClick={(e) => handleHotelTransport(e)}
-                    title="Transportation"
+                    title="transport"
                     className="cost-div"
                   >
                     <h5>Total Transportation Cost</h5>
                     <div>
                       <a>$</a>
                       <span>
-                        <span>{tripBudget.transport}</span>
+                        <span>{transport}</span>
                       </span>
                       <button>Edit</button>
                     </div>
@@ -926,7 +1069,7 @@ function TripPlanner() {
                 </div>
                 <hr className="budget-hr" />
 
-                <div className="visual-breakdown">
+                {/* <div className="visual-breakdown">
                   <div id="pie-chart">
                     <div>
                       <p>Hotel</p>
@@ -969,8 +1112,8 @@ function TripPlanner() {
                       ></div>
                     </div>
                   </div>
-                </div>
-                <hr className="budget-hr" />
+                </div> */}
+              
                 <ul
                   ref={tripDetailsList}
                   onClick={(e) => handleListClicks(e)}
@@ -988,12 +1131,12 @@ function TripPlanner() {
       <div ref={favoritesList} id="favorites-list">
       <FontAwesomeIcon icon={faX} id="x-out-btn-planner" onClick={() => {
         if (window.innerWidth > 704) {
-        favoritesList.current.style.right = '-80vw';
+        favoritesList.current.style.right = '-42vw';
         } else {
         favoritesList.current.style.right = '-100vw';
         }
       }} />
-        <h3>Add a place</h3>
+        <h3 className="add-place-text">Add a place</h3>
         <hr />
         <div id="hello-user-input-search-planner">
             <input placeholder="Sushi in Miami, Resturants in Orlando..." ref={smartSearchInput} style={{borderRadius: '30rem 0 0 30rem'}} id="input-planner"></input>
@@ -1004,17 +1147,53 @@ function TripPlanner() {
           confirmExpCity ?
           
           smartSearchPlaces.map((place) => (
-            <div>
-              <img></img>
+            <div className="smart-search-result-planner">
               <div className="place-text-info-1">
                 <h3>{place.name}</h3>
                 <h4>{place.style} {place.category}</h4>
                 <p>Serving {place.serves}</p>
-                <p>{place.area} | {place.price}</p>
+                <p>{place.area} | {'$'.repeat(place.price)}</p>
               </div>
               <div className="place-action-btns">
-                <button>Add</button>
-                <button>Learn More</button>
+                <button onClick={(e) => {
+                  const currPlan = dbPlans;
+            
+                  currPlan[`day ${String(currDay)}`].push(`${place.name}|${'00:00'}|${'0'}`);
+                  
+                  fetch("http://localhost:8080/updateTrip", {
+                    method: "POST",
+                    headers: {
+                      Authorization: "Bearer " + cookies.access_token,
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      "tripname": tripName.current.textContent,
+                      "city": sessionStorage.getItem('city'),
+                      "year": trips.trips[tripName.current.textContent].year,
+                      "dates": trips.trips[tripName.current.textContent].dates,
+                      "plans": currPlan,
+                      "expenses": {
+                      "hotel": hotel,
+                      "budget": totalBudget,
+                      "transport": transport
+                      }
+                    }),
+                  })
+                    .then((response) => {
+                      return response.json();
+                    })
+                    .then((data) => {
+                      
+                    })
+                    .catch((err) => {
+                      console.error(err);
+                    });
+                    favoritesList.current.style.right = "-42vw";
+                    setDbPlans(currPlan)
+                    addPlace(e, place.category, place.area, place.name,  0, '', `day ${currDay}`)
+           
+                }}>Add</button>
+                <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.style, place.area, place.price, place.text, place.favorite, place.category, place.placeid, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
               </div>
             </div>
           ))

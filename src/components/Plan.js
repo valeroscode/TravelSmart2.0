@@ -571,7 +571,7 @@ function Plan() {
     submit: function (e) {
       tripObj.Where = inputCityField.current.value;
       tripObj.Name = inputNameField.current.value;
-      if (currentUser.name !== Guest) {
+      if (currentUser.name !== "Guest") {
         fetch("http://localhost:8080/createTrip", {
           method: "POST",
           headers: {
@@ -602,7 +602,7 @@ function Plan() {
           }); 
 
           setTimeout(() => {
-            window.location.replace('http://localhost:8080/trips');
+            window.location.replace('http://localhost:8080/home');
           }, 300);
       } else {
         sessionStorage.setItem("tripname", tripObj.Name);
@@ -612,7 +612,7 @@ function Plan() {
           sessionStorage.setItem(`Day ${i}`, tripDates[i]);
         }
         setTimeout(() => {
-          window.location.replace('http://localhost:8080/trips');
+          window.location.replace('http://localhost:8080/home');
         }, 300);
       }
     },

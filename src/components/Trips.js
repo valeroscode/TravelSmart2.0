@@ -11,10 +11,12 @@ import {
 import { allPlaces } from "./allMarkers.mjs";
 import { docMethods } from "./firebase/firebase";
 import { useAuth } from "./contexts/AuthContext";
+import { useCookies } from "react-cookie";
 
 import { tripObj, tripDates, dateObj } from "./getPlaceInfo.mjs";
 
 function TripsPage() {
+  const [cookies] = useCookies(["access_token"]);
   const { currentUser, trips } = useAuth();
   const [info, setInfo] = useState({});
 
@@ -450,6 +452,7 @@ function TripsPage() {
   function deleteTrip(e, text) {
     document.getElementById("are-you-sure").style.display = "flex";
     document.getElementById("deleting-trip").textContent = `Deleting ${text}`;
+    document.getElementById("are-you-sure").setAttribute('name', text)
     deletedTrip = e.target.closest(".trip-item");
   }
 
@@ -458,10 +461,34 @@ function TripsPage() {
       "Deleting ",
       ""
     );
-    delete info[str];
-    docMethods.updateTrips(string, info);
-    document.getElementById("are-you-sure").style.display = "none";
-    deletedTrip.remove();
+    fetch("http://localhost:8080/deleteTrip", {
+      method: "POST",
+      headers: {
+      Authorization: "Bearer " + cookies.access_token,
+      "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+      "tripname": e.target.parentNode.parentNode.getAttribute('name'),
+      }
+    ),
+    })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      
+    })
+    .catch((err) => {
+      console.error(err);
+    });
+    e.target.parentNode.parentNode.style.display = "none";
+    const tr = document.getElementsByClassName('trip-name-text-key')
+
+    for (let i = 0; i < tr.length; i++) {
+      if (tr[i].textContent === text) {
+        tr[i].style.display = 'none'
+      }
+    }
   }
 
   function getTripDetails(e) {
@@ -545,7 +572,7 @@ function TripsPage() {
                   
                   <div className="trip-flex">
                     <div>
-                      <h2>{key}</h2>
+                      <h2 className="trip-name-text-key">{key}</h2>
                       <p>
                         {value.dates[0]} - {value.dates[value.dates.length - 1]}
                       </p>

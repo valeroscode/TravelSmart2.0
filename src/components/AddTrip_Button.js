@@ -4,23 +4,22 @@ import { useAuth } from "./contexts/AuthContext";
 import { docMethods } from "./firebase/firebase";
 
 function AddTrip_Button() {
-  const { currentUser, info } = useAuth();
-  const [trips, setTrips] = useState([]);
+  const { currentUser, trips } = useAuth();
   const [dbTrips, setDbTrips] = useState();
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (currentUser) {
       setTimeout(() => {
-        if (info.trips) {
+        if (trips.trips) {
           //Changed trips state to reflect trips in the database
           setTrips(
-            Object.entries(info.trips).filter(
+            Object.entries(trips.trips).filter(
               (trip, index) => trip[1].City === sessionStorage.getItem("city")
             )
           );
-          console.log(Object.entries(info.trips));
-          setDbTrips(info.trips);
+          console.log(Object.entries(trips.trips));
+          setDbTrips(trips.trips);
           //Sets loading to false to rerender the component once the trips variables have been set to match whats in the database
           setLoading(false);
         }
@@ -43,7 +42,6 @@ function AddTrip_Button() {
     //Updates the database
     docMethods.updateTrips(string, dbTrips);
     setDbTrips(dbTrips);
-    setTrips(Object.entries(info.trips));
     const addToTrip = document.getElementById("adding-to-trip");
     //Makes the add to trip modal disappear
     addToTrip.style.opacity = 0;
@@ -100,41 +98,7 @@ function AddTrip_Button() {
       <div id="trips-list">
         {/* Populates the trip modal with the trips array */}
         {!loading
-          ? trips.map((trip) => (
-              <div className="tripSection" key={trip[0]}>
-                <h2 key={`${trip[0]}h2`}>{trip[0]}</h2>
-                <p>
-                  {trip[1].Dates[0]} - {trip[1].Dates[trip[1].Dates.length - 1]}
-                </p>
-                <div id="day-select-div" key={`${trip[0]}div`}>
-                  <p className="choose-day" key={`${trip[0]}p`}>
-                    Choose a day
-                  </p>
-                  {Object.values(trip[1].Dates).map((btn, index) => (
-                    <a
-                      key={`${index}`}
-                      onClick={(e) => updateTrip(e)}
-                      className="day-select"
-                      index={index}
-                    >
-                      <h4 key={trip[0] + index}>
-                        {
-                          daysoftheweek[
-                            new Date(
-                              `${btn}, ${trip[1].Year} 23:15:30`
-                            ).getDay()
-                          ]
-                        }
-                        , {btn}
-                      </h4>
-                      {trip[1].Plans[index][`Day ${index + 1}`].map((plan) => (
-                        <p> - {String(plan.split("|")[0])}</p>
-                      ))}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))
+          ? <h2>This Feature is still in the works. For now, add places to your trip by clicking "Edit Trip" in the home page.</h2>
           : null}
       </div>
     </div>

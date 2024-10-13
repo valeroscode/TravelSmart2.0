@@ -54,14 +54,9 @@ export function generalScript(allPlaces) {
       var marker = new google.maps.Marker({
         map: map,
         position: props.coords,
-        
         coords: {
           lat: props.coords.lat,
           lng: props.coords.lng,
-        },
-        icon: {
-          url: props.category === 'Resturant' ? "/assets/DineSvg.svg" : props.category === 'Club' ? "/assets/NightSvg.svg" : "/assets/RecSvg.svg",
-          scaledSize: new google.maps.Size(15, 15),
         },
         name: props.name,
         content: props.content,
@@ -249,14 +244,27 @@ export function generalScript(allPlaces) {
                       `<br>` +
                       `<div id="APPEND_HERE">
                   <button id="place-button" class='infocard-btn' role='button' target="_blank">Learn More</button>
-                  <button id="add-button" name='${place.name}' class='infocard-btn trip-adder' role='button' target="_blank">Add to Trip</button>
+                  <button id="add-button" name='${place.name}' class='infocard-btn trip-adder' role='button' target="_blank">Learn More</button>
                   <div>` +
                       `<br>` +
                       `<br>` +
                       "</div>";
 
                     document.getElementById("add-button").addEventListener("click", (e) => {
-                      handleTripAdderPopup(e) 
+                      learnMoreAboutPlace(
+                        place.name,
+                        place.rating,
+                        type,
+                        area,
+                        price,
+                        place.name,
+                        place.favorite,
+                        category,
+                        id,
+                        e.target,
+                        lat,
+                        lng
+                      );
                     })
 
                     //Takes the user to a seperate page where they can learn more about the place

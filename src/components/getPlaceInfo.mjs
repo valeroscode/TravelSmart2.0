@@ -135,7 +135,7 @@ export function placePageSuggestions() {
 
   arr2 = [];
 
-  window.location.replace("https://travelsmart2-0.onrender.com/place");
+  window.location.replace("http://localhost:8080/place");
 }
 
 export function matchingKeyInputs(e, name, element) {

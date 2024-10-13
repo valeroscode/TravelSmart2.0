@@ -653,8 +653,14 @@ function TravelSmart() {
  
 
     for (let i = 0; i < allPlaces_Global.length; i++) {
+
+      if (searchTerm === String(allPlaces_Global[i].name).toLocaleLowerCase()) {
+        allPlaces_Global[i].score++
+        setSmartSearchPlaces([allPlaces_Global[i]])
+        setConfirmExpCity(true)
+        return
+      }
      
-      allPlaces_Global[i].score = 0
      if (cityInArray.length === 0) {
       if (finalTerms.some(term => term.term.includes(String(allPlaces_Global[i].area).toLocaleLowerCase()))) {
         allPlaces_Global[i].score++

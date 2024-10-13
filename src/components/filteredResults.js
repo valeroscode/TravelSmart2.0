@@ -43,7 +43,7 @@ function Results() {
   const [type, setType] = useState("")
   const [checked, setChecked] = useState(false)
   const [filteredPlaces, setFilteredPlaces] = useState([])
-  const [rendered, setRendered] = useState(false)
+  const [images, setImages] = useState(false)
 
   const { currentUser, allPlaces } = useAuth();
 
@@ -107,8 +107,10 @@ function Results() {
     );
     }
     resolve('Images Recieved')
+    setImages(true)
   }
   })
+
   }
 
   async function getImages() {
@@ -117,20 +119,16 @@ function Results() {
 
   getImages()
 
-  setFilteredPlaces(placesAPICall);
   setPlaces(placesAPICall);
 
   }, [])
 
   useEffect(() => {
-
     if (places.length > 0) {
-
-    setRendered(true)
-
+      setFilteredPlaces("places")
+      setFilteredPlaces(places)
     }
-  
-  }, [places])
+  }, [images])
 
   useEffect(() => {
 
@@ -422,7 +420,7 @@ function Results() {
             <button onClick={(e) => toggleFilterDisplay(e)}>Category ▼ {catScore > 0 ? `(${catScore})` : null}</button>
             <ul style={{display: 'none'}}>
               {
-                categories.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item}
+                categories.map((item) => (<li><p>{item}</p> <input type="checkbox" item={item} className="price-filter-click"
                   onClick={(e) => {
                     if (e.target.checked === true) {
                       setCatScore(catScore + 1)
@@ -590,46 +588,6 @@ function Results() {
           <div id="place-div-container">
 
             {
-              rendered ?
-              places.map((place) => 
-                  (
-                 <div className="place-div">
-                  <img className="place-div-image-results" src={place['imgSrc']}></img>
-                   <div className="place-div-name-rating">
-                   <h4 className="place-rating-h4">{place.rating}</h4>
-                    <h3 className="place-div-name">{place.name}</h3>
-                   </div>
-                    <h4 className="place-div-category-area">{place.category} In {place.area} | {'$'.repeat(place.price)}</h4>
-                    <h4 className="place-div-style">{place.style}</h4>
-                    
-                      <h5 className="place-div-serves">Serves {String(place.serves).replaceAll(',',' ')}</h5>
-                    { 
-                    place.awards !== '' ?
-                    legend.current.style.display = 'block' &&
-                    <div className="place-div-awards">
-                    <FontAwesomeIcon icon={faStarOfLife} />
-                    </div>
-                    : null
-                    }
-               
-                    <div className="all-places-buttons">
-                    <button>Add To Trip</button>
-                    <button onClick={(e) => learnMoreAboutPlace(place.name, place.rating, place.type, place.area, place.price, place.name, place.favorite, place.category, place.placeid, e.target, place.coords.lat, place.coords.lng)}>Learn More</button>
-                   
-                    </div>
-                    <div className="place-div-tags">
-                      {
-                        place.price <= 2 && place.price > 0 ? <p className="inexpensive-place">Inexpensive</p> : null
-                      }
-                      {
-                        place.rating >= 4 ? <p className="highly-rated-place">Highly Rated</p> : null
-                      }
-                    </div>
-                    <div className="filteredplaces-line"></div>
-                 </div>
-                  )
-              )
-              :
               filteredPlaces.map((place) => 
                 (
                <div className="place-div">

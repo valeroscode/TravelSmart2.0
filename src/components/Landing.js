@@ -270,9 +270,13 @@ function Landing() {
             <h2 id="feature-text-content" ref={content}>
               Here To Help You Make Memories
             </h2>
+            {cookies.access_token ? (
+              <button className="get-started-below-h2" onClick={() => window.location.replace('http://localhost:8080/home')}>START NOW</button>
+          ) : (
             <Link to="/login">
               <button className="get-started-below-h2">START NOW</button>
             </Link>
+          )}
           </div>
 
           <div id="feature-cards">
