@@ -361,6 +361,7 @@ font-family: "Roboto Condensed", sans-serif;
   color: black;
   font-family: "Roboto Condensed", sans-serif;
   background-color: whitesmoke;
+  border-radius: 30px;
 }
 .user-name button a {
 color: white;

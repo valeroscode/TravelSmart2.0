@@ -43,7 +43,8 @@ function Results() {
   const [type, setType] = useState("")
   const [checked, setChecked] = useState(false)
   const [filteredPlaces, setFilteredPlaces] = useState([])
-  const [images, setImages] = useState(false)
+  const [rendered, setRendered] = useState(false)
+  const [images, setImages] = useState({})
 
   const { currentUser, allPlaces } = useAuth();
 
@@ -73,8 +74,8 @@ function Results() {
     placesAPICall = newArr
   }
 
-  function fetchImages() {
-    return new Promise((resolve) => {
+  const obj = {}
+
   if (placesAPICall.length > 0) {
     var geocoder = new window.google.maps.Geocoder();
     for (let i = 0; i < placesAPICall.length; i++) {
@@ -90,6 +91,7 @@ function Results() {
           service.getDetails(request, function (place, status) {
             if (status == "OK") {
               const src = place.photos[0].getUrl({ maxWidth: 400 })
+              obj[placesAPICall[i].name] = src;
               placesAPICall[i]['imgSrc'] = src;
               if (i === 0) {
               document.getElementsByClassName('banner-img')[0].src = place.photos[0].getUrl({ maxWidth: 400 })
@@ -106,29 +108,19 @@ function Results() {
       }
     );
     }
-    resolve('Images Recieved')
-    setImages(true)
   }
-  })
-
-  }
-
-  async function getImages() {
-    await fetchImages();
-  }
-
-  getImages()
 
   setPlaces(placesAPICall);
+  setFiltered(placesAPICall);
 
   }, [])
 
-  useEffect(() => {
-    if (places.length > 0) {
-      setFilteredPlaces("places")
-      setFilteredPlaces(places)
-    }
-  }, [images])
+  function setFiltered(array) {
+    setTimeout(() => {
+    setFilteredPlaces(array)
+    setRendered(true)
+  }, 500)
+  }
 
   useEffect(() => {
 
@@ -588,10 +580,16 @@ function Results() {
           <div id="place-div-container">
 
             {
+              rendered ?
               filteredPlaces.map((place) => 
                 (
                <div className="place-div">
-                <img className="place-div-image-results" src={place['imgSrc']}></img>
+                {
+                  place.imgSrc ? 
+                  (
+                <img className="place-div-image-results" src={place.imgSrc}></img>
+                  ) : <p>Leading...</p>
+                }
                  <div className="place-div-name-rating">
                  <h4 className="place-rating-h4">{place.rating}</h4>
                   <h3 className="place-div-name">{place.name}</h3>
@@ -626,7 +624,8 @@ function Results() {
                </div>
                 )
               )
-            }
+              : null
+            } 
           </div>
         </div>
       </section>

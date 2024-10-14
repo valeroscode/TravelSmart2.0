@@ -525,7 +525,7 @@ function Landing() {
 
       <section id="landing-subs">
         <div id="landing-subs-text">
-          <h2>Want Updates like New Cities Sent To Your Inbox?</h2>
+          <h2>Know An Amazing Place We Should Include?</h2>
         </div>
         <div id="landing-subs-input">
           <input type="text" placeholder="Enter your email"></input>

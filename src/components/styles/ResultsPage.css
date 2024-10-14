@@ -118,9 +118,10 @@
 }
 
 .best-rated-place div:nth-child(2) h5 {
+    font-size: 1rem;
+    font-weight: 800;
     margin: 0;
-    font-weight: 400;
-    font-size: 0.9rem;
+    color: gray;
 }
 
 .buttons-container {
@@ -361,9 +362,10 @@
 }
 
 .budget-friendly-place div:nth-child(2) h5 {
-    font-size: 0.9rem;
-    font-weight: 400;
+    font-size: 1rem;
+    font-weight: 800;
     margin: 0.1rem 0;
+    color: gray;
 }
 
 #place-div-container {

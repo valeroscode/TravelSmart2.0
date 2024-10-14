@@ -21,7 +21,6 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (cookies.access_token && window.location.pathname !== "/login" && window.location.pathname !== '/') {
         //Checks if access token is expired
-        console.log('RENDERRRR')
         const payload = JSON.parse(atob(cookies.access_token.split('.')[1]));
         const exp = payload.exp * 1000; // Convert to milliseconds
         const now = Date.now();
@@ -74,6 +73,7 @@ export function AuthProvider({ children }) {
     } else {
       setLoading(false);
     }
+
   }, []);
 
   //Now the places in their default city will be populated

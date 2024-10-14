@@ -247,24 +247,25 @@ function PlacePage() {
         <div id='place-pg-btns'>
         <button onClick={(e) => handleTripAdderPopup(e)}>Add to Trip</button>
         <button onClick={(e) => {
-          fetch("http://localhost:8080/updateFavorites", {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              Operation: 'append',
-              Item: localStorage.getItem('title')
-            })
-          }).then(res => {
-            if (res.ok) return res.json()
-          }).then(() => {
-            e.target.style.backgroundColor = 'whitesmoke';
-            e.target.style.color = 'black';
-            e.target.textContent = ' Favorited';
-          }).catch(e => {
-            console.error(e.error)
-          })
+          alert('This feature is coming soon!')
+          // fetch("http://localhost:8080/updateFavorites", {
+          //   method: 'POST',
+          //   headers: {
+          //   'Content-Type': 'application/json'
+          //   },
+          //   body: JSON.stringify({
+          //     Operation: 'append',
+          //     Item: localStorage.getItem('title')
+          //   })
+          // }).then(res => {
+          //   if (res.ok) return res.json()
+          // }).then(() => {
+          //   e.target.style.backgroundColor = 'whitesmoke';
+          //   e.target.style.color = 'black';
+          //   e.target.textContent = ' Favorited';
+          // }).catch(e => {
+          //   console.error(e.error)
+          // })
 
         }}><FontAwesomeIcon icon={faBookmark} 
         /> Save</button>

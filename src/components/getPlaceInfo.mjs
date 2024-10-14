@@ -215,6 +215,7 @@ export function handleFavoritesNotifications(array, target, svg) {
 }
 
 export function handleTripAdderPopup(e) {
+  alert('Coming soon. Trips can now only be added on the edit trip page which can be navigated to from the homepage.')
   const addToTrip = document.getElementById("adding-to-trip");
   const adding = document.getElementById("adding-place");
   if (e.target.classList.contains("trip-adder")) {

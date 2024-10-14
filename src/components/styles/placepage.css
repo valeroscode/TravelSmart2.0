@@ -130,11 +130,11 @@
 
 #place-basic-rating p {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin-left: 0.5rem;
     background-color: #8a05ff;
     color: white;
-    padding: 0.25rem;
+    padding: 0.5rem;
     border-radius: 100%;
     font-weight: 800;
 }
@@ -230,7 +230,7 @@
 .place-sec-info-recs-line {
     background-color: #8a05ff;
     width: 0%;
-    height: 0.25rem;
+    height: 0.5rem;
     -webkit-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
